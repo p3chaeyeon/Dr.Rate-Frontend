@@ -9,9 +9,9 @@ const HomePage = () => {
     const navigate = useNavigate();
 
     return (
-        <main>
+        <main className={styles.homeMain}>
             {/* HomePage 는 양쪽 여백 없이 꽉 채우기 */}
-            <div className={styles.homeMain}>
+            <div className={styles.homeMainDiv}>
                 <div className={styles.homeTitle}>
                     <div className={styles.titleText}>한눈에</div>
                     <div className={styles.titleBlue}>
@@ -21,9 +21,13 @@ const HomePage = () => {
                     </div>
                     <div className={styles.titleText}>비교</div>
                 </div>
-
             </div>
+
+
             <section>
+                <div>
+                    phone frame 추가 예정
+                </div>
                 여기가 section
             </section>
         </main>
