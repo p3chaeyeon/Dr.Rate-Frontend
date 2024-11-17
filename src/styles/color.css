@@ -1,0 +1,24 @@
+:root {
+    --white: #fbfbfb;
+    --black: #171717;
+    --main1: #0068FF; /* 로고 파랑 */
+    --main2: #0085E4; /* 예금 */
+    --main3: #5C44F3; /* 적금 */
+    --light-red: #FF4143;
+    --divider-border: #CCC;
+    --font1: #E5E5E5;
+    --font2: #787878;
+    --font3: #858585;
+    --font4: #BBBBBB;
+    --blue-gray: #84ABD8;
+    --gray: #F4F4F4;
+    --coral: #FF9574;
+    --neon-green: #AFD939;
+    --light-gray: #E1E1E1;
+    --silver-gray: #CDCDCD;
+    --light-yellow: #FFDE99;
+    --warm-gray: #F6F6F6;
+    --bright-gray: #F2F2F2;
+    --agent-red: #FF6B00;
+  }
+  
