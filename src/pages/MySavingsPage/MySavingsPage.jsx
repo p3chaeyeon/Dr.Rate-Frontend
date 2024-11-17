@@ -9,7 +9,7 @@ function MySavingsPage() {
     return (
         <main>
             <MyNav />
-            
+
             <section>
                 <h1>예금 즐겨찾기 페이지</h1>
                 <h3>Test 문단: 예금 금리 상승, 소비자 유치 경쟁 치열</h3>
@@ -23,6 +23,33 @@ function MySavingsPage() {
                 </p>
                 <br/>
                 <p>When you have some text, how can you choose a typeface? Many people—professional designers included—go through an app’s font menu until we find one we like. But the aim of this Google Fonts Knowledge module is to show that there are many considerations that can improve our type choices. By setting some useful constraints to aid our type selection, we can also develop a critical eye for analyzing type along the way.</p>
+                <br/>
+                
+            {/* // <h2>Font Test</h2> */}
+
+
+            <input type="checkbox" />
+            {/* 테스트할 요소 추가 */}
+            <p>테스트용 문단</p>
+            <a href="#">링크 스타일 테스트</a>
+            <ul>
+                <li>목록 아이템 1</li>
+                <li>목록 아이템 2</li>
+            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>테이블 헤더1</th>
+                        <th>테이블 헤더2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>데이터1</td>
+                        <td>데이터2</td>
+                    </tr>
+                </tbody>
+            </table>
             </section>
         </main>
     );

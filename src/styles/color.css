@@ -2,11 +2,11 @@
     --white: #fbfbfb;
     --black: #171717;
     --main1: #0068FF; /* 로고 파랑 */
-    --main2: #0085E4; /* 예금 */
-    --main3: #5C44F3; /* 적금 */
+    --main2: #0085E4; /* HomePage 예금 box  */
+    --main3: #5C44F3; /* HomePage 적금 box  */
     --light-red: #FF4143;
     --divider-border: #CCC;
-    --font1: #E5E5E5;
+    --font1: #333; /* MENU 글씨 색상 */
     --font2: #787878;
     --font3: #858585;
     --font4: #BBBBBB;

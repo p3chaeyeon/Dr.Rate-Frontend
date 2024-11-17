@@ -1,3 +1,39 @@
+main {
+    padding: 0;
+    // width: 100%;// 100vw;
+    // max-width: none !important;
+    // margin: 0 auto;
+    border: 1px solid var(--black);
+}
 
+.homeMain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+    .homeTitle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+
+        .titleText, .titleBlue {
+            font-size: 70px;
+            font-weight: 700;
+            letter-spacing: 3px;
+        }
+
+        .titleBlue {
+            display: flex;
+            justify-content: center;
+            align-items: center;            
+            color: var(--main1);
+        }
+
+        .titleDot {
+            font-size: 50px;
+        }
+    }
+    
+}
   

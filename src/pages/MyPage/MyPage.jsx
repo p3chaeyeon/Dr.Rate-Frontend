@@ -10,6 +10,16 @@ const MyPage = () => {
 
             <section>
                 <h1>마이 페이지 &gt; 회원 정보</h1>
+                <h2>Alert Modal Test</h2>
+                    언젠가 하겠지
+                <br/>
+
+                <h2>Confirm Modal Test</h2>
+                    이것도,,
+                <br/>
+
+
+
                 <h2>Font Test</h2>
                 <p className="custom1">
                 Segoe UI// 대한민국은 민주공화국이다.

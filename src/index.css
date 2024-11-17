@@ -27,8 +27,8 @@ body {
 /* <header> */
 header {
   height: 90px;
-  border-bottom: 1px solid #ccc;
-  color: #333;
+  border-bottom: 1px solid var(--divider-border);
+  color: var(--font1);
   padding: 10px 5%;
   display: flex;
   justify-content: space-between;
@@ -45,11 +45,16 @@ section {
   margin: 0 auto;
   border: 1px solid red;
 }
+
+
 /* </container> */
 /* </main> */
 
 
 /* <footer> */
+
+
+
 
 
 /* 라이트 모드일 때 스타일 */
