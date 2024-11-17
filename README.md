@@ -1,8 +1,13 @@
-# `git clone` 후 프로젝트 실행
-`git clone <repository_url>`
+# 프로젝트 실행
+## 로컬 실행
+`git clone (https://github.com/BitCamp-Final-Project/Dr.Rate-Frontend.git`
 `cd dr_rate_front`
 `yarn install  # 또는 yarn i`
 `yarn dev`
+
+---
+## 빌드
+`yarn build`
 
 Currently, two official plugins are available:
 
