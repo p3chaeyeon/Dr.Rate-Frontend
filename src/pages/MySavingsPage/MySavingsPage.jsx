@@ -9,6 +9,7 @@ function MySavingsPage() {
     return (
         <main>
             <MyNav />
+            
             <section>
                 <h1>예금 즐겨찾기 페이지</h1>
                 <h3>Test 문단: 예금 금리 상승, 소비자 유치 경쟁 치열</h3>

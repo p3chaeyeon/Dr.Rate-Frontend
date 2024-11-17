@@ -77,26 +77,30 @@ input {
 }
   
 input[type="checkbox"] {
-cursor: pointer;
-transform: scale(1.4);
-appearance: none;
--webkit-appearance: none; /* Safari 호환 */
-background-color: white;
-border: 1px solid #ccc;
-width: 16px;
-height: 16px;
-border-radius: 3px; 
-display: flex;
-align-items: center;
-justify-content: center;  
+    all: unset;
+    cursor: pointer;
+    transform: scale(1.4);
+    appearance: none;
+    -webkit-appearance: none; /* Safari 호환 */
+    background-color: white;
+    border: 1px solid #ccc;
+    width: 16px;
+    height: 16px;
+    border-radius: 3px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;  
 }
 
 
 input[type="checkbox"]:checked::after {
-content: "✔"; 
-font-size: 14px;
-color: black;
+    content: "✔"; 
+    font-size: 14px;
+    color: black !important; /* 검은색으로 강제 설정 */
+    font-family: Arial, sans-serif; /* 명확한 글꼴 지정 */
+    line-height: 1;
 }
+  
 
 
 
