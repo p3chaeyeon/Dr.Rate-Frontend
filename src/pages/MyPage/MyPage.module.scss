@@ -1,0 +1,18 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid red;
+  
+    .item {
+      color: #cf359c;
+      margin: 5px;
+  
+      &:hover {
+        color: #1d9151;
+      }
+    }
+  }
+  
+  

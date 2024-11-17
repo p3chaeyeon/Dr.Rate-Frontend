@@ -1,0 +1,43 @@
+// src/components/MyNav/MyNav.module.scss
+
+.myNav {
+    height: 70px;
+    border-bottom: 1px solid #ccc;
+    color: #333;
+    padding: 10px 5%;
+    display: flex;    
+    justify-content: center;
+    align-items: center;    
+    
+    font-size: 17px;
+    font-weight: 700;
+
+    .myMenuList {
+        max-width: 360px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+
+        .myMenuItem {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            .downArrow {
+                width: 12px;
+                height: 12px;
+                margin-left: 8px;
+            }
+        }
+
+    }
+}
+
+
+
