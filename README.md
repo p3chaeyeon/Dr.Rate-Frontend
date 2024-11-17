@@ -1,4 +1,4 @@
-# 사용법
+# `git clone` 후 프로젝트 실행
 `git clone <repository_url>`
 `cd dr_rate_front`
 `yarn install  # 또는 yarn i`
