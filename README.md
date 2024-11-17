@@ -5,9 +5,11 @@
 `yarn install  # 또는 yarn i`
 `yarn dev`
 
----
+
 ## 빌드
 `yarn build`
+
+---
 
 Currently, two official plugins are available:
 
