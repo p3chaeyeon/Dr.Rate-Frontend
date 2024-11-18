@@ -1,48 +1,184 @@
-/* src/pages/HomePage/HomePage.module.scss */
-main.homeMain {
+.homeMain {
     padding: 0;
-    background-image: url('src/assets/images/homePageBG.png'); 
-    background-size: cover; /* 가로 너비에 맞추고 비율 유지 */
-    background-repeat: no-repeat; /* 반복 없이 한 번만 */
-    background-position: center; /* 이미지의 중앙 배치 */
     width: 100vw;
-    // height: 100vh;
-    min-height: 100vh; /* 콘텐츠가 더 길면 스크롤 허용 */
+    min-height: 100vh;
     height: auto;
-    overflow-y: visible; /* 스크롤 방지 문제 해결 */    
+    overflow-y: auto;
 }
 
 .homeMainDiv {
+    position: relative;
+    width: 100%;
+    height: 1600px;
+    background-image: url('src/assets/images/homePageBG.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    width: 100%;
-    height: 1400px;
-    padding-top: 200px;
+    padding-top: 250px;
 
     .homeTitle {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-
-        .titleText, .titleBlue {
-            font-size: 70px;
-            font-weight: 700;
-            letter-spacing: 3px;
-        }
+        font-size: 4rem;
+        font-weight: 700;
+        color: var(--black);
+        text-align: center;
 
         .titleBlue {
-            display: flex;
-            justify-content: center;
-            align-items: center;            
             color: var(--main1);
         }
+    }
+}
 
-        .titleDot {
-            font-size: 50px;
+.bankScatter {
+    position: relative;
+    width: 100%;
+    height: 764px; /* 페이지 높이 */
+    text-align: center;
+    transition: all 0.5s ease-in-out;
+
+    .scatterText {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 4rem;
+        color: #555;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    img {
+        position: absolute;
+        width: 200px; /* 각 은행 이미지의 가로 크기 */
+        height: auto;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .scatterKookmin {
+        top: calc((66 / 764) * 100%);
+        left: calc((150 / 1200) * 100%);
+    }
+
+    .scatterToss {
+        top: calc((80 / 764) * 100%);
+        left: calc((543 / 1200) * 100%);
+    }
+
+    .scatterKaKao {
+        top: calc((190 / 764) * 100%);
+        left: calc((818 / 1200) * 100%);
+    }
+
+    .scatterNonghyup {
+        top: calc((472 / 764) * 100%);
+        left: calc((774 / 1200) * 100%);
+    }
+
+    .scatterHana {
+        top: calc((600 / 764) * 100%);
+        left: calc((609 / 1200) * 100%);
+    }
+
+    .scatterWoori {
+        top: calc((500 / 764) * 100%);
+        left: calc((222 / 1200) * 100%);
+    }
+
+    .scatterShinhan {
+        top: calc((280 / 764) * 100%);
+        left: calc((80 / 1200) * 100%);
+    }
+
+    &.collapsed {
+        .scatterKookmin {
+            top: calc(45% + 40px); 
+            left: calc(30% - 20px);
+        }
+
+        .scatterToss {
+            top: calc(45% + 10px); 
+            left: calc(40% + 20px);
+        }
+
+        .scatterKaKao {
+            top: calc(60% - 30px); 
+            left: calc(60% - 20px);
+        }
+
+        .scatterNonghyup {
+            top: calc(75% - 80px);
+            left: calc(50% + 40px);
+        }
+
+        .scatterHana {
+            top: calc(85% - 50px); 
+            left: calc(50% + 10px);
+        }
+
+        .scatterWoori {
+            top: calc(85% - 30px); 
+            left: calc(40% - 20px);
+        }
+
+        .scatterShinhan {
+            top: calc(65% + 30px); /* 적당히 중앙으로 이동 */
+            left: calc(30% - 30px);
         }
     }
-    
 }
-  
+
+
+
+.seeTogether {
+    height: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    font-weight: bold;
+    color: #333;
+    transition: opacity 0.5s ease-in-out;
+
+    &.hidden {
+        opacity: 0.3;
+    }
+
+    &.visible {
+        opacity: 1;
+    }
+}
+
+.phoneScroll {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+
+    img {
+        transition: width 0.5s ease-in-out;
+        width: 70%; /* 처음 부분적으로 보이는 경우 크기 */
+    }
+
+    &.partial {
+        img {
+            width: 80%;
+            transform: translateY(-100px); /* "한 번에 확인" 글자를 덮는 효과 */
+            opacity: 0.7;
+        }
+    }
+
+    &.full {
+        img {
+            width: 30%; /* 폰 전체가 나타나면 크기 줄이기 */
+            transform: translateY(0); /* 이미지가 완전히 노출 */
+            opacity: 1;
+        }
+    }
+}
+
+section {
+    padding: 20px;
+    background-color: #fff;
+}
