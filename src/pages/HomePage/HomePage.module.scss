@@ -1,6 +1,6 @@
 .homeMain {
     padding: 0;
-    width: 100vw;
+    width: 100%;
     min-height: 100vh;
     height: auto;
     overflow-y: auto;
@@ -9,7 +9,7 @@
 .homeMainDiv {
     position: relative;
     width: 100%;
-    height: 1600px;
+    height: 1800px;
     background-image: url('src/assets/images/homePageBG.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -92,18 +92,18 @@
 
     &.collapsed {
         .scatterKookmin {
-            top: calc(45% + 40px); 
-            left: calc(30% - 20px);
+            top: calc(50% + 40px); 
+            left: calc(35% - 20px);
         }
 
         .scatterToss {
-            top: calc(45% + 10px); 
-            left: calc(40% + 20px);
+            top: calc(45% + 20px); 
+            left: calc(43% + 20px);
         }
 
         .scatterKaKao {
             top: calc(60% - 30px); 
-            left: calc(60% - 20px);
+            left: calc(55% - 20px);
         }
 
         .scatterNonghyup {
@@ -131,7 +131,7 @@
 
 
 .seeTogether {
-    height: 1000px;
+    height: 764px;
     display: flex;
     justify-content: center;
     align-items: center;
