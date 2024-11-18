@@ -15,13 +15,13 @@ const HomePage = () => {
             const scrollY = window.scrollY;
 
             // 은행 이미지 단계적 모임 (스크롤 값에 따라 조금 더 유연하게 조정)
-            setScatterCollapsed(scrollY > 1500 && scrollY < 2100);
+            setScatterCollapsed(scrollY > 1700 && scrollY < 2300);
 
             // '흩어진 정보' 텍스트 가시성 (1500이 넘으면 사라짐)
-            setInfoVisible(scrollY < 1500);
+            setInfoVisible(scrollY < 1750);
 
             // "한 번에 확인" 글자 표시 (은행 이미지들이 모인 후 나타남)
-            setSeeTogetherVisible(scrollY >= 2000 && scrollY < 2400);
+            setSeeTogetherVisible(scrollY >= 2000 && scrollY < 2500);
 
             // 폰 프레임 일부 노출 (은행 로고와 '한 번에 확인' 글자가 사라진 후 표시)
             setPhoneFramePartialVisible(scrollY >= 2000 && scrollY < 2600);
