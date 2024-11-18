@@ -4,9 +4,12 @@
 
 `cd dr_rate_front`
 
+`git pull origin dev`
+
 `yarn install  # 또는 yarn i`
 
 `yarn dev`
+
 
 
 ## 빌드
