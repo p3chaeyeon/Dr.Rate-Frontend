@@ -28,7 +28,7 @@ body {
 
 .today::after {
   content: ''; /* 동그라미 생성 */
-  background-color: #FF4143; /* 자주색 배경 */
+  background-color: #FF4143; 
   width: 25px;
   height: 25px;
   border-radius: 50%; /* 원 모양 */
@@ -62,7 +62,7 @@ body {
   margin: 0;
 }
 
-// 모달 스타일
+//모달 스타일
 .modalContent {
   width: 90%; /* 너비 */
   max-width: 400px; /* 최대 너비 설정 */
@@ -75,7 +75,6 @@ body {
   top: 50px; 
 }
 
-// 모달 오버레이
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -94,6 +93,7 @@ body {
   filter: blur(3px); /* 흐림 효과 */
   pointer-events: none; /* 클릭 방지 */
 }
+
 
 
 
