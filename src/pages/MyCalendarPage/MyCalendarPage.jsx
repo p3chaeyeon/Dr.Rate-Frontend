@@ -1,10 +1,10 @@
 import styles from './MyCalendarPage.module.scss';
 
 import React, { useState, useRef } from 'react';
-import FullCalendar from '@fullcalendar/react'; // React용 FullCalendar
-import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
-import interactionPlugin from '@fullcalendar/interaction'; // 날짜 클릭
-import Modal from 'react-modal'; // 모달
+import FullCalendar from '@fullcalendar/react'; //React용 FullCalendar
+import dayGridPlugin from '@fullcalendar/daygrid'; //월간 보기
+import interactionPlugin from '@fullcalendar/interaction'; //날짜 클릭
+import Modal from 'react-modal'; //모달
 
 // 모달 초기 설정
 Modal.setAppElement('#root');
@@ -49,7 +49,7 @@ const MyCalendarPage = () => {
         const currentDay = startDate.getDate();
         startDate.setMonth(startDate.getMonth() + 1);
         if (startDate.getDate() !== currentDay) {
-          startDate.setDate(0); // 말일로 설정
+          startDate.setDate(0); //말일로 설정
         }
       }
 
@@ -61,14 +61,16 @@ const MyCalendarPage = () => {
       setSelectedDate('');
       setEndDate('');
     } else {
-      alert('모든 필드를 입력해주세요!');
+      alert('모든 정보를 입력해주세요!');
     }
   };
 
   return (
     <div className={styles.calendar}>
       <h1>적금 달력</h1>
-      <div style={{ width: '80%', margin: '30px auto' }} className="calendar">
+      <div
+        className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} // 모달 열리면 흐림 효과
+      >
         <FullCalendar
           ref={calendarRef}
           locale="ko"
@@ -83,18 +85,29 @@ const MyCalendarPage = () => {
           events={events}
           dateClick={handleDateClick}
           dayCellClassNames={({ date }) => {
+            const today = new Date();
+            const isToday =
+              date.getFullYear() === today.getFullYear() &&
+              date.getMonth() === today.getMonth() &&
+              date.getDate() === today.getDate();
+            if (isToday) return styles.today; //오늘 날짜
             const day = date.getUTCDay();
-            if (day === 6) return styles.sunday; // 일요일 클래스 추가
-            if (day === 5) return styles.saturday; // 토요일 클래스 추가
-            return '';
+            if (day === 6) return styles.sunday; //일요일 
+            if (day === 5) return styles.saturday; //토요일 
           }}
+          dayCellDidMount={(info) => {
+            if (info.isToday) {
+              info.el.style.backgroundColor = 'transparent'; //노란 배경 제거
+              info.el.classList.add(styles.today); //커스텀 스타일 추가
+            }
+          }}        
           dayCellContent={({ date }) => {
             return <span style={{ display: 'block', textAlign: 'center' }}>{date.getDate()}</span>;
           }}
           datesSet={() => {
             const titleElement = document.querySelector('.fc-toolbar-title');
             if (titleElement) {
-              titleElement.classList.add(styles.title); // SCSS 클래스 추가
+              titleElement.classList.add(styles.title); 
             }
           }}
         />
@@ -104,15 +117,8 @@ const MyCalendarPage = () => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        style={{
-          overlay: { zIndex: 1000 },
-          content: {
-            width: '300px',
-            margin: 'auto',
-            padding: '20px',
-            borderRadius: '8px',
-          },
-        }}
+        className={styles.modalContent} //콘텐츠 스타일
+        overlayClassName={styles.modalOverlay} //오버레이 스타일
       >
         <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>은행</label>
         <select
@@ -127,7 +133,6 @@ const MyCalendarPage = () => {
           <option value="우리은행">우리은행</option>
           <option value="카카오뱅크">카카오뱅크</option>
         </select>
-
         <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>적금명</label>
         <select
           value={savingName}
@@ -169,7 +174,7 @@ const MyCalendarPage = () => {
           style={{
             padding: '10px',
             width: '100%',
-            backgroundColor: '#0068FF',
+            backgroundColor: '#0085E4',
             color: 'white',
             border: 'none',
             cursor: 'pointer',
