@@ -7,9 +7,6 @@ git pull origin dev
 
 npm install --global yarn
 yarn --version # 1.22.22
-
-yarn create vite dr_rate_front # React / Javascript
-cd dr_rate_front
 yarn install
 
 yarn add react-router-dom  # 클라이언트 측 라우팅 지원
