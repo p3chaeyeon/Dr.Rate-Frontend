@@ -1,6 +1,8 @@
 /* src/utils.path.js; PATH 객체를 사용하여 라우팅 경로를 관리 */
 
+
 export const PATH = {
+    /* 사용자 경로 */
     HOME: '/',
     MY_SAVINGS: '/mySavings',           // 마이페이지; 예금 즐겨찾기
     MY_RECURRING: '/myRecurring',       // 마이페이지; 적금 즐겨찾기
@@ -9,7 +11,12 @@ export const PATH = {
     MY_WITHDRAW: '/myWithdraw',         // 마이페이지; 회원 탈퇴
     MY_CALENDAR: '/myCalendar',         // 마이페이지; 나의 적금 달력
 
+
+    /* 관리자 경로 */
+    ADMIN_MAIN: '/admin/adminMain'
+
     // SERVER: "https://api.kookmin-timebank.com"
+    
 };
 
 // 환경 변수에서 deployHostName 값을 가져옴
