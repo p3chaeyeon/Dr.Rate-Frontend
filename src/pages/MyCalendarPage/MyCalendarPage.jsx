@@ -65,18 +65,10 @@ const MyCalendarPage = () => {
     }
   };
 
-  // 요일 스타일링
-  const getDayClassNames = (date) => {
-    const day = date.getUTCDay();
-    if (day === 6) return 'sunday'; // 일요일
-    if (day === 5) return 'saturday'; // 토요일
-    return 'daycell';
-  };
-
   return (
-    <div className={styles.container}>
+    <div className={styles.calendar}>
       <h1>적금 달력</h1>
-      <div style={{ width: '80%', margin: '0 auto' }} className="calendar">
+      <div style={{ width: '80%', margin: '30px auto' }} className="calendar">
         <FullCalendar
           ref={calendarRef}
           locale="ko"
@@ -90,8 +82,21 @@ const MyCalendarPage = () => {
           titleFormat={{ year: 'numeric', month: 'long' }}
           events={events}
           dateClick={handleDateClick}
-          dayCellClassNames={({ date }) => getDayClassNames(date)}
-          dayCellContent={({ date }) => <span>{date.getDate()}</span>}
+          dayCellClassNames={({ date }) => {
+            const day = date.getUTCDay();
+            if (day === 6) return styles.sunday; // 일요일 클래스 추가
+            if (day === 5) return styles.saturday; // 토요일 클래스 추가
+            return '';
+          }}
+          dayCellContent={({ date }) => {
+            return <span style={{ display: 'block', textAlign: 'center' }}>{date.getDate()}</span>;
+          }}
+          datesSet={() => {
+            const titleElement = document.querySelector('.fc-toolbar-title');
+            if (titleElement) {
+              titleElement.classList.add(styles.title); // SCSS 클래스 추가
+            }
+          }}
         />
       </div>
 

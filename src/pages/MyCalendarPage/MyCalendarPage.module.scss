@@ -1,34 +1,42 @@
 //Fonts
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
 
-//공통 스타일
+// 공통 스타일
 body {
   font-family: 'Noto Sans KR', sans-serif;
 }
 
-//컨테이너 스타일
+// 컨테이너 스타일
+/*
 .container {
-  border: 1px solid blue; //파란색 테두리
+  border: 1px solid blue;
 }
+*/
 
 //캘린더 스타일
 .calendar {
-  font-size: 0.9em; //전체 글씨 크기 줄이기
+  font-size: 0.9em;
+  width: 80%;
+  height: auto;
+  margin: 20px auto;
 }
 
-//날짜 셀 스타일
-.daycell {
-  padding: 4px; //셀 간격 줄이기
-}
-
-//주말 스타일
-.saturday, 
+//일요일과 토요일
 .sunday {
-  background-color: #EFFBFB !important; //하늘색 배경
-  color: black !important; //글씨 검정색
+  background-color: #EFFBFB !important;
+  color: black !important;
 }
 
-//제목 스타일
-.fc-toolbar h2 {
-  font-size: 1.2em !important; //날짜 글씨 크기 조정
+.saturday {
+  background-color: #EFFBFB !important;
+  color: black !important;
+}
+
+//오른쪽 상단 날짜글씨
+.title {
+  font-size: 1.3rem !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  color: black !important;
+  margin: 0 !important;
 }
