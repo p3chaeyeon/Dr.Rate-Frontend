@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AlertModal = () => {
+const AdminMainPage = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const AlertModal = () => {
     );
 };
 
-export default AlertModal;
+export default AdminMainPage;

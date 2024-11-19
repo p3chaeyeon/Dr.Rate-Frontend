@@ -1,3 +1,1 @@
-// src/components/MyNav/index.js
-import MyNav from './MyNav';
-export default MyNav;
+export { default } from './MyNav.jsx';
