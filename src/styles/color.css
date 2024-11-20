@@ -2,8 +2,9 @@
     --white: #fbfbfb;
     --black: #171717;
     --main1: #0068FF; /* 로고 파랑 */
-    --main2: #0085E4; /* HomePage 예금 box  */
-    --main3: #5C44F3; /* HomePage 적금 box  */
+    --main2: #407BFF;
+    --box1: #0085E4; /* HomePage 예금 box  */
+    --box2: #5C44F3; /* HomePage 적금 box  */
     --light-red: #FF4143;
     --side-nav: #15306D; /* 관리자 사이드 메뉴 배경 색 */
     --divider-border: #CCC; /* <header>, <nav> border-bottom 색상 */
