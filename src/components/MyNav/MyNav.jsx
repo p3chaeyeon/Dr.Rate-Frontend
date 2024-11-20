@@ -24,10 +24,10 @@ const MyNav = () => {
                     {isDropdownOpen && (
                         <ul className={styles.dropdownMenu}>
                             <li className={styles.dropdownItem} onClick={() => navigate(PATH.SAVINGS)}>
-                                예금
+                                예금 즐겨찾기
                             </li>
                             <li className={styles.dropdownItem} onClick={() => navigate(PATH.INSTALLMENT)}>
-                                적금
+                                적금 즐겨찾기
                             </li>
                         </ul>
                     )}
