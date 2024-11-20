@@ -94,43 +94,6 @@ body {
   pointer-events: none; /* 클릭 방지 */
 }
 
-/* 버튼 공통 스타일 */
-button-common {
-  background: none !important; /* 배경 제거 */
-  border: none !important; /* 테두리 제거 */
-  color: black !important; /* 텍스트 검정 */
-  font-size: 14px !important; /* 텍스트 크기 */
-  font-weight: bold !important; /* 텍스트 두께 */
-  padding: 0 !important; /* 여백 제거 */
-  box-shadow: none !important; /* 그림자 제거 */
-  cursor: pointer !important; /* 마우스 커서 포인터 */
-}
-
-/* 이전(<) 버튼 스타일 */
-button-prev {
-  font-size: 16px !important; /* 이전 버튼 크기 */
-  font-weight: bold !important; /* 두껍게 */
-}
-
-/* 다음(>) 버튼 스타일 */
-button-next {
-  font-size: 16px !important; /* 다음 버튼 크기 */
-  font-weight: bold !important; /* 두껍게 */
-}
-
-/* 오늘 버튼 스타일 */
-button-today {
-  color: black !important;
-  font-weight: bold !important;
-}
-
-/* 오늘 버튼 호버 효과 */
-button-today:hover {
-  transform: scale(1.1);
-  transition: transform 0.2s ease-in-out;
-}
-
-
 
 
 
