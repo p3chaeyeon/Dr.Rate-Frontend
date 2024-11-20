@@ -1,7 +1,7 @@
 /* src/App.css */
 
 #root {
-  width: 100%;
+  max-width: 1900px;
   margin: 0 auto;
   padding: 0;
 }
