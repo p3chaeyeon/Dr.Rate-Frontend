@@ -1,10 +1,10 @@
-import styles from './MyCalendarPage.module.scss';
-
 import React, { useState, useRef } from 'react';
-import FullCalendar from '@fullcalendar/react'; //React용 FullCalendar
-import dayGridPlugin from '@fullcalendar/daygrid'; //월간 보기
-import interactionPlugin from '@fullcalendar/interaction'; //날짜 클릭
-import Modal from 'react-modal'; //모달
+import FullCalendar from '@fullcalendar/react'; // React용 FullCalendar
+import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
+import interactionPlugin from '@fullcalendar/interaction'; // 날짜 클릭
+import Modal from 'react-modal'; // 모달
+
+import styles from './MyCalendarPage.module.scss';
 
 // 모달 초기 설정
 Modal.setAppElement('#root');
@@ -49,7 +49,7 @@ const MyCalendarPage = () => {
         const currentDay = startDate.getDate();
         startDate.setMonth(startDate.getMonth() + 1);
         if (startDate.getDate() !== currentDay) {
-          startDate.setDate(0); //말일로 설정
+          startDate.setDate(0); // 말일로 설정
         }
       }
 
@@ -77,9 +77,14 @@ const MyCalendarPage = () => {
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           headerToolbar={{
-            left: 'prev,next today',
+            left: 'prev,today,next',
             center: '',
             right: 'title',
+          }}
+          buttonText={{
+            today: '오늘', // 'Today'를 '오늘'로 변경
+            prev: '<', // 이전 버튼을 '<'로 표시
+            next: '>', // 다음 버튼을 '>'로 표시
           }}
           titleFormat={{ year: 'numeric', month: 'long' }}
           events={events}
@@ -90,24 +95,55 @@ const MyCalendarPage = () => {
               date.getFullYear() === today.getFullYear() &&
               date.getMonth() === today.getMonth() &&
               date.getDate() === today.getDate();
-            if (isToday) return styles.today; //오늘 날짜
+            if (isToday) return styles.today; // 오늘 날짜
             const day = date.getUTCDay();
-            if (day === 6) return styles.sunday; //일요일 
-            if (day === 5) return styles.saturday; //토요일 
+            if (day === 6) return styles.sunday; // 일요일
+            if (day === 5) return styles.saturday; // 토요일
           }}
           dayCellDidMount={(info) => {
             if (info.isToday) {
-              info.el.style.backgroundColor = 'transparent'; //노란 배경 제거
-              info.el.classList.add(styles.today); //커스텀 스타일 추가
+              info.el.style.backgroundColor = 'transparent'; // 노란 배경 제거
+              info.el.classList.add(styles.today); // 커스텀 스타일 추가
             }
-          }}        
+          }}
           dayCellContent={({ date }) => {
             return <span style={{ display: 'block', textAlign: 'center' }}>{date.getDate()}</span>;
           }}
           datesSet={() => {
             const titleElement = document.querySelector('.fc-toolbar-title');
             if (titleElement) {
-              titleElement.classList.add(styles.title); 
+              titleElement.classList.add(styles.title);
+            }
+
+            // 윗선 제거
+            const tableElement = document.querySelector('.fc-scrollgrid');
+            if (tableElement) {
+              tableElement.style.borderTop = 'none'; // <table>의 윗선 제거
+            }
+
+            // 버튼 스타일 수정
+            const prevButton = document.querySelector('.fc-prev-button');
+            if (prevButton) {
+              prevButton.style.backgroundColor = 'transparent'; // 배경 제거
+              prevButton.style.color = 'black'; // 글자 색상
+              prevButton.style.border = 'none'; // 테두리 제거
+              prevButton.style.boxShadow = 'none'; // 그림자 제거
+            }
+
+            const nextButton = document.querySelector('.fc-next-button');
+            if (nextButton) {
+              nextButton.style.backgroundColor = 'transparent'; // 배경 제거
+              nextButton.style.color = 'black'; // 글자 색상
+              nextButton.style.border = 'none'; // 테두리 제거
+              nextButton.style.boxShadow = 'none'; // 그림자 제거
+            }
+
+            const todayButton = document.querySelector('.fc-today-button');
+            if (todayButton) {
+              todayButton.style.backgroundColor = 'transparent'; // 배경 제거
+              todayButton.style.color = 'black'; // 글자 색상
+              todayButton.style.border = 'none'; // 테두리 제거
+              todayButton.style.boxShadow = 'none'; // 그림자 제거
             }
           }}
         />
@@ -117,8 +153,8 @@ const MyCalendarPage = () => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        className={styles.modalContent} //콘텐츠 스타일
-        overlayClassName={styles.modalOverlay} //오버레이 스타일
+        className={styles.modalContent} // 콘텐츠 스타일
+        overlayClassName={styles.modalOverlay} // 오버레이 스타일
       >
         <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>은행</label>
         <select
@@ -126,7 +162,9 @@ const MyCalendarPage = () => {
           onChange={(e) => setLogoUrl(e.target.value)}
           style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
         >
-          <option value="" disabled>은행 선택</option>
+          <option value="" disabled>
+            은행 선택
+          </option>
           <option value="국민은행">국민은행</option>
           <option value="신한은행">신한은행</option>
           <option value="하나은행">하나은행</option>
@@ -139,7 +177,9 @@ const MyCalendarPage = () => {
           onChange={(e) => setSavingName(e.target.value)}
           style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
         >
-          <option value="" disabled>적금명 선택</option>
+          <option value="" disabled>
+            적금명 선택
+          </option>
           <option value="행복적금">행복적금</option>
           <option value="희망적금">희망적금</option>
           <option value="안전적금">안전적금</option>
