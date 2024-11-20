@@ -3,6 +3,14 @@ import FullCalendar from '@fullcalendar/react'; // React용 FullCalendar
 import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
 import interactionPlugin from '@fullcalendar/interaction'; // 날짜 클릭
 import Modal from 'react-modal'; // 모달
+import kookminLogo from '/src/assets/bank/kookminLogo.png';
+import shinhanLogo from '/src/assets/bank/shinhanLogo.png';
+import hanaLogo from '/src/assets/bank/hanaLogo.png';
+import wooriLogo from '/src/assets/bank/wooriLogo.png';
+import kakaoLogo from '/src/assets/bank/kakaoLogo.png';
+import nonghyupLogo from '/src/assets/bank/nonghyupLogo.png';
+import tossLogo from '/src/assets/bank/tossLogo.png';
+
 
 import styles from './MyCalendarPage.module.scss';
 
@@ -20,6 +28,17 @@ const MyCalendarPage = () => {
 
   const calendarRef = useRef(null); // 캘린더 참조
 
+  // 은행 로고 URL 매핑
+  const bankLogos = {
+    국민은행: kookminLogo,
+    신한은행: shinhanLogo,
+    하나은행: hanaLogo,
+    우리은행: wooriLogo,
+    카카오뱅크: kakaoLogo,
+    농협은행: nonghyupLogo,
+    토스뱅크: tossLogo,
+  };  
+
   // 날짜 클릭 시 모달 열기
   const handleDateClick = (info) => {
     setSelectedDate(info.dateStr);
@@ -34,7 +53,7 @@ const MyCalendarPage = () => {
 
   // 새로운 이벤트 저장
   const saveEvent = () => {
-    if (savingName && amount && selectedDate && endDate) {
+    if (savingName && amount && selectedDate && endDate && logoUrl) {
       const startDate = new Date(selectedDate);
       const finalDate = new Date(endDate);
 
@@ -43,7 +62,10 @@ const MyCalendarPage = () => {
         newEvents.push({
           title: `${savingName} - ${amount}원`,
           date: startDate.toISOString().split('T')[0],
-          extendedProps: { logoUrl, amount },
+          extendedProps: { 
+            logoUrl: bankLogos[logoUrl], // 로고 URL 추가
+            amount,
+          },
         });
 
         const currentDay = startDate.getDate();
@@ -67,7 +89,6 @@ const MyCalendarPage = () => {
 
   return (
     <div className={styles.calendar}>
-      <h1>적금 달력</h1>
       <div
         className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} // 모달 열리면 흐림 효과
       >
@@ -101,11 +122,18 @@ const MyCalendarPage = () => {
             if (day === 5) return styles.saturday; // 토요일
           }}
           dayCellDidMount={(info) => {
+            info.el.style.height = '100px'; // 칸 높이 고정
             if (info.isToday) {
               info.el.style.backgroundColor = 'transparent'; // 노란 배경 제거
               info.el.classList.add(styles.today); // 커스텀 스타일 추가
             }
           }}
+          eventDidMount={(info) => {
+            //기본 파란 배경 제거
+            info.el.style.backgroundColor = 'transparent'; // 배경 제거
+            info.el.style.border = 'none'; // 테두리 제거
+            info.el.style.boxShadow = 'none'; // 그림자 제거
+          }}        
           dayCellContent={({ date }) => {
             return <span style={{ display: 'block', textAlign: 'center' }}>{date.getDate()}</span>;
           }}
@@ -146,6 +174,26 @@ const MyCalendarPage = () => {
               todayButton.style.boxShadow = 'none'; // 그림자 제거
             }
           }}
+          eventContent={(eventInfo) => {
+            const logo = eventInfo.event.extendedProps.logoUrl;
+            return (
+              <div className={styles.eventContainer}>
+                {logo && (
+                  <img
+                    src={logo}
+                    alt="Bank Logo"
+                    className={styles.eventLogo}
+                  />
+                )}
+                <div>
+                  <div className={styles.eventTitle}>{eventInfo.event.title.split(' - ')[0]}</div>
+                  <div className={styles.eventAmount}>
+                    {eventInfo.event.title.split(' - ')[1]}
+                  </div>
+                </div>
+              </div>
+            );
+          }}          
         />
       </div>
 
@@ -165,11 +213,11 @@ const MyCalendarPage = () => {
           <option value="" disabled>
             은행 선택
           </option>
-          <option value="국민은행">국민은행</option>
-          <option value="신한은행">신한은행</option>
-          <option value="하나은행">하나은행</option>
-          <option value="우리은행">우리은행</option>
-          <option value="카카오뱅크">카카오뱅크</option>
+          {Object.keys(bankLogos).map((bank) => (
+            <option key={bank} value={bank}>
+              {bank}
+            </option>
+          ))}
         </select>
         <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>적금명</label>
         <select
@@ -180,8 +228,8 @@ const MyCalendarPage = () => {
           <option value="" disabled>
             적금명 선택
           </option>
-          <option value="행복적금">행복적금</option>
-          <option value="희망적금">희망적금</option>
+          <option value="KB Dream 정기적금">행복적금</option>
+          <option value="하나 더블업 정기적금">희망적금</option>
           <option value="안전적금">안전적금</option>
         </select>
 
@@ -192,7 +240,6 @@ const MyCalendarPage = () => {
           onChange={(e) => setSelectedDate(e.target.value)}
           style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
         />
-
         <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>만기일</label>
         <input
           type="date"
@@ -200,7 +247,6 @@ const MyCalendarPage = () => {
           onChange={(e) => setEndDate(e.target.value)}
           style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
         />
-
         <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>금액</label>
         <input
           type="number"
@@ -208,7 +254,6 @@ const MyCalendarPage = () => {
           onChange={(e) => setAmount(e.target.value)}
           style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
         />
-
         <button
           onClick={saveEvent}
           style={{

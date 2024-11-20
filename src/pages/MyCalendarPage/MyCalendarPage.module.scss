@@ -16,9 +16,10 @@ body {
 //캘린더 스타일
 .calendar {
   font-size: 1em;
-  width: 90%;
+  width: 95%;
   height: auto;
   margin: 20px auto;
+  padding: 40px;
 }
 
 /* 오늘 날짜 스타일 */
@@ -93,6 +94,53 @@ body {
   filter: blur(3px); /* 흐림 효과 */
   pointer-events: none; /* 클릭 방지 */
 }
+
+/* 로고관련 */
+.eventContainer {
+  display: flex;
+  align-items: center;
+  background-color: #fbfbfb;
+  border: 2px solid #E1E1E1; 
+  border-radius: 8px; /* 모서리를 둥글게 */
+  padding: 15px;
+  box-shadow: 0 3px 7px rgba(150, 150, 150, 1);
+  overflow: hidden; /* 박스 밖으로 넘치는 내용을 숨김 */
+}
+
+/* 호버 상태 */
+.eventContainer:hover {
+  width: 230px; /* 호버 시 넓이를 늘림 */
+}
+
+.eventLogo {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  border-radius: 50%; /* 로고를 동그랗게 */
+}
+
+.eventTitle {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #171717;
+  white-space: nowrap; /* 한 줄로 유지 */
+}
+
+.eventAmount {
+  font-size: 0.8rem;
+  color: #666;
+  white-space: nowrap;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
