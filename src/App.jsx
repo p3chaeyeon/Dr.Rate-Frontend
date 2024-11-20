@@ -24,6 +24,7 @@ function App() {
           {/* 관리자 페이지 라우트 */}
           <Route path="/admin" element={<AdminLayout />}>
               <Route path={PATH.ADMIN_MAIN} element={<PageRoutes.AdminMainPage />} />
+              <Route path={PATH.ADMIN_INQUIRE} element={<PageRoutes.AdminInquirePage />} />
           </Route>
       </Routes>
 
