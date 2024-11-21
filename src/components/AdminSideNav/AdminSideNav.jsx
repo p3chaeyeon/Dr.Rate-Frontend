@@ -9,7 +9,7 @@ const AdminSideNav = () => {
 
     return (
         <div className={ styles.adminNav }>
-            <div className={ styles.adminLogoDiv }  onClick={() => navigate(PATH.ADMIN_MAIN)}>
+            <div className={ styles.adminLogoDiv } onClick={() => navigate(PATH.ADMIN_MAIN)}>
                 <img src={adminLogo} alt="admin logo" className={styles.adminLogo} />
             </div>
 
