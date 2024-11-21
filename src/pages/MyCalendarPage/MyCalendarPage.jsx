@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import FullCalendar from '@fullcalendar/react'; // React용 FullCalendar
-import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
-import interactionPlugin from '@fullcalendar/interaction'; // 날짜 클릭
-import Modal from 'react-modal'; // 모달
+import FullCalendar from '@fullcalendar/react'; //React용 FullCalendar
+import dayGridPlugin from '@fullcalendar/daygrid'; //월간 보기
+import interactionPlugin from '@fullcalendar/interaction'; //날짜 클릭
+import Modal from 'react-modal'; //모달
 import kookminLogo from '/src/assets/bank/kookminLogo.png';
 import shinhanLogo from '/src/assets/bank/shinhanLogo.png';
 import hanaLogo from '/src/assets/bank/hanaLogo.png';
@@ -50,7 +50,7 @@ const MyCalendarPage = () => {
     calendarApi.today();
   };
 
-  // 새로운 이벤트 저장
+  // 이벤트 저장
   const saveEvent = () => {
     if (savingName && amount && selectedDate && endDate && logoUrl) {
       const startDate = new Date(selectedDate);
@@ -73,8 +73,10 @@ const MyCalendarPage = () => {
           startDate.setDate(0); // 말일로 설정
         }
       }
-
-      setEvents([...events, ...newEvents]);
+      setEvents((prevEvents) => {
+        const updatedEvents = [...prevEvents, ...newEvents];
+        return updatedEvents.sort((a, b) => new Date(a.date) - new Date(b.date)); // 날짜 순서로 정렬
+      });      
       setModalIsOpen(false);
       setSavingName('');
       setAmount('');
@@ -89,31 +91,32 @@ const MyCalendarPage = () => {
   return (
     <div className={styles.calendar}>
       <div
-        className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} // 모달 열리면 흐림 효과
+        className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} //흐림효과 추가
       >
         <FullCalendar
           ref={calendarRef}
-          locale="ko"
-          plugins={[dayGridPlugin, interactionPlugin]}
+          locale="ko" //한글
+          plugins={[dayGridPlugin, interactionPlugin]} //월간보기, 날짜클릭
           initialView="dayGridMonth"
+          eventOrder="" //이벤트 순서
           headerToolbar={{
-            left: 'prev,today,next',
+            left: 'title',
             center: '',
-            right: 'title',
+            right: 'prev,today,next',
           }}
           buttonText={{
-            today: '오늘', // 'Today'를 '오늘'로 변경
-            prev: '<', // 이전 버튼을 '<'로 표시
-            next: '>', // 다음 버튼을 '>'로 표시
+            today: '오늘', 
+            prev: '<', //이전 버튼을 '<'로 표시
+            next: '>', //다음 버튼을 '>'로 표시
           }}
           titleFormat={{ year: 'numeric', month: 'long' }}
           events={events}
-          contentHeight={810} // 주 고정된 높이
+          contentHeight={1500} // 달력 주 고정된 높이
           dateClick={handleDateClick}
           dayCellClassNames={({ date }) => {
             const today = new Date();
             const isToday =
-              date.getFullYear() === today.getFullYear() &&
+              date.getFullYear() === today.getFullYear() && //일치여부
               date.getMonth() === today.getMonth() &&
               date.getDate() === today.getDate();
             if (isToday) return styles.today; // 오늘 날짜
@@ -131,7 +134,7 @@ const MyCalendarPage = () => {
             info.el.classList.add(styles.eventStyle); // 이벤트 스타일
           }}
           dayCellContent={({ date }) => {
-            return <span>{date.getDate()}</span>;
+            return <span>{date.getDate()}</span>; //일 표시
           }}
           datesSet={() => {
             const frames = document.querySelectorAll('.fc-daygrid-day-frame');
@@ -141,7 +144,7 @@ const MyCalendarPage = () => {
 
             const titleElement = document.querySelector('.fc-toolbar-title');
             if (titleElement) {
-              titleElement.classList.add(styles.title);
+              titleElement.classList.add(styles.title); //날짜css
             }
 
             const tableElement = document.querySelector('.fc-scrollgrid');
@@ -151,17 +154,17 @@ const MyCalendarPage = () => {
 
             const prevButton = document.querySelector('.fc-prev-button');
             if (prevButton) {
-              prevButton.classList.add(styles.transparentButton);
+              prevButton.classList.add(styles.transparentButton); //이전버튼
             }
 
             const nextButton = document.querySelector('.fc-next-button');
             if (nextButton) {
-              nextButton.classList.add(styles.transparentButton);
+              nextButton.classList.add(styles.transparentButton); //다음버튼
             }
 
             const todayButton = document.querySelector('.fc-today-button');
             if (todayButton) {
-              todayButton.classList.add(styles.transparentButton);
+              todayButton.classList.add(styles.transparentButton); //오늘버튼
             }
           }}
           eventContent={(eventInfo) => {
@@ -176,7 +179,14 @@ const MyCalendarPage = () => {
                   />
                 )}
                 <div>
-                  <div className={styles.eventTitle}>{eventInfo.event.title.split(' - ')[0]}</div>
+                  <div className={styles.eventTitleContainer}>
+                    <div className={styles.eventTitle}>
+                      {eventInfo.event.title.split(' - ')[0]}
+                    </div>
+                    <div className={styles.tooltip}>
+                      {eventInfo.event.title.split(' - ')[0]}
+                    </div>
+                  </div>
                   <div className={styles.eventAmount}>
                     {eventInfo.event.title.split(' - ')[1]}
                   </div>
@@ -191,8 +201,8 @@ const MyCalendarPage = () => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        className={styles.modalContent} // 콘텐츠 스타일
-        overlayClassName={styles.modalOverlay} // 오버레이 스타일
+        className={styles.modalContent} //모달 스타일
+        overlayClassName={styles.modalOverlay} //배경
       >
         <label className={styles.modalLabel}>은행</label>
         <select
@@ -204,7 +214,7 @@ const MyCalendarPage = () => {
             은행 선택
           </option>
           {Object.keys(bankLogos).map((bank) => (
-            <option key={bank} value={bank}>
+            <option key={bank} value={bank}> 
               {bank}
             </option>
           ))}
