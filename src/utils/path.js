@@ -14,7 +14,8 @@ export const PATH = {
     PRODUCT_DETAIL: '/products/detail',   // 상품페이지; 상품 상세페이지
 
     /* 관리자 경로 */
-    ADMIN_MAIN: '/admin/adminMain'
+    ADMIN_MAIN: '/admin/adminMain',
+    ADMIN_INQUIRE : '/admin/adminInquire'
 
     // SERVER: "https://api.kookmin-timebank.com"
     
