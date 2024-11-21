@@ -36,7 +36,7 @@ const MyCalendarPage = () => {
     카카오뱅크: kakaoLogo,
     농협은행: nonghyupLogo,
     토스뱅크: tossLogo,
-  };  
+  };
 
   // 날짜 클릭 시 모달 열기
   const handleDateClick = (info) => {
@@ -61,7 +61,7 @@ const MyCalendarPage = () => {
         newEvents.push({
           title: `${savingName} - ${amount}원`,
           date: startDate.toISOString().split('T')[0],
-          extendedProps: { 
+          extendedProps: {
             logoUrl: bankLogos[logoUrl], // 로고 URL 추가
             amount,
           },
@@ -108,7 +108,7 @@ const MyCalendarPage = () => {
           }}
           titleFormat={{ year: 'numeric', month: 'long' }}
           events={events}
-          contentHeight={810} //주 고정된 높이 
+          contentHeight={810} // 주 고정된 높이
           dateClick={handleDateClick}
           dayCellClassNames={({ date }) => {
             const today = new Date();
@@ -124,19 +124,19 @@ const MyCalendarPage = () => {
           dayCellDidMount={(info) => {
             info.el.classList.add(styles.mycellstyle);
             if (info.isToday) {
-              info.el.classList.add(styles.today); //오늘날짜
+              info.el.classList.add(styles.today); // 오늘 날짜
             }
           }}
           eventDidMount={(info) => {
-            info.el.classList.add(styles.eventStyle); //이벤트 스타일
-          }}        
+            info.el.classList.add(styles.eventStyle); // 이벤트 스타일
+          }}
           dayCellContent={({ date }) => {
             return <span>{date.getDate()}</span>;
           }}
           datesSet={() => {
             const frames = document.querySelectorAll('.fc-daygrid-day-frame');
             frames.forEach((frame) => {
-              frame.classList.add(styles.expandedPadding); // 각 셀크기
+              frame.classList.add(styles.expandedPadding); // 각 셀 크기
             });
 
             const titleElement = document.querySelector('.fc-toolbar-title');
@@ -144,13 +144,11 @@ const MyCalendarPage = () => {
               titleElement.classList.add(styles.title);
             }
 
-            // 윗선 제거
             const tableElement = document.querySelector('.fc-scrollgrid');
             if (tableElement) {
-              tableElement.classList.add(styles.noBorderTop); 
+              tableElement.classList.add(styles.noBorderTop); // 윗선 제거
             }
 
-            // 버튼 스타일 수정
             const prevButton = document.querySelector('.fc-prev-button');
             if (prevButton) {
               prevButton.classList.add(styles.transparentButton);
@@ -185,7 +183,7 @@ const MyCalendarPage = () => {
                 </div>
               </div>
             );
-          }}          
+          }}
         />
       </div>
 
