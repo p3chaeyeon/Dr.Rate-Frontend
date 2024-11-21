@@ -16,15 +16,26 @@ body {
 //캘린더 스타일
 .calendar {
   font-size: 1em;
-  width: 95%;
+  width: 97%;
   height: auto;
   margin: 20px auto;
   padding: 40px;
 }
 
+/* 윗선 제거 */
+.noBorderTop {
+  border-top: none !important; /* 윗선 제거 */
+}
+
+/* 각 셀 크기 */
+.expandedPadding {
+  height: 120px; /* 높이를 고정 */
+}
+
 /* 오늘 날짜 스타일 */
 .today {
   position: relative;
+  background-color: transparent !important; //기존 배경 삭제
 }
 
 .today::after {
@@ -89,26 +100,71 @@ body {
   z-index: 1000; /* 위에표시 */
 }
 
+.modalLabel {
+  display: block;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.modalSelect,
+.modalInput {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.modalButton {
+  padding: 10px;
+  width: 100%;
+  background-color: #0085e4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+
+  &:hover {
+    background-color: #006bbd; /* 버튼 호버 색상 */
+  }
+}
+
 /* 달력 흐리게 처리 */
 .calendarBlur {
   filter: blur(3px); /* 흐림 효과 */
   pointer-events: none; /* 클릭 방지 */
 }
 
-/* 로고관련 */
+/* 이벤트 스타일 */
+.eventStyle {
+  background-color: transparent !important; /* 기본 파란 배경 제거 */
+  border: none !important; /* 테두리 제거 */
+  box-shadow: none !important; /* 그림자 제거 */
+}
+
+/* 이벤트관련 */
 .eventContainer {
   display: flex;
   align-items: center;
+  justify-content: flex-start; /* 이벤트 내용 왼쪽 정렬 */
   background-color: #fbfbfb;
-  border: 2px solid #E1E1E1; 
+  border: 2px solid #E1E1E1;
   border-radius: 8px; /* 모서리를 둥글게 */
   padding: 15px;
   box-shadow: 0 3px 7px rgba(150, 150, 150, 1);
   overflow: hidden; /* 박스 밖으로 넘치는 내용을 숨김 */
+  position: relative; /* z-index를 적용하기 위해 position 설정 */
+  z-index: 1; /* 기본 z-index */
 }
 
 /* 호버 상태 */
 .eventContainer:hover {
+  z-index: 100; /* 호버 시 z-index를 높게 설정 */
   width: 230px; /* 호버 시 넓이를 늘림 */
 }
 
@@ -131,6 +187,26 @@ body {
   color: #666;
   white-space: nowrap;
 }
+
+/* 버튼 */
+.transparentButton {
+  background-color: transparent !important; /* 배경 제거 */
+  color: black !important; /* 글자 색상 */
+  border: none !important; /* 테두리 제거 */
+  box-shadow: none !important; /* 효과제거 */
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

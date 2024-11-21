@@ -11,7 +11,6 @@ import kakaoLogo from '/src/assets/bank/kakaoLogo.png';
 import nonghyupLogo from '/src/assets/bank/nonghyupLogo.png';
 import tossLogo from '/src/assets/bank/tossLogo.png';
 
-
 import styles from './MyCalendarPage.module.scss';
 
 // 모달 초기 설정
@@ -109,6 +108,7 @@ const MyCalendarPage = () => {
           }}
           titleFormat={{ year: 'numeric', month: 'long' }}
           events={events}
+          contentHeight={810} //주 고정된 높이 
           dateClick={handleDateClick}
           dayCellClassNames={({ date }) => {
             const today = new Date();
@@ -122,22 +122,23 @@ const MyCalendarPage = () => {
             if (day === 5) return styles.saturday; // 토요일
           }}
           dayCellDidMount={(info) => {
-            info.el.style.height = '100px'; // 칸 높이 고정
+            info.el.classList.add(styles.mycellstyle);
             if (info.isToday) {
-              info.el.style.backgroundColor = 'transparent'; // 노란 배경 제거
-              info.el.classList.add(styles.today); // 커스텀 스타일 추가
+              info.el.classList.add(styles.today); //오늘날짜
             }
           }}
           eventDidMount={(info) => {
-            //기본 파란 배경 제거
-            info.el.style.backgroundColor = 'transparent'; // 배경 제거
-            info.el.style.border = 'none'; // 테두리 제거
-            info.el.style.boxShadow = 'none'; // 그림자 제거
+            info.el.classList.add(styles.eventStyle); //이벤트 스타일
           }}        
           dayCellContent={({ date }) => {
-            return <span style={{ display: 'block', textAlign: 'center' }}>{date.getDate()}</span>;
+            return <span>{date.getDate()}</span>;
           }}
           datesSet={() => {
+            const frames = document.querySelectorAll('.fc-daygrid-day-frame');
+            frames.forEach((frame) => {
+              frame.classList.add(styles.expandedPadding); // 각 셀크기
+            });
+
             const titleElement = document.querySelector('.fc-toolbar-title');
             if (titleElement) {
               titleElement.classList.add(styles.title);
@@ -146,32 +147,23 @@ const MyCalendarPage = () => {
             // 윗선 제거
             const tableElement = document.querySelector('.fc-scrollgrid');
             if (tableElement) {
-              tableElement.style.borderTop = 'none'; // <table>의 윗선 제거
+              tableElement.classList.add(styles.noBorderTop); 
             }
 
             // 버튼 스타일 수정
             const prevButton = document.querySelector('.fc-prev-button');
             if (prevButton) {
-              prevButton.style.backgroundColor = 'transparent'; // 배경 제거
-              prevButton.style.color = 'black'; // 글자 색상
-              prevButton.style.border = 'none'; // 테두리 제거
-              prevButton.style.boxShadow = 'none'; // 그림자 제거
+              prevButton.classList.add(styles.transparentButton);
             }
 
             const nextButton = document.querySelector('.fc-next-button');
             if (nextButton) {
-              nextButton.style.backgroundColor = 'transparent'; // 배경 제거
-              nextButton.style.color = 'black'; // 글자 색상
-              nextButton.style.border = 'none'; // 테두리 제거
-              nextButton.style.boxShadow = 'none'; // 그림자 제거
+              nextButton.classList.add(styles.transparentButton);
             }
 
             const todayButton = document.querySelector('.fc-today-button');
             if (todayButton) {
-              todayButton.style.backgroundColor = 'transparent'; // 배경 제거
-              todayButton.style.color = 'black'; // 글자 색상
-              todayButton.style.border = 'none'; // 테두리 제거
-              todayButton.style.boxShadow = 'none'; // 그림자 제거
+              todayButton.classList.add(styles.transparentButton);
             }
           }}
           eventContent={(eventInfo) => {
@@ -204,11 +196,11 @@ const MyCalendarPage = () => {
         className={styles.modalContent} // 콘텐츠 스타일
         overlayClassName={styles.modalOverlay} // 오버레이 스타일
       >
-        <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>은행</label>
+        <label className={styles.modalLabel}>은행</label>
         <select
           value={logoUrl}
           onChange={(e) => setLogoUrl(e.target.value)}
-          style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
+          className={styles.modalSelect}
         >
           <option value="" disabled>
             은행 선택
@@ -219,52 +211,45 @@ const MyCalendarPage = () => {
             </option>
           ))}
         </select>
-        <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>적금명</label>
+        <label className={styles.modalLabel}>적금명</label>
         <select
           value={savingName}
           onChange={(e) => setSavingName(e.target.value)}
-          style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
+          className={styles.modalSelect}
         >
           <option value="" disabled>
             적금명 선택
           </option>
-          <option value="KB Dream 정기적금">행복적금</option>
-          <option value="하나 더블업 정기적금">희망적금</option>
+          <option value="KB Dream 정기적금">KB Dream 정기적금</option>
+          <option value="하나 더블업 정기적금">하나 더블업 정기적금</option>
           <option value="안전적금">안전적금</option>
+          <option value="행복적금">행복적금</option>
+          <option value="희망적금">희망적금</option>
+          <option value="긴글자용테스트입니다용">긴글자용테스트입니다용</option>
         </select>
 
-        <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>시작 날짜</label>
+        <label className={styles.modalLabel}>시작 날짜</label>
         <input
           type="date"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
-          style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
+          className={styles.modalInput}
         />
-        <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>만기일</label>
+        <label className={styles.modalLabel}>만기일</label>
         <input
           type="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-          style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
+          className={styles.modalInput}
         />
-        <label style={{ display: 'block', marginBottom: '10px', textAlign: 'left' }}>금액</label>
+        <label className={styles.modalLabel}>금액</label>
         <input
           type="number"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
-          style={{ marginBottom: '10px', padding: '8px', width: '100%' }}
+          className={styles.modalInput}
         />
-        <button
-          onClick={saveEvent}
-          style={{
-            padding: '10px',
-            width: '100%',
-            backgroundColor: '#0085E4',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-          }}
-        >
+        <button onClick={saveEvent} className={styles.modalButton}>
           저장
         </button>
       </Modal>
