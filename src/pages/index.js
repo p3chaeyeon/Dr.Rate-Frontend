@@ -8,7 +8,9 @@ import MyEditPage from './MyEditPage';
 import MyWithdrawPage from './MyWithdrawPage';
 import MyCalendarPage from './MyCalendarPage';
 import AdminMainPage from './AdminMainPage';
+import ProductDetailPage from './ProductDetailPage/ProductDetailPage';
 import AdminInquirePage from './AdminInquirePage';
+
 
 // 각 페이지 컴포넌트를 PageRoutes 객체에 모아 내보내기
 const PageRoutes = {
@@ -21,6 +23,8 @@ const PageRoutes = {
     MyEditPage,
     MyWithdrawPage,
     MyCalendarPage,
+
+    ProductDetailPage,
 
     // 관리자 페이지 컴포넌트
     AdminMainPage,

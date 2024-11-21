@@ -16,7 +16,7 @@ const Header = () => {
             </div>
             <nav className={styles.mainNav} >
                 <ul className={styles.mainMenuList}>
-                    <li className={styles.mainMenuItem}>
+                    <li className={styles.mainMenuItem} onClick={() => navigate(PATH.PRODUCT_DETAIL)}>
                         예금
                     </li>
                     <li className={styles.mainMenuItem}>
