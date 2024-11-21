@@ -16,7 +16,7 @@ body {
 //캘린더 스타일
 .calendar {
   font-size: 1em;
-  width: 100%;
+  width: 97%;
   height: auto;
   margin: 20px auto;
   padding: 40px;
@@ -40,9 +40,9 @@ body {
 
 .today::after {
   content: ''; /* 동그라미 생성 */
-  background-color: var(--light-red); 
-  width: 26px;
-  height: 26px;
+  background-color: var(--red1); 
+  width: 25px;
+  height: 25px;
   border-radius: 50%; /* 원 모양 */
   position: absolute;
   top: 5px; /* 셀 안에서 위쪽 간격 */
@@ -51,7 +51,7 @@ body {
 }
 
 .today span {
-  color: white !important; /* 오늘 날짜 숫자 흰색 */
+  color: var(--white) !important; /* 오늘 날짜 숫자 흰색 */
   position: relative;
   z-index: 2; /* 동그라미 위에 숫자 표시 */
 }
@@ -70,7 +70,7 @@ body {
   font-size: 1.2rem !important;
   font-weight: 500;
   text-align: center;
-  color: var(--black);
+  color: black;
   margin: 0;
 }
 
@@ -97,11 +97,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100; /* 위에표시 */
+  z-index: 1000; /* 위에표시 */
 }
 
 .modalLabel {
-  display: block; //한줄
+  display: block;
   margin-bottom: 10px;
   text-align: left;
   font-size: 14px;
@@ -208,6 +208,7 @@ body {
   color: var(--black);
   white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
   max-width: 150px;
   cursor: pointer;
 }
@@ -234,48 +235,3 @@ body {
   top: 120%; /* 아래로 이동 */
   transition: all 0.3s ease; 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
