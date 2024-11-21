@@ -3,10 +3,19 @@
     height: 100%;
     background-color: var(--side-nav);
 
-    .adminLogo {
+    .adminLogoDiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         height: 8%;
         border-bottom: 1px solid var(--divider-border);
+        
+        img {
+            object-fit: contain;
+            max-width: 200px;
+            cursor: pointer;
+        }
     }
 
     .adminMenu {
