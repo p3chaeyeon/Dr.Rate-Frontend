@@ -1,0 +1,173 @@
+.serviceDiv{
+    margin-top: 200px;
+    width: 100%;
+    border: 2px solid #407BFF;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+
+    .serviceTop{
+        width: 100%; height: 50px; line-height: 45px;
+        border-bottom: 2px solid #407BFF;
+        padding: 0 20px;
+        cursor: pointer;
+    
+        .serviceTwo{
+            float: right;
+            color: var(--font2);
+        }
+    }
+    .serviceTitle{
+        border-bottom: 2px solid #407BFF;
+        padding: 10px 20px;
+
+        .serviceTwo{
+            float: right;
+            color: var(--font2);
+        }
+    }
+
+    .serviceInput{
+        margin-top: 100px;
+        font-size: 1.2em;
+        text-align: center;
+
+        .serviceMonthTitle{
+            margin-right: 15px;
+        }
+
+        .serviceMonthTitleInput{
+            margin-left: 15px;
+
+            .inputType{
+                width: 250px;
+                padding: 5px 10px;
+                border: 1px solid var(--divider-border);
+                outline: none;
+            }
+
+            .inputType:focus{
+                border:1px solid #407BFF;
+                transition: 0.4s;
+                color: #407BFF;
+            }
+
+            input[type="number"]::-webkit-outer-spin-button,
+            input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+            }
+
+            input[type="number"] {
+            -moz-appearance: textfield; /* Firefox에서 spin 버튼을 숨기기 */
+            }
+        }
+
+        .midTitle{
+            margin-top: 50px;
+            font-size: 0.8em;
+            color: var(--font2);
+        }
+
+        .totalTitle{
+            margin: 30px 0 100px 0;
+
+            .monthM{
+                padding: 0 10px;
+                font-size: 1.1em;
+                font-weight: 700;
+            }
+
+            .serviceMonthTotal{
+                margin-left: 10px;
+                font-size: 1.2em;
+                font-weight: 700;
+                color: var(--light-red);
+            }
+        }
+    }
+
+    .scpl_rate_title{
+        font-size: 1.2em;
+        margin: 0 50px;
+
+        .scpl_total_rate{
+            float: right;
+            font-weight: 700;
+            color:  var(--light-red);
+        }
+
+        .toggle_ul {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        
+            li {
+                display: flex;
+                justify-content: space-between; /* 양쪽 끝으로 공간 분배 */
+                align-items: center;
+                padding: 20px;
+                background: #407BFF;
+                border-bottom: 2px solid var(--white);
+                font-size: 16px;
+            }
+        
+            span {
+                font-size: 17px;
+                color: var(--white);
+            }
+        
+            /* '조건'은 왼쪽에 위치 */
+            span:nth-child(1) {
+                flex: 1; /* 왼쪽 공간을 차지 */
+            }
+        
+            /* '1%'는 체크박스와 같은 줄에 위치 */
+            span:nth-child(2) {
+                margin-right: 20px; /* 오른쪽 여백 */
+            }
+        
+            span:nth-child(3) {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        
+            /* 숨겨진 체크박스 */
+            .toggleBtn {
+                display: none;
+            }
+        
+            label {
+                cursor: pointer;
+                width: 60px;
+                height: 30px;
+                background-color: var(--font4);
+                border-radius: 50px;
+                position: relative;
+                transition: background-color 0.3s ease-in-out;
+            }
+        
+            label::after {
+                content: '';
+                width: 24px;
+                height: 24px;
+                background-color: var(--white);
+                position: absolute;
+                border-radius: 50%;
+                top: 3px;
+                left: 3px;
+                transition: left 0.3s ease-in-out;
+            }
+        
+            .toggleBtn:checked + label {
+                background-color: var(--neon-green); /* 초록색 상태 */
+            }
+        
+            .toggleBtn:checked + label::after {
+                left: calc(100% - 27px); /* 오른쪽으로 슬라이드 */
+            }
+        }
+    }
+
+}

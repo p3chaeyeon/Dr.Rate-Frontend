@@ -11,6 +11,7 @@ export const PATH = {
     MY_WITHDRAW: '/myWithdraw',         // 마이페이지; 회원 탈퇴
     MY_CALENDAR: '/myCalendar',         // 마이페이지; 나의 적금 달력
 
+    PRODUCT_DETAIL: '/products/detail',   // 상품페이지; 상품 상세페이지
 
     /* 관리자 경로 */
     ADMIN_MAIN: '/admin/adminMain'
