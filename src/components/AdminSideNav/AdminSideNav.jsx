@@ -13,11 +13,11 @@ const AdminSideNav = () => {
                 <img src={adminLogo} alt="admin logo" className={styles.adminLogo} />
             </div>
 
-            <div className={ styles.adminMenu }>
+            <div className={ styles.adminMenuDiv }>
                 {/* 여기에 관리자 메뉴 */}
             </div>
 
-            <div className={ styles.userNavigate } onClick={() => navigate(PATH.HOME)}>
+            <div className={ styles.userNavigateDiv } onClick={() => navigate(PATH.HOME)}>
                 사용자 페이지 이동 &gt;
             </div>
 
