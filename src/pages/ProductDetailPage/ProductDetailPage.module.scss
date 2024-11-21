@@ -1,0 +1,105 @@
+.title{
+    font-size: 1.2em;
+    padding: 20px 0;
+    border-bottom: 2px solid var(--black);
+}
+
+.topDiv{
+    padding: 100px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 요소들 사이에 간격을 넣어줌 */
+
+    .image{
+        width: 100px; height: 100px;
+        border: 1px solid var(--divider-border);
+        border-radius: 50px;
+        float: left;
+    }
+
+    .name{
+        margin-inline-start: 40px;
+        line-height: 40px;
+
+        .nameOne{
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .nameTwo{
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .nameThree{
+            font-size: 1.0em;
+            margin-top: 20px;
+            width: 160px; height: 30px; line-height: 30px;
+            text-align: center;
+            background-color: var(--font2);
+            color: var(--white);
+        }
+    }
+
+    .rate{
+        width: 70%;
+        text-align: right;
+
+        .rateOne{
+            font-size: 1.7em;
+            font-weight: 700;
+            color: var(--light-red);
+        }
+        .rateTwo{
+            margin-top: 10px;
+        }
+    }
+}
+
+.btnDiv{
+    text-align: right;
+    float: right;
+
+    .intobtn{
+        float: left;
+    }
+
+    .intobtn, .gotoHomePage{
+        margin: 0 10px;
+        width: 156px; height: 53px;
+        background: #407BFF;
+        border: 0;
+        color: var(--white);
+
+    }
+
+    .intobtn:hover, .gotoHomePage:hover{
+        background: var(--main1);;
+    }
+}
+
+.serviceDiv{
+    clear: both;
+    margin-top: 200px;
+    width: 100%; height: 50px; line-height: 45px;
+    border: 2px solid #407BFF;
+    border-radius: 10px;
+    padding: 0 20px;
+    cursor: pointer;
+
+    .serviceTwo{
+        float: right;
+        color: var(--font2);
+    }
+
+}
+
+.serviceDiv.open{
+    background-color: #407BFF;
+    color: var(--white);
+}
+
+.detailDiv{
+    margin-top: 50px;
+    height: 500px;
+    border-top: 1px solid var(--black);
+}

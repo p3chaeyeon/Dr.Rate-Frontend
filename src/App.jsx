@@ -19,11 +19,14 @@ function App() {
               <Route path={PATH.MY_EDIT} element={<PageRoutes.MyEditPage />} />
               <Route path={PATH.MY_WITHDRAW} element={<PageRoutes.MyWithdrawPage />} />
               <Route path={PATH.MY_CALENDAR} element={<PageRoutes.MyCalendarPage />} />
+
+              <Route path={PATH.PRODUCT_DETAIL} element={<PageRoutes.ProductDetailPage />} />
           </Route>
 
           {/* 관리자 페이지 라우트 */}
           <Route path="/admin" element={<AdminLayout />}>
               <Route path={PATH.ADMIN_MAIN} element={<PageRoutes.AdminMainPage />} />
+              <Route path={PATH.ADMIN_INQUIRE} element={<PageRoutes.AdminInquirePage />} />
           </Route>
       </Routes>
 
