@@ -12,7 +12,7 @@ const Header = () => {
     return (
         <header>
             <div className={styles.logoDiv} onClick={() => navigate(PATH.HOME)}>
-                <img src={headerLogo} alt="Down arrow" className={styles.headerLogo} />
+                <img src={headerLogo} alt="header logo" className={styles.headerLogo} />
             </div>
             <nav className={styles.mainNav} >
                 <ul className={styles.mainMenuList}>
@@ -35,7 +35,7 @@ const Header = () => {
                     <li className={styles.userMenuItem}>
                         <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
                     </li>                    
-                    <li className={styles.userMenuItem}  onClick={() => navigate(PATH.MY_SAVINGS)}>
+                    <li className={styles.userMenuItem}  onClick={() => navigate(PATH.MY_DEPOSIT)}>
                         마이페이지{/* 로그인 */}
                     </li>
                     <li className={styles.userMenuItem}>

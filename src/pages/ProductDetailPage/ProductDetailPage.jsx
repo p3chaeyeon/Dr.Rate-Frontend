@@ -3,12 +3,13 @@ import styles from './ProductDetailPage.module.scss';
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { PATH } from "src/utils/path";
 
 const ProductDetailPage = () => {
     const id = 4;
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/product/getOneProduct/${id}`)
+        axios.get(`${PATH.SERVER}/product/getOneProduct/${id}`)
             .then((res) => {
                 setTest(res.data)
                 console.log(res.data)
