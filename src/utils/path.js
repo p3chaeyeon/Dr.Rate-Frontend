@@ -4,8 +4,8 @@
 export const PATH = {
     /* 사용자 경로 */
     HOME: '/',
-    MY_SAVINGS: '/mySavings',           // 마이페이지; 예금 즐겨찾기
-    MY_RECURRING: '/myRecurring',       // 마이페이지; 적금 즐겨찾기
+    MY_DEPOSIT: '/myDeposit',           // 마이페이지; 예금 즐겨찾기
+    MY_INSTALLMENT: '/myInstallment',       // 마이페이지; 적금 즐겨찾기
     MY: '/my',                          // 마이페이지; 회원 정보 (조회)
     MY_EDIT: '/myEdit',                 // 마이페이지; 회원 정보 수정
     MY_WITHDRAW: '/myWithdraw',         // 마이페이지; 회원 탈퇴
@@ -13,11 +13,20 @@ export const PATH = {
 
     PRODUCT_DETAIL: '/products/detail',   // 상품페이지; 상품 상세페이지
 
+
+
+
     /* 관리자 경로 */
     ADMIN_MAIN: '/admin/adminMain',
-    ADMIN_INQUIRE : '/admin/adminInquire'
+    ADMIN_INQUIRE : '/admin/adminInquire',
 
-    // SERVER: "https://api.kookmin-timebank.com"
+    
+    
+    
+    
+    
+    
+    SERVER: 'http://localhost:8080', // 배포 후 여기만 수정
     
 };
 
