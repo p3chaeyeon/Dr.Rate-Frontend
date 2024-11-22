@@ -10,6 +10,10 @@ function MyDepositPage() {
 
             <section>
                 <h1>예금 즐겨찾기 페이지</h1>
+                <span className={styles.heartIcon}>&hearts;</span>
+                <div className={styles.searchDiv}>
+                    <input type="checkbox" /> <button>삭제</button>
+                </div>
                 <h3>Test 문단: 예금 금리 상승, 소비자 유치 경쟁 치열</h3>
                 <p>
                     최근 은행들이 예금 금리를 잇달아 인상하며 소비자 유치 경쟁이 치열해지고 있다. 

@@ -1,0 +1,23 @@
+.heartIcon {
+    color: var(--red2); 
+    font-size: 26px;
+}
+
+.searchDiv{
+    // border: 1px solid blue;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+
+    input[type="checkbox"] {
+        transform: scale(1.4);
+        margin-right: 20px;
+    }
+
+     button{
+        font-size: 15px;
+        height: 40px;
+     }
+
+}
