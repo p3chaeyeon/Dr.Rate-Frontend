@@ -1,8 +1,10 @@
-import React, { useState, useRef } from 'react';
-import FullCalendar from '@fullcalendar/react'; //React용 FullCalendar
-import dayGridPlugin from '@fullcalendar/daygrid'; //월간 보기
-import interactionPlugin from '@fullcalendar/interaction'; //날짜 클릭
-import Modal from 'react-modal'; //모달
+//Jotai 및 관련 라이브러리 import
+import React, { useRef } from 'react';
+import { atom, useAtom } from 'jotai';
+import FullCalendar from '@fullcalendar/react'; // React용 FullCalendar
+import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
+import interactionPlugin from '@fullcalendar/interaction'; // 날짜 클릭
+import Modal from 'react-modal'; // 모달
 import kookminLogo from '/src/assets/bank/kookminLogo.png';
 import shinhanLogo from '/src/assets/bank/shinhanLogo.png';
 import hanaLogo from '/src/assets/bank/hanaLogo.png';
@@ -13,17 +15,26 @@ import tossLogo from '/src/assets/bank/tossLogo.png';
 
 import styles from './MyCalendarPage.module.scss';
 
+// Jotai 상태 관리
+const eventsAtom = atom([]); // 이벤트 목록 저장
+const modalIsOpenAtom = atom(false); // 모달 열림 상태
+const selectedDateAtom = atom(''); // 선택된 날짜 저장
+const savingNameAtom = atom(''); // 상품 이름 저장
+const amountAtom = atom(''); // 금액 저장
+const logoUrlAtom = atom(''); // 로고 URL 저장
+const endDateAtom = atom(''); // 만기일 저장
+
 // 모달 초기 설정
 Modal.setAppElement('#root');
 
 const MyCalendarPage = () => {
-  const [events, setEvents] = useState([]); // 이벤트 목록 저장
-  const [modalIsOpen, setModalIsOpen] = useState(false); // 모달 창 열림 상태
-  const [selectedDate, setSelectedDate] = useState(''); // 선택된 날짜 저장
-  const [savingName, setSavingName] = useState(''); // 상품 이름 저장
-  const [amount, setAmount] = useState(''); // 금액 저장
-  const [logoUrl, setLogoUrl] = useState(''); // 로고 URL 저장
-  const [endDate, setEndDate] = useState(''); // 만기일 저장
+  const [events, setEvents] = useAtom(eventsAtom);
+  const [modalIsOpen, setModalIsOpen] = useAtom(modalIsOpenAtom);
+  const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom);
+  const [savingName, setSavingName] = useAtom(savingNameAtom);
+  const [amount, setAmount] = useAtom(amountAtom);
+  const [logoUrl, setLogoUrl] = useAtom(logoUrlAtom);
+  const [endDate, setEndDate] = useAtom(endDateAtom);
 
   const calendarRef = useRef(null); // 캘린더 참조
 
@@ -40,6 +51,15 @@ const MyCalendarPage = () => {
 
   // 날짜 클릭 시 모달 열기
   const handleDateClick = (info) => {
+    const selectedDateEventsCount = events.filter(
+      (event) => event.date === info.dateStr
+    ).length;
+  
+    // 이미 3개의 이벤트가 있는 경우 모달을 열지 않고 alert 표시
+    if (selectedDateEventsCount >= 3) {
+      alert('한 날짜에 최대 3개의 목록만 추가할 수 있습니다!');
+      return; // 함수 종료
+    }  
     setSelectedDate(info.dateStr);
     setModalIsOpen(true);
   };
@@ -76,7 +96,7 @@ const MyCalendarPage = () => {
       setEvents((prevEvents) => {
         const updatedEvents = [...prevEvents, ...newEvents];
         return updatedEvents.sort((a, b) => new Date(a.date) - new Date(b.date)); // 날짜 순서로 정렬
-      });      
+      });
       setModalIsOpen(false);
       setSavingName('');
       setAmount('');
@@ -91,32 +111,32 @@ const MyCalendarPage = () => {
   return (
     <div className={styles.calendar}>
       <div
-        className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} //흐림효과 추가
+        className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} // 흐림효과 추가
       >
         <FullCalendar
           ref={calendarRef}
-          locale="ko" //한글
-          plugins={[dayGridPlugin, interactionPlugin]} //월간보기, 날짜클릭
+          locale="ko" // 한글
+          plugins={[dayGridPlugin, interactionPlugin]} // 월간보기, 날짜클릭
           initialView="dayGridMonth"
-          eventOrder="" //이벤트 순서
+          eventOrder="" // 이벤트 순서
           headerToolbar={{
             left: 'title',
             center: '',
             right: 'prev,today,next',
           }}
           buttonText={{
-            today: '오늘', 
-            prev: '<', //이전 버튼을 '<'로 표시
-            next: '>', //다음 버튼을 '>'로 표시
+            today: '오늘',
+            prev: '<', // 이전 버튼을 '<'로 표시
+            next: '>', // 다음 버튼을 '>'로 표시
           }}
           titleFormat={{ year: 'numeric', month: 'long' }}
           events={events}
-          contentHeight={1500} // 달력 주 고정된 높이
+          contentHeight={1300} // 달력 주 고정된 높이
           dateClick={handleDateClick}
           dayCellClassNames={({ date }) => {
             const today = new Date();
             const isToday =
-              date.getFullYear() === today.getFullYear() && //일치여부
+              date.getFullYear() === today.getFullYear() && // 일치여부
               date.getMonth() === today.getMonth() &&
               date.getDate() === today.getDate();
             if (isToday) return styles.today; // 오늘 날짜
@@ -134,7 +154,7 @@ const MyCalendarPage = () => {
             info.el.classList.add(styles.eventStyle); // 이벤트 스타일
           }}
           dayCellContent={({ date }) => {
-            return <span>{date.getDate()}</span>; //일 표시
+            return <span>{date.getDate()}</span>; // 일 표시
           }}
           datesSet={() => {
             const frames = document.querySelectorAll('.fc-daygrid-day-frame');
@@ -144,7 +164,7 @@ const MyCalendarPage = () => {
 
             const titleElement = document.querySelector('.fc-toolbar-title');
             if (titleElement) {
-              titleElement.classList.add(styles.title); //날짜css
+              titleElement.classList.add(styles.title); // 날짜 css
             }
 
             const tableElement = document.querySelector('.fc-scrollgrid');
@@ -154,17 +174,17 @@ const MyCalendarPage = () => {
 
             const prevButton = document.querySelector('.fc-prev-button');
             if (prevButton) {
-              prevButton.classList.add(styles.transparentButton); //이전버튼
+              prevButton.classList.add(styles.transparentButton); // 이전버튼
             }
 
             const nextButton = document.querySelector('.fc-next-button');
             if (nextButton) {
-              nextButton.classList.add(styles.transparentButton); //다음버튼
+              nextButton.classList.add(styles.transparentButton); // 다음버튼
             }
 
             const todayButton = document.querySelector('.fc-today-button');
             if (todayButton) {
-              todayButton.classList.add(styles.transparentButton); //오늘버튼
+              todayButton.classList.add(styles.transparentButton); // 오늘버튼
             }
           }}
           eventContent={(eventInfo) => {
@@ -201,8 +221,8 @@ const MyCalendarPage = () => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
-        className={styles.modalContent} //모달 스타일
-        overlayClassName={styles.modalOverlay} //배경
+        className={styles.modalContent} // 모달 스타일
+        overlayClassName={styles.modalOverlay} // 배경
       >
         <label className={styles.modalLabel}>은행</label>
         <select
@@ -214,7 +234,7 @@ const MyCalendarPage = () => {
             은행 선택
           </option>
           {Object.keys(bankLogos).map((bank) => (
-            <option key={bank} value={bank}> 
+            <option key={bank} value={bank}>
               {bank}
             </option>
           ))}
