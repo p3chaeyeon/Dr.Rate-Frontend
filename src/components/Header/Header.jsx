@@ -3,7 +3,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from "src/utils/path";
 import headerLogo from 'src/assets/images/headerLogo.png';
+import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
 import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
+
 
 const Header = () => {
     const navigate = useNavigate();
@@ -23,7 +25,8 @@ const Header = () => {
                         적금
                     </li>
                     <li className={styles.mainMenuItem}>
-                        맞춤 상품
+                        비교
+                        <img src={downArrowIcon} alt="Down arrow" className={styles.headerDownArrow} />
                     </li>
                 </ul>
             </nav>

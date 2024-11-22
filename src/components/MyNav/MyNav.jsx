@@ -20,7 +20,7 @@ const MyNav = () => {
             <ul className={styles.myMenuList}>
                 <li className={styles.myMenuItem} onClick={toggleDropdown}>
                     즐겨찾기
-                    <img src={downArrowIcon} alt="Down arrow" className={styles.downArrow} />
+                    <img src={downArrowIcon} alt="Down arrow" className={styles.myNavDownArrow} />
                     {isDropdownOpen && (
                         <ul className={styles.dropdownMenu}>
                             <li className={styles.dropdownItem} onClick={() => navigate(PATH.SAVINGS)}>
