@@ -31,10 +31,10 @@ const AdminSideNav = () => {
                     </div>
                     <div className={ styles.adminMenuList }>
                         <div className={ styles.adminMenuItemImg}>
-                            <img src={userManagement} alt="사용자 관리" className={styles.adminMenuImg} />
+                            <img src={userManagement} alt="사용자 조회" className={styles.adminMenuImg} />
                         </div>
                         <div className={ styles.adminMenuItemText }>
-                            사용자 관리
+                            사용자 조회
                         </div>                        
                     </div>
                     <div className={ styles.adminMenuList }>
