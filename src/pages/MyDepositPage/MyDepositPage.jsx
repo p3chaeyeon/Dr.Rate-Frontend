@@ -1,11 +1,9 @@
-// src/pages/MySavingsPage/MySavingsPage.jsx
-
-import styles from './MySavingsPage.module.scss';
+import styles from './MyDepositPage.module.scss';
 
 import React from 'react';
 import MyNav from 'src/components/MyNav'; 
 
-function MySavingsPage() {
+function MyDepositPage() {
     return (
         <main>
             <MyNav />
@@ -55,4 +53,4 @@ function MySavingsPage() {
     );
 }
 
-export default MySavingsPage;
+export default MyDepositPage;

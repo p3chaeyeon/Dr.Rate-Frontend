@@ -12,7 +12,7 @@ const Header = () => {
     return (
         <header>
             <div className={styles.logoDiv} onClick={() => navigate(PATH.HOME)}>
-                <img src={headerLogo} alt="Down arrow" className={styles.headerLogo} />
+                <img src={headerLogo} alt="header logo" className={styles.headerLogo} />
             </div>
             <nav className={styles.mainNav} >
                 <ul className={styles.mainMenuList}>
