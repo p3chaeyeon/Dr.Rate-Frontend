@@ -1,10 +1,13 @@
 //Jotai 및 관련 라이브러리 import
 import React, { useRef } from 'react';
 import { atom, useAtom } from 'jotai';
+import MyNav from 'src/components/MyNav'; //MyNav
 import FullCalendar from '@fullcalendar/react'; // React용 FullCalendar
 import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
 import interactionPlugin from '@fullcalendar/interaction'; // 날짜 클릭
 import Modal from 'react-modal'; // 모달
+import leftArrowIcon from 'src/assets/icons/leftArrow.svg'; //icon
+import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 import kookminLogo from '/src/assets/bank/kookminLogo.png';
 import shinhanLogo from '/src/assets/bank/shinhanLogo.png';
 import hanaLogo from '/src/assets/bank/hanaLogo.png';
@@ -28,13 +31,13 @@ const endDateAtom = atom(''); // 만기일 저장
 Modal.setAppElement('#root');
 
 const MyCalendarPage = () => {
-  const [events, setEvents] = useAtom(eventsAtom);
-  const [modalIsOpen, setModalIsOpen] = useAtom(modalIsOpenAtom);
-  const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom);
-  const [savingName, setSavingName] = useAtom(savingNameAtom);
-  const [amount, setAmount] = useAtom(amountAtom);
-  const [logoUrl, setLogoUrl] = useAtom(logoUrlAtom);
-  const [endDate, setEndDate] = useAtom(endDateAtom);
+  const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom); //선택날짜
+  const [modalIsOpen, setModalIsOpen] = useAtom(modalIsOpenAtom); //모달열림
+  const [savingName, setSavingName] = useAtom(savingNameAtom); //적금명
+  const [logoUrl, setLogoUrl] = useAtom(logoUrlAtom); //은행로고
+  const [endDate, setEndDate] = useAtom(endDateAtom); //만기일
+  const [amount, setAmount] = useAtom(amountAtom); //금액
+  const [events, setEvents] = useAtom(eventsAtom); //이벤트목록
 
   const calendarRef = useRef(null); // 캘린더 참조
 
@@ -51,15 +54,16 @@ const MyCalendarPage = () => {
 
   // 날짜 클릭 시 모달 열기
   const handleDateClick = (info) => {
+    //이벤트 개수 확인
     const selectedDateEventsCount = events.filter(
       (event) => event.date === info.dateStr
     ).length;
-  
-    // 이미 3개의 이벤트가 있는 경우 모달을 열지 않고 alert 표시
+
+    //3개까지 허용
     if (selectedDateEventsCount >= 3) {
       alert('한 날짜에 최대 3개의 목록만 추가할 수 있습니다!');
       return; // 함수 종료
-    }  
+    }
     setSelectedDate(info.dateStr);
     setModalIsOpen(true);
   };
@@ -76,27 +80,33 @@ const MyCalendarPage = () => {
       const startDate = new Date(selectedDate);
       const finalDate = new Date(endDate);
 
-      const newEvents = [];
+      const numericAmount = parseInt(amount.replace(/,/g, ''), 10); //쉼표 제거 후 숫자로 변환
+      const formattedAmount = numericAmount.toLocaleString(); //쉼표 추가
+
+      const newEvents = []; //새로운 이벤트 리스트
       while (startDate <= finalDate) {
         newEvents.push({
-          title: `${savingName} - ${amount}원`,
+          title: `${savingName} - ${formattedAmount}원`,
           date: startDate.toISOString().split('T')[0],
           extendedProps: {
             logoUrl: bankLogos[logoUrl], // 로고 URL 추가
-            amount,
+            amount: numericAmount, //금액
           },
         });
 
+        //매월 같은날짜 반복
         const currentDay = startDate.getDate();
         startDate.setMonth(startDate.getMonth() + 1);
         if (startDate.getDate() !== currentDay) {
           startDate.setDate(0); // 말일로 설정
         }
       }
+      //기존이벤트와 새로운 이벤트 병합
       setEvents((prevEvents) => {
         const updatedEvents = [...prevEvents, ...newEvents];
         return updatedEvents.sort((a, b) => new Date(a.date) - new Date(b.date)); // 날짜 순서로 정렬
       });
+      //초기화
       setModalIsOpen(false);
       setSavingName('');
       setAmount('');
@@ -109,7 +119,11 @@ const MyCalendarPage = () => {
   };
 
   return (
-    <div className={styles.calendar}>
+    <div>
+      {/* MyNav를 캘린더 영역 위로 이동 */}
+      <div className={styles.myNavContainer}>
+        <MyNav />
+      </div>
       <div
         className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} // 흐림효과 추가
       >
@@ -117,7 +131,7 @@ const MyCalendarPage = () => {
           ref={calendarRef}
           locale="ko" // 한글
           plugins={[dayGridPlugin, interactionPlugin]} // 월간보기, 날짜클릭
-          initialView="dayGridMonth"
+          initialView="dayGridMonth" //초기화면설정
           eventOrder="" // 이벤트 순서
           headerToolbar={{
             left: 'title',
@@ -126,8 +140,8 @@ const MyCalendarPage = () => {
           }}
           buttonText={{
             today: '오늘',
-            prev: '<', // 이전 버튼을 '<'로 표시
-            next: '>', // 다음 버튼을 '>'로 표시
+            prev: '',
+            next: '',
           }}
           titleFormat={{ year: 'numeric', month: 'long' }}
           events={events}
@@ -172,14 +186,27 @@ const MyCalendarPage = () => {
               tableElement.classList.add(styles.noBorderTop); // 윗선 제거
             }
 
-            const prevButton = document.querySelector('.fc-prev-button');
-            if (prevButton) {
-              prevButton.classList.add(styles.transparentButton); // 이전버튼
+            const prevButton = document.querySelector('.fc-prev-button'); //이전버튼
+            const nextButton = document.querySelector('.fc-next-button'); //다음버튼
+
+            const defaultIcons = document.querySelectorAll('.fc-icon'); //기본 icon요소
+            defaultIcons.forEach((icon) => (icon.style.display = 'none')); //숨기기          
+
+            //이전 버튼에 커스텀 아이콘 추가
+            if (prevButton && !prevButton.querySelector('img')) {
+              const prevImg = document.createElement('img');
+              prevImg.src = leftArrowIcon;
+              prevImg.alt = '이전';
+              prevButton.className = styles.transparentButton;
+              prevButton.appendChild(prevImg);
             }
 
-            const nextButton = document.querySelector('.fc-next-button');
-            if (nextButton) {
-              nextButton.classList.add(styles.transparentButton); // 다음버튼
+            if (nextButton && !nextButton.querySelector('img')) {
+              const nextImg = document.createElement('img');
+              nextImg.src = rightArrowIcon;
+              nextImg.alt = '다음';
+              nextButton.className = styles.transparentButton;
+              nextButton.appendChild(nextImg);
             }
 
             const todayButton = document.querySelector('.fc-today-button');
@@ -267,6 +294,7 @@ const MyCalendarPage = () => {
         <input
           type="date"
           value={endDate}
+          min={selectedDate || undefined} // 시작일 이후로만 선택 가능
           onChange={(e) => setEndDate(e.target.value)}
           className={styles.modalInput}
         />
