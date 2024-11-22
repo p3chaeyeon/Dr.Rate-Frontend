@@ -15,6 +15,7 @@ yarn add jotai             # 경량 상태 관리
 yarn add sass              # scss 사용 라이브러리
 yarn add @fullcalendar/react @fullcalendar/daygrid @fullcalendar/interaction @fullcalendar/core
 yarn add react-modal       # @FullCalendar 라이브러리 설치, modal
+
 yarn dev
 
 ```
