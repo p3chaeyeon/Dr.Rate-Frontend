@@ -13,8 +13,8 @@ function App() {
           {/* 사용자 페이지 라우트 */}
           <Route path="/" element={<UserLayout />}>
               <Route index element={<PageRoutes.HomePage />} /> {/* 기본 경로 */}
-              <Route path={PATH.MY_SAVINGS} element={<PageRoutes.MySavingsPage />} />
-              <Route path={PATH.MY_RECURRING} element={<PageRoutes.MyRecurringPage />} />
+              <Route path={PATH.MY_DEPOSIT} element={<PageRoutes.MyDepositPage />} />
+              <Route path={PATH.MY_INSTALLMENT} element={<PageRoutes.MyInstallmentPage />} />
               <Route path={PATH.MY} element={<PageRoutes.MyPage />} />
               <Route path={PATH.MY_EDIT} element={<PageRoutes.MyEditPage />} />
               <Route path={PATH.MY_WITHDRAW} element={<PageRoutes.MyWithdrawPage />} />
@@ -22,6 +22,12 @@ function App() {
 
               <Route path={PATH.PRODUCT_DETAIL} element={<PageRoutes.ProductDetailPage />} />
           </Route>
+
+
+
+
+
+          
 
           {/* 관리자 페이지 라우트 */}
           <Route path="/admin" element={<AdminLayout />}>
