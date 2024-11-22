@@ -35,7 +35,7 @@ const Header = () => {
                     <li className={styles.userMenuItem}>
                         <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
                     </li>                    
-                    <li className={styles.userMenuItem}  onClick={() => navigate(PATH.MY_SAVINGS)}>
+                    <li className={styles.userMenuItem}  onClick={() => navigate(PATH.MY_DEPOSIT)}>
                         마이페이지{/* 로그인 */}
                     </li>
                     <li className={styles.userMenuItem}>
