@@ -19,7 +19,33 @@
     }
 
     .adminMenuDiv {
+        display: flex;
         height: 89%;
+        align-items: flex-start;
+
+        .adminMenuList{
+            display: flex;
+            align-items: center;
+            margin: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            .adminMenuImg{
+                height: 46px;
+                width: 60px;
+                padding-right: 20px;
+            }
+
+            &:hover{
+                background-color: rgba(173, 216, 230, 0.3); 
+            }
+
+            .adminMenuItemText{
+                font: bold;
+                color: var(--white);
+            }
+        }
+
     }
 
     .userNavigateDiv {

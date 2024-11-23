@@ -33,6 +33,7 @@ function App() {
           <Route path="/admin" element={<AdminLayout />}>
               <Route path={PATH.ADMIN_MAIN} element={<PageRoutes.AdminMainPage />} />
               <Route path={PATH.ADMIN_INQUIRE} element={<PageRoutes.AdminInquirePage />} />
+              <Route path={PATH.ADMIN_USERLIST} element={<PageRoutes.AdminUserListPage/>} />
           </Route>
       </Routes>
 
