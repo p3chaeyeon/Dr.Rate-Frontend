@@ -10,15 +10,14 @@ import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
 const MyNav = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-
     const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
-
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
         setDropdownOpen(!isDropdownOpen);
     };
 
+    
     return (
         <nav id="MyNav" className={styles.myNav}>
             <ul className={styles.myMenuList}>
