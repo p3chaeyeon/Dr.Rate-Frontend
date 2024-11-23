@@ -1,6 +1,6 @@
 /* src/components/MyNav/MyNav.jsx */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './MyNav.module.scss';
 import { useNavigate, useLocation } from "react-router-dom";
 import { PATH } from "src/utils/path";
@@ -12,10 +12,18 @@ const MyNav = () => {
     const location = useLocation();
     const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
     const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
-    const toggleDropdown = () => {
-        setDropdownOpen(!isDropdownOpen);
+    // 드롭다운 열기/닫기
+    const handleMouseEnter = () => {
+        setDropdownOpen(true);
     };
+
+    const handleMouseLeave = () => {
+        setDropdownOpen(false);
+    };
+
+
 
     
     return (
@@ -23,7 +31,8 @@ const MyNav = () => {
             <ul className={styles.myMenuList}>
                 <li 
                     className={styles.myMenuItem} 
-                    onClick={toggleDropdown}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}                    
                     style={{
                         color: isPathActive([PATH.MY_DEPOSIT, PATH.MY_INSTALLMENT]) ? 'var(--main1)' : 'inherit',
                     }}                
@@ -31,7 +40,7 @@ const MyNav = () => {
                     즐겨찾기
                     <img src={downArrowIcon} alt="Down arrow" className={styles.myNavDownArrow} />
                     {isDropdownOpen && (
-                        <ul className={styles.dropdownMenu}>
+                        <ul className={styles.dropdownMenu} ref={dropdownRef}>
                             <li className={styles.dropdownItem} onClick={() => navigate(PATH.MY_DEPOSIT)}>
                                 예금 즐겨찾기
                             </li>

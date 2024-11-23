@@ -21,7 +21,7 @@
     
         .myMenuItem {
             width: 120px;
-            height: 23px;
+            height: 30px;
             line-height: 30px;
             display: flex;
             justify-content: center;
@@ -37,14 +37,16 @@
 
             .dropdownMenu {
                 color: var(--font1);
+                font-size: 16px;
                 position: absolute;
-                top: 30px; //간격
-                left: 10px; // 왼쪽으로 이동
+                top: 30px; 
+                left: -10px; 
                 width: 130px;
-                background-color: #fbfbfb;
-                border: 2px solid #BBBBBB;
-                border-radius: 10px; //둥글게
-                overflow: hidden; //벗어나지않게
+                background-color: var(--white);
+                // border: 2px solid #BBBBBB;
+                border-radius: 10px;
+                overflow: hidden; 
+                box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
             }
 
             .dropdownItem {
@@ -53,9 +55,10 @@
                 text-align: center;
 
                 &:hover {
-                    background-color: #A5D8F5;
+                    color: var(--white);
+                    background-color: var(--main1);
                 }
-            } 
+            }
         }
     }
 }
