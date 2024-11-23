@@ -1,0 +1,204 @@
+.dashboardDiv {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--admin-body);
+    width: 100%;
+    height: 92%;
+
+    .dashboardRow {
+        display: flex;
+        height: 50%;
+        width: 100%;
+
+        .dashboardItemArea {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 50%;
+
+            .dashboardItem {
+                background-color: var(--white);
+                height: 97%;
+                width: 98%;
+
+                .dashboardItemHeader {
+                    display: flex;
+                    width: 100%;
+                    height: 15%;
+                    border-bottom: 1px solid var(--admin-body);
+
+                    .dashboardItemTitle {
+                        display: flex;
+                        font-size: 17px;
+                        justify-content: center;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        margin-left: 10px;
+                    }
+                    
+                }
+
+                /* 대시 보드 주 내용 공간 */
+                .dashboardItemBody {
+                    display: flex;
+                    overflow: auto;
+                    width: 100%;
+                    height: 85%;
+
+                    /* 1. 방문자 수 현황 그래프 */
+
+                    /* 2. 일자별 요약 테이블 */
+                    .summaryTable {
+                        white-space: pre-wrap;
+                        width: 100%;
+                        border-collapse: collapse;
+                        height: 100%;
+
+                        th,
+                        td {
+                            border: 1px solid #ddd;
+                            padding: 10px;
+                            text-align: center;
+                        }
+
+                        th {
+                            background-color: #f4f4f4;
+                            font-weight: bold;
+                        }
+
+                        tbody tr:nth-child(even) {
+                            background-color: #f9f9f9; // 줄무늬 효과
+                        }
+
+                        tfoot tr {
+                            font-weight: bold;
+                            background-color: #f4f4f4;
+                        }
+
+                        tfoot td {
+                            text-align: center;
+                        }
+                    }
+
+                    /* 3. 신규 회원 리스트 */
+                    .newUserList {
+                        white-space: pre-wrap;
+                        width: 100%;
+                        list-style: none;
+
+                        .newUserItem {
+                            display: flex;
+                            align-items: center;
+                            padding: 8px 8px;
+                            border-bottom: 1px solid #f5f5f5;
+
+                            &:last-child {
+                                border-bottom: none;
+                            }
+
+                            .profileImage {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                width: 40px;
+                                height: 40px;
+                                background: #e0e0e0;
+                                border-radius: 50%;
+                                margin-right: 16px;
+
+                                img {
+                                    width: 80%;
+                                    height: 80%;
+                                }
+                            }
+
+                            .userInfo {
+                                flex: 1;
+
+                                .userName {
+                                    display: block;
+                                    font-size: 14px;
+                                    font-weight: bold;
+                                    margin-bottom: 4px;
+                                }
+
+                                .userEmail {
+                                    font-size: 12px;
+                                    color: #666;
+                                }
+                            }
+
+                            .joinDate {
+                                padding-right: 15px;
+                                font-size: 12px;
+                                color: #999;
+                            }
+                        }
+                    }
+
+                    /* 4. 1:1 문의 내역 목록 */
+                    .inquiryList {
+                        white-space: pre-wrap;
+                        height: 100%;
+                        width: 100%;
+                        list-style: none;
+
+                        .inquiryItem {
+                            display: flex;
+                            align-items: flex-start;
+                            padding: 12px 10px;
+                            border-bottom: 1px solid #f5f5f5;
+
+                            &:last-child {
+                                border-bottom: none;
+                            }
+
+                            .profileImage {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                width: 40px;
+                                height: 40px;
+                                background: #e0e0e0;
+                                border-radius: 50%;
+                                margin-right: 16px;
+
+                                img {
+                                    width: 80%;
+                                    height: 80%;
+                                }
+                            }
+
+                            .inquiryContent {
+                                flex: 1;
+
+                                .inquiryTitle {
+                                    font-size: 14px;
+                                    font-weight: bold;
+                                    margin-bottom: 4px;
+
+                                    .newBadge {
+                                        background: #ff4500;
+                                        color: #fff;
+                                        font-size: 12px;
+                                        padding: 2px 6px;
+                                        border-radius: 12px;
+                                        margin-left: 8px;
+                                    }
+                                }
+
+                                .inquiryMeta {
+                                    font-size: 12px;
+                                    color: #666;
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
+}

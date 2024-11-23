@@ -21,7 +21,7 @@ const AdminSideNav = () => {
             {/* 관리자 메뉴 */}
             <div className={ styles.adminMenuDiv }>
                 <div>
-                    <div className={ styles.adminMenuList }>
+                    <div className={ styles.adminMenuList } onClick={()=>navigate(PATH.ADMIN_MAIN)}> 
                         <div className={ styles.adminMenuItemImg}>
                             <img src={dashboard} alt="대시보드" className={styles.adminMenuImg} />
                         </div>
@@ -29,7 +29,7 @@ const AdminSideNav = () => {
                             대시보드
                         </div>
                     </div>
-                    <div className={ styles.adminMenuList }>
+                    <div className={ styles.adminMenuList } onClick={()=> navigate(PATH.ADMIN_USERLIST)}>
                         <div className={ styles.adminMenuItemImg}>
                             <img src={userManagement} alt="사용자 조회" className={styles.adminMenuImg} />
                         </div>
@@ -37,7 +37,7 @@ const AdminSideNav = () => {
                             사용자 조회
                         </div>                        
                     </div>
-                    <div className={ styles.adminMenuList }>
+                    <div className={ styles.adminMenuList } onClick={()=> navigate(PATH.ADMIN_INQUIRE_LIST)}>
                         <div className={ styles.adminMenuItemImg}>
                             <img src={inquiryHistory} alt="1:1 문의 내역" className={styles.adminMenuImg} />
                         </div>

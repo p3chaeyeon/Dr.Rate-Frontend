@@ -1,0 +1,199 @@
+.userListDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--admin-body);
+    width: 100%;
+    height: 92%;
+
+    .userListArea {
+        display: flex;
+        flex-direction: column;
+        width: 95%;
+        height: 90%;
+        background-color: var(--white);
+
+        /* 헤더 */
+        .userListHeader {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 30%;
+
+            .userListTitle {
+                padding: 20px;
+                font-size: 20px;
+            }
+
+            .userSearchBar {
+                display: flex;
+                padding: 20px;
+                gap: 10px;
+
+                input {
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    transition: border-color 0.3s ease;
+
+                    &:hover {
+                        border-color: #706d6d;
+                    }
+
+                    &:focus {
+                        outline: none;
+                        border-color: #706d6d;
+                    }
+                }
+
+                button {
+                    padding: 8px 16px;
+                    background-color: #b0adad;
+                    color: #fff;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+
+                    &:hover {
+                        background-color: #706d6d;
+                        transform: scale(1.05);
+                    }
+
+                    &:active {
+                        transform: scale(0.95);
+                    }
+                }
+
+            }
+        }
+
+        /* 유저 목록 테이블 */
+        .userListTable {
+            width: 100%;
+            height: 50%;
+            margin-top: 20px;
+            overflow-x: auto;
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                .row {
+                    cursor: pointer; 
+                    &:hover {
+                        background-color: #f5f5f5; 
+                    }
+                }
+
+                th,
+                td {
+                    padding: 12px;
+                    border: 1px solid #f1f1f1;
+                    text-align: left;
+                    transition: background-color 0.3s ease;
+                }
+
+                th {
+                    background-color: #f9f9f9;
+                    font-weight: bold;
+                }
+
+                td {
+                    &:hover {
+                        background-color: #f7f7f7;
+                        /* 셀 호버 효과 */
+                    }
+
+                    button {
+                        padding: 6px 12px;
+                        border: none;
+                        border-radius: 4px;
+                        font-size: 12px;
+                        cursor: pointer;
+                        transition: transform 0.2s ease;
+                        /* 크기 전환 효과 */
+
+
+                        &:hover {
+                            transform: scale(1.05);
+                            /* 버튼 확대 */
+                        }
+
+                        &:active {
+                            transform: scale(0.95);
+                            /* 버튼 클릭 시 축소 */
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+        .pagination {
+            display: flex;
+            height: 20%;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 20px;
+
+            .pageBtn {
+                display: flex;
+                gap: 8px;
+                /* 버튼 간의 간격 추가 */
+                align-items: center;
+                /* 버튼들을 수직 가운데 정렬 */
+                height: 40%;
+                padding: 8px 12px;
+                border-radius: 4px;
+                cursor: pointer;
+                background-color: #fff;
+
+                button {
+                    padding: 8px 16px;
+                    /* 버튼 내부 여백 */
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    background-color: #fff;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+                    /* 배경, 그림자, 크기 전환 효과 */
+
+                    &:hover {
+                        background-color: #f7f7f7;
+                        /* 버튼 배경 밝게 */
+                        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                        /* 그림자 추가 */
+                        transform: scale(1.05);
+                        /* 버튼 확대 */
+                    }
+
+                    &:active {
+                        background-color: #ececec;
+                        /* 클릭 시 배경 변경 */
+                        box-shadow: none;
+                        /* 클릭 시 그림자 제거 */
+                        transform: scale(0.95);
+                        /* 클릭 시 축소 */
+                    }
+                }
+
+                .active {
+                    background-color: #007bff;
+                    color: #fff;
+
+                    &:hover {
+                        background-color: #9fc5ee;
+                        transform: scale(1.05);
+                    }
+                }
+
+                &:disabled {
+                    cursor: not-allowed;
+                    color: #aaa;
+                    background-color: #f5f5f5;
+                }
+            }
+        }
+    }
+}
