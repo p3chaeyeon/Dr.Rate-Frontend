@@ -22,6 +22,7 @@ export const PATH = {
     /* 관리자 경로 */
     ADMIN_MAIN: '/admin/adminMain',
     ADMIN_USERLIST: '/admin/userList',
+    ADMIN_INQUIRE_LIST : '/admin/adminInquireList',
     ADMIN_INQUIRE : '/admin/adminInquire',
 
     

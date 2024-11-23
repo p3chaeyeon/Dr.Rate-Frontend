@@ -42,6 +42,7 @@
                 /* 대시 보드 주 내용 공간 */
                 .dashboardItemBody {
                     display: flex;
+                    overflow: auto;
                     width: 100%;
                     height: 85%;
 
@@ -49,6 +50,7 @@
 
                     /* 2. 일자별 요약 테이블 */
                     .summaryTable {
+                        white-space: pre-wrap;
                         width: 100%;
                         border-collapse: collapse;
                         height: 100%;
@@ -81,6 +83,7 @@
 
                     /* 3. 신규 회원 리스트 */
                     .newUserList {
+                        white-space: pre-wrap;
                         width: 100%;
                         list-style: none;
 
@@ -136,6 +139,7 @@
 
                     /* 4. 1:1 문의 내역 목록 */
                     .inquiryList {
+                        white-space: pre-wrap;
                         height: 100%;
                         width: 100%;
                         list-style: none;

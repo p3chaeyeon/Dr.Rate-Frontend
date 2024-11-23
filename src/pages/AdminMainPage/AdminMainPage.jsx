@@ -113,6 +113,18 @@ const AdminMainPage = () => {
                                         <td>2</td>
                                         <td>1</td>
                                     </tr>
+                                    <tr>
+                                        <td>2024-11-12</td>
+                                        <td>9</td>
+                                        <td>2</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2024-11-12</td>
+                                        <td>9</td>
+                                        <td>2</td>
+                                        <td>1</td>
+                                    </tr>
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -150,6 +162,8 @@ const AdminMainPage = () => {
                                     { name: "김유진", email: "yu****@example.com", date: "2024-11-14" },
                                     { name: "박현지", email: "ph****@example.com", date: "2024-11-14" },
                                     { name: "이준호", email: "lj****@example.com", date: "2024-11-14" },
+                                    { name: "정하나", email: "jh****@example.com", date: "2024-11-14" },
+                                    { name: "정하나", email: "jh****@example.com", date: "2024-11-14" },
                                     { name: "정하나", email: "jh****@example.com", date: "2024-11-14" },
                                 ].map((user, index) => (
                                     <li key={index} className={styles.newUserItem}>
@@ -194,6 +208,16 @@ const AdminMainPage = () => {
                                         title: "게시판 작성 커스텀 하단 만들기(푸터)",
                                         author: "관리자",
                                         date: "2020-12-10 14:36"
+                                    },
+                                    {
+                                        title: "게시판 작성 하단 설정하기(푸터)",
+                                        author: "관리자",
+                                        date: "2020-12-10 11:06"
+                                    },
+                                    {
+                                        title: "게시판 작성 하단 설정하기(푸터)",
+                                        author: "관리자",
+                                        date: "2020-12-10 11:06"
                                     },
                                     {
                                         title: "게시판 작성 하단 설정하기(푸터)",

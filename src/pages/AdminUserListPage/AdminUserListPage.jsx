@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './AdminUserListPage.module.scss';
+import styles from './AdminUserListPage.module.scss'
 
 const AdminUserListPage = () => {
     return (
@@ -8,7 +8,7 @@ const AdminUserListPage = () => {
                 {/* 헤더 */}
                 <div className={styles.userListHeader}>
                     <div className={styles.userListTitle}>
-                        <h4>1:1 문의 내역</h4>
+                        <h4>사용자 조회</h4>
                     </div>
                     <div className={styles.userSearchBar}>
                         <input type="text" placeholder="아이디" />
@@ -22,58 +22,45 @@ const AdminUserListPage = () => {
                             <tr>
                                 <th>아이디</th>
                                 <th>이름</th>
-                                <th>제목</th>
-                                <th>카테고리</th>
-                                <th>상태</th>
+                                <th>그룹(역할)</th>
+                                <th>가입일자</th>
                             </tr>
                         </thead>
                         <tbody>
                             {[
                                 {
+                                    id: 'ADMIN',
+                                    name: '관리자',
+                                    group: '관리자',
+                                    created_at: '2023-07-12 16:53:33',
+                                },
+                                {
                                     id: 'HONG',
-                                    name: '홍채현',
-                                    title: '박사가 되고 싶어요',
-                                    category: '진로',
-                                    status: '답변 완료',
+                                    name: '홍제헌',
+                                    group: '사용자',
+                                    created_at: '2023-07-13 16:53:33',
                                 },
                                 {
-                                    id: 'TEST',
-                                    name: '테스트',
-                                    title: '마이페이지 접속이 안돼요',
-                                    category: '서버',
-                                    status: '답변 미완료',
+                                    id: 'PARK',
+                                    name: '박채연',
+                                    group: '사용자',
+                                    created_at: '2023-07-14 16:53:33',
                                 },
                                 {
-                                    id: 'TEST1',
-                                    name: '테스트',
-                                    title: '적금을 추천할 다른 방...',
-                                    category: '적금',
-                                    status: '답변 미완료',
-                                },
-                                {
-                                    id: 'TEST2',
-                                    name: '테스트',
-                                    title: '...',
-                                    category: '예금',
-                                    status: '답변 미완료',
-                                },
+                                    id: 'OH',
+                                    name: '오영수',
+                                    group: '사용자',
+                                    created_at: '2023-07-18 16:53:33',
+                                },                                
                             ].map((user, index) => (
-                                <tr key={index}>
+                                <tr
+                                    key={index} 
+                                    className={styles.row}
+                                >
                                     <td>{user.id}</td>
                                     <td>{user.name}</td>
-                                    <td>{user.title}</td>
-                                    <td>{user.category}</td>
-                                    <td>
-                                        <button
-                                            className={
-                                                user.status === '답변 완료'
-                                                    ? styles.completed
-                                                    : styles.pending
-                                            }
-                                        >
-                                            {user.status}
-                                        </button>
-                                    </td>
+                                    <td>{user.group}</td>
+                                    <td>{user.created_at}</td>
                                 </tr>
                             ))}
                         </tbody>

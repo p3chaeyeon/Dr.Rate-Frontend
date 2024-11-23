@@ -37,7 +37,7 @@ const AdminSideNav = () => {
                             사용자 조회
                         </div>                        
                     </div>
-                    <div className={ styles.adminMenuList } onClick={()=> navigate(PATH.ADMIN_INQUIRE)}>
+                    <div className={ styles.adminMenuList } onClick={()=> navigate(PATH.ADMIN_INQUIRE_LIST)}>
                         <div className={ styles.adminMenuItemImg}>
                             <img src={inquiryHistory} alt="1:1 문의 내역" className={styles.adminMenuImg} />
                         </div>

@@ -11,6 +11,7 @@ import AdminMainPage from './AdminMainPage';
 import ProductDetailPage from './ProductDetailPage';
 import AdminInquirePage from './AdminInquirePage';
 import AdminUserListPage from './AdminUserListPage/AdminUserListPage';
+import AdminInquireListPage from './AdminInquireListPage/AdminInquireListPage';
 
 
 
@@ -30,14 +31,11 @@ const PageRoutes = {
     MyWithdrawPage,
     MyCalendarPage,
 
-    ProductDetailPage,
-
-
-
-    
+    ProductDetailPage,    
 
     // 관리자 페이지 컴포넌트
     AdminMainPage,
+    AdminInquireListPage,
     AdminInquirePage,
     AdminUserListPage,
     
