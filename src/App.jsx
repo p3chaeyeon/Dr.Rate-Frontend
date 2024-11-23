@@ -15,7 +15,7 @@ function App() {
               <Route index element={<PageRoutes.HomePage />} /> {/* 기본 경로 */}
               <Route path={PATH.MY_DEPOSIT} element={<PageRoutes.MyDepositPage />} />
               <Route path={PATH.MY_INSTALLMENT} element={<PageRoutes.MyInstallmentPage />} />
-              <Route path={PATH.MY} element={<PageRoutes.MyPage />} />
+              <Route path={PATH.MY_INFO} element={<PageRoutes.MyPage />} />
               <Route path={PATH.MY_EDIT} element={<PageRoutes.MyEditPage />} />
               <Route path={PATH.MY_WITHDRAW} element={<PageRoutes.MyWithdrawPage />} />
               <Route path={PATH.MY_CALENDAR} element={<PageRoutes.MyCalendarPage />} />

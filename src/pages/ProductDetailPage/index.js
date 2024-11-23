@@ -1,3 +1,3 @@
-import ProductDetailPage from "./MyWithdrawPage";
+import ProductDetailPage from "./ProductDetailPage";
 
 export default ProductDetailPage;
