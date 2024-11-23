@@ -1,31 +1,17 @@
-/* src/components/MyNav/MyNav.jsx */
-
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import styles from './MyNav.module.scss';
 import { useNavigate, useLocation } from "react-router-dom";
 import { PATH } from "src/utils/path";
 import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
+import useDropdown from 'src/hooks/useDropdown';
 
 
 const MyNav = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const dropdownRef = useRef(null);
+    const { isDropdownOpen, dropdownRef, handleMouseEnter, handleMouseLeave } = useDropdown();
 
-    // 드롭다운 열기/닫기
-    const handleMouseEnter = () => {
-        setDropdownOpen(true);
-    };
-
-    const handleMouseLeave = () => {
-        setDropdownOpen(false);
-    };
-
-
-
-    
     return (
         <nav id="MyNav" className={styles.myNav}>
             <ul className={styles.myMenuList}>
@@ -40,11 +26,11 @@ const MyNav = () => {
                     즐겨찾기
                     <img src={downArrowIcon} alt="Down arrow" className={styles.myNavDownArrow} />
                     {isDropdownOpen && (
-                        <ul className={styles.dropdownMenu} ref={dropdownRef}>
-                            <li className={styles.dropdownItem} onClick={() => navigate(PATH.MY_DEPOSIT)}>
+                        <ul className={styles.MyDropdownMenu} ref={dropdownRef}>
+                            <li className={styles.MyDropdownItem} onClick={() => navigate(PATH.MY_DEPOSIT)}>
                                 예금 즐겨찾기
                             </li>
-                            <li className={styles.dropdownItem} onClick={() => navigate(PATH.MY_INSTALLMENT)}>
+                            <li className={styles.MyDropdownItem} onClick={() => navigate(PATH.MY_INSTALLMENT)}>
                                 적금 즐겨찾기
                             </li>
                         </ul>

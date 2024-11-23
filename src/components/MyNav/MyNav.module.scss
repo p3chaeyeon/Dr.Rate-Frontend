@@ -35,7 +35,7 @@
                 margin: 5px 0 0 10px;
             }
 
-            .dropdownMenu {
+            .MyDropdownMenu {
                 color: var(--font1);
                 font-size: 16px;
                 position: absolute;
@@ -47,16 +47,16 @@
                 border-radius: 10px;
                 overflow: hidden; 
                 box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
-            }
-
-            .dropdownItem {
-                padding: 8px;
-                cursor: pointer;
-                text-align: center;
-
-                &:hover {
-                    color: var(--white);
-                    background-color: var(--main1);
+                
+                .MyDropdownItem {
+                    padding: 8px;
+                    cursor: pointer;
+                    text-align: center;
+                    
+                    &:hover {
+                        color: var(--white);
+                        background-color: var(--main1);
+                    }
                 }
             }
         }
