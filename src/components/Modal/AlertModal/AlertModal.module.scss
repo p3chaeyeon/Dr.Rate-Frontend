@@ -12,7 +12,7 @@
   }
   
   .alertModalContent {
-    background-color: white;
+    background-color: var(--white);
     padding: 25px;
     border-radius: 10px; 
     width: 80%;
@@ -36,7 +36,7 @@
     font-size: 16px;
     font-weight: bold;
     background-color: var(--main2);
-    color: white;
+    color: var(--white);
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-top: 15px;

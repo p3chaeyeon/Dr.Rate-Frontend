@@ -41,8 +41,13 @@ const MyCalendarPage = () => {
   const [amount, setAmount] = useAtom(amountAtom); //금액
   const [events, setEvents] = useAtom(eventsAtom); //이벤트목록
 
-  //중복방지, 별칭사용
-  const { isOpen: isAlertOpen, openModal: openAlert, closeModal: closeAlert, content } = useModal();
+  //useModal 훅
+  const {
+    isAlertOpen,
+    openAlertModal,
+    closeAlertModal,
+    alertContent,
+  } = useModal();
 
   const calendarRef = useRef(null); // 캘린더 참조
 
@@ -66,7 +71,7 @@ const MyCalendarPage = () => {
 
     //3개까지 허용
     if (selectedDateEventsCount >= 3) {
-      openAlert('실패', '하루에 최대 3개의 상품만 추가할 수 있습니다!');
+      openAlertModal('실패', '하루에 최대 3개의 상품만 추가할 수 있습니다!');
       return;
     }
     setSelectedDate(info.dateStr);
@@ -118,11 +123,10 @@ const MyCalendarPage = () => {
       setLogoUrl('');
       setSelectedDate('');
       setEndDate('');
-    } else {
-      setModalIsOpen(false); //기존모달창 닫기
-      openAlert('작성 불가', '모든 정보를 입력해주세요!'); // AlertModal 열기
-    }
-  };
+    }else {
+        openAlertModal('작성 불가', '모든 정보를 입력해주세요!');
+      }
+    };  
 
   return (
     <main>
@@ -131,9 +135,9 @@ const MyCalendarPage = () => {
         {/* AlertModal 컴포넌트 */}
         <AlertModal
           isOpen={isAlertOpen}
-          closeModal={closeAlert}
-          title={content.title}
-          message={content.message}
+          closeModal={closeAlertModal}
+          title={alertContent.title}
+          message={alertContent.message}
         />
         {/* MyNav를 캘린더 영역 위로 이동 */}
         <div className={styles.myNavContainer} >

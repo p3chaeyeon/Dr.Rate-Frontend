@@ -19,7 +19,7 @@ function App() {
               <Route path={PATH.MY_EDIT} element={<PageRoutes.MyEditPage />} />
               <Route path={PATH.MY_WITHDRAW} element={<PageRoutes.MyWithdrawPage />} />
               <Route path={PATH.MY_CALENDAR} element={<PageRoutes.MyCalendarPage />} />
-
+              <Route path={PATH.PRODUCT_INS_LIST} element={<PageRoutes.ProductInsListPage />} />
               <Route path={PATH.PRODUCT_DETAIL} element={<PageRoutes.ProductDetailPage />} />
           </Route>
 

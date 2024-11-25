@@ -1,18 +1,48 @@
 import { useState, useCallback } from 'react';
 
 const useModal = () => {
-    const [isOpen, setIsOpen] = useState(false); //모달 열림 상태
-    const [content, setContent] = useState({ title: '', message: '' }); //모달 내용 상태
+    const [isAlertOpen, setIsAlertOpen] = useState(false); //alert 모달 열림상태
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false); //confirm 모달 열림상태
 
-    //모달열기(제목, 메세지 설정)
-    const openModal = useCallback((title = '', message = '') => {
-        setContent({ title, message }); //내용설정
-        setIsOpen(true); //열림 상태로 변경
+    const [alertContent, setAlertContent] = useState({ title: '', message: '' }); //alert 모달 내용
+    const [confirmContent, setConfirmContent] = useState({
+        title : '',
+        message : '',
+        onConfirm : null, //확인
+        onCancel : null, //취소
+    }); //confirm 모달 내용
+
+    //alert 모달열기(제목, 메세지 설정)
+    const openAlertModal = useCallback((title = '', message = '') => {
+        setAlertContent({ title, message }); //내용설정
+        setIsAlertOpen(true); //열림 상태로 변경
     },[]);
 
-    //모달 닫기
-    const closeModal = useCallback(() => setIsOpen(false), []);
-    return { isOpen, openModal, closeModal, content };
-    };
+    //alert 모달 닫기
+    const closeAlertModal = useCallback(() => setIsAlertOpen(false), []);
 
+    //confirm 모달열기
+    const openConfirmModal = useCallback(
+        (title = '', message = '', onConfirm = () => {}, onCancel = () => {}) => {
+            setConfirmContent({ title, message, onConfirm, onCancel });
+            setIsConfirmOpen(true);
+        },
+        []
+    );
+
+    //confirm 모달 닫기
+    const closeConfirmModal = useCallback(() => setIsConfirmOpen(false), []);
+
+    return {
+        isAlertOpen,
+        openAlertModal,
+        closeAlertModal,
+        alertContent,
+        isConfirmOpen,
+        openConfirmModal,
+        closeConfirmModal,
+        confirmContent,
+    };
+}; 
+    
 export default useModal;
