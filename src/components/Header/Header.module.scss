@@ -185,14 +185,152 @@
         width: 77%;
 
         .mobileSideHeader {
-            height: 16%;
-            border: 1px solid red;
+            height: 120px;
 
+            .sideLogoDiv {
+                height: 60px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                padding-left: 5px;
+        
+                img {
+                    object-fit: contain;
+                    max-width: 130px;
+                    cursor: pointer;
+                }        
+            }
+
+            .sideBtnDiv {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 14px;
+                height: 60px;
+                display: none;
+
+                .signInBtn, .signUpBtn {
+                    width: 120px;
+                    height: 40px;
+                }
+
+                .signInBtn {
+                    border: 1px solid var(--main1);
+                    color: var(--main1);
+                }
+
+                .signUpBtn {
+                    color: var(--white);
+                    border: 1px solid var(--main1);
+                    background: var(--main1);
+                }
+            }
+
+            .sideUserInfo {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 10px;
+                height: 60px;
+                // display: none;
+                padding-left: 13px;
+                padding-bottom: 8px;
+
+                .mobileSideProfileDiv {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .sideUserName {
+                    font-size: 14px;
+
+                    span {
+                        font-size: 16px;
+                        font-weight: 600;
+                        margin-right: 5px;
+                    }
+                }
+
+            }
         }
 
+
+
         .mobileSideMain {
-            height: 58%;
-            border: 1px solid green;
+            flex: 1;
+            height: auto;
+            // border: 1px solid orange;
+
+
+            .sideMainList {
+                padding: 10px 0;
+                border-top: 1px solid var(--divider-border);
+
+                .sideMainItem {
+                    padding: 0 10px;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 15px;
+                    height: 50px;
+                    
+                    .sideMainIconDiv {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        .sideMainIcon {
+                            object-fit: contain;
+                            max-width: 35px;
+                        }
+                    }
+
+                    .sideMainItemDiv {
+                        flex: 1;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .sideMainItemArrow {
+                            width: 12px;
+                            height: 12px;
+                            cursor: pointer;
+                            // transition: transform 0.3s ease; // 애니메이션 추가
+                        
+                            &.arrowUp {
+                                transform: rotate(180deg); // 화살표 위로 회전
+                            }
+                        }
+                    }
+                    
+                    &:hover {
+                        background: var(--bg1);
+                    }
+                }
+
+                .compareSubMenuList {
+                    list-style: none;
+                
+                    .compareSubMenuItem {
+                        padding: 8px 40px;
+                        font-size: 14px;
+                        cursor: pointer;
+                
+                        &:hover {
+                            background: var(--bg1);
+                        }
+                    }
+                }
+                
+            }
+
+            .sideUserList {
+                border-top: 1px solid var(--divider-border);
+            }
+
+
+
         }
 
 

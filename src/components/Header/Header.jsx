@@ -8,6 +8,10 @@ import headerLogo from 'src/assets/images/headerLogo.png';
 import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
 import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
 import mobileMenuIcon from 'src/assets/icons/mobileMenuIcon.svg';
+import mobileSideProfile from 'src/assets/icons/mobileSideProfile.svg';
+import mobileSideCompare from 'src/assets/icons/mobileSideCompare.png';
+import mobileSideDeposit from 'src/assets/icons/mobileSideDeposit.png';
+import mobileSideInstallment from 'src/assets/icons/mobileSideInstallment.png';
 import useDropdown from 'src/hooks/useDropdown';
 
 const Header = () => {
@@ -27,8 +31,16 @@ const Header = () => {
     // 모바일 사이드 메뉴
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+    // 비교 서브 메뉴 상태
+    const [isCompareSubMenuOpen, setIsCompareSubMenuOpen] = useState(false);
+
+
     const mobileToggleMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const toggleCompareSubMenu = () => {
+        setIsCompareSubMenuOpen(!isCompareSubMenuOpen); 
     };
 
     return (
@@ -81,13 +93,13 @@ const Header = () => {
             <nav className={styles.userNav} >
             <ul className={styles.userMenuList}>
                     <li className={styles.userMenuItem}>
-                        로그아웃{/* 회원가입 */}
+                        {/* {Users tb 조회 혹은 세션 확인 === '로그인 세션 있으면' ? '로그인(경로: Sign_In)' : '로그아웃'} */}로그아웃
                     </li>
                     <li className={styles.userMenuItem}>
                         <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
                     </li>                    
                     <li className={styles.userMenuItem}  onClick={() => navigate(PATH.MY_DEPOSIT)}>
-                        마이페이지{/* 로그인 */}
+                        {/* {Users tb 조회 혹은 세션 확인 === '로그인 세션 있으면' ? '회원가입(경로: Sign_Up)' : '마이페이지(경로: MY_DEPOSIT)'} */}마이페이지
                     </li>
                     <li className={styles.userMenuItem}>
                         <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
@@ -108,13 +120,86 @@ const Header = () => {
                 <div className={styles.mobileOverlay} onClick={mobileToggleMenu}>
                     <nav className={styles.mobileSideNav} onClick={(e) => e.stopPropagation()}>
                         <div className={ styles.mobileSideHeader }>
+                            <div className={styles.sideLogoDiv} onClick={() => navigate(PATH.HOME)}>
+                                <img src={headerLogo} alt="header logo" className={styles.sideHeaderLogo} />
+                            </div>
 
-                        </div>
+                            {/* 로그인 안했을 때 */}
+                            <div className={ styles.sideBtnDiv }>
+                                <button className={ styles.signInBtn }>로그인</button>
+                                <button className={ styles.signUpBtn }>회원가입</button>
+                            </div>
+
+                            {/* 로그인 했을 때 */}
+                            <div className={ styles.sideUserInfo }>
+                                <div className={ styles.mobileSideProfileDiv } onClick={() => navigate(PATH.HOME)}>
+                                    <img src={mobileSideProfile} alt="mobileSideProfile" className={styles.mobileSideProfile} />
+                                </div>
+                                <div className={ styles.sideUserName }>
+                                    <span>홍박사</span>님
+                                </div>
+                            </div>
+
+                        </div>{/* //<div className={ styles.mobileSideHeader }> */}
+
+
 
                         <div className={ styles.mobileSideMain }>
+                            <ul className={ styles.sideMainList }>
+                                <li className={ styles.sideMainItem }>
+                                    <div className={ styles.sideMainIconDiv }>
+                                        <img src={mobileSideDeposit} alt="mobileSideInstallment" className={styles.sideMainIcon} />
+                                    </div>
+                                    <div className={styles.sideMainItemDiv}>예금</div>
+                                </li>
+
+                                <li className={ styles.sideMainItem }>
+                                    <div className={ styles.sideMainIconDiv }>
+                                        <img src={mobileSideInstallment} alt="mobileSideInstallment" className={styles.sideMainIcon} />
+                                    </div>
+                                    <div className={styles.sideMainItemDiv}>적금</div>
+                                </li>
+                                <li className={ styles.sideMainItem }>
+                                    <div className={ styles.sideMainIconDiv }>
+                                        <img src={mobileSideCompare} alt="mobileSideInstallment" className={styles.sideMainIcon} />
+                                    </div>
+                                    <div className={styles.sideMainItemDiv}  onClick={() => setIsCompareSubMenuOpen(!isCompareSubMenuOpen)}>
+                                        <div className={ styles.sideMainItemTextDiv}>
+                                            비교
+                                        </div>
+                                        <div className={styles.sideMainItemArrowDiv}>
+                                            <img
+                                                src={downArrowIcon}
+                                                alt="Down arrow"
+                                                className={`${styles.sideMainItemArrow} ${isCompareSubMenuOpen ? styles.arrowUp : ''}`}
+                                            />
+                                        </div>                                   
+                                    </div>
+                                </li>
+                                {isCompareSubMenuOpen && (
+                                    <ul className={styles.compareSubMenuList}>
+                                        <li
+                                            className={styles.compareSubMenuItem}
+                                        >
+                                            예금 비교
+                                        </li>
+                                        <li
+                                            className={styles.compareSubMenuItem}
+                                        >
+                                            적금 비교
+                                        </li>
+                                    </ul>
+                                )}
+                                                                                              
+                            </ul>{/* //<ul className={ styles.sideMainList }> */}
 
 
-                        </div>
+                            <ul className={ styles.sideUserList }>
+
+                            </ul>
+
+
+                        </div>{/* //<div className={ styles.mobileSideMain }> */}
 
                     </nav>
                 </div>
