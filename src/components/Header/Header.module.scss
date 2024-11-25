@@ -87,3 +87,66 @@
         cursor: pointer;
     }
 }
+
+
+.mobileMenuIconDiv {
+    display: none;
+}
+
+
+
+
+/* ====================================== 가로 1000px 이하 ====================================== */
+
+@media (max-width: 1000px) {
+    header {
+        height: 60px;
+        padding: 0px 5%;
+    }
+
+    .mainNav,
+    .userNav {
+        display: none; /* 숨기기 */
+    }
+
+    .logoDiv {
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        img {
+            object-fit: contain;
+            max-width: 130px;
+            cursor: pointer;
+        }        
+    }
+
+    .mobileMenuIconDiv {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        img {
+            object-fit: contain;
+            cursor: pointer;
+            max-width: 26px;
+        }
+    }
+}
+
+
+
+
+/* ====================================== 가로 400px 이하 ====================================== */
+@media (max-width: 400px) {
+    .mobileMenuIconDiv {
+    
+        img {
+
+            max-width: 26px;
+        }
+    }
+
+}

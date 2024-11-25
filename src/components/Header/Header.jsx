@@ -5,6 +5,7 @@ import { PATH } from "src/utils/path";
 import headerLogo from 'src/assets/images/headerLogo.png';
 import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
 import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
+import mobileMenuIcon from 'src/assets/icons/mobileMenuIcon.svg';
 import useDropdown from 'src/hooks/useDropdown';
 
 const Header = () => {
@@ -87,6 +88,16 @@ const Header = () => {
                     </li>
                 </ul>
             </nav>
+
+
+
+            <div className={styles.mobileMenuIconDiv}>
+                <img src={mobileMenuIcon} alt="모바일 메뉴 아이콘" className={styles.mobileMenuIcon} />
+            </div>
+
+
+
+
         </header>
     );
 };
