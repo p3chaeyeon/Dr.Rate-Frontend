@@ -7,7 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
 import interactionPlugin from '@fullcalendar/interaction'; // 날짜 클릭
 import Modal from 'react-modal'; // 모달
 import AlertModal from "src/components/Modal/AlertModal/AlertModal"; //AlertModal
-import { isAlertOpenAtom, alertContentAtom } from 'src/atoms/alertAtom'; // alertAtom
+import useModal from 'src/hooks/useModal'; //useModal 훅 추가
 import leftArrowIcon from 'src/assets/icons/leftArrow.svg'; //icon
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 import kookminLogo from '/src/assets/bank/kookminLogo.png';
@@ -40,8 +40,9 @@ const MyCalendarPage = () => {
   const [endDate, setEndDate] = useAtom(endDateAtom); //만기일
   const [amount, setAmount] = useAtom(amountAtom); //금액
   const [events, setEvents] = useAtom(eventsAtom); //이벤트목록
-  const [isAlertOpen, setIsAlertOpen] = useAtom(isAlertOpenAtom);
-  const [alertContent, setAlertContent] = useAtom(alertContentAtom);
+
+  //중복방지, 별칭사용
+  const { isOpen: isAlertOpen, openModal: openAlert, closeModal: closeAlert, content } = useModal();
 
   const calendarRef = useRef(null); // 캘린더 참조
 
@@ -65,11 +66,7 @@ const MyCalendarPage = () => {
 
     //3개까지 허용
     if (selectedDateEventsCount >= 3) {
-      setAlertContent({
-        title: '경고',
-        message: '한 날짜에 최대 3개의 목록만 추가할 수 있습니다!',
-      });
-      setIsAlertOpen(true);
+      openAlert('실패', '하루에 최대 3개의 상품만 추가할 수 있습니다!');
       return;
     }
     setSelectedDate(info.dateStr);
@@ -123,140 +120,144 @@ const MyCalendarPage = () => {
       setEndDate('');
     } else {
       setModalIsOpen(false); //기존모달창 닫기
-      setAlertContent({
-        title: '입력 오류',
-        message: '모든 정보를 입력해주세요!',
-      });
-      setIsAlertOpen(true);
+      openAlert('작성 불가', '모든 정보를 입력해주세요!'); // AlertModal 열기
     }
   };
 
   return (
-    <div>
-      <AlertModal />
-      {/* MyNav를 캘린더 영역 위로 이동 */}
-      <div className={styles.myNavContainer}>
-        <MyNav />
-      </div>
-      <div
-        className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} // 흐림효과 추가
-      >
-        <FullCalendar
-          ref={calendarRef}
-          locale="ko" // 한글
-          plugins={[dayGridPlugin, interactionPlugin]} // 월간보기, 날짜클릭
-          initialView="dayGridMonth" //초기화면설정
-          eventOrder="" // 이벤트 순서
-          headerToolbar={{
-            left: 'title',
-            center: '',
-            right: 'prev,today,next',
-          }}
-          buttonText={{
-            today: '오늘',
-            prev: '',
-            next: '',
-          }}
-          titleFormat={{ year: 'numeric', month: 'long' }}
-          events={events}
-          contentHeight={1300} // 달력 주 고정된 높이
-          dateClick={handleDateClick}
-          dayCellClassNames={({ date }) => {
-            const today = new Date();
-            const isToday =
-              date.getFullYear() === today.getFullYear() && // 일치여부
-              date.getMonth() === today.getMonth() &&
-              date.getDate() === today.getDate();
-            if (isToday) return styles.today; // 오늘 날짜
-            const day = date.getUTCDay();
-            if (day === 6) return styles.sunday; // 일요일
-            if (day === 5) return styles.saturday; // 토요일
-          }}
-          dayCellDidMount={(info) => {
-            info.el.classList.add(styles.mycellstyle);
-            if (info.isToday) {
-              info.el.classList.add(styles.today); // 오늘 날짜
-            }
-          }}
-          eventDidMount={(info) => {
-            info.el.classList.add(styles.eventStyle); // 이벤트 스타일
-          }}
-          dayCellContent={({ date }) => {
-            return <span>{date.getDate()}</span>; // 일 표시
-          }}
-          datesSet={() => {
-            const frames = document.querySelectorAll('.fc-daygrid-day-frame');
-            frames.forEach((frame) => {
-              frame.classList.add(styles.expandedPadding); // 각 셀 크기
-            });
+    <main>
+      <MyNav />
+      <section>
+        {/* AlertModal 컴포넌트 */}
+        <AlertModal
+          isOpen={isAlertOpen}
+          closeModal={closeAlert}
+          title={content.title}
+          message={content.message}
+        />
+        {/* MyNav를 캘린더 영역 위로 이동 */}
+        <div className={styles.myNavContainer} >
+        </div>
+        <div
+          className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} // 흐림효과 추가
+        >
+          <FullCalendar
+            ref={calendarRef}
+            locale="ko" // 한글
+            plugins={[dayGridPlugin, interactionPlugin]} // 월간보기, 날짜클릭
+            initialView="dayGridMonth" //초기화면설정
+            eventOrder="" // 이벤트 순서
+            headerToolbar={{
+              left: 'title',
+              center: '',
+              right: 'prev,today,next',
+            }}
+            buttonText={{
+              today: '오늘',
+              prev: '',
+              next: '',
+            }}
+            titleFormat={{ year: 'numeric', month: 'long' }}
+            events={events}
+            contentHeight={1300} // 달력 주 고정된 높이
+            dateClick={handleDateClick}
+            dayCellClassNames={({ date }) => {
+              const today = new Date();
+              const isToday =
+                date.getFullYear() === today.getFullYear() && // 일치여부
+                date.getMonth() === today.getMonth() &&
+                date.getDate() === today.getDate();
+              if (isToday) return styles.today; // 오늘 날짜
+              const day = date.getUTCDay();
+              if (day === 6) return styles.sunday; // 일요일
+              if (day === 5) return styles.saturday; // 토요일
+            }}
+            dayCellDidMount={(info) => {
+              info.el.classList.add(styles.mycellstyle);
+              if (info.isToday) {
+                info.el.classList.add(styles.today); // 오늘 날짜
+              }
+            }}
+            eventDidMount={(info) => {
+              info.el.classList.add(styles.eventStyle); // 이벤트 스타일
+            }}
+            dayCellContent={({ date }) => {
+              return <span>{date.getDate()}</span>; // 일 표시
+            }}
+            datesSet={() => {
+              const frames = document.querySelectorAll('.fc-daygrid-day-frame');
+              frames.forEach((frame) => {
+                frame.classList.add(styles.expandedPadding); // 각 셀 크기
+              });
 
-            const titleElement = document.querySelector('.fc-toolbar-title');
-            if (titleElement) {
-              titleElement.classList.add(styles.title); // 날짜 css
-            }
+              const titleElement = document.querySelector('.fc-toolbar-title');
+              if (titleElement) {
+                titleElement.classList.add(styles.title); // 날짜 css
+              }
 
-            const tableElement = document.querySelector('.fc-scrollgrid');
-            if (tableElement) {
-              tableElement.classList.add(styles.noBorderTop); // 윗선 제거
-            }
+              const tableElement = document.querySelector('.fc-scrollgrid');
+              if (tableElement) {
+                tableElement.classList.add(styles.noBorderTop); // 윗선 제거
+              }
 
-            const prevButton = document.querySelector('.fc-prev-button'); //이전버튼
-            const nextButton = document.querySelector('.fc-next-button'); //다음버튼
+              const prevButton = document.querySelector('.fc-prev-button'); //이전버튼
+              const nextButton = document.querySelector('.fc-next-button'); //다음버튼
 
-            const defaultIcons = document.querySelectorAll('.fc-icon'); //기본 icon요소
-            defaultIcons.forEach((icon) => (icon.style.display = 'none')); //숨기기          
+              const defaultIcons = document.querySelectorAll('.fc-icon'); //기본 icon요소
+              defaultIcons.forEach((icon) => (icon.style.display = 'none')); //숨기기          
 
-            //이전 버튼에 커스텀 아이콘 추가
-            if (prevButton && !prevButton.querySelector('img')) {
-              const prevImg = document.createElement('img');
-              prevImg.src = leftArrowIcon;
-              prevImg.alt = '이전';
-              prevButton.className = styles.transparentButton;
-              prevButton.appendChild(prevImg);
-            }
+              //이전 버튼에 커스텀 아이콘 추가
+              if (prevButton && !prevButton.querySelector('img')) {
+                const prevImg = document.createElement('img');
+                prevImg.src = leftArrowIcon;
+                prevImg.alt = '이전';
+                prevButton.className = styles.transparentButton;
+                prevButton.appendChild(prevImg);
+              }
 
-            if (nextButton && !nextButton.querySelector('img')) {
-              const nextImg = document.createElement('img');
-              nextImg.src = rightArrowIcon;
-              nextImg.alt = '다음';
-              nextButton.className = styles.transparentButton;
-              nextButton.appendChild(nextImg);
-            }
+              if (nextButton && !nextButton.querySelector('img')) {
+                const nextImg = document.createElement('img');
+                nextImg.src = rightArrowIcon;
+                nextImg.alt = '다음';
+                nextButton.className = styles.transparentButton;
+                nextButton.appendChild(nextImg);
+              }
 
-            const todayButton = document.querySelector('.fc-today-button');
-            if (todayButton) {
-              todayButton.classList.add(styles.transparentButton); // 오늘버튼
-            }
-          }}
-          eventContent={(eventInfo) => {
-            const logo = eventInfo.event.extendedProps.logoUrl;
-            return (
-              <div className={styles.eventContainer}>
-                {logo && (
-                  <img
-                    src={logo}
-                    alt="Bank Logo"
-                    className={styles.eventLogo}
-                  />
-                )}
-                <div>
-                  <div className={styles.eventTitleContainer}>
-                    <div className={styles.eventTitle}>
-                      {eventInfo.event.title.split(' - ')[0]}
+              const todayButton = document.querySelector('.fc-today-button');
+              if (todayButton) {
+                todayButton.classList.add(styles.transparentButton); // 오늘버튼
+              }
+            }}
+            eventContent={(eventInfo) => {
+              const logo = eventInfo.event.extendedProps.logoUrl;
+              return (
+                <div className={styles.eventContainer}>
+                  {logo && (
+                    <img
+                      src={logo}
+                      alt="Bank Logo"
+                      className={styles.eventLogo}
+                    />
+                  )}
+                  <div>
+                    <div className={styles.eventTitleContainer}>
+                      <div className={styles.eventTitle}>
+                        {eventInfo.event.title.split(' - ')[0]}
+                      </div>
+                      <div className={styles.tooltip}>
+                        {eventInfo.event.title.split(' - ')[0]}
+                      </div>
                     </div>
-                    <div className={styles.tooltip}>
-                      {eventInfo.event.title.split(' - ')[0]}
+                    <div className={styles.eventAmount}>
+                      {eventInfo.event.title.split(' - ')[1]}
                     </div>
-                  </div>
-                  <div className={styles.eventAmount}>
-                    {eventInfo.event.title.split(' - ')[1]}
                   </div>
                 </div>
-              </div>
-            );
-          }}
-        />
-      </div>
+              );
+            }}
+          />
+        </div>
+      </section>
 
       {/* 모달 */}
       <Modal
@@ -323,7 +324,7 @@ const MyCalendarPage = () => {
           저장
         </button>
       </Modal>
-    </div>
+    </main>
   );
 };
 

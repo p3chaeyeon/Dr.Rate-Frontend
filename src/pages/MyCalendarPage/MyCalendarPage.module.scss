@@ -6,11 +6,6 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
 }
 
-/* nav위치 */
-.myNavContainer {
-  margin-top: 90px; /* 헤더와의 간격 조정 */
-}
-
 //왼쪽 상단 날짜글씨
 .title {
   font-size: 1.2rem !important;
@@ -104,7 +99,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* 위에표시 */
+  z-index: 2000; /* 위에표시 */
 }
 
 .modalLabel {
