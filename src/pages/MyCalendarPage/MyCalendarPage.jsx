@@ -6,6 +6,8 @@ import FullCalendar from '@fullcalendar/react'; // React용 FullCalendar
 import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
 import interactionPlugin from '@fullcalendar/interaction'; // 날짜 클릭
 import Modal from 'react-modal'; // 모달
+import AlertModal from "src/components/Modal/AlertModal/AlertModal"; //AlertModal
+import { isAlertOpenAtom, alertContentAtom } from 'src/atoms/alertAtom'; // alertAtom
 import leftArrowIcon from 'src/assets/icons/leftArrow.svg'; //icon
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 import kookminLogo from '/src/assets/bank/kookminLogo.png';
@@ -38,6 +40,8 @@ const MyCalendarPage = () => {
   const [endDate, setEndDate] = useAtom(endDateAtom); //만기일
   const [amount, setAmount] = useAtom(amountAtom); //금액
   const [events, setEvents] = useAtom(eventsAtom); //이벤트목록
+  const [isAlertOpen, setIsAlertOpen] = useAtom(isAlertOpenAtom);
+  const [alertContent, setAlertContent] = useAtom(alertContentAtom);
 
   const calendarRef = useRef(null); // 캘린더 참조
 
@@ -61,8 +65,12 @@ const MyCalendarPage = () => {
 
     //3개까지 허용
     if (selectedDateEventsCount >= 3) {
-      alert('한 날짜에 최대 3개의 목록만 추가할 수 있습니다!');
-      return; // 함수 종료
+      setAlertContent({
+        title: '경고',
+        message: '한 날짜에 최대 3개의 목록만 추가할 수 있습니다!',
+      });
+      setIsAlertOpen(true);
+      return;
     }
     setSelectedDate(info.dateStr);
     setModalIsOpen(true);
@@ -114,12 +122,18 @@ const MyCalendarPage = () => {
       setSelectedDate('');
       setEndDate('');
     } else {
-      alert('모든 정보를 입력해주세요!');
+      setModalIsOpen(false); //기존모달창 닫기
+      setAlertContent({
+        title: '입력 오류',
+        message: '모든 정보를 입력해주세요!',
+      });
+      setIsAlertOpen(true);
     }
   };
 
   return (
     <div>
+      <AlertModal />
       {/* MyNav를 캘린더 영역 위로 이동 */}
       <div className={styles.myNavContainer}>
         <MyNav />
