@@ -9,13 +9,13 @@ npm install --global yarn
 yarn --version # 1.22.22
 yarn install
 
-yarn add react-router-dom  # 클라이언트 측 라우팅 지원
-yarn add axios             # HTTP 요청을 처리
-yarn add jotai             # 경량 상태 관리
-yarn add sass              # scss 사용 라이브러리
+yarn add react-router-dom           # 클라이언트 측 라우팅 지원
+yarn add axios                      # HTTP 요청을 처리
+yarn add jotai                      # 경량 상태 관리
+yarn add sass                       # scss 사용 라이브러리
 yarn add @fullcalendar/react @fullcalendar/daygrid @fullcalendar/interaction @fullcalendar/core
-yarn add react-modal       # @FullCalendar 라이브러리 설치, modal
-yarn add chart.js react-chartjs-2  # 관리자 페이지 그래프 라이브러리
+yarn add react-modal                # @FullCalendar 라이브러리 설치, modal
+yarn add chart.js react-chartjs-2   # 관리자 페이지 그래프 라이브러리
 
 yarn dev
 
