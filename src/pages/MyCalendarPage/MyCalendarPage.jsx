@@ -7,7 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
 import interactionPlugin from '@fullcalendar/interaction'; // 날짜 클릭
 import Modal from 'react-modal'; // 모달
 import AlertModal from "src/components/Modal/AlertModal/AlertModal"; //AlertModal
-import { isAlertOpenAtom, alertContentAtom } from 'src/atoms/alertAtom'; // alertAtom
+import useModal from 'src/hooks/useModal'; //useModal 훅 추가
 import leftArrowIcon from 'src/assets/icons/leftArrow.svg'; //icon
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 import kookminLogo from '/src/assets/bank/kookminLogo.png';
@@ -40,8 +40,9 @@ const MyCalendarPage = () => {
   const [endDate, setEndDate] = useAtom(endDateAtom); //만기일
   const [amount, setAmount] = useAtom(amountAtom); //금액
   const [events, setEvents] = useAtom(eventsAtom); //이벤트목록
-  const [isAlertOpen, setIsAlertOpen] = useAtom(isAlertOpenAtom);
-  const [alertContent, setAlertContent] = useAtom(alertContentAtom);
+
+  //중복방지, 별칭사용
+  const { isOpen: isAlertOpen, openModal: openAlert, closeModal: closeAlert, content } = useModal();
 
   const calendarRef = useRef(null); // 캘린더 참조
 
@@ -65,11 +66,7 @@ const MyCalendarPage = () => {
 
     //3개까지 허용
     if (selectedDateEventsCount >= 3) {
-      setAlertContent({
-        title: '경고',
-        message: '한 날짜에 최대 3개의 목록만 추가할 수 있습니다!',
-      });
-      setIsAlertOpen(true);
+      openAlert('실패', '하루에 최대 3개의 상품만 추가할 수 있습니다!');
       return;
     }
     setSelectedDate(info.dateStr);
@@ -123,20 +120,22 @@ const MyCalendarPage = () => {
       setEndDate('');
     } else {
       setModalIsOpen(false); //기존모달창 닫기
-      setAlertContent({
-        title: '입력 오류',
-        message: '모든 정보를 입력해주세요!',
-      });
-      setIsAlertOpen(true);
+      openAlert('작성 불가', '모든 정보를 입력해주세요!'); // AlertModal 열기
     }
   };
 
   return (
     <div>
-      <AlertModal />
+      {/* AlertModal 컴포넌트 */}
+      <AlertModal 
+       isOpen={isAlertOpen}
+       closeModal={closeAlert}
+       title={ content.title }
+       message={ content.message }
+       />
       {/* MyNav를 캘린더 영역 위로 이동 */}
       <div className={styles.myNavContainer}>
-        <MyNav />
+      <MyNav />
       </div>
       <div
         className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} // 흐림효과 추가

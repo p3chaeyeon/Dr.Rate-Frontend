@@ -1,23 +1,22 @@
 import React from 'react';
-import { useAtom } from 'jotai';
-import { isAlertOpenAtom, alertContentAtom } from 'src/atoms/alertAtom';
-
 import styles from './AlertModal.module.scss';
 
-const AlertModal = () => {
-  const [isAlertOpen, setIsAlertOpen] = useAtom(isAlertOpenAtom); //모달 열림 상태 및 상태변경함수
-  const [alertContent] = useAtom(alertContentAtom); //모달의 제목과 메시지 상태
+const AlertModal = ({ isOpen, closeModal, title, message }) => {
+  if (!isOpen) return null; // 모달이 닫혀있으면 렌더링하지 않음
 
-  if (!isAlertOpen) return null; // 모달이 닫혀있으면 렌더링하지 않음
-
-  const handleClose = () => setIsAlertOpen(false); // 확인 버튼 클릭 시 모달 닫기
+  const handleBackgroundClick = (e) => {
+    //바탕 클릭 닫기
+    if (e.target.classList.contains(styles.alertModal)) {
+      closeModal(); 
+    }
+  };
 
   return (
-    <div className={styles.alertModal}>
+    <div className={styles.alertModal} onClick={handleBackgroundClick}>
       <div className={styles.alertModalContent}>
-        <h2>{alertContent.title || '알림 제목'}</h2>
-        <p>{alertContent.message || '알림 메시지가 없습니다.'}</p>
-        <button className={styles.alertOkBtn} onClick={handleClose}>
+        <h2>{title}</h2>
+        <p>{message}</p>
+        <button className={styles.alertOkBtn} onClick={closeModal}>
           확인
         </button>
       </div>
