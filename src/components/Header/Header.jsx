@@ -1,5 +1,7 @@
+/* src/components/Header/Header.jsx */
+
 import styles from './Header.module.scss';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PATH } from "src/utils/path";
 import headerLogo from 'src/assets/images/headerLogo.png';
@@ -20,6 +22,13 @@ const Header = () => {
             return searchParams.get('category') === category;
         }
         return false;
+    };
+
+    // 모바일 사이드 메뉴
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const mobileToggleMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
     return (
@@ -91,11 +100,25 @@ const Header = () => {
 
 
 
-            <div className={styles.mobileMenuIconDiv}>
+            <div className={styles.mobileMenuIconDiv} onClick={mobileToggleMenu}>
                 <img src={mobileMenuIcon} alt="모바일 메뉴 아이콘" className={styles.mobileMenuIcon} />
             </div>
 
+            {isMobileMenuOpen && (
+                <div className={styles.mobileOverlay} onClick={mobileToggleMenu}>
+                    <nav className={styles.mobileSideNav} onClick={(e) => e.stopPropagation()}>
+                        <div className={ styles.mobileSideHeader }>
 
+                        </div>
+
+                        <div className={ styles.mobileSideMain }>
+
+
+                        </div>
+
+                    </nav>
+                </div>
+            )}
 
 
         </header>

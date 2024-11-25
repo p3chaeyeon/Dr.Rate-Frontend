@@ -1,3 +1,5 @@
+/* src/components/Header/Header.module.scss */
+
 .logoDiv {
     width: 244px;
     max-height: 60px;
@@ -89,9 +91,16 @@
 }
 
 
+
+
+
 .mobileMenuIconDiv {
     display: none;
 }
+
+
+
+
 
 
 
@@ -134,19 +143,64 @@
             max-width: 26px;
         }
     }
+
+    .mobileOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); 
+        z-index: 2100; 
+        display: flex;
+        justify-content: flex-start; // 메뉴를 화면 왼쪽에 위치
+    }
+    
+    .mobileSideNav {
+        width: 50%;
+        height: 100%;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 0 15px;
+        box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+        z-index: 2500; // 메뉴가 오버레이 위에 나타나도록 설정
+
+    }
 }
 
 
 
 
 /* ====================================== 가로 400px 이하 ====================================== */
-@media (max-width: 400px) {
+@media (max-width: 430px) {
     .mobileMenuIconDiv {
     
         img {
-
             max-width: 26px;
         }
+    }
+
+    .mobileSideNav {
+        width: 77%;
+
+        .mobileSideHeader {
+            height: 16%;
+            border: 1px solid red;
+
+        }
+
+        .mobileSideMain {
+            height: 58%;
+            border: 1px solid green;
+        }
+
+
+
+
+
+
+
     }
 
 }
