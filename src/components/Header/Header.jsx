@@ -147,23 +147,27 @@ const Header = () => {
                 <div className={styles.mobileOverlay} onClick={mobileToggleMenu}>
                     <nav className={styles.mobileSideNav} onClick={(e) => e.stopPropagation()}>
                         <div className={ styles.mobileSideHeader }>
-                            <div className={styles.sideLogoDiv} onClick={() => navigate(PATH.HOME)}>
+                            <div className={styles.sideLogoDiv} onClick={() => sideNavigation(PATH.HOME)}>
                                 <img src={headerLogo} alt="header logo" className={styles.sideHeaderLogo} />
                             </div>
 
-                            {/* 로그인 안했을 때 */}
-                            <div className={ styles.sideBtnDiv }>
-                                <button className={ styles.signInBtn }>로그인</button>
-                                <button className={ styles.signUpBtn }>회원가입</button>
+                            {/* (비회원) 로그인 안했을 때 */}
+                            <div className={ styles.sideNonMemberMenu }>
+                                <div className={ styles.sideBtnDiv }>
+                                    <button className={ styles.signInBtn }>로그인</button>
+                                    <button className={ styles.signUpBtn }>회원가입</button>
+                                </div>
                             </div>
 
-                            {/* 로그인 했을 때 */}
-                            <div className={ styles.sideUserInfo }>
-                                <div className={ styles.mobileSideProfileDiv } onClick={() => navigate(PATH.HOME)}>
-                                    <img src={mobileSideProfile} alt="mobileSideProfile" className={styles.mobileSideProfile} />
-                                </div>
-                                <div className={ styles.sideUserName }>
-                                    <span>홍박사</span>님
+                            {/* (회원) 로그인 했을 때 */}
+                            <div className={ styles.sideMemberMenu }>
+                                <div className={ styles.sideUserInfo }>
+                                    <div className={ styles.mobileSideProfileDiv } >
+                                        <img src={mobileSideProfile} alt="mobileSideProfile" className={styles.mobileSideProfile} />
+                                    </div>
+                                    <div className={ styles.sideUserName }>
+                                        <span>홍박사</span>님
+                                    </div>
                                 </div>
                             </div>
 
@@ -222,57 +226,63 @@ const Header = () => {
 
 
                             <ul className={ styles.sideUserList }>
-                                <li className={ styles.sideMainItem }>
-                                    로그아웃
-                                </li>
-                                <li className={ styles.sideMainItem }  onClick={() => setIsMySubMenuOpen(!isMySubMenuOpen)}>
-                                    <div className={ styles.mySubItemText }>
-                                        마이페이지
-                                    </div>
-                                    <div className={ styles.mySubItemArrowDiv }>
-                                        <img
-                                            src={downArrowIcon}
-                                            alt="Down arrow"
-                                            className={`${styles.mySubItemArrow} ${isMySubMenuOpen ? styles.arrowUp : ''}`}
-                                        />
-                                    </div>
-                                </li>
-                                {isMySubMenuOpen && (
-                                    <ul className={styles.mySubMenuList}>
-                                        <li
-                                            className={styles.mySubMenuItem}
-                                        >
-                                            즐겨찾기
-                                        </li>
-                                        <ul className={ styles.myFavSubMenuList }>
-                                            <li 
-                                                className={styles.myFavSubMenuItem }
-                                                onClick={() => sideNavigation(PATH.MY_DEPOSIT)}
+                                
+                                {/* (회원) 로그인 했을 때; 로그아웃, 마이페이지, 고객센터 모두 보여야함 */}
+                                <div className={ styles.sideMemberMenu }>
+                                    <li className={ styles.sideMainItem }>
+                                        로그아웃
+                                    </li>
+                                    <li className={ styles.sideMainItem }  onClick={() => setIsMySubMenuOpen(!isMySubMenuOpen)}>
+                                        <div className={ styles.mySubItemText }>
+                                            마이페이지
+                                        </div>
+                                        <div className={ styles.mySubItemArrowDiv }>
+                                            <img
+                                                src={downArrowIcon}
+                                                alt="Down arrow"
+                                                className={`${styles.mySubItemArrow} ${isMySubMenuOpen ? styles.arrowUp : ''}`}
+                                            />
+                                        </div>
+                                    </li>
+                                    {isMySubMenuOpen && (
+                                        <ul className={styles.mySubMenuList}>
+                                            <li
+                                                className={styles.mySubMenuItem}
                                             >
-                                                <span>•</span>예금 즐겨찾기
+                                                즐겨찾기
                                             </li>
-                                            <li 
-                                                className={styles.myFavSubMenuItem }
-                                                onClick={() => sideNavigation(PATH.MY_INSTALLMENT)}
+                                            <ul className={ styles.myFavSubMenuList }>
+                                                <li 
+                                                    className={styles.myFavSubMenuItem }
+                                                    onClick={() => sideNavigation(PATH.MY_DEPOSIT)}
+                                                >
+                                                    <span>•</span>예금 즐겨찾기
+                                                </li>
+                                                <li 
+                                                    className={styles.myFavSubMenuItem }
+                                                    onClick={() => sideNavigation(PATH.MY_INSTALLMENT)}
+                                                >
+                                                    <span>•</span>적금 즐겨찾기
+                                                </li>
+                                            </ul>
+                                            <li
+                                                className={styles.mySubMenuItem}
+                                                onClick={() => sideNavigation(PATH.MY_INFO)}
                                             >
-                                                <span>•</span>적금 즐겨찾기
+                                                회원정보
+                                            </li>
+                                            <li
+                                                className={styles.mySubMenuItem}
+                                                onClick={() => sideNavigation(PATH.MY_CALENDAR)}
+                                            >
+                                                적금달력
                                             </li>
                                         </ul>
-                                        <li
-                                            className={styles.mySubMenuItem}
-                                            onClick={() => sideNavigation(PATH.MY_INFO)}
-                                        >
-                                            회원정보
-                                        </li>
-                                        <li
-                                            className={styles.mySubMenuItem}
-                                            onClick={() => sideNavigation(PATH.MY_CALENDAR)}
-                                        >
-                                            적금달력
-                                        </li>
-                                    </ul>
-                                )}
+                                    )}
+                                </div>
 
+
+                                {/* (비회원, 회원) 비회원은 고객센터만 보여야함 */}
                                 <li className={ styles.sideMainItem }>
                                     고객센터
                                 </li>
