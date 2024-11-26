@@ -72,7 +72,7 @@ const Header = () => {
                 <ul className={styles.mainMenuList}>
                     <li 
                         className={styles.mainMenuItem} 
-                        onClick={() => navigate(`${PATH.DEPOSIT_LIST}`)}
+                        onClick={() => navigate(PATH.DEPOSIT_LIST)}
                         style={{
                             color: location.pathname.includes(PATH.DEPOSIT_LIST) ? 'var(--main1)' : 'inherit',
                         }}                    
@@ -81,7 +81,7 @@ const Header = () => {
                     </li>
                     <li 
                         className={styles.mainMenuItem}
-                        onClick={() => navigate(`${PATH.INSTALLMENT_LIST}`)}
+                        onClick={() => navigate(PATH.INSTALLMENT_LIST)}
                         style={{
                             color: location.pathname.includes(PATH.INSTALLMENT_LIST) ? 'var(--main1)' : 'inherit',
                         }}

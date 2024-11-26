@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styles from './MyNav.module.scss';
 import { useNavigate, useLocation } from "react-router-dom";
 import { PATH } from "src/utils/path";
@@ -11,6 +11,7 @@ const MyNav = () => {
     const location = useLocation();
     const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
     const { isDropdownOpen, dropdownRef, handleMouseEnter, handleMouseLeave } = useDropdown();
+  
 
     return (
         <nav id="MyNav" className={styles.myNav}>
