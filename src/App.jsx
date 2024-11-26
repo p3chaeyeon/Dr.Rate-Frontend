@@ -34,7 +34,7 @@ function App() {
               <Route path={PATH.ADMIN_MAIN} element={<PageRoutes.AdminMainPage />} />
               <Route path={PATH.ADMIN_INQUIRE_LIST} element={<PageRoutes.AdminInquireListPage/>} />
               <Route path={PATH.ADMIN_INQUIRE} element={<PageRoutes.AdminInquirePage />} />
-              <Route path={PATH.ADMIN_USERLIST} element={<PageRoutes.AdminUserListPage/>} />
+              <Route path={PATH.ADMIN_USER_LIST} element={<PageRoutes.AdminUserListPage/>} />
           </Route>
       </Routes>
 
