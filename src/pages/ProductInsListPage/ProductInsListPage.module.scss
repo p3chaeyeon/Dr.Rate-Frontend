@@ -58,7 +58,7 @@
   //은행선택 박스 
 
   .main1 {
-    border: 1px solid #D9D9D9; 
+    border: 1px solid var(--bg2); 
     margin-top: 25px;
     margin-bottom: 30px;
     display: flex;
@@ -66,7 +66,7 @@
     font-family: Arial, sans-serif;
     padding: 25px;
     justify-content: left;
-    background-color: #D9D9D9;   /* 배경색 추가 */
+    background-color: var(--bg2);   /* 배경색 추가 */
   }
 
   
@@ -179,7 +179,7 @@
     }
   
     .productListBtn {
-      background-color: #D9D9D9; /* 버튼 배경색 */
+      background-color: var(--bg2); /* 버튼 배경색 */
       padding: 5px 10px;
       border-radius: 5px;
       font-size: 12px;

@@ -11,7 +11,7 @@ export const PATH = {
     MY_WITHDRAW: '/myWithdraw',             // 마이페이지; 회원 탈퇴
     MY_CALENDAR: '/myCalendar',             // 마이페이지; 나의 적금 달력
 
-    INSTALLMENT_LIST: "/productinsList",   // 상품-적금페이지; 필터페이지
+    INSTALLMENT_LIST: '/product/installmentList',   // 상품-적금리스트페이지; 필터페이지 -혜진
     PRODUCT_DETAIL: '/products/detail',   // 상품페이지; 상품 상세페이지
 
 
