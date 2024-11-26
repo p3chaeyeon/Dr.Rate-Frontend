@@ -62,3 +62,45 @@
         }
     }
 }
+
+
+
+/* ====================================== 가로 430px 이하 ====================================== */
+@media (max-width: 430px) {
+    .myNav {
+        height: 50px;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .myMenuList {
+        max-width: 300px;
+        height: 30px;
+    
+        .myMenuItem {
+            width: 100px;
+
+            .myNavDownArrow {
+                width: 10px;
+                height: 10px;
+                margin: 5px 0 0 8px;
+            }
+
+            .MyDropdownMenu {
+                color: var(--font1);
+                font-size: 14px;
+                position: absolute;
+                top: 10px; 
+                left: 15px; 
+                width: 110px;
+                // border: 2px solid #BBBBBB;
+                border-radius: 8px;
+                
+                .MyDropdownItem {
+                    padding: 8px;
+                }
+            }
+        }
+    }
+
+}
