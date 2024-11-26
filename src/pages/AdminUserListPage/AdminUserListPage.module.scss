@@ -11,6 +11,7 @@
         flex-direction: column;
         width: 95%;
         height: 90%;
+        padding: 30px;
         background-color: var(--white);
 
         /* 헤더 */
@@ -21,17 +22,42 @@
             height: 30%;
 
             .userListTitle {
-                padding: 20px;
+                padding: 20px 0;
                 font-size: 20px;
             }
 
             .userSearchBar {
                 display: flex;
-                padding: 20px;
+                padding: 20px 0;
                 gap: 10px;
+                border-bottom: 1px solid var(--font2);
+
+                select {
+                    width: 100px;
+                    cursor: pointer;
+                    color: var(--font2);
+
+                    optgroup {
+                        font-size: 14px;
+                        font-weight: 500;
+
+                        option {
+                            font-size: 14px;
+                            color: var(--black);
+                            background-color: #fff; 
+                            padding: 5px; 
+                            cursor: pointer;
+                        }
+                    }
+                }
 
                 input {
-                    padding: 8px;
+                    width: 240px;
+                }
+
+                select, input {
+                    font-size: 14px;
+                    padding: 5px 10px;
                     border: 1px solid #ddd;
                     border-radius: 4px;
                     transition: border-color 0.3s ease;
@@ -47,16 +73,20 @@
                 }
 
                 button {
-                    padding: 8px 16px;
-                    background-color: #b0adad;
+                    width: 80px;
+                    display: flex;
+                    justify-self: center;
+                    align-items: center;
+                    background-color: var(--font2);
                     color: #fff;
                     border: none;
                     border-radius: 4px;
                     cursor: pointer;
+                    letter-spacing: 1px;
                     transition: background-color 0.3s ease, transform 0.2s ease;
 
                     &:hover {
-                        background-color: #706d6d;
+                        background-color: #4f4f4f;
                         transform: scale(1.05);
                     }
 
@@ -76,6 +106,7 @@
             overflow-x: auto;
 
             table {
+                text-align: center;
                 width: 100%;
                 border-collapse: collapse;
                 .row {
@@ -89,16 +120,18 @@
                 td {
                     padding: 12px;
                     border: 1px solid #f1f1f1;
-                    text-align: left;
                     transition: background-color 0.3s ease;
                 }
 
                 th {
                     background-color: #f9f9f9;
                     font-weight: bold;
+                    font-size: 16px;
                 }
 
                 td {
+                    font-size : 14px;
+                    
                     &:hover {
                         background-color: #f7f7f7;
                         /* 셀 호버 효과 */
