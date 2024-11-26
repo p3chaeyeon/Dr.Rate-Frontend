@@ -21,7 +21,7 @@ const MyNav = () => {
                     onMouseLeave={handleMouseLeave}                    
                     style={{
                         color: isPathActive([PATH.MY_DEPOSIT, PATH.MY_INSTALLMENT]) ? 'var(--main1)' : 'inherit',
-                    }}                
+                    }}             
                 >
                     즐겨찾기
                     <img src={downArrowIcon} alt="Down arrow" className={styles.myNavDownArrow} />

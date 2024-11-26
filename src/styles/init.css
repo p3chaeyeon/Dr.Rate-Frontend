@@ -8,7 +8,8 @@
 
 html, body {
     width: 100%;
-    height: auto; /* auto로 설정해 콘텐츠 높이에 따라 확장 */
+    /* height: auto; /* auto 로 설정해 콘텐츠 높이에 따라 확장 */
+    height: 100%;
     overflow-x: hidden;
     overflow-y: auto; /* 스크롤 허용 */   
     font-size: 16px;
@@ -38,6 +39,11 @@ h3 {
 
 ul, ol, li {
     list-style: none;
+    background: transparent;
+}
+
+ul:hover, ol:hover, li:hover {
+    background: transparent;
 }
 
 a {

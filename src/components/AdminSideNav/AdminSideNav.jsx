@@ -29,7 +29,7 @@ const AdminSideNav = () => {
                             대시보드
                         </div>
                     </div>
-                    <div className={ styles.adminMenuList } onClick={()=> navigate(PATH.ADMIN_USERLIST)}>
+                    <div className={ styles.adminMenuList } onClick={()=> navigate(PATH.ADMIN_USER_LIST)}>
                         <div className={ styles.adminMenuItemImg}>
                             <img src={userManagement} alt="사용자 조회" className={styles.adminMenuImg} />
                         </div>

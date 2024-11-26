@@ -90,6 +90,14 @@ div.adminPage {
 
 
 
+@media (max-width: 1000px) {
+  main {
+    padding-top: 60px;
+  }
+
+}
+
+
 
 /* 라이트 모드일 때 스타일 */
 /* @media (prefers-color-scheme: light) { } */

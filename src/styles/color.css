@@ -1,12 +1,14 @@
 :root {
     --white: #fbfbfb;
     --black: #171717;
-    --main1: #0068FF; /* 로고 파랑 */
-    --main2: #407BFF; /* 나에게 맞는 예금 상품이 궁금하다면? 배경 파랑 */
-    --box1: #0085E4; /* HomePage 예금 box */
-    --box2: #5C44F3; /* HomePage 적금 box */
-    --red1: #FF4143; /* 밝은 빨강 */
-    --red2: #F30606; /* 최고 금리 빨강 */
+    --main1: #0068FF;   /* 로고 파랑 */
+    --main2: #407BFF;   /* 나에게 맞는 예금 상품이 궁금하다면? 배경 파랑 */
+    --box1: #0085E4;    /* HomePage 예금 box */
+    --box2: #5C44F3;    /* HomePage 적금 box */
+    --red1: #FF4143;    /* 밝은 빨강 */
+    --red2: #F30606;    /* 최고 금리 빨강 */
+    --bg1: #F7F9FA;     /* 옅은 하늘 배경 */
+    --bg2: #D9D9D9;     /* 회색 배경 */
 
     /* Admin */
     --side-nav: #15306D; /* 관리자 사이드 메뉴 배경 색 */
@@ -14,18 +16,9 @@
     --admin-body: #EEEEEE;
 
     --font1: #333; /* MENU 글씨 색상 */
-    --font2: #787878;
+    --font2: #555;
     --font3: #858585;
     --font4: #BBBBBB;
-    --blue-gray: #84ABD8;
-    --gray: #F4F4F4;
-    --coral: #FF9574;
-    --neon-green: #AFD939;
-    --light-gray: #E1E1E1;
-    --silver-gray: #CDCDCD;
-    --light-yellow: #FFDE99;
-    --warm-gray: #F6F6F6;
-    --bright-gray: #F2F2F2;
-    --agent-red: #FF6B00;
+
   }
   

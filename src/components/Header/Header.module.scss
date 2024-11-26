@@ -1,3 +1,5 @@
+/* src/components/Header/Header.module.scss */
+
 .logoDiv {
     width: 244px;
     max-height: 60px;
@@ -86,4 +88,327 @@
         align-items: center;
         cursor: pointer;
     }
+}
+
+
+
+
+
+.mobileMenuIconDiv {
+    display: none;
+}
+
+
+
+
+
+
+
+
+/* ====================================== 가로 1000px 이하 ====================================== */
+
+@media (max-width: 1000px) {
+    header {
+        height: 60px;
+        padding: 0px 5%;
+    }
+
+    .mainNav,
+    .userNav {
+        display: none; /* 숨기기 */
+    }
+
+    .logoDiv {
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        img {
+            object-fit: contain;
+            max-width: 130px;
+            cursor: pointer;
+        }        
+    }
+
+    .mobileMenuIconDiv {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        img {
+            object-fit: contain;
+            cursor: pointer;
+            max-width: 26px;
+        }
+    }
+
+    .mobileOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); 
+        z-index: 2100; 
+        display: flex;
+        justify-content: flex-start; // 메뉴를 화면 왼쪽에 위치
+    }
+    
+    .mobileSideNav {
+        width: 77%;
+        width: 50%;
+        height: 100%;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        padding: 0 15px;
+        box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+        z-index: 2500; // 메뉴가 오버레이 위에 나타나도록 설정
+
+        /* 비회원 사이드 메뉴 */
+        .sideNonMemberMenu {
+            display: none;
+        }
+        
+        /* 회원 사이드 메뉴 */
+        .sideMemberMenu {
+        }
+
+        .mobileSideHeader {
+            height: 120px;
+
+            .sideLogoDiv {
+                height: 60px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                padding-left: 5px;
+        
+                img {
+                    object-fit: contain;
+                    max-width: 130px;
+                    cursor: pointer;
+                }        
+            }
+
+            .sideBtnDiv {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 14px;
+                height: 60px;
+
+                .signInBtn, .signUpBtn {
+                    width: 120px;
+                    height: 40px;
+                }
+
+                .signInBtn {
+                    border: 1px solid var(--main1);
+                    color: var(--main1);
+                }
+
+                .signUpBtn {
+                    color: var(--white);
+                    border: 1px solid var(--main1);
+                    background: var(--main1);
+                }
+            }
+
+            .sideUserInfo {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 10px;
+                height: 60px;
+                padding-left: 13px;
+                padding-bottom: 8px;
+
+                .mobileSideProfileDiv {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .sideUserName {
+                    font-size: 14px;
+
+                    span {
+                        font-size: 16px;
+                        font-weight: 600;
+                        margin-right: 5px;
+                    }
+                }
+
+            }
+        }
+
+
+
+        .mobileSideMain {
+            flex: 1;
+            height: auto;
+            // border: 1px solid orange;
+            letter-spacing: 1px;
+
+
+            .sideMainList {
+                padding: 10px 0;
+                border-top: 1px solid var(--divider-border);
+                color: var(--black);
+
+                .sideMainItem {
+                    padding: 0 10px;
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 15px;
+                    height: 50px;
+                    cursor: pointer;
+                    
+                    .sideMainIconDiv {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        .sideMainIcon {
+                            object-fit: contain;
+                            max-width: 35px;
+                        }
+                    }
+
+                    .sideMainItemDiv {
+                        flex: 1;
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+
+                        .sideMainItemArrow {
+                            width: 12px;
+                            height: 12px;
+                            cursor: pointer;
+                            // transition: transform 0.3s ease; // 애니메이션 추가
+                        
+                            &.arrowUp {
+                                transform: rotate(180deg); // 화살표 위로 회전
+                            }
+                        }
+                    }
+                    
+                    &:hover {
+                        background: var(--bg1);
+                    }
+                }
+
+                .compareSubMenuList {
+                    list-style: none;
+                
+                    .compareSubMenuItem {
+                        padding: 8px 40px;
+                        font-size: 14px;
+                        cursor: pointer;
+                
+                        &:hover {
+                            background: var(--bg1);
+                        }
+                    }
+                }
+                
+            }
+
+            .sideUserList {
+                border-top: 1px solid var(--divider-border);
+                font-size: 14px;
+                color: var(--font1);
+                padding: 10px 0;
+
+                .sideMainItem {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;                    
+                    padding: 0 10px 0 15px;
+                    height: 40px;
+                    cursor: pointer;
+
+                    .mySubItemArrow {
+                        width: 12px;
+                        height: 12px;
+                        cursor: pointer;
+                        // transition: transform 0.3s ease; // 애니메이션 추가
+                    
+                        &.arrowUp {
+                            transform: rotate(180deg); // 화살표 위로 회전
+                        }
+                    }
+
+                    &:hover {
+                        background: var(--bg1);
+                    }
+                }
+
+                .mySubMenuList {
+                    list-style: none;
+
+                
+                    .mySubMenuItem {
+                        padding: 5px 40px;
+                        font-size: 13px;
+                        cursor: pointer;
+                
+                        &:nth-child(2):hover, &:nth-child(3):hover { 
+                            background: var(--bg1);
+                        }
+                    }
+                    .myFavSubMenuList {
+                        // list-style-type: circle;
+                        // list-style-position: inside;
+                        
+                        .myFavSubMenuItem {
+                            display: flex;
+                            justify-content: flex-start;
+                            align-items: center;
+                            height: 30px;
+                            padding-left: 50px;
+                            font-size: 13px;
+                            background: none;
+
+                            span {
+                                margin-right: 10px;
+                            }
+                            
+                            &:hover {
+                                background: var(--bg1);
+                            }
+                        }
+                    }
+                    
+                }
+
+
+            }
+
+        }
+
+
+    }
+}
+
+
+
+
+/* ====================================== 가로 400px 이하 ====================================== */
+@media (max-width: 430px) {
+    .mobileMenuIconDiv {
+    
+        img {
+            max-width: 26px;
+        }
+    }
+
+    .mobileSideNav {
+        width: 77%;
+    }
+
 }

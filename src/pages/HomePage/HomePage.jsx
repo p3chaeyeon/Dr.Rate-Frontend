@@ -11,6 +11,16 @@ const HomePage = () => {
 
 
     useEffect(() => {
+        // body에 클래스 추가
+        document.body.classList.add(styles.homeBody);
+
+        return () => {
+            // 페이지가 변경될 때 클래스 제거
+            document.body.classList.remove(styles.homeBody);
+        };
+    }, []);
+    
+    useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
 
