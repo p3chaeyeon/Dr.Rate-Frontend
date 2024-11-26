@@ -127,11 +127,12 @@
                     background-color: #f9f9f9;
                     font-weight: bold;
                     font-size: 16px;
+                    letter-spacing: 1px;
                 }
 
                 td {
                     font-size : 14px;
-                    
+
                     &:hover {
                         background-color: #f7f7f7;
                         /* 셀 호버 효과 */

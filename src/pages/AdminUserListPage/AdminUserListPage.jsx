@@ -11,7 +11,6 @@ const AdminUserListPage = () => {
                         <h4>사용자 조회</h4>
                     </div>
                     <div className={styles.userSearchBar}>
-                        {/* <input type="text" placeholder="아이디" /> */}
                         <select>
                             <optgroup label="검색 항목">
                                 <option value="id" selected>아이디</option>
