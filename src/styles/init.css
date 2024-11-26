@@ -39,6 +39,11 @@ h3 {
 
 ul, ol, li {
     list-style: none;
+    background: transparent;
+}
+
+ul:hover, ol:hover, li:hover {
+    background: transparent;
 }
 
 a {

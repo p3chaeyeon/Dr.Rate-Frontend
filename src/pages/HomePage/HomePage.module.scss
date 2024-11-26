@@ -2,15 +2,15 @@
 
 .homeBody {
     height: auto; /* 콘텐츠 높이에 따라 확장 */
-    overflow-y: auto; /* 세로 스크롤 활성화 */
+    overflow-y: hidden; /* 세로 스크롤 활성화 */
 }
 
 .homeMain {
     padding: 0;
     width: 100%;
-    min-height: 100vh;
-    height: auto;
-    overflow-y: auto;
+    // min-height: 100vh;
+    // height: auto;
+    // overflow-y: auto;
 }
 
 .homeMainDiv {
