@@ -17,16 +17,8 @@ import useDropdown from 'src/hooks/useDropdown';
 const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
     const { isDropdownOpen, dropdownRef, handleMouseEnter, handleMouseLeave } = useDropdown();
-
-    // 현재 경로 확인 함수
-    const isPathActive = (path, category) => {
-        if (location.pathname.includes(path)) {
-            const searchParams = new URLSearchParams(location.search);
-            return searchParams.get('category') === category;
-        }
-        return false;
-    };
 
     // 모바일 사이드 메뉴
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -36,15 +28,15 @@ const Header = () => {
     const [isMySubMenuOpen, setIsMySubMenuOpen] = useState(false);
 
 
-    const mobileToggleMenu = () => {
+    const mobileToggleMenu = () => { // 모바일 사이드 메뉴
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
-    const toggleCompareSubMenu = () => {
+    const toggleCompareSubMenu = () => { // 모바일 사이드 메뉴 - 비교 서브메뉴
         setIsCompareSubMenuOpen(!isCompareSubMenuOpen); 
     };
 
-    const toggleMySubMenu = () => {
+    const toggleMySubMenu = () => { // 모바일 사이드 메뉴 - 마이페이지 서브메뉴
         setIsMySubMenuOpen(!isMySubMenuOpen);
     };
 
@@ -80,36 +72,38 @@ const Header = () => {
                 <ul className={styles.mainMenuList}>
                     <li 
                         className={styles.mainMenuItem} 
-                        // onClick={() => navigate(`${PATH.PRODUCT_DEP_LIST}`)}
+                        onClick={() => navigate(`${PATH.DEPOSIT_LIST}`)}
                         style={{
-                            color: isPathActive(PATH.PRODUCT_DETAIL, 'i') ? 'var(--main)' : 'inherit',
+                            color: location.pathname.includes(PATH.DEPOSIT_LIST) ? 'var(--main1)' : 'inherit',
                         }}                    
                     >
                         예금
                     </li>
                     <li 
                         className={styles.mainMenuItem}
-                        // onClick={() => navigate(`${PATH.PRODUCT_INS_LIST}`)}
+                        onClick={() => navigate(`${PATH.INSTALLMENT_LIST}`)}
                         style={{
-                            color: isPathActive(PATH.PRODUCT_DETAIL, 'd') ? 'var(--main)' : 'inherit',
+                            color: location.pathname.includes(PATH.INSTALLMENT_LIST) ? 'var(--main1)' : 'inherit',
                         }}
-
                     >
                         적금
                     </li>
                     <li 
                         className={styles.mainMenuItem}
                         onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}                     
+                        onMouseLeave={handleMouseLeave}     
+                        style={{
+                            color: isPathActive([PATH.DEPOSIT_COMPARE, PATH.INSTALLMENT_COMPARE]) ? 'var(--main1)' : 'inherit',
+                        }}                 
                     >
                         비교
                         <img src={downArrowIcon} alt="Down arrow" className={styles.headerDownArrow} />
                         {isDropdownOpen && (
                         <ul className={styles.HeaderDropdownMenu} ref={dropdownRef}>
-                            <li className={styles.HeaderDropdownItem} onClick={() => navigate(PATH.MY_DEPOSIT)}>
+                            <li className={styles.HeaderDropdownItem} onClick={() => navigate(PATH.DEPOSIT_COMPARE)}>
                                 예금 비교
                             </li>
-                            <li className={styles.HeaderDropdownItem} onClick={() => navigate(PATH.MY_INSTALLMENT)}>
+                            <li className={styles.HeaderDropdownItem} onClick={() => navigate(PATH.INSTALLMENT_COMPARE)}>
                                 적금 비교
                             </li>
                         </ul>
@@ -125,7 +119,7 @@ const Header = () => {
                     <li className={styles.userMenuItem}>
                         <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
                     </li>                    
-                    <li className={styles.userMenuItem}  onClick={() => navigate(PATH.MY_DEPOSIT)}>
+                    <li className={styles.userMenuItem} onClick={() => navigate(PATH.MY_DEPOSIT)}>
                         {/* {Users tb 조회 혹은 세션 확인 === '로그인 세션 있으면' ? '회원가입(경로: Sign_Up)' : '마이페이지(경로: MY_DEPOSIT)'} */}마이페이지
                     </li>
                     <li className={styles.userMenuItem}>
@@ -177,14 +171,14 @@ const Header = () => {
 
                         <div className={ styles.mobileSideMain }>
                             <ul className={ styles.sideMainList }>
-                                <li className={ styles.sideMainItem }>
+                                <li className={ styles.sideMainItem } onClick={() => sideNavigation(PATH.DEPOSIT_LIST)}>
                                     <div className={ styles.sideMainIconDiv }>
                                         <img src={mobileSideDeposit} alt="mobileSideInstallment" className={styles.sideMainIcon} />
                                     </div>
                                     <div className={styles.sideMainItemDiv}>예금</div>
                                 </li>
 
-                                <li className={ styles.sideMainItem }>
+                                <li className={ styles.sideMainItem } onClick={() => sideNavigation(PATH.INSTALLMENT_LIST)}>
                                     <div className={ styles.sideMainIconDiv }>
                                         <img src={mobileSideInstallment} alt="mobileSideInstallment" className={styles.sideMainIcon} />
                                     </div>
@@ -211,11 +205,13 @@ const Header = () => {
                                     <ul className={styles.compareSubMenuList}>
                                         <li
                                             className={styles.compareSubMenuItem}
+                                            onClick={() => sideNavigation(PATH.DEPOSIT_COMPARE)}
                                         >
                                             예금 비교
                                         </li>
                                         <li
                                             className={styles.compareSubMenuItem}
+                                            onClick={() => sideNavigation(PATH.INSTALLMENT_COMPARE)}
                                         >
                                             적금 비교
                                         </li>
