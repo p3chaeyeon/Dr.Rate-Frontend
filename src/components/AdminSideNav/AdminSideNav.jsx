@@ -6,6 +6,7 @@ import adminLogo from 'src/assets/images/adminLogo.png';
 import dashboard from 'src/assets/images/adminDashboard.png';
 import userManagement from 'src/assets/images/adminUserManagement.png';
 import inquiryHistory from 'src/assets/images/adminInquiryHistory.png';
+import whiteRightArrow from 'src/assets/icons/whiteRightArrow.svg';
 
 const AdminSideNav = () => {
     const navigate = useNavigate();
@@ -72,7 +73,8 @@ const AdminSideNav = () => {
 
             {/* 사용자 페이지 이동 */}
             <div className={ styles.userNavigateDiv } onClick={() => navigate(PATH.HOME)}>
-                사용자 페이지 이동 &gt;
+                사용자 페이지 이동
+                <img src={whiteRightArrow} alt="이동 오른쪽 >" className={styles.whiteRightArrowImg} />
             </div>
 
             
