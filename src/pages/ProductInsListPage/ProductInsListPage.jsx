@@ -21,18 +21,18 @@ const ProductInsListPage = () => {
     // 추가 로직 구현
   };
 
-  // const handleRateClick = () => {
-  //   console.log("금리 높은 순 버튼 클릭"); // 테스트용
-  //   // 추가 로직 구현
-  // };
+  const handleRateClick = () => {
+    console.log("금리 높은 순 버튼 클릭"); // 테스트용
+    // 추가 로직 구현
+  };
   
  
   return (
-    <div>
-       <h3 className={styles.mainTitle}>예금</h3>
-      
-       {/* 회원/비회원 공통 보이는 필터*/} 
-      <div className={styles.main1}>
+    <main>
+       <section className={styles.mainTitle}><h3>적금</h3></section>
+
+      {/* 회원/비회원 공통 보이는 필터 */}
+      <section className={styles.main1}>
         <div className={styles.bankselect}>
           <select
             name="bank"
@@ -45,31 +45,25 @@ const ProductInsListPage = () => {
             <option value="국민 은행">국민 은행</option>
           </select>
         </div>
-          {/* 선택한 은행을 화면에 표시 */}
-       
-          {/* 선택된 은행 표시 */}
-  <div className={styles.selectedBanksContainer}>
-  {selectedBanks.map((bank, index) => (
-    <div
-      key={index}
-      className={styles.selectedBank} 
-    >
-      <span>{bank}</span>
-      <button
-        onClick={() => handleBankRemove(bank)}
-        className={styles.removeBank} 
-      >
-        X
-      </button>
-    </div>
-  ))}
-</div>
-      </div>
 
-      
-      {/* 로그인 하고 보이는 필터*/} 
-      {/* main1 */}
-      <div className={styles.filterTotal}>
+        {/* 선택된 은행 표시 */}
+        <div className={styles.selectedBanksContainer}>
+          {selectedBanks.map((bank, index) => (
+            <div key={index} className={styles.selectedBank}>
+              <span>{bank}</span>
+              <button
+                onClick={() => handleBankRemove(bank)}
+                className={styles.removeBank}
+              >
+                X
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 로그인 후 보이는 필터 */}
+      <section className={styles.filterTotal}>
         <div className={styles.filterDiv}>
           <label style={{ marginRight: "10px" }}>나이:</label>
           <input
@@ -103,26 +97,25 @@ const ProductInsListPage = () => {
           </select>
         </div>
 
-       <div className={styles.filterDiv}>
-  <h4>이자 계산 방식</h4>
-  <div className="toggle-buttons">
-    <div
-      className="toggle-button"
-      data-value="단리"
-      onClick={() => handleFilterChange("단리")}
-    >
-      단리
-    </div>
-    <div
-      className="toggle-button"
-      data-value="복리"
-      onClick={() => handleFilterChange("복리")}
-    >
-      복리
-    </div>
-  </div>
-</div>
-
+        <div className={styles.filterDiv}>
+          <h4>이자 계산 방식</h4>
+          <div className="toggle-buttons">
+            <div
+              className="toggle-button"
+              data-value="단리"
+              onClick={() => handleFilterChange("단리")}
+            >
+              단리
+            </div>
+            <div
+              className="toggle-button"
+              data-value="복리"
+              onClick={() => handleFilterChange("복리")}
+            >
+              복리
+            </div>
+          </div>
+        </div>
 
         <div className={styles.filterDiv}>
           <h4>가입방식</h4>
@@ -136,26 +129,25 @@ const ProductInsListPage = () => {
             <option value="비대면">비대면</option>
           </select>
         </div>
-      {/* <button
-  onClick={handleRateClick}
-  style={{
-    marginTop: "50px",
-    padding: "10px 20px 10px",
-    backgroundColor: "#007bff",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    float: "right", // 오른쪽 정렬
-  }}
->
-  조회
-</button> */}
-      </div>{" "}
-    
-      {/* </div> */}
-      {/*     list html 구조 예시 */}
-      <div className={styles.productListDiv}>
+      </section>
+
+      {/* <div className={styles.filterDiv}>
+          <h4>가입방식</h4>
+          <select
+            name="type"
+            onChange={handleFilterChange}
+            style={{ padding: "8px", width: "200px" }}
+          >
+            <option value="">적립유형</option>
+            <option value="대면">자유적립</option>
+            <option value="비대면">정액적립</option>
+          </select>
+        </div>
+      </section> */}
+
+
+      {/* 리스트 */}
+      <section className={styles.productListDiv}>
         <div className={styles.productList}>
           <div className={styles.productListLogo}>로고</div>
           <div className={styles.productListInfo}>
@@ -200,9 +192,8 @@ const ProductInsListPage = () => {
           </div>
           <div className={styles.productListBtn}>비교 담기</div>
         </div>
-      </div>{" "}
-      {/*리스트끝 */}
-    </div>
+      </section>
+    </main>
   );
 };
 
