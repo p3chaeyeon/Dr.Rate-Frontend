@@ -1,7 +1,7 @@
 /* src/components/Header/Header.jsx */
 
 import styles from './Header.module.scss';
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { PATH } from "src/utils/path";
 import headerLogo from 'src/assets/images/headerLogo.png';
@@ -31,8 +31,9 @@ const Header = () => {
     // 모바일 사이드 메뉴
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    // 비교 서브 메뉴 상태
+    // 비교, 마이페이지 서브 메뉴 상태
     const [isCompareSubMenuOpen, setIsCompareSubMenuOpen] = useState(false);
+    const [isMySubMenuOpen, setIsMySubMenuOpen] = useState(false);
 
 
     const mobileToggleMenu = () => {
@@ -42,6 +43,32 @@ const Header = () => {
     const toggleCompareSubMenu = () => {
         setIsCompareSubMenuOpen(!isCompareSubMenuOpen); 
     };
+
+    const toggleMySubMenu = () => {
+        setIsMySubMenuOpen(!isMySubMenuOpen);
+    };
+
+    // 모바일 사이드 메뉴에서의 페이지 이동; 사이드 메뉴 닫혀야 함
+    const sideNavigation = (path) => {
+        navigate(path);
+        setIsMobileMenuOpen(false);
+    };
+
+    // 화면 크기 변화 감지; 모바일 사이드 메뉴 닫기
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth > 1000 && isMobileMenuOpen) {
+                setIsMobileMenuOpen(false); // 화면이 데스크톱 크기로 돌아가면 사이드 메뉴 닫기
+                setIsCompareSubMenuOpen(false); // 서브 메뉴도 닫기
+                setIsMySubMenuOpen(false);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [isMobileMenuOpen]);
 
     return (
         <header>
@@ -53,7 +80,7 @@ const Header = () => {
                 <ul className={styles.mainMenuList}>
                     <li 
                         className={styles.mainMenuItem} 
-                        // onClick={() => navigate(`${PATH.PRODUCT_DETAIL}?category=i`)}
+                        // onClick={() => navigate(`${PATH.PRODUCT_DEP_LIST}`)}
                         style={{
                             color: isPathActive(PATH.PRODUCT_DETAIL, 'i') ? 'var(--main)' : 'inherit',
                         }}                    
@@ -62,7 +89,7 @@ const Header = () => {
                     </li>
                     <li 
                         className={styles.mainMenuItem}
-                        // onClick={() => navigate(`${PATH.PRODUCT_DETAIL}?category=d`)}
+                        // onClick={() => navigate(`${PATH.PRODUCT_INS_LIST}`)}
                         style={{
                             color: isPathActive(PATH.PRODUCT_DETAIL, 'd') ? 'var(--main)' : 'inherit',
                         }}
@@ -111,7 +138,7 @@ const Header = () => {
             </nav>
 
 
-
+            {/* ============================================ 모바일 사이드 메뉴 ============================================ */}
             <div className={styles.mobileMenuIconDiv} onClick={mobileToggleMenu}>
                 <img src={mobileMenuIcon} alt="모바일 메뉴 아이콘" className={styles.mobileMenuIcon} />
             </div>
@@ -159,11 +186,11 @@ const Header = () => {
                                     </div>
                                     <div className={styles.sideMainItemDiv}>적금</div>
                                 </li>
-                                <li className={ styles.sideMainItem }>
+                                <li className={ styles.sideMainItem } onClick={() => setIsCompareSubMenuOpen(!isCompareSubMenuOpen)}>
                                     <div className={ styles.sideMainIconDiv }>
                                         <img src={mobileSideCompare} alt="mobileSideInstallment" className={styles.sideMainIcon} />
                                     </div>
-                                    <div className={styles.sideMainItemDiv}  onClick={() => setIsCompareSubMenuOpen(!isCompareSubMenuOpen)}>
+                                    <div className={styles.sideMainItemDiv} >
                                         <div className={ styles.sideMainItemTextDiv}>
                                             비교
                                         </div>
@@ -195,8 +222,62 @@ const Header = () => {
 
 
                             <ul className={ styles.sideUserList }>
+                                <li className={ styles.sideMainItem }>
+                                    로그아웃
+                                </li>
+                                <li className={ styles.sideMainItem }  onClick={() => setIsMySubMenuOpen(!isMySubMenuOpen)}>
+                                    <div className={ styles.mySubItemText }>
+                                        마이페이지
+                                    </div>
+                                    <div className={ styles.mySubItemArrowDiv }>
+                                        <img
+                                            src={downArrowIcon}
+                                            alt="Down arrow"
+                                            className={`${styles.mySubItemArrow} ${isMySubMenuOpen ? styles.arrowUp : ''}`}
+                                        />
+                                    </div>
+                                </li>
+                                {isMySubMenuOpen && (
+                                    <ul className={styles.mySubMenuList}>
+                                        <li
+                                            className={styles.mySubMenuItem}
+                                        >
+                                            즐겨찾기
+                                        </li>
+                                        <ul className={ styles.myFavSubMenuList }>
+                                            <li 
+                                                className={styles.myFavSubMenuItem }
+                                                onClick={() => sideNavigation(PATH.MY_DEPOSIT)}
+                                            >
+                                                <span>•</span>예금 즐겨찾기
+                                            </li>
+                                            <li 
+                                                className={styles.myFavSubMenuItem }
+                                                onClick={() => sideNavigation(PATH.MY_INSTALLMENT)}
+                                            >
+                                                <span>•</span>적금 즐겨찾기
+                                            </li>
+                                        </ul>
+                                        <li
+                                            className={styles.mySubMenuItem}
+                                            onClick={() => sideNavigation(PATH.MY_INFO)}
+                                        >
+                                            회원정보
+                                        </li>
+                                        <li
+                                            className={styles.mySubMenuItem}
+                                            onClick={() => sideNavigation(PATH.MY_CALENDAR)}
+                                        >
+                                            적금달력
+                                        </li>
+                                    </ul>
+                                )}
 
-                            </ul>
+                                <li className={ styles.sideMainItem }>
+                                    고객센터
+                                </li>
+
+                            </ul>{/* //<ul className={ styles.sideUserList }> */}
 
 
                         </div>{/* //<div className={ styles.mobileSideMain }> */}
