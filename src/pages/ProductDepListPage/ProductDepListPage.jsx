@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import styles from "./ProductInsListPage.module.scss";
+import styles from "./ProductDepListPage.module.scss";
 
-const ProductInsListPage = () => {
+const ProductDepListPage = () => {
   const [selectedBanks, setSelectedBanks] = useState([]); // 선택된 은행 목록
 
   const handleBankChange = (e) => {
@@ -26,25 +26,23 @@ const ProductInsListPage = () => {
   };
 
   return (
-    <main>
+    <main className={styles.productListMain}>
       <section>
         <div className={styles.mainTitle}>
-          <h3>적금</h3>
+          <h3>예금</h3>
         </div>
 
         {/* 회원/비회원 공통 보이는 필터 */}
-        <div className={styles.main1}>
-          <div className={styles.bankselect}>
-            <div
-              name="bank"
-              onChange={handleBankChange}
-              style={{ padding: "8px", width: "200px" }}
-            >
+        <div className={styles.commonFilter}>
+          <div className={styles.bankSelectTitle}>은행</div>
+
+          <div className={styles.bankSelectDiv}>
+            <select className={styles.bankSelect} onChange={handleBankChange}>
               <option value="">은행 선택</option>
               <option value="KB 은행">KB 은행</option>
               <option value="우리 은행">우리 은행</option>
               <option value="국민 은행">국민 은행</option>
-            </div>
+            </select>
           </div>
 
           {/* 선택된 은행 표시 */}
@@ -63,18 +61,27 @@ const ProductInsListPage = () => {
           </div>
         </div>
 
+        {/* 비회원 보이는 배너 */}
+        <div className={styles.nonMemberBanner}>
+          <div className={styles.banner}>
+            <h3>
+              나에게 맞는 예금 상품이 궁금하다면? <span>Click</span>
+            </h3>
+          </div>
+        </div>
+
         {/* 로그인 후 보이는 필터 */}
-        <div className={styles.filterTotal}>
+        <div className={styles.filterTotalDiv}>
           <div className={styles.filterDiv}>
-            <label style={{ marginRight: "10px" }}>나이:</label>
+            <h4>나이</h4>
             <input
               type="number"
               name="birth"
               placeholder="나이 입력"
               onChange={handleFilterChange}
               style={{
-                padding: "10px",
-                width: "30%",
+                padding: "8px",
+                width: "55%",
                 border: "1px solid #ccc",
                 borderRadius: "5px",
               }}
@@ -83,53 +90,80 @@ const ProductInsListPage = () => {
 
           <div
             className={styles.filterDiv}
-            style={{ display: "flex", alignItems: "center" }}
+            // style={{ display: "flex", alignItems: "center" }}
           >
-            <span style={{ fontSize: "16px" }}>저축 예정 기간</span>
-            <div
+            <h4>저축 예정 기간</h4>
+            <select
               name="period"
               onChange={handleFilterChange}
-              style={{ padding: "8px", width: "200px", marginRight: "10px" }}
+              style={{
+                padding: "8px",
+                width: "200px",
+                marginRight: "10px",
+                border: "1px solid #ccc",
+              }}
             >
               <option value="">저축 예정 기간</option>
+              <option value="1개월">1개월</option>
               <option value="3개월">3개월</option>
               <option value="6개월">6개월</option>
-              <option value="1년">1년</option>
-            </div>
+              <option value="12개월">12개월</option>
+            </select>
           </div>
 
           <div className={styles.filterDiv}>
             <h4>이자 계산 방식</h4>
-            <div className="toggle-buttons">
-              <div
-                className="toggle-button"
+            <div className={styles.toggle}>
+              <button
+                className={styles.ratetype}
+                style={{ width: "120px" }}
                 data-value="단리"
                 onClick={() => handleFilterChange("단리")}
               >
                 단리
-              </div>
-              <div
-                className="toggle-button"
+              </button>
+              <button
+                className={styles.ratetype}
+                style={{ width: "120px" }}
                 data-value="복리"
                 onClick={() => handleFilterChange("복리")}
               >
                 복리
-              </div>
+              </button>
             </div>
           </div>
 
           <div className={styles.filterDiv}>
             <h4>가입방식</h4>
-            <div
+            <select
               name="type"
               onChange={handleFilterChange}
-              style={{ padding: "8px", width: "200px" }}
+              style={{
+                padding: "8px",
+                width: "200px",
+                border: "1px solid #ccc",
+              }}
             >
               <option value="">가입 방식</option>
               <option value="대면">대면</option>
               <option value="비대면">비대면</option>
-            </div>
+            </select>
           </div>
+          {/*버튼 hidden*/}
+          {/* <button
+        onClick={handleRateClick}
+        style={{
+          marginTop: "15px",
+          padding: "10px 20px",
+          backgroundColor: "#407BFF",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        조회
+      </button> */}
         </div>
 
         {/* <div className={styles.filterDiv}>
@@ -145,7 +179,11 @@ const ProductInsListPage = () => {
           </select>
         </div>
       </section> */}
-
+        {/* 금리순 정렬  */}
+        <div className={styles.rateStandard}>
+          <span>최고 금리순 | </span>
+          <span>기본 금리순</span>
+        </div>
         {/* 리스트 */}
         <div className={styles.productListDiv}>
           <div className={styles.productList}>
@@ -198,4 +236,4 @@ const ProductInsListPage = () => {
   );
 };
 
-export default ProductInsListPage;
+export default ProductDepListPage;
