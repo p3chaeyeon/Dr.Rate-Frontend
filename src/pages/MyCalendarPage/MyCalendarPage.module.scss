@@ -35,7 +35,7 @@ body {
 
 /* 윗선 제거 */
 .noBorderTop {
-  border-top: none !important; /* 윗선 제거 */
+  border-top: none !important; 
 }
 
 /* 각 셀 크기 */
@@ -232,128 +232,55 @@ body {
 /* 반응형 스타일 */
 @media (max-width: 1000px) and (min-width: 901px) {
   .expandedPadding {
-    height: 160px;
-    transition: none; /* 애니메이션 제거 */
-  }
-
-  .fc-daygrid-day-frame {
-    padding: 0;
-    transition: none;
+    height: 160px; /* 셀 높이 */
   }
 
   .eventContainer {
-    display: flex;
-    justify-content: center; /* 가운데 정렬 */
-    align-items: center;
     padding: 0;
-    margin: 0; /* 여백 고정 */
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative; /* 위치 고정 */
-    width: 100%; /* 넓이 고정 */
-    height: 100%; /* 높이 고정 */
-    transition: none; /* 애니메이션 제거 */
+    background-color: transparent; /* 이벤트 배경색 제거 */
+    box-shadow: none; /* 그림자 제거 */
   }
 
   .eventContainer:hover {
-    display: flex;
-    justify-content: center; /* 동일한 가운데 정렬 유지 */
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative;
     width: 100%;
-    height: 100%;
-    transition: none;
   }
 
   .eventLogo {
     width: 40px; /* 크기 고정 */
     height: 40px; /* 크기 고정 */
     margin: 0 auto; /* 가운데 정렬 */
-    position: static; /* 위치 고정 */
-    transition: none; /* 애니메이션 제거 */
   }
-
-  .eventLogo:hover {
-    width: 40px; /* 크기 변경 없음 */
-    height: 40px;
-    margin: 0 auto;
-    position: static;
-    transition: none;
-  }
-
+  
+  /* 적금명, 금액 가리기 */
   .eventTitle,
-  .eventAmount,
-  .tooltip {
+  .eventAmount {
     display: none !important;
-  }
+  } 
 }
 
 @media (max-width: 900px) and (min-width: 801px) {
   .expandedPadding {
     height: 140px;
-    transition: none;
-  }
-
-  .fc-daygrid-day-frame {
-    padding: 5px;
-    transition: none;
   }
 
   .eventContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 0;
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: none;
+    background-color: transparent; /* 이벤트 배경색 제거 */
+    box-shadow: none; /* 그림자 제거 */
   }
 
   .eventContainer:hover {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative;
     width: 100%;
-    height: 100%;
-    transition: none;
   }
 
   .eventLogo {
     width: 33px;
     height: 33px;
     margin: 0 auto;
-    position: static;
-    transition: none;
-  }
-
-  .eventLogo:hover {
-    width: 33px;
-    height: 33px;
-    margin: 0 auto;
-    position: static;
-    transition: none;
   }
 
   .eventTitle,
-  .eventAmount,
-  .tooltip {
+  .eventAmount {
     display: none !important;
   }
 }
@@ -361,63 +288,26 @@ body {
 @media (max-width: 800px) and (min-width: 701px) {
   .expandedPadding {
     height: 115px;
-    transition: none;
-  }
-
-  .fc-daygrid-day-frame {
-    padding: 5px;
-    transition: none;
   }
 
   .eventContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 0;
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: none;
+    background-color: transparent; /* 이벤트 배경색 제거 */
+    box-shadow: none; /* 그림자 제거 */
   }
 
   .eventContainer:hover {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative;
     width: 100%;
-    height: 100%;
-    transition: none;
   }
 
   .eventLogo {
     width: 25px;
     height: 25px;
     margin: 0 auto;
-    position: static;
-    transition: none;
-  }
-
-  .eventLogo:hover {
-    width: 25px;
-    height: 25px;
-    margin: 0 auto;
-    position: static;
-    transition: none;
   }
 
   .eventTitle,
-  .eventAmount,
-  .tooltip {
+  .eventAmount {
     display: none !important;
   }
 }
@@ -425,211 +315,84 @@ body {
 @media (max-width: 700px) and (min-width: 601px) {
   .expandedPadding {
     height: 100px;
-    transition: none;
-  }
-
-  .fc-daygrid-day-frame {
-    padding: 5px;
-    transition: none;
   }
 
   .eventContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 0;
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: none;
+    background-color: transparent; /* 이벤트 배경색 제거 */
+    box-shadow: none; /* 그림자 제거 */
   }
 
   .eventContainer:hover {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative;
     width: 100%;
-    height: 100%;
-    transition: none;
   }
 
   .eventLogo {
     width: 20px;
     height: 20px;
     margin: 0 auto;
-    position: static;
-    transition: none;
-  }
-
-  .eventLogo:hover {
-    width: 20px;
-    height: 20px;
-    margin: 0 auto;
-    position: static;
-    transition: none;
   }
 
   .eventTitle,
-  .eventAmount,
-  .tooltip {
+  .eventAmount {
+    display: none !important;
+  }
+}
+@media (max-width: 600px) and (min-width: 351px)
+ {
+  .expandedPadding {
+    height: 100px;
+  }
+
+  .eventContainer {
+    padding: 0;
+    background-color: transparent; /* 이벤트 배경색 제거 */
+    box-shadow: none; /* 그림자 제거 */
+  }
+
+  .eventContainer:hover {
+    width: 100%;
+  }
+
+  .eventLogo {
+    width: 15px;
+    height: 15px;
+    margin: 0 auto;
+  }  
+
+  .eventTitle,
+  .eventAmount {
     display: none !important;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 350px) {
   .expandedPadding {
     height: 80px;
-    transition: none;
-  }
-
-  .fc-daygrid-day-frame {
-    padding: 4px;
-    transition: none;
   }
 
   .eventContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 0;
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: none;
+    background-color: transparent; 
+    box-shadow: none; 
   }
 
   .eventContainer:hover {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-    border: none;
-    box-shadow: none;
-    position: relative;
     width: 100%;
-    height: 100%;
-    transition: none;
   }
 
   .eventLogo {
-    width: 15px;
-    height: 15px;
+    width: 7px;
+    height: 7px;
     margin: 0 auto;
-    position: static;
-    transition: none;
-  }
-
-  .eventLogo:hover {
-    width: 15px;
-    height: 15px;
-    margin: 0 auto;
-    position: static;
-    transition: none;
   }
 
   .eventTitle,
-  .eventAmount,
-  .tooltip {
+  .eventAmount {
     display: none !important;
   }
-  @media (max-width: 600px) and (min-width: 351px) {
-    .expandedPadding {
-      height: 100px;
-      transition: none;
-    }
-  
-    .fc-daygrid-day-frame {
-      padding: 5px;
-      transition: none;
-    }
-  
-    .eventContainer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      margin: 0;
-      background-color: transparent;
-      border: none;
-      box-shadow: none;
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: none;
-    }
-  
-    .eventLogo {
-      width: 15px; /* 크기 고정 */
-      height: 15px; /* 크기 고정 */
-      margin: 0 auto;
-      position: static; /* 위치 고정 */
-      transition: none;
-    }
-  
-    .eventTitle,
-    .eventAmount,
-    .tooltip {
-      display: none !important;
-    }
-  }
-  
-  @media (max-width: 350px) {
-    .expandedPadding {
-      height: 80px; /* 더 작게 */
-      transition: none;
-    }
-  
-    .fc-daygrid-day-frame {
-      padding: 4px;
-      transition: none;
-    }
-  
-    .eventContainer {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0;
-      margin: 0;
-      background-color: transparent;
-      border: none;
-      box-shadow: none;
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: none;
-    }
-  
-    .eventLogo {
-      width: 10px; /* 더 작은 로고 크기 */
-      height: 10px;
-      margin: 0 auto;
-      position: static; /* 위치 고정 */
-      transition: none;
-    }
-  
-    .eventTitle,
-    .eventAmount,
-    .tooltip {
-      display: none !important;
-    }
-  }
 }
+
 
 
 
