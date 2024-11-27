@@ -139,9 +139,6 @@ const MyCalendarPage = () => {
           title={alertContent.title}
           message={alertContent.message}
         />
-        {/* MyNav를 캘린더 영역 위로 이동 */}
-        <div className={styles.myNavContainer} >
-        </div>
         <div
           className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} // 흐림효과 추가
         >
@@ -163,7 +160,7 @@ const MyCalendarPage = () => {
             }}
             titleFormat={{ year: 'numeric', month: 'long' }}
             events={events}
-            contentHeight={1300} // 달력 주 고정된 높이
+            contentHeight="auto" // 달력 주 고정된 높이
             dateClick={handleDateClick}
             dayCellClassNames={({ date }) => {
               const today = new Date();
