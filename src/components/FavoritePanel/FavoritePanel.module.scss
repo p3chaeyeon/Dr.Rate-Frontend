@@ -1,0 +1,106 @@
+.favoritePanel {
+    .favoriteCategoryDiv {
+        margin: 20px 0;
+        color: var(--font1);
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .favoriteCategoryItem {
+            display: flex;
+            align-items: center;
+
+            .rightArrowIcon {
+                width: 14px;
+                height: 10px;
+            }
+
+            &:nth-child(3) {
+                font-weight: 600;
+            }
+        }
+    }
+
+    .favoriteDeleteSearchDiv {
+        padding: 10px 5px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 15px;
+        font-size: 14px;
+        border-bottom: 1px solid var(--font2);
+
+        .favoriteDeleteBtn, .favoriteSearchBtn {
+            width: 100px;
+            height: 36px;
+            border-radius: 3px;
+            color: var(--white);
+            font-size: 15px;
+        }
+
+        .favoriteDeleteBtn {
+            background: #0056b3; //var(--side-nav);
+            border: 1px solid #0056b3;
+
+            &:hover {
+                background: #003f87;
+                border: 1px solid #003f87;
+            }
+        }
+
+        .favoriteSearchBtn {
+            background: var(--main2);
+            border: 1px solid var(--main2);
+
+            &:hover {
+                background: var(--main1);
+                border: 1px solid var(--main1);
+            }
+        }
+
+
+        select, input.favoriteSearchText {
+            font-size: 14px;
+            padding: 5px 10px;
+            border: 1px solid var(--divider-border);
+            border-radius: 4px;
+            transition: border-color 0.3s ease;
+            height: 36px;
+
+            &:hover {
+                border-color: #706d6d;
+            }
+
+            &:focus {
+                outline: none;
+                border-color: #706d6d;
+            }
+        }
+
+        select {
+            width: 120px;
+            cursor: pointer;
+            color: var(--font2);
+
+            optgroup {
+                font-size: 14px;
+                font-weight: 500;
+
+                option {
+                    font-size: 14px;
+                    color: var(--black);
+                    background-color: #fff; 
+                    padding: 5px; 
+                    cursor: pointer;
+                }
+            }
+        }
+
+        input.favoriteSearchText {
+            // width: 240px;
+            flex: 1;
+        }
+
+    }
+
+}

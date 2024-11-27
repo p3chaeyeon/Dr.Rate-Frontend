@@ -91,7 +91,7 @@ input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none; /* Safari 호환 */
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid var(--divider-border);
     width: 16px;
     height: 16px;
     border-radius: 3px; 
