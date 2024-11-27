@@ -1,17 +1,26 @@
 /* src/components/FavoritePanel/FavoritePanel.jsx */
 
 import styles from './FavoritePanel.module.scss';
-
 import React from 'react';
 import { PATH } from "src/utils/path";
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { allCheckedAtom, setAllCheckedAtom } from 'src/atoms/favoriteAtoms';
+import useFavorite from 'src/hooks/useFavorite';
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 
-const FavoritePanel = () => {
+const FavoritePanel = ({ favoriteDataLength }) => {
     const location = useLocation();
     // const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
 
+    const [allChecked] = useAtom(allCheckedAtom);
+    const [, setAllCheckedState] = useAtom(setAllCheckedAtom);
 
+    const { handleIndividualCheck } = useFavorite(favoriteDataLength);
+
+    const handleAllCheck = (e) => {
+        setAllCheckedState(e.target.checked); // 전체 체크박스 상태 업데이트
+    };
 
 
     return (
@@ -28,12 +37,15 @@ const FavoritePanel = () => {
                 </div>
             </div>
 
+            {/* src/components/FavoritePanel/FavoritePanel.jsx */}
             {/* 즐겨찾기 삭제 & 검색바 */}
             <div className={ styles.favoriteDeleteSearchDiv }>
                 <input 
                     type="checkbox" 
                     name="allCheck" 
                     className={ styles.allCheck }
+                    checked={allChecked}
+                    onChange={handleAllCheck}
                 />
                 <button className={ styles.favoriteDeleteBtn }>선택 삭제</button>
                 <select defaultValue="bank_name">

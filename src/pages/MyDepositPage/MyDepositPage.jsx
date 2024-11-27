@@ -1,8 +1,8 @@
 import styles from './MyDepositPage.module.scss';
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import MyNav from 'src/components/MyNav';
 import FavoritePanel from 'src/components/FavoritePanel';
+import useFavorite from 'src/hooks/useFavorite';
 
 const favoriteData = [
     {
@@ -28,14 +28,20 @@ const favoriteData = [
     }
 ];
 
+/* src/pages/MyDepositPage/MyDepositPage.jsx */
 const MyDepositPage = () => {
+
+    const favoriteDataLength = favoriteData.length;
+    const { individualChecked, handleIndividualCheck } = useFavorite(favoriteDataLength);
+
     return (
         <main>
             <MyNav />
 
             <section className={styles.favoriteSection}>
-                <FavoritePanel />
+            <FavoritePanel favoriteDataLength={favoriteDataLength} />
 
+                {/* src/pages/MyDepositPage/MyDepositPage.jsx */}
                 <div className={styles.favoriteListDiv}>
                     {favoriteData.map((item, index) => (
                         <div key={index} className={styles.favoriteList}>
@@ -43,6 +49,10 @@ const MyDepositPage = () => {
                                 type="checkbox"
                                 name="check"
                                 className={styles.check}
+                                checked={individualChecked[index] || false}
+                                onChange={(e) =>
+                                    handleIndividualCheck(index, e.target.checked)
+                                }
                             />
                             <div className={styles.favoriteLogoDiv}>
                                 {/* img 'src/assets/bank/' + '파일명' 으로 src/assets/bank 폴더에서 이미지 가져옴 */}
@@ -68,15 +78,11 @@ const MyDepositPage = () => {
                                         <div className={styles.favoriteBaseRatePer}><span className={styles.basic_rate}>{item.basic_rate}</span>%</div>
                                     </div>
                                 </div>
-
                             </div>
-
                         </div>
-
-
-
                     ))}
                 </div>
+
             </section>
         </main>
     );
