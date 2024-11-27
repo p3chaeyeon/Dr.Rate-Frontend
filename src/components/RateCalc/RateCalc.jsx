@@ -2,16 +2,17 @@ import styles from './RateCalc.module.scss';
 
 import React, { useState } from 'react';
 
-const RateCalc = ({isOpen, onClose, options}) => {
-    const {id, basicRate, products, rateType, rateTypeKo, rsrvType, rsrvTypeName, saveTime, spclRate} = options[0] || {};
+const RateCalc = ({isOpen, onClose, conditions, options}) => {
+    const {id, basicRate, products, rateType, rateTypeKo, rsrvType, rsrvTypeName, saveTime, spclRate} = options || {};
 
-    const [monthM, setMonthM] = useState(products.max);  // 월 적립금액
+    const [monthM, setMonthM] = useState(products.max === null ? 100 : products.max / 10000); // 월 적립금액
     const [total, setTotal] = useState(0); // 총 세후 금액
     const [accountType, setAccountType] = useState(products.ctg); // 예금(d) / 적금(i)
     const [interestType, setInterestType] = useState(rateType); // 단리(M) / 복리(S)
 
     let result = 0;
     const [r, setR] = useState(basicRate); // 이자율 (4% 예시)
+    const [spcl, setSpcl] = useState(0); // 적용된 우대금리
     const t = saveTime/12;    // 기간 (1년 예시)
     const months = saveTime;  // 이자 개월 주기 (1년 = 12개월)
 
@@ -74,7 +75,27 @@ const RateCalc = ({isOpen, onClose, options}) => {
   // onChange 이벤트 핸들러
   const handleInputChange = (e) => {
     const value = e.target.value;
-    setMonthM(Number(value));
+
+    if(products.max != null){
+      if(value > products.max/10000){
+        alert('최대값' + products.max/10000 + '만원 입니다.');
+        e.target.value = products.max/10000;
+      }else if(value < 1) {
+        alert('0 이하로는 입력할 수 없습니다.');
+        e.target.value = 1;
+      }
+    }else{
+      if(value > 1000000){
+        alert('100억 이하의 값만 가능합니다.');
+        e.target.value = 1000000;
+      }else if(value < 1) {
+        alert('0 이하로는 입력할 수 없습니다.');
+        e.target.value = 1;
+      }
+    }
+    
+    setMonthM(Number(e.target.value));
+
   };
 
   // 월 적립 금액이 변경되면 이자 계산 실행
@@ -99,8 +120,10 @@ const RateCalc = ({isOpen, onClose, options}) => {
     // 계산 후 소수점 둘째 자리까지 반올림
     if (e.target.checked) {
         setR((prevR) => parseFloat((prevR + value).toFixed(2))); // 소수점 둘째 자리로 반올림
+        setSpcl(parseFloat((spcl + value).toFixed(2)));
     } else {
         setR((prevR) => parseFloat((prevR - value).toFixed(2))); // 소수점 둘째 자리로 반올림
+        setSpcl(parseFloat((spcl - value).toFixed(2)));
     }
 };
 
@@ -112,53 +135,52 @@ const RateCalc = ({isOpen, onClose, options}) => {
         </div>
 
         <div className={styles.serviceInput}>
-        <p>
-            <span className={styles.serviceMonthTitle}>{getInputTitle()}</span>
-            <span className={styles.serviceMonthTitleInput}>
-                <input type="number" placeholder={getInputTitle()} 
-                className={styles.inputType} id="monthM" onChange={handleInputChange} /> 만원
-            </span>
-        </p>
-        <p className={styles.midTitle}>
-            <span>{months}개월 저축 중 ..</span>
-        </p>
-        <p className={styles.totalTitle}>
-            {getInputTitle2()} <span className={styles.monthM}>{formatNumber(monthM)} 만원</span> 적립하면 
-            <span className={styles.serviceMonthTotal}>총 금액 {formatNumber(total)}원</span>
-        </p>
+          <p>
+              <span className={styles.serviceMonthTitle}>{getInputTitle()}</span>
+              <span className={styles.serviceMonthTitleInput}>
+                  <input type="number" placeholder={getInputTitle()}
+                  className={styles.inputType} id="monthM" onChange={handleInputChange} /> 만원
+              </span>
+          </p>
+          <p className={styles.scpl_total_rateTitle}>
+              <span className={styles.scpl_total_rate}>금리 {r} %</span>
+          </p>
+          <p className={styles.scpl_total_ratesub}>
+              <span>기본 금리 {basicRate} % + <span className={styles.spclStyle}>우대금리 {spcl} %</span></span>
+          </p>
+          <p className={styles.totalTitle}>
+              {getInputTitle2()} <span className={styles.monthM}>{formatNumber(monthM)} 만원( 총 {saveTime} 개월 )</span>적립 시, 
+              <span className={styles.serviceMonthTotal}>총 금액 {formatNumber(total)}원</span>
+          </p>
+          
         </div>
 
         <div className={styles.scpl_rate_title}>
             <p>
                 <span>우대 금리가 반영된 금리</span>
-                <span className={styles.scpl_total_rate}>최종 적용 금리 {r} %</span>
             </p>
             
               <ul className={styles.toggle_ul}>
-                <li>
-                  <span>조건</span>
-                  <span>1%</span>
-                  <span>
-                    <input type="checkbox" className={styles.toggleBtn} value='1' id='1' onChange={onChangeRateTotal}/>
-                    <label htmlFor="1"></label>
-                  </span>
-                </li>
-                <li>
-                  <span>조건</span>
-                  <span>2.5%</span>
-                  <span>
-                    <input type="checkbox" className={styles.toggleBtn}  value='2.5' id='2' onChange={onChangeRateTotal}/>
-                    <label htmlFor="2"></label>
-                  </span>
-                </li>
-                <li>
-                  <span>조건</span>
-                  <span>1%</span>
-                  <span>
-                    <input type="checkbox" className={styles.toggleBtn} value='1' id='3' onChange={onChangeRateTotal}/>
-                    <label htmlFor="3"></label>
-                  </span>
-                </li>
+              {Array.isArray(conditions) && conditions.length > 0 ? (
+                conditions.map((condition, index) => (
+                  <li key={index}>
+                    <span className={styles.description}>{condition.description}</span>
+                    <span>{condition.rate} %</span>
+                    <span>
+                      <input 
+                        type="checkbox" 
+                        className={styles.toggleBtn} 
+                        value={condition.rate} 
+                        id={index} 
+                        onChange={onChangeRateTotal}
+                      />
+                      <label htmlFor={index}></label>
+                    </span>
+                  </li>
+                ))
+              ) : (
+                <li><span>해당사항 없음</span></li> // 조건이 없을 경우 표시할 내용
+              )}
               </ul>
             
         </div>

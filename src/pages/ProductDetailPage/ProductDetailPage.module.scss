@@ -11,14 +11,16 @@
     justify-content: space-between; /* 요소들 사이에 간격을 넣어줌 */
 
     .image{
-        width: 100px; height: 100px;
-        border: 1px solid var(--divider-border);
+        width: 120px; height: 120px;
         border-radius: 50px;
         float: left;
+
+        img{
+            width: 120px; height: 120px;
+        }
     }
 
     .name{
-        margin-inline-start: 40px;
         line-height: 40px;
 
         .nameOne{
@@ -35,19 +37,19 @@
             margin-top: 20px;
             width: 160px; height: 30px; line-height: 30px;
             text-align: center;
-            background-color: var(--font2);
+            background-color: var(--font3);
             color: var(--white);
         }
     }
 
     .rate{
-        width: 70%;
+        width: 60%;
         text-align: right;
 
         .rateOne{
             font-size: 1.7em;
             font-weight: 700;
-            color: var(--light-red);
+            color: var(--red1);
         }
         .rateTwo{
             margin-top: 10px;
@@ -59,22 +61,31 @@
     text-align: right;
     float: right;
 
-    .intobtn{
+    .intobtn, .heartIcon{
         float: left;
     }
 
-    .intobtn, .gotoHomePage{
-        margin: 0 10px;
+    .intobtn, .gotoHomePage, .heartIcon{
+        margin-right: 10px;
+        font-size: 20px;
         width: 156px; height: 53px;
-        background: #407BFF;
+        background: var(--main2);
         border: 0;
         color: var(--white);
 
-    }
+        &:hover{
+            background: var(--main1);
+        }
 
-    .intobtn:hover, .gotoHomePage:hover{
-        background: var(--main1);;
+        .heart{
+            padding-right: 10px;
+
+            &:active{
+                color: var(--red2);
+            }
+        }
     }
+    
 }
 
 .serviceDiv{
@@ -85,6 +96,10 @@
     border-radius: 10px;
     padding: 0 20px;
     cursor: pointer;
+
+    .downArrowIcon2{
+        margin-left: 10px;
+    }
 
     .serviceTwo{
         float: right;
@@ -100,6 +115,197 @@
 
 .detailDiv{
     margin-top: 50px;
-    height: 500px;
+    padding: 40px 50px;
     border-top: 1px solid var(--black);
+    background-color: var(--bg1);
+
+    .detailTitle{
+        margin-bottom: 20px;
+        font-size: 21px;
+        color: var(--font1);
+    }
+
+    ul li{
+        padding: 10px 0;
+
+        span{
+            font-size: 18px; font-weight: 700;
+            color: var(--font1);
+        }
+
+        p{
+            padding: 10px 0 0 10px;
+        }
+
+        .rateTable, .rateTypeTable, .rateCalcTable{
+            margin: 10px 0 0 10px;
+
+            td{
+                padding: 5px;
+                border: 1px solid var(--divider-border);
+            }
+
+            thead tr td{
+                background: var(--black);
+                color: var(--white);
+                text-align: center;
+            }
+        }
+
+        .rateTable{
+            width: 300px;
+        }
+    
+        .rateTypeTable{
+            width: 300px;
+        }
+    
+        .rateCalcTable{
+            width: 800px;
+        }
+    
+        .mtrtInt, .spclCnd{
+            white-space: pre-line;
+            line-height: 30px;
+        }
+    }
 }
+
+
+@media (max-width: 768px) {
+    .topDiv {
+      flex-direction: column;
+      padding: 50px 20px;
+
+      .image {
+          margin-bottom: 30px;
+          
+          img{
+            width: 80px;
+            height: 80px;
+        }
+      }
+
+      .name {
+        text-align: center;
+      }
+
+      .rate {
+        width: 100%;
+        text-align: center;
+        margin-top: 20px;
+      }
+    }
+  
+    .btnDiv {
+      text-align: center;
+      float: none;
+
+      .heartIcon, .intobtn, .gotoHomePage{
+        width: 200px;
+      }
+    }
+  
+    .serviceDiv {
+      margin-top: 100px;
+
+      .serviceTwo {
+        float: none;
+        text-align: center;
+      }
+    }
+  
+    .detailDiv {
+      padding: 20px;
+
+        .rateTable, .rateTypeTable, .rateCalcTable {
+            width: 100%;
+            td{
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            thead tr td{
+                font-size: 16px;
+            }
+        }
+    }
+  }
+  
+  /* 모바일 화면에서 더 작은 패딩 및 폰트 크기 조정 */
+  @media (max-width: 480px) {
+    .title {
+      font-size: 1.0em;
+    }
+  
+    .topDiv {
+      padding: 30px 10px;
+
+      .image {
+        width: 80px;
+        height: 80px;
+
+        img{
+            width: 80px;
+            height: 80px;
+        }
+      }
+
+      .name {
+
+          .nameOne {
+            font-size: 20px;
+          }
+          .nameTwo {
+            font-size: 16px;
+          }
+      }
+
+      .rate .rateOne {
+        font-size: 1.5em;
+      }
+
+    }
+  
+    .btnDiv {
+
+        .intobtn, .gotoHomePage, .heartIcon {
+          font-size: 15px;
+          margin-right: 5px;
+          width: 32%;
+          height: 50px;
+        }
+    }
+
+    .serviceDiv{
+        margin-top: 30px;
+
+        .serviceTwo{
+            float: right;
+        }
+    }
+  
+    .detailDiv {
+        padding: 10px;
+
+        .detailTitle{
+            font-size: 1.0em;
+        }
+
+        ul li {
+            .rateTable, .rateTypeTable, .rateCalcTable {
+                width: 95%;
+
+                td{
+                    font-size: 12px;
+                    padding: 5px;
+                }
+
+                thead tr td{
+                    font-size: 14px;
+                }
+            }
+        }
+        
+    }
+  }

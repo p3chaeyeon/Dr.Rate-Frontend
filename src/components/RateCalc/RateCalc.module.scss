@@ -1,14 +1,14 @@
 .serviceDiv{
     margin-top: 200px;
     width: 100%;
-    border: 2px solid #407BFF;
+    border: 2px solid var(--main2);
     border-radius: 10px;
     overflow: hidden;
     position: relative;
 
     .serviceTop{
         width: 100%; height: 50px; line-height: 45px;
-        border-bottom: 2px solid #407BFF;
+        border-bottom: 2px solid var(--main2);
         padding: 0 20px;
         cursor: pointer;
     
@@ -18,7 +18,7 @@
         }
     }
     .serviceTitle{
-        border-bottom: 2px solid #407BFF;
+        border-bottom: 2px solid var(--main2);
         padding: 10px 20px;
 
         .serviceTwo{
@@ -47,9 +47,9 @@
             }
 
             .inputType:focus{
-                border:1px solid #407BFF;
+                border:1px solid var(--main2);
                 transition: 0.4s;
-                color: #407BFF;
+                color: var(--main2);
             }
 
             input[type="number"]::-webkit-outer-spin-button,
@@ -63,10 +63,27 @@
             }
         }
 
-        .midTitle{
-            margin-top: 50px;
-            font-size: 0.8em;
+        .scpl_total_rateTitle{
+            margin: 70px 0 30px 0;
+
+            .scpl_total_rate{
+                padding: 10px 20px;
+                color: var(--white);
+                background-color: var(--main2);
+                border-radius: 15px;
+                font-weight: 700;
+            }
+        }
+
+        .scpl_total_ratesub{
+            margin: 10px 0 70px 0;
+            font-size: 0.8em; font-weight: 700;
             color: var(--font2);
+
+            .spclStyle{
+                color: var(--main2);
+            }
+
         }
 
         .totalTitle{
@@ -82,7 +99,7 @@
                 margin-left: 10px;
                 font-size: 1.2em;
                 font-weight: 700;
-                color: var(--light-red);
+                color: var(--red1);
             }
         }
     }
@@ -90,12 +107,6 @@
     .scpl_rate_title{
         font-size: 1.2em;
         margin: 0 50px;
-
-        .scpl_total_rate{
-            float: right;
-            font-weight: 700;
-            color:  var(--light-red);
-        }
 
         .toggle_ul {
             list-style: none;
@@ -107,9 +118,13 @@
                 justify-content: space-between; /* 양쪽 끝으로 공간 분배 */
                 align-items: center;
                 padding: 20px;
-                background: #407BFF;
+                background: var(--main2);
                 border-bottom: 2px solid var(--white);
                 font-size: 16px;
+
+                .description{
+                    white-space: pre-line;
+                }
             }
         
             span {
@@ -141,8 +156,9 @@
             label {
                 cursor: pointer;
                 width: 60px;
-                height: 30px;
-                background-color: var(--font4);
+                height: 34px;
+                border: 2px solid var(--white);
+                background-color: var(--main2);
                 border-radius: 50px;
                 position: relative;
                 transition: background-color 0.3s ease-in-out;
@@ -161,7 +177,7 @@
             }
         
             .toggleBtn:checked + label {
-                background-color: var(--neon-green); /* 초록색 상태 */
+                background-color: var(--main1); /* 초록색 상태 */
             }
         
             .toggleBtn:checked + label::after {
