@@ -108,7 +108,14 @@ input[type="checkbox"]:checked::after {
     font-family: Arial, sans-serif; /* 명확한 글꼴 지정 */
     line-height: 1;
 }
-  
+
+
+/* select {
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    outline: none;
+} */
 
 
 

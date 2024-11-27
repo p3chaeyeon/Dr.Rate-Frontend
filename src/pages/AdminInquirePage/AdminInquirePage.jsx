@@ -6,7 +6,7 @@ const AdminInquirePage = () => {
         <div className={styles.adminInquireBody}>
             <div className={styles.adminInquireMain}>
                 <div className={styles.adminInquireMainHeader}>
-                    <h3>user님과의 1:1 문의</h3>
+                    <h3><span>User</span>님과의 1:1 문의</h3>
                 </div>
                 <div className={styles.adminInquireMainChat}>
                     <div className={styles.phoneContainer}>

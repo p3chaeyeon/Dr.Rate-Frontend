@@ -32,6 +32,7 @@ function App() {
 
           {/* 관리자 페이지 라우트 */}
           <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<PageRoutes.AdminMainPage />} /> {/* /admin 기본 경로 */}
               <Route path={PATH.ADMIN_MAIN} element={<PageRoutes.AdminMainPage />} />
               <Route path={PATH.ADMIN_INQUIRE_LIST} element={<PageRoutes.AdminInquireListPage/>} />
               <Route path={PATH.ADMIN_INQUIRE} element={<PageRoutes.AdminInquirePage />} />

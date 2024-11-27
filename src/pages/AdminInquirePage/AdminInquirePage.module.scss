@@ -20,6 +20,9 @@
 
             h3{
                 font-size: 20px;
+                span {
+                    margin-right: 5px;
+                }
             }
 
         }
@@ -33,6 +36,7 @@
 
             .phoneContainer {
                 width: 375px; // 일반적인 핸드폰 너비
+                // width: 50%;
                 height: 100%; // 핸드폰 높이
                 border-radius: 30px; // 둥근 모서리
                 padding: 7px;

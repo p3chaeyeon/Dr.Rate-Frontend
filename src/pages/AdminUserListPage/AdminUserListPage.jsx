@@ -11,7 +11,13 @@ const AdminUserListPage = () => {
                         <h4>사용자 조회</h4>
                     </div>
                     <div className={styles.userSearchBar}>
-                        <input type="text" placeholder="아이디" />
+                        <select>
+                            <optgroup label="검색 항목">
+                                <option value="id" selected>아이디</option>
+                                <option value="name">이름</option>
+                            </optgroup>
+                        </select>
+                        
                         <input type="text" placeholder="검색어" />
                         <button>조회</button>
                     </div>
@@ -22,7 +28,7 @@ const AdminUserListPage = () => {
                             <tr>
                                 <th>아이디</th>
                                 <th>이름</th>
-                                <th>그룹(역할)</th>
+                                <th>그룹 (역할)</th>
                                 <th>가입일자</th>
                             </tr>
                         </thead>
@@ -36,7 +42,7 @@ const AdminUserListPage = () => {
                                 },
                                 {
                                     id: 'HONG',
-                                    name: '홍제헌',
+                                    name: '홍재헌',
                                     group: '사용자',
                                     created_at: '2023-07-13 16:53:33',
                                 },

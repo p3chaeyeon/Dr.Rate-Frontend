@@ -15,7 +15,14 @@ const AdminInquireListPage = () => {
                         <h4>1:1 문의 내역</h4>
                     </div>
                     <div className={styles.inquireSearchBar}>
-                        <input type="text" placeholder="아이디" />
+                        <select>
+                            <optgroup label="검색 항목">
+                                <option value="id" selected>아이디</option>
+                                <option value="name">이름</option>
+                                <option value="subject">제목</option>
+                            </optgroup>
+                        </select>
+                        
                         <input type="text" placeholder="검색어" />
                         <button>조회</button>
                     </div>
@@ -64,12 +71,11 @@ const AdminInquireListPage = () => {
                             ].map((inquire, index) => (
                                 <tr
                                     key={index}
-                                    onClick={() => navigate(PATH.ADMIN_INQUIRE)}
                                     className={styles.row}
                                 >
                                     <td>{inquire.id}</td>
                                     <td>{inquire.name}</td>
-                                    <td>{inquire.title}</td>
+                                    <td onClick={() => navigate(PATH.ADMIN_INQUIRE)}>{inquire.title}</td>
                                     <td>{inquire.category}</td>
                                     <td>
                                         <div className={styles.statusButtons}>
