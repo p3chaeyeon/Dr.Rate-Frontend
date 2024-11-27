@@ -1,7 +1,9 @@
 footer {
     width: 100%;
-    height: auto; /* 높이를 콘텐츠에 따라 조정 */
-    min-height: 160px; /* 최소 높이 보장 */
+    height: auto;
+    /* 높이를 콘텐츠에 따라 조정 */
+    min-height: 160px;
+    /* 최소 높이 보장 */
     padding: 20px 10%;
     background: #F6F7FA;
 
@@ -15,7 +17,7 @@ footer {
 .footerContainer {
     width: 100%;
     height: auto;
-    min-height: 120px; 
+    min-height: 120px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -126,21 +128,45 @@ footer {
 // .corContact 안의 .footerDivider 는 display: none;
 
 @media (max-width: 1100px) {
-   .footerContainer{
+    .footerContainer {
         flex-direction: column;
 
-        .footerInfo{
-            .corContact{
+        .footerInfo,
+        .footerIcon {
+            width: 100%;
+        }
+
+        .footerInfo {
+            .corContact {
                 flex-direction: column;
                 align-items: flex-start;
-                
 
-                .footerDivider{
+
+                .footerDivider {
                     display: none;
                     width: 0;
                     height: 0;
                 }
             }
         }
-   }
+
+        .footerIcon {
+            padding: 10px 0;
+            justify-content: flex-start;
+        }
+    }
+}
+
+
+@media (max-width: 600px) {
+    footer {
+        padding: 20px 3%;
+    }
+}
+
+@media (max-width: 380px) {
+    .footerContainer .footerInfo .corAddress {
+        width: 340px;
+        gap: 7px;
+    }
 }
