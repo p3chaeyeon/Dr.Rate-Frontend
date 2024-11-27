@@ -7,7 +7,7 @@ import axios from 'axios';
 import { PATH } from "src/utils/path";
 
 const ProductDetailPage = () => {
-    const id = 1;
+    const id = 2;
 
     useEffect(() => {
         axios.get(`${PATH.SERVER}/product/getOneProduct/${id}`)
