@@ -231,3 +231,63 @@
         }
     }
 }
+
+@media (max-width: 500px) {
+    .userListDiv {
+        height: auto; /* 높이를 콘텐츠에 맞춤 */
+        padding: 10px;
+
+        .userListArea {
+            padding: 15px;
+            height: auto;
+
+            .userListHeader {
+                flex-direction: column; /* 검색 바를 세로로 배치 */
+                align-items: stretch;
+
+                .userListTitle {
+                    font-size: 16px; /* 제목 크기 줄이기 */
+                    text-align: center; /* 중앙 정렬 */
+                }
+
+                .userSearchBar {
+                    flex-direction: column; /* 검색 바를 세로 배치 */
+                    gap: 8px;
+
+                    select, input {
+                        width: 100%; /* 전체 너비 차지 */
+                    }
+
+                    button {
+                        width: 100%; /* 버튼도 전체 너비 */
+                    }
+                }
+            }
+
+            .userListTable {
+                overflow-x: auto; /* 테이블 스크롤 추가 */
+                table {
+                    font-size: 12px; /* 테이블 텍스트 크기 축소 */
+
+                    th,
+                    td {
+                        padding: 8px; /* 셀 패딩 축소 */
+                    }
+                }
+            }
+
+            .pagination {
+                justify-content: center; /* 페이지네이션 중앙 정렬 */
+                .pageBtn {
+                    flex-wrap: wrap; /* 버튼 줄바꿈 허용 */
+                    gap: 5px;
+
+                    button {
+                        padding: 6px 12px; /* 버튼 크기 줄이기 */
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -96,7 +96,11 @@ div.adminPage {
   main {
     padding-top: 60px;
   }
-
+  .left{
+    display: none; 
+    width: 0;
+    height: 0;
+  }
 }
 
 
