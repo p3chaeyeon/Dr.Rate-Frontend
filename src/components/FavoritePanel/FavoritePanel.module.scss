@@ -32,7 +32,8 @@
         font-size: 14px;
         border-bottom: 1px solid var(--font2);
 
-        .favoriteDeleteBtn, .favoriteSearchBtn {
+        .favoriteDeleteBtn,
+        .favoriteSearchBtn {
             width: 100px;
             height: 36px;
             border-radius: 3px;
@@ -61,7 +62,8 @@
         }
 
 
-        select, input.favoriteSearchText {
+        select,
+        input.favoriteSearchText {
             font-size: 14px;
             padding: 5px 10px;
             border: 1px solid var(--divider-border);
@@ -92,8 +94,8 @@
                     cursor: pointer;
                     font-size: 14px;
                     color: var(--black);
-                    background-color: #fff; 
-                    padding: 5px; 
+                    background-color: #fff;
+                    padding: 5px;
                     cursor: pointer;
                 }
             }
@@ -132,13 +134,16 @@
     .favoritePanel {
 
         .favoriteDeleteSearchDiv {
-            .favoriteDeleteBtn, .favoriteSearchBtn {
+
+            .favoriteDeleteBtn,
+            .favoriteSearchBtn {
                 width: 90px;
                 height: 32px;
                 font-size: 14px;
             }
-            
-            select, input.favoriteSearchText {
+
+            select,
+            input.favoriteSearchText {
                 height: 32px;
                 padding: 2px 8px;
             }
@@ -156,7 +161,8 @@
                 transform: scale(1.3);
             }
 
-            .favoriteDeleteBtn, .favoriteSearchBtn {
+            .favoriteDeleteBtn,
+            .favoriteSearchBtn {
                 width: 80px;
             }
         }
@@ -190,13 +196,15 @@
             // justify-content: flex-start;
             gap: 5px;
 
-            .favoriteDeleteBtn, .favoriteSearchBtn {
+            .favoriteDeleteBtn,
+            .favoriteSearchBtn {
                 width: 60px;
                 height: 28px;
                 font-size: 13px;
             }
 
-            select, input.favoriteSearchText {
+            select,
+            input.favoriteSearchText {
                 height: 28px;
             }
 
@@ -213,8 +221,82 @@
 
 
 /* ====================================== 가로 430px 이하 ====================================== */
+@media (max-width: 430px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            // align-items: center;
+            justify-content: space-between;
+
+            /* 첫 번째 행 : 체크박스 & select 박스, & 검색 input */
+            .allCheck {
+                // flex: 1 1 calc(2% - 5px);
+            }
+
+            select {
+                flex: 1 1 calc(33% - 10px);
+            }
+
+            .favoriteSearchText {
+                flex: 2 1 calc(64% - 10px); // 검색창은 더 넓게
+                max-width: 220px !important;
+            }
 
 
+            /* 두 번째 행  : 삭제 버튼 & 검색 버튼 */
+            .favoriteDeleteBtn {
+                flex: 1 1 calc(50% - 5px);
+                order: 1;
+            }
+
+            .favoriteSearchBtn {
+                flex: 1 1 calc(50% - 5px);
+                order: 2;
+            }
+
+        }
+    }
+}
+
+
+
+/* ====================================== 가로 420px 이하 ====================================== */
+@media (max-width: 420px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+
+            /* 첫 번째 행 : 체크박스 & select 박스, & 검색 input */
+            // .allCheck {
+            //     // flex: 1 1 calc(2% - 5px);
+            // }
+
+            select {
+                max-width: 70px;
+                flex: 1 1 calc(32% - 10px);
+            }
+
+            .favoriteSearchText {
+                flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
+                // max-width: 220px !important;
+            }
+
+
+            /* 두 번째 행  : 삭제 버튼 & 검색 버튼 */
+            // .favoriteDeleteBtn {
+            //     flex: 1 1 calc(50% - 5px);
+            //     order: 1;
+            // }
+
+            // .favoriteSearchBtn {
+            //     flex: 1 1 calc(50% - 5px);
+            //     order: 2;
+            // }
+
+        }
+    }
+}
 
 /* ====================================== 가로 400px 이하 ====================================== */
 
