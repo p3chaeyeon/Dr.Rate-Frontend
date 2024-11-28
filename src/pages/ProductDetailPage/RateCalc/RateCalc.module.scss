@@ -1,0 +1,402 @@
+.serviceDiv{
+    margin-top: 200px;
+    width: 100%;
+    border: 2px solid var(--main2);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+
+    .serviceTop{
+        width: 100%; height: 50px; line-height: 45px;
+        border-bottom: 2px solid var(--main2);
+        padding: 0 20px;
+        cursor: pointer;
+    
+        .serviceTwo{
+            float: right;
+            color: var(--font2);
+        }
+    }
+    .serviceTitle{
+        border-bottom: 2px solid var(--main2);
+        padding: 10px 20px;
+
+        .serviceTwo{
+            float: right;
+            color: var(--font2);
+        }
+    }
+
+    .serviceInput{
+        margin-top: 100px;
+        font-size: 1.2em;
+        text-align: center;
+
+        .serviceMonthTitle{
+            margin-right: 15px;
+        }
+
+        .serviceMonthTitleInput{
+            margin-left: 15px;
+
+            .inputType{
+                width: 250px;
+                padding: 5px 10px;
+                border: 1px solid var(--divider-border);
+                outline: none;
+            }
+
+            .inputType:focus{
+                border:1px solid var(--main2);
+                transition: 0.4s;
+                color: var(--main2);
+            }
+
+            input[type="number"]::-webkit-outer-spin-button,
+            input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+            }
+
+            input[type="number"] {
+            -moz-appearance: textfield; /* Firefox에서 spin 버튼을 숨기기 */
+            }
+        }
+
+        .scpl_total_rateTitle{
+            margin: 70px 0 30px 0;
+
+            .scpl_total_rate{
+                padding: 10px 20px;
+                color: var(--white);
+                background-color: var(--main2);
+                border-radius: 15px;
+                font-weight: 700;
+            }
+        }
+
+        .scpl_total_ratesub{
+            margin: 10px 0 70px 0;
+            font-size: 0.8em; font-weight: 700;
+            color: var(--font2);
+
+            .spclStyle{
+                color: var(--main2);
+            }
+
+        }
+
+        .totalTitle{
+            margin: 30px 0 100px 0;
+
+            .monthM{
+                padding: 0 10px;
+                font-size: 1.1em;
+                font-weight: 700;
+            }
+
+            .serviceMonthTotal{
+                margin-left: 10px;
+                font-size: 1.2em;
+                font-weight: 700;
+                color: var(--red1);
+            }
+        }
+    }
+
+    .scpl_rate_title{
+        font-size: 1.2em;
+        margin: 0 50px;
+
+        .toggle_ul {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        
+            li {
+                display: flex;
+                justify-content: space-between; /* 양쪽 끝으로 공간 분배 */
+                align-items: center;
+                padding: 20px;
+                background: var(--main2);
+                border-bottom: 2px solid var(--white);
+                font-size: 16px;
+
+                .description{
+                    white-space: pre-line;
+                }
+            }
+        
+            span{
+                font-size: 17px;
+                color: var(--white);
+            }
+        
+            /* '조건'은 왼쪽에 위치 */
+            span:nth-child(1) {
+                flex: 1; /* 왼쪽 공간을 차지 */
+            }
+        
+            p{
+                /* '1%'는 체크박스와 같은 줄에 위치 */
+                span:nth-child(1) {
+                    margin-right: 20px; /* 오른쪽 여백 */
+                    float: inline-start;
+                }
+            
+                span:nth-child(2) {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+            }
+        
+            /* 숨겨진 체크박스 */
+            .toggleBtn {
+                display: none;
+            }
+        
+            label {
+                cursor: pointer;
+                width: 60px;
+                height: 34px;
+                border: 2px solid var(--white);
+                background-color: var(--main2);
+                border-radius: 50px;
+                position: relative;
+                transition: background-color 0.3s ease-in-out;
+            }
+        
+            label::after {
+                content: '';
+                width: 24px;
+                height: 24px;
+                background-color: var(--white);
+                position: absolute;
+                border-radius: 50%;
+                top: 3px;
+                left: 3px;
+                transition: left 0.3s ease-in-out;
+            }
+        
+            .toggleBtn:checked + label {
+                background-color: var(--main1); /* 초록색 상태 */
+            }
+        
+            .toggleBtn:checked + label::after {
+                left: calc(100% - 27px); /* 오른쪽으로 슬라이드 */
+            }
+        }
+    }
+
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+    .serviceDiv {
+        margin-top: 100px;
+
+        .serviceTop {
+            height: 45px;
+            padding: 0 15px;
+        }
+
+        .serviceTitle {
+            padding: 10px 15px;
+        }
+    }
+
+    .serviceInput {
+        font-size: 1.1em;
+        margin-top: 80px;
+
+        .inputType {
+            width: 200px;
+            font-size: 1em;
+        }
+    }
+
+    
+    .scpl_total_rate {
+        padding: 8px 16px;
+        font-size: 1.1em;
+    }
+
+    .scpl_total_ratesub {
+        font-size: 0.9em;
+    }
+
+    .totalTitle {
+        margin: 20px 0 80px 0;
+
+        .monthM {
+            font-size: 1em;
+        }
+
+        .serviceMonthTotal {
+            font-size: 1.1em;
+        }
+    }
+
+    .scpl_rate_title {
+        font-size: 1.1em;
+        margin: 0 30px;
+    
+        .toggle_ul li {
+            padding: 15px;
+            font-size: 14px;
+        
+            span {
+                font-size: 16px;
+            }
+        }
+    }
+
+}
+
+@media (max-width: 768px) {
+    .serviceDiv {
+        margin-top: 50px;
+        
+        .serviceTop {
+            height: 40px;
+            padding: 0 10px;
+        }
+    }
+
+    .serviceInput {
+        font-size: 1em;
+        margin-top: 30px;
+
+        .inputType {
+            width: 100px;
+        }
+    }
+
+
+    .scpl_total_rate {
+        padding: 6px 12px;
+        font-size: 1em;
+
+    }
+    
+    .scpl_total_ratesub {
+        font-size: 0.85em;
+    }
+
+    .totalTitle {
+        margin: 15px 0 60px 0;
+        .monthM {
+            font-size: 0.9em;
+        }
+        .serviceMonthTotal {
+            font-size: 1em;
+        }
+    }
+    
+
+    .scpl_rate_title {
+        font-size: 1em;
+        margin: 0 20px;
+        li {
+            padding: 12px;
+            font-size: 13px;
+        }
+    
+        .toggle_ul li {
+            padding: 12px;
+            font-size: 13px;
+
+            span {
+                font-size: 15px;
+            }
+        }
+    }
+
+
+}
+
+@media (max-width: 480px) {
+    .serviceDiv {
+        margin-top: 30px;
+    }
+
+    .serviceTop {
+        height: 35px;
+        padding: 0 5px;
+    }
+
+    .serviceInput {
+        font-size: 0.9em;
+        margin-top: 50px !important;
+
+        .serviceMonthTitle{
+            padding-left: 15px;
+        }
+
+        .inputType {
+            margin-top: 10px;
+            width: 70% !important;
+        }
+    }
+    
+    .scpl_total_rateTitle{
+
+        .scpl_total_rate {
+            padding: 5px 10px;
+            font-size: 0.8em;
+        }
+    }
+
+    .scpl_total_ratesub {
+        font-size: 0.8em;
+        margin-bottom: 30px;
+    }
+
+    .totalTitle {
+        margin: 0px 10px 50px 10px !important;
+        font-size: 0.9em;
+        .monthM {
+            font-size: 0.85em;
+        }
+
+        .serviceMonthTotal {
+            font-size: 0.9em;
+        }
+    }
+
+
+
+    .scpl_rate_title {
+        font-size: 1.0em !important;
+        margin: 0 15px !important;
+    
+        .toggle_ul li {
+            padding: 10px;
+            display: block !important;
+            
+            .description{
+                font-size: 1.1em !important;
+                margin: 0px !important;
+            }
+
+            p{
+                margin: 0px !important;
+                padding-top: 30px;
+                display: flex;             /* 추가: p 요소에 flex 사용 */
+                justify-content: center;   /* 추가: 가로로 가운데 정렬 */
+                align-items: center;       /* 추가: 세로로도 가운데 정렬 */
+
+                span:nth-child(1) {
+                    margin:0px !important;
+                }
+
+                span:nth-child(2){
+                    display: inline-flex !important;
+                }
+            }
+        }
+    }
+
+}
