@@ -22,7 +22,7 @@ const favoriteData = [
     {
         bank_logo: 'shinhanLogo.png',
         bank_name: '신한은행',
-        prd_name: '청년 처음예금',
+        prd_name: '신한프리미어 토지보상 정기예금',
         spcl_rate: '4.0',
         basic_rate: '3.3'
     }
