@@ -49,95 +49,97 @@ const ServiceCenterPage = () => {
   };
 
   return (
-    <main className={styles.main}>
-      {/* 질문 섹션 + 관리자 문의 섹션 */}
-      <div className={styles.topContainer}>
-        <section className={styles.questionSection}>
-          <h3 className={styles.heading}>무엇을 도와 드릴까요?</h3>
-          <br></br>
-          <ul className={styles.fixedQuestionList}>
-            {fixedQuestions.map((item) => (
-              <li key={item.id} className={styles.fixedQuestionItem}>
-                <button
-                  className={styles.questionButton}
-                  onClick={() => setActiveCategory(item.category)}
-                >
-                  <span className={styles.icon}>Q</span>
-                  {item.question}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
-        <aside className={styles.contactSection}>
-          <h3 className={styles.subheading}>관리자 문의</h3>
-          <ul className={styles.infoList}>
-            <li>・평일: 전체 문의 상담</li>
+    <main className={styles.serviceCenterMain}>
+      {/* 공통 section */}
+      <section className={styles.commonSection}>
+        <div className={styles.topContainer}>
+          <div className={styles.questionSection}>
+            <h3 className={styles.heading}>무엇을 도와 드릴까요?</h3>
             <br></br>
-            <li>・토요일: 이메일 상담</li>
-            <br></br>
-            <li>・일요일: 휴무</li>
-            <br></br>
-          </ul>
-          <button className={styles.chatButton}>관리자 1:1 문의하기</button>
-          <div className={styles.emailActions}>
-            <button className={styles.emailButton}>이메일 문의하기</button>
-            <button className={styles.copyButton}>이메일 주소 복사하기</button>
+            <ul className={styles.fixedQuestionList}>
+              {fixedQuestions.map((item) => (
+                <li key={item.id} className={styles.fixedQuestionItem}>
+                  <button
+                    className={styles.questionButton}
+                    onClick={() => {
+                      setActiveCategory(item.category);
+                      setExpandedQuestionId(item.id);
+                    }}
+                  >
+                    <span className={styles.icon}>Q</span>
+                    {item.question}
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
-        </aside>
-      </div>
-
-      {/* 기준선 추가 */}
-      <div className={styles.sectionDivider}></div>
-
-      {/* 카테고리 섹션 */}
-      <nav className={styles.navBar}>
-        {categories.map((category) => (
-          <button
-            key={category.id}
-            className={`${styles.navButton} ${
-              activeCategory === category.id ? styles.active : ""
-            }`}
-            onClick={() => setActiveCategory(category.id)}
-          >
-            {category.name}
-          </button>
-        ))}
-      </nav>
-
-      {/* FAQ 섹션 */}
-      <div className={styles.faqContainer}>
-        {faqData[activeCategory].map((item) => (
-          <section
-            key={item.id}
-            className={`${styles.faqSection} ${
-              expandedQuestionId === item.id ? styles.open : ""
-            }`}
-          >
-            <button
-              className={styles.questionButton}
-              onClick={() => handleQuestionClick(item.id)}
-            >
-              <span className={styles.icon}>Q</span>
-              {item.question}
-              <span
-                className={`${styles.arrowIcon} ${
-                  expandedQuestionId === item.id ? styles.up : ""
-                }`}
-              ></span>
-            </button>
-            <div
-              className={styles.answerContainer}
-              style={{
-                maxHeight: expandedQuestionId === item.id ? "200px" : "0",
-                opacity: expandedQuestionId === item.id ? "1" : "0",
-              }}
-            >
-              <p className={styles.answer}>{item.answer}</p>
+          <div className={styles.contactSection}>
+            <h3 className={styles.subheading}>관리자 문의</h3>
+            <ul className={styles.infoList}>
+              <li>・평일: 전체 문의 상담</li>
+              <br></br>
+              <li>・토요일: 이메일 상담</li>
+              <br></br>
+              <li>・일요일: 휴무</li>
+              <br></br>
+            </ul>
+            <button className={styles.chatButton}>관리자 1:1 문의하기</button>
+            <div className={styles.emailActions}>
+              <button className={styles.emailButton}>이메일 문의하기</button>
+              <button className={styles.copyButton}>이메일 주소 복사하기</button>
             </div>
-          </section>
-        ))}
-      </div>
+          </div>
+        </div>
+
+        <div className={styles.sectionDivider}></div>
+
+        <nav className={styles.navBar}>
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              className={`${styles.navButton} ${
+                activeCategory === category.id ? styles.active : ""
+              }`}
+              onClick={() => setActiveCategory(category.id)}
+            >
+              {category.name}
+            </button>
+          ))}
+        </nav>
+
+        <div className={styles.faqContainer}>
+          {faqData[activeCategory].map((item) => (
+            <div
+              key={item.id}
+              className={`${styles.faqSection} ${
+                expandedQuestionId === item.id ? styles.open : ""
+              }`}
+            >
+              <button
+                className={styles.questionButton}
+                onClick={() => handleQuestionClick(item.id)}
+              >
+                <span className={styles.icon}>Q</span>
+                {item.question}
+                <span
+                  className={`${styles.arrowIcon} ${
+                    expandedQuestionId === item.id ? styles.up : ""
+                  }`}
+                ></span>
+              </button>
+              <div
+                className={styles.answerContainer}
+                style={{
+                  maxHeight: expandedQuestionId === item.id ? "200px" : "0",
+                  opacity: expandedQuestionId === item.id ? "1" : "0",
+                }}
+              >
+                <p className={styles.answer}>{item.answer}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 };
