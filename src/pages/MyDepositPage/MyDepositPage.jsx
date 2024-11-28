@@ -8,7 +8,7 @@ const favoriteData = [
     {
         bank_logo: 'kookminLogo.png',
         bank_name: '국민은행',
-        prd_name: '청년들을 위한 Kstar 예금',
+        prd_name: '국민수퍼정기예금 (CD금리연동형)',
         spcl_rate: '4.2',
         basic_rate: '3.32'
     },

@@ -2,6 +2,7 @@
 
 .favoriteSection {
     padding-top: 70px;
+
     .favoriteListDiv {
         margin-top: 40px;
         display: flex;
@@ -31,7 +32,7 @@
 
                 .favoriteLogoImg {
                     object-fit: contain;
-                    width: 70px
+                    width: 70px;
                 }
             }
 
@@ -68,7 +69,8 @@
                     justify-content: flex-end;
                 }
 
-                .spcl_rate, .basic_rate {
+                .spcl_rate,
+                .basic_rate {
                     margin-right: 3px;
                 }
             }
@@ -115,12 +117,52 @@
 /* ====================================== 가로 800px 이하 ====================================== */
 @media (max-width: 800px) {
     .favoriteSection {
-        padding-top: 60px;
+        .favoriteListDiv {
+            .favoriteList {
+                .check {
+                    transform: scale(1.3);
+                }
+
+
+                .favoriteLogoDiv {
+                    width: 130px;
+
+                    .favoriteLogoImg {
+                        width: 60px;
+                    }
+                }
+            }
+        }
     }
 }
 
+/* ====================================== 가로 700px 이하 ====================================== */
+@media (max-width: 700px) {
+    .favoriteSection {
+        .favoriteListDiv {
+            .favoriteList {
+                .check {
+                    transform: scale(1.3);
+                    height: 14px;
+                }
 
 
+                .favoriteLogoDiv {
+                    width: 90px;
+                    justify-content: flex-end;
+
+                    .favoriteLogoImg {
+                        width: 50px;
+                    }
+                }
+
+                .favoriteInfoDiv {
+                    padding: 0 5px;
+                }
+            }
+        }
+    }
+}
 
 
 
@@ -132,8 +174,51 @@
         padding: 20px 10px;
         padding-top: 60px;
         width: 84%;
+
+        .favoriteListDiv {
+            .favoriteList {
+                height: 90px;
+            }
+        }
     }
 }
+
+
+
+/* ====================================== 가로 560px 이하 ====================================== */
+@media (max-width: 560px) {
+    .favoriteSection {
+        .favoriteListDiv {
+            .favoriteList {
+                .favoriteInfoDiv {
+                    padding: 5px 0 5px 20px;
+                    flex-direction: column;
+                    align-items: flex-start;
+
+                    .favoriteBankProDiv {
+                        font-size: 13px;
+                    }
+                    .favoriteRateDiv {
+                        display: flex;
+                        gap: 8px;
+
+                        .favoriteHighestRateDiv,
+                        .favoriteSBaseRateDiv {
+                            font-size: 12px;
+                        }
+
+                        .favoriteHighestRatePer,
+                        .favoriteBaseRatePer {
+                            width: 36px;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 
 
@@ -141,6 +226,77 @@
 @media (max-width: 430px) {
     .favoriteSection {
         padding-top: 50px;
+
+        .favoriteListDiv {
+            .favoriteList {
+                height: 80px;
+
+                .favoriteInfoDiv {
+                    padding: 5px 0 5px 10px;
+                }
+            }
+        }
     }
 }
+
+
+/* ====================================== 가로 375px 이하 ====================================== */
+@media (max-width: 375px) {
+    .favoriteSection {
+        .favoriteListDiv {
+            .favoriteList {
+                height: 76px;
+
+                .favoriteLogoDiv {
+                    width: 84px;
+                    .favoriteLogoImg {
+                        width: 44px;
+                    }
+                }
+
+                .favoriteInfoDiv {
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+}
+
+
+/* ====================================== 가로 344px 이하 ====================================== */
+@media (max-width: 344px) {
+    .favoriteSection {
+        .favoriteListDiv {
+            .favoriteList {
+                height: 76px;
+
+                .check {
+                    max-width: 12px;
+                    max-height: 12px;
+                }                    
+
+                .favoriteLogoDiv {
+                    width: 74px;
+                    padding: 0 5px 0 0;
+                    .favoriteLogoImg {
+                        width: 42px;
+                    }
+                }
+
+                .favoriteInfoDiv {
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
 
