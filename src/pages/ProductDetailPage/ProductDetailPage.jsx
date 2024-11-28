@@ -11,7 +11,7 @@ import { PATH } from "src/utils/path";
 import { atom, useAtom } from 'jotai';
 
 // Jotai 상태 관리
-const idAtom = atom(1);
+const idAtom = atom(2);
 const productsAtom = atom({
     optionNum: {},
     options: [],
