@@ -47,7 +47,6 @@ const FavoritePanel = ({ favoriteDataLength }) => {
                     checked={allChecked}
                     onChange={handleAllCheck}
                 />
-                <button className={ styles.favoriteDeleteBtn }>선택 삭제</button>
                 <select defaultValue="bank_name">
                     <optgroup label="검색 항목">
                         <option value="bank_name">은행</option>
@@ -61,6 +60,7 @@ const FavoritePanel = ({ favoriteDataLength }) => {
                     placeholder="검색어" 
                 />
                 <button className={ styles.favoriteSearchBtn }>검색</button>
+                <button className={ styles.favoriteDeleteBtn }>삭제</button>
             </div>
             
         </div>
