@@ -126,7 +126,7 @@
     }
 
     ul li{
-        padding: 10px 0;
+        padding: 20px 0;
 
         span{
             font-size: 18px; font-weight: 700;
@@ -137,7 +137,7 @@
             padding: 10px 0 0 10px;
         }
 
-        .rateTable, .rateTypeTable, .rateCalcTable{
+        .rateTable, .rateCalcTable{
             margin: 10px 0 0 10px;
 
             td{
@@ -153,13 +153,8 @@
         }
 
         .rateTable{
-            width: 300px;
+            width: 800px;
         }
-    
-        .rateTypeTable{
-            width: 300px;
-        }
-    
         .rateCalcTable{
             width: 800px;
         }
@@ -171,6 +166,12 @@
     }
 }
 
+.modalLogin{
+    color: var(--main1);
+    text-decoration-line:underline;
+    font-weight: 700;
+    cursor: pointer;
+}
 
 @media (max-width: 768px) {
     .topDiv {
@@ -178,10 +179,11 @@
       padding: 50px 20px;
 
       .image {
-          margin-bottom: 30px;
+        width: 80px; height: 80px;
+        margin-bottom: 30px;
           
-          img{
-            width: 80px;
+        img{
+            width: 90px;
             height: 80px;
         }
       }
@@ -201,8 +203,14 @@
       text-align: center;
       float: none;
 
-      .heartIcon, .intobtn, .gotoHomePage{
-        width: 200px;
+      .heartIcon, .intobtn{
+        width: 32%;
+        margin-right: 0.5em;
+      }
+
+      .gotoHomePage{
+        width: 32%;
+        margin-right: 0px;
       }
     }
   
@@ -210,7 +218,7 @@
       margin-top: 100px;
 
       .serviceTwo {
-        float: none;
+        float: right;
         text-align: center;
       }
     }
@@ -218,15 +226,17 @@
     .detailDiv {
       padding: 20px;
 
-        .rateTable, .rateTypeTable, .rateCalcTable {
-            width: 100%;
+        .rateTable, .rateCalcTable {
+            width: 100% !important;
+            font-size: 1.0em;
+
             td{
-                font-size: 14px;
+                font-size: 1.0em;
                 padding: 8px;
             }
 
             thead tr td{
-                font-size: 16px;
+                font-size: 1.0em;
             }
         }
     }
@@ -269,11 +279,17 @@
   
     .btnDiv {
 
-        .intobtn, .gotoHomePage, .heartIcon {
-          font-size: 15px;
-          margin-right: 5px;
-          width: 32%;
-          height: 50px;
+        .intobtn, .heartIcon {
+            font-size: 0.8em;
+            margin-right: 0.2em;
+            width: 32%;
+            height: 50px;
+        }
+
+        .gotoHomePage{
+            font-size: 0.8em;
+            width: 32%;
+            height: 50px;
         }
     }
 
@@ -293,7 +309,7 @@
         }
 
         ul li {
-            .rateTable, .rateTypeTable, .rateCalcTable {
+            .rateTable, .rateCalcTable {
                 width: 95%;
 
                 td{
@@ -302,7 +318,7 @@
                 }
 
                 thead tr td{
-                    font-size: 14px;
+                    font-size: 0.6em;
                 }
             }
         }
