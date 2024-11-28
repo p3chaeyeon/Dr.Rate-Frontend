@@ -30,6 +30,7 @@ body {
   width: 100%;
   height: auto;
   margin: 20px auto;
+  padding-top: 70px;
 }
   
 
@@ -149,6 +150,12 @@ body {
   box-shadow: none !important; /* 그림자 제거 */
 }
 
+.fc-daygrid-day-events {
+  display: flex; /* 유연한 레이아웃 */
+  flex-direction: column; /* 세로 정렬 */
+  align-items: flex-start; /* 왼쪽 정렬 */
+}
+
 /* 이벤트관련 */
 .eventContainer {
   display: flex;
@@ -229,6 +236,7 @@ body {
   transition: all 0.3s ease; 
 }
 
+
 /* 반응형 스타일 */
 @media (max-width: 1000px) and (min-width: 901px) {
   .expandedPadding {
@@ -239,6 +247,7 @@ body {
     padding: 0;
     background-color: transparent; /* 이벤트 배경색 제거 */
     box-shadow: none; /* 그림자 제거 */
+    position: relative;
   }
 
   .eventContainer:hover {
@@ -366,7 +375,7 @@ body {
   }
 }
 
-@media (max-width: 350px) {
+@media (max-width: 351px) {
   .expandedPadding {
     height: 80px;
   }
@@ -392,6 +401,14 @@ body {
     display: none !important;
   }
 }
+
+.fc-daygrid-event {
+  display: block !important; /* 이벤트를 강제로 블록 요소로 표시 */
+  margin-bottom: 5px; /* 이벤트 간 간격 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+
 
 
 

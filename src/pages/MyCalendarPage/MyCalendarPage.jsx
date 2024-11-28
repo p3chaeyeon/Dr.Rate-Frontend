@@ -1,13 +1,15 @@
 //Jotai 및 관련 라이브러리 import
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { atom, useAtom } from 'jotai';
-import MyNav from 'src/components/MyNav'; //MyNav
 import FullCalendar from '@fullcalendar/react'; // React용 FullCalendar
 import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
 import interactionPlugin from '@fullcalendar/interaction'; // 날짜 클릭
 import Modal from 'react-modal'; // 모달
+
+import MyNav from 'src/components/MyNav'; //MyNav
 import AlertModal from "src/components/Modal/AlertModal/AlertModal"; //AlertModal
 import useModal from 'src/hooks/useModal'; //useModal 훅 추가
+
 import leftArrowIcon from 'src/assets/icons/leftArrow.svg'; //icon
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 import kookminLogo from '/src/assets/bank/kookminLogo.png';
@@ -28,6 +30,18 @@ const savingNameAtom = atom(''); // 상품 이름 저장
 const amountAtom = atom(''); // 금액 저장
 const logoUrlAtom = atom(''); // 로고 URL 저장
 const endDateAtom = atom(''); // 만기일 저장
+const isSmallScreenAtom = atom(window.innerWidth <= 1000); //화면 크기 변경 시 상태 업데이트
+
+// 은행 로고 URL 매핑
+const bankLogos = {
+  국민은행: kookminLogo,
+  신한은행: shinhanLogo,
+  하나은행: hanaLogo,
+  우리은행: wooriLogo,
+  카카오뱅크: kakaoLogo,
+  농협은행: nonghyupLogo,
+  토스뱅크: tossLogo,
+};
 
 // 모달 초기 설정
 Modal.setAppElement('#root');
@@ -40,27 +54,31 @@ const MyCalendarPage = () => {
   const [endDate, setEndDate] = useAtom(endDateAtom); //만기일
   const [amount, setAmount] = useAtom(amountAtom); //금액
   const [events, setEvents] = useAtom(eventsAtom); //이벤트목록
+  const [isSmallScreen, setIsSmallScreen] = useAtom(isSmallScreenAtom);
 
-  //useModal 훅
-  const {
-    isAlertOpen,
-    openAlertModal,
-    closeAlertModal,
-    alertContent,
-  } = useModal();
+  //화면크기 상태
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 1000); // 화면 크기 변경 시 상태 업데이트
+    };
+    window.addEventListener('resize', handleResize); // resize 이벤트 리스너 등록
+    return () => window.removeEventListener('resize', handleResize); // 컴포넌트 언마운트 시 리스너 제거
+  }, [setIsSmallScreen]);
 
   const calendarRef = useRef(null); // 캘린더 참조
 
-  // 은행 로고 URL 매핑
-  const bankLogos = {
-    국민은행: kookminLogo,
-    신한은행: shinhanLogo,
-    하나은행: hanaLogo,
-    우리은행: wooriLogo,
-    카카오뱅크: kakaoLogo,
-    농협은행: nonghyupLogo,
-    토스뱅크: tossLogo,
-  };
+  //useModal 훅
+  const { isAlertOpen, openAlertModal, closeAlertModal, alertContent } = useModal();
+
+  // 작은 화면에서는 각 날짜의 첫 번째 이벤트만 표시
+  const filteredEvents = isSmallScreen
+    ?
+    events.filter(
+      (event, index, self) =>
+        self.findIndex((e) => e.date === event.date) === index
+    )
+    : // 큰 화면에서는 모든 이벤트 표시
+    events;
 
   // 날짜 클릭 시 모달 열기
   const handleDateClick = (info) => {
@@ -123,21 +141,17 @@ const MyCalendarPage = () => {
       setLogoUrl('');
       setSelectedDate('');
       setEndDate('');
-    }else {
-        openAlertModal('작성 불가', '모든 정보를 입력해주세요!');
-      }
-    };  
+    } else {
+      openAlertModal('작성 불가', '모든 정보를 입력해주세요!');
+    }
+  };
 
   return (
     <main>
       <MyNav />
       <section>
-        {/* AlertModal 컴포넌트 */}
         <AlertModal
-          isOpen={isAlertOpen}
-          closeModal={closeAlertModal}
-          title={alertContent.title}
-          message={alertContent.message}
+          isOpen={isAlertOpen} closeModal={closeAlertModal} title={alertContent.title} message={alertContent.message}
         />
         <div
           className={`${styles.calendar} ${modalIsOpen ? styles.calendarBlur : ''}`} // 흐림효과 추가
@@ -159,9 +173,9 @@ const MyCalendarPage = () => {
               next: '',
             }}
             titleFormat={{ year: 'numeric', month: 'long' }}
-            events={events}
+            events={filteredEvents} //이벤트목록
             contentHeight="auto" // 달력 주 고정된 높이
-            dateClick={handleDateClick}
+            dateClick={handleDateClick} //날짜클릭
             dayCellClassNames={({ date }) => {
               const today = new Date();
               const isToday =
