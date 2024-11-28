@@ -114,13 +114,13 @@ const Header = () => {
             <nav className={styles.userNav} >
             <ul className={styles.userMenuList}>
                     <li className={styles.userMenuItem}>
-                        {/* {Users tb 조회 혹은 세션 확인 === '로그인 세션 있으면' ? '로그인(경로: Sign_In)' : '로그아웃'} */}로그아웃
+                        {/* {로그인 상태 조회 === '로그인 상태이면' ? '로그인(경로: Sign_In)' : '로그아웃'} */}로그아웃
                     </li>
                     <li className={styles.userMenuItem}>
                         <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
                     </li>                    
                     <li className={styles.userMenuItem} onClick={() => navigate(PATH.MY_DEPOSIT)}>
-                        {/* {Users tb 조회 혹은 세션 확인 === '로그인 세션 있으면' ? '회원가입(경로: Sign_Up)' : '마이페이지(경로: MY_DEPOSIT)'} */}마이페이지
+                        {/* {로그인 상태 조회 === '로그인 상태이면' ? '회원가입(경로: Sign_Up)' : '마이페이지(경로: MY_DEPOSIT)'} */}마이페이지
                     </li>
                     <li className={styles.userMenuItem}>
                         <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
