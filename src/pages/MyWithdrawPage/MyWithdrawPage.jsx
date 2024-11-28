@@ -8,7 +8,7 @@ const MyWithdrawPage = () => {
         <main>
             <MyNav />
 
-            <section className={ styles.accountSettingsSection }>
+            <section className={ styles.MyWithdrawSection }>
 
             </section>
         

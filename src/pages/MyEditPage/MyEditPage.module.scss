@@ -1,7 +1,5 @@
-.accountSettingsSection {
+.myEditSection {
     padding-top: 70px;
-    border: 1px solid red;
-    height: 50px;
 }
 
 
@@ -20,7 +18,7 @@
 
 /* ====================================== 가로 1000px 이하 ====================================== */
 @media (max-width: 1000px) {
-    .accountSettingsSection {
+    .myEditSection {
         padding-top: 60px;
     }
 }
@@ -30,7 +28,7 @@
 
 /* ====================================== 가로 430px 이하 ====================================== */
 @media (max-width: 430px) {
-    .accountSettingsSection{
+    .myEditSection{
         padding-top: 50px;
     }
 }

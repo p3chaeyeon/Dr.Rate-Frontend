@@ -7,7 +7,7 @@ const MyEditPage = () => {
         <main>
             <MyNav />
 
-            <section className={ styles.accountSettingsSection }>
+            <section className={ styles.myEditSection }>
 
             </section>
         
