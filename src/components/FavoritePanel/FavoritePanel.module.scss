@@ -237,11 +237,19 @@
 
             select {
                 flex: 1 1 calc(33% - 10px);
+
+                optgroup {
+                    font-size: 12px;
+    
+                    option {
+                        font-size: 12px;
+                    }
+                }
             }
 
-            .favoriteSearchText {
+            input.favoriteSearchText {
                 flex: 2 1 calc(64% - 10px); // 검색창은 더 넓게
-                max-width: 220px !important;
+                max-width: 220px;
             }
 
 
@@ -266,41 +274,111 @@
 @media (max-width: 420px) {
     .favoritePanel {
         .favoriteDeleteSearchDiv {
-
-            /* 첫 번째 행 : 체크박스 & select 박스, & 검색 input */
-            // .allCheck {
-            //     // flex: 1 1 calc(2% - 5px);
-            // }
+            gap: 6px;
 
             select {
-                max-width: 70px;
+                max-width: 74px;
                 flex: 1 1 calc(32% - 10px);
             }
 
-            .favoriteSearchText {
+            input.favoriteSearchText {
                 flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
-                // max-width: 220px !important;
+                max-width: 210px;
             }
-
-
-            /* 두 번째 행  : 삭제 버튼 & 검색 버튼 */
-            // .favoriteDeleteBtn {
-            //     flex: 1 1 calc(50% - 5px);
-            //     order: 1;
-            // }
-
-            // .favoriteSearchBtn {
-            //     flex: 1 1 calc(50% - 5px);
-            //     order: 2;
-            // }
-
         }
     }
 }
 
+
+
+
+/* ====================================== 가로 410px 이하 ====================================== */
+@media (max-width: 410px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+            // gap: 6px;
+
+            input.favoriteSearchText {
+                max-width: 202px;
+            }
+        }
+    }
+}
+
+
+
 /* ====================================== 가로 400px 이하 ====================================== */
+@media (max-width: 400px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+            select {
+                max-width: 70px;
+            }
+
+            input.favoriteSearchText {
+                flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
+                max-width: 190px;
+            }
+        }
+    }
+}
 
 
+
+/* ====================================== 가로 380px 이하 ====================================== */
+@media (max-width: 380px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+            select {
+                max-width: 70px;
+            }
+
+            input.favoriteSearchText {
+                flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
+                max-width: 180px;
+            }
+        }
+    }
+}
 
 
 /* ====================================== 가로 370px 이하 ====================================== */
+@media (max-width: 370px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+            select {
+                max-width: 66px;
+            }
+
+            input.favoriteSearchText {
+                flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
+                max-width: 174px;
+            }
+        }
+    }
+}
+
+
+/* ====================================== 가로 344px 이하 ====================================== */
+@media (max-width: 344px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+
+            .allCheck {
+                max-width: 12px;
+                max-height: 12px;
+            }
+
+            select {
+                max-width: 64px;
+            }
+
+            input.favoriteSearchText {
+                flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
+                max-width: 166px;
+            }
+        }
+    }
+}
+
+

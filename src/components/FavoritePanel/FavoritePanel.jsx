@@ -40,6 +40,7 @@ const FavoritePanel = ({ favoriteDataLength }) => {
             {/* src/components/FavoritePanel/FavoritePanel.jsx */}
             {/* 즐겨찾기 삭제 & 검색바 */}
             <div className={ styles.favoriteDeleteSearchDiv }>
+                
                 <input 
                     type="checkbox" 
                     name="allCheck" 
@@ -47,19 +48,23 @@ const FavoritePanel = ({ favoriteDataLength }) => {
                     checked={allChecked}
                     onChange={handleAllCheck}
                 />
+
                 <select defaultValue="bank_name">
                     <optgroup label="검색 항목">
                         <option value="bank_name">은행</option>
                         <option value="prd_name">상품</option>
                     </optgroup>
                 </select>
+
                 <input 
                     type="text" 
                     name="favoriteSearchText" 
                     className={ styles.favoriteSearchText }
                     placeholder="검색어" 
                 />
+
                 <button className={ styles.favoriteSearchBtn }>검색</button>
+
                 <button className={ styles.favoriteDeleteBtn }>삭제</button>
             </div>
             
