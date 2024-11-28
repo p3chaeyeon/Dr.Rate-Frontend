@@ -1,9 +1,86 @@
+/* src/pages/MyDepositPage/MyDepositPage.module.scss */
+
+.favoriteSection {
+    .favoriteListDiv {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .favoriteList {
+            border: 1px solid var(--font2);
+            border-radius: 3px;
+            height: 100px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+
+            .check {
+                position: absolute;
+                top: 7px;
+                left: 7px;
+            }
+
+            .favoriteLogoDiv {
+                width: 140px;
+                padding-right: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .favoriteLogoImg {
+                    object-fit: contain;
+                    width: 70px
+                }
+            }
+
+            .favoriteInfoDiv {
+                flex: 1;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: var(--black);
+                padding: 0 10px;
+
+                .favoriteBankProDiv {
+                    .favoriteBank {
+                        font-weight: 600;
+                    }
+                }
+
+                .favoriteHighestRateDiv,
+                .favoriteSBaseRateDiv {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+                .favoriteHighestRateDiv {
+                    color: var(--red2);
+                }
+
+                .favoriteHighestRatePer,
+                .favoriteBaseRatePer {
+                    width: 50px;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+
+                .spcl_rate, .basic_rate {
+                    margin-right: 3px;
+                }
+            }
+        }
+    }
+}
+
 .heartIcon {
-    color: var(--red2); 
+    color: var(--red2);
     font-size: 26px;
 }
 
-.searchDiv{
+.searchDiv {
     // border: 1px solid blue;
     height: 40px;
     display: flex;
@@ -15,9 +92,9 @@
         margin-right: 20px;
     }
 
-     button{
+    button {
         font-size: 15px;
         height: 40px;
-     }
+    }
 
 }
