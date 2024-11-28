@@ -1,6 +1,48 @@
-.favoriteSection{
+.favoriteSection {
+    padding-top: 70px;
+
     .favoriteListDiv {
         margin-top: 40px;
         border: 1px solid red;
+    }
+}
+
+
+
+
+
+
+
+
+/* ====================================== 가로 1000px 이하 ====================================== */
+@media (max-width: 1000px) {
+    .favoriteSection {
+        padding-top: 60px;
+    }
+}
+
+
+
+
+
+
+
+
+/* ====================================== 가로 600px 이하 ====================================== */
+@media (max-width: 600px) {
+    .favoriteSection {
+        padding: 20px 10px;
+        padding-top: 60px;
+        width: 84%;
+    }
+}
+
+
+
+/* ====================================== 가로 430px 이하 ====================================== */
+@media (max-width: 430px) {
+    .favoriteSection {
+        padding-top: 50px;
+
     }
 }
