@@ -111,10 +111,15 @@
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    border-bottom : 1px solid var(--font2);
                     
                     &:hover {
                         color: var(--white);
                         background-color: var(--main2);
+                    }
+
+                    &:last-child {
+                        border-bottom : none;
                     }
                 }
             }
