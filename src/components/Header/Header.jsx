@@ -99,15 +99,15 @@ const Header = () => {
                         비교
                         <img src={downArrowIcon} alt="Down arrow" className={styles.headerDownArrow} />
                         {isDropdownOpen && (
-                        <ul className={styles.HeaderDropdownMenu} ref={dropdownRef}>
-                            <li className={styles.HeaderDropdownItem} onClick={() => navigate(PATH.DEPOSIT_COMPARE)}>
-                                예금 비교
-                            </li>
-                            <li className={styles.HeaderDropdownItem} onClick={() => navigate(PATH.INSTALLMENT_COMPARE)}>
-                                적금 비교
-                            </li>
-                        </ul>
-                    )}                        
+                            <ul className={styles.headerDropdownMenu} ref={dropdownRef}>
+                                <li className={styles.headerDropdownItem} onClick={() => navigate(PATH.DEPOSIT_COMPARE)}>
+                                    예금 비교
+                                </li>
+                                <li className={styles.headerDropdownItem} onClick={() => navigate(PATH.INSTALLMENT_COMPARE)}>
+                                    적금 비교
+                                </li>
+                            </ul>
+                        )}                        
                     </li>
                 </ul>
             </nav>
