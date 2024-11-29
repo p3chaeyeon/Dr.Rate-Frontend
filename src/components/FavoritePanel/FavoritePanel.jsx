@@ -69,8 +69,8 @@ const FavoritePanel = ({ favoriteDataLength }) => {
                         onClick={ handleToggleDropdown }
                         className={`${styles.selectDefaultDiv} ${isDropdownOpen ? styles.active : ''}`}
                     >
-                        <div className={ styles.selectOption }>
-                            <span className={ styles.searchKey }>{searchKey}</span>
+                        <div className={ styles.selectOptionDiv }>
+                            <span className={ styles.selectOption }>{searchKey}</span>
                         </div>
                         <div className= {styles.selectArrowDiv }>
                             <img
