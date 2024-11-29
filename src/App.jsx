@@ -21,8 +21,8 @@ function App() {
               <Route path={PATH.MY_CALENDAR} element={<PageRoutes.MyCalendarPage />} />
               <Route path={PATH.INSTALLMENT_LIST} element={<PageRoutes.ProductInsListPage />} />
               <Route path={PATH.DEPOSIT_LIST} element={<PageRoutes.ProductDepListPage />} />
-              <Route path={PATH.PRODUCT_DETAIL} element={<PageRoutes.ProductDetailPage />} />
               <Route path={PATH.SERVICE_CENTER} element={<PageRoutes.ServiceCenterPage />} />
+              <Route path={PATH.PRODUCT_DETAIL} element={<PageRoutes.ProductDetailPage />} />{/* path={`${PATH.PRODUCT_DETAIL}/:productId`} */}
           </Route>
 
 
@@ -36,7 +36,7 @@ function App() {
               <Route index element={<PageRoutes.AdminMainPage />} /> {/* /admin 기본 경로 */}
               <Route path={PATH.ADMIN_MAIN} element={<PageRoutes.AdminMainPage />} />
               <Route path={PATH.ADMIN_INQUIRE_LIST} element={<PageRoutes.AdminInquireListPage/>} />
-              <Route path={PATH.ADMIN_INQUIRE} element={<PageRoutes.AdminInquirePage />} />
+              <Route path={PATH.ADMIN_INQUIRE} element={<PageRoutes.AdminInquirePage />} />{/* path={`${PATH.ADMIN_INQUIRE}/:inquireId`} */}
               <Route path={PATH.ADMIN_USER_LIST} element={<PageRoutes.AdminUserListPage/>} />
           </Route>
       </Routes>

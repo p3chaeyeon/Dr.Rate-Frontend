@@ -12,7 +12,7 @@ export const PATH = {
 
   INSTALLMENT_LIST: "/product/installmentList", // 상품-적금리스트페이지; 필터페이지 -혜진
   DEPOSIT_LIST: "/product/depositList", // 상품-예금리스트페이지; 필터페이지 -혜진
-  PRODUCT_DETAIL: "/products/detail", // 상품페이지; 상품 상세페이지
+  PRODUCT_DETAIL: "/product/detail", // 상품페이지; 상품 상세페이지
 
   SERVICE_CENTER: '/serviceCenter',
 
