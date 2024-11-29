@@ -22,6 +22,7 @@ function App() {
               <Route path={PATH.INSTALLMENT_LIST} element={<PageRoutes.ProductInsListPage />} />
               <Route path={PATH.DEPOSIT_LIST} element={<PageRoutes.ProductDepListPage />} />
               <Route path={PATH.PRODUCT_DETAIL} element={<PageRoutes.ProductDetailPage />} />{/* path={`${PATH.PRODUCT_DETAIL}/:productId`} */}
+              <Route path={PATH.PRODUCT_COMPARE} element={<PageRoutes.ProductComparePage />}/>
           </Route>
 
 
