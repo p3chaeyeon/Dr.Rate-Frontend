@@ -61,13 +61,6 @@ const FavoritePanel = ({ favoriteDataLength }) => {
                     onChange={handleAllCheck}
                 />
 
-                <select defaultValue="bank_name">
-                    {/* <optgroup label="검색 항목"> */}
-                        <option value="bank_name">은행</option>
-                        <option value="prd_name">상품</option>
-                    {/* </optgroup> */}
-                </select>
-
                 <div
                     className={ styles.selectDiv }
                     ref={dropdownRef}

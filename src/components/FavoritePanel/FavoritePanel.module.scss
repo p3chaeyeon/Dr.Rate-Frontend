@@ -39,40 +39,6 @@
             box-shadow: 0 0 0 0.7px var(--font2);
         }
 
-
-        select {
-            font-size: 14px;
-            border: 1px solid var(--font2);
-            transition: border-color 0.3s ease;
-            width: 120px;
-            height: 36px;
-            cursor: pointer;
-            color: var(--font2);
-            display: none;
-
-            &:hover {
-                border-color: #706d6d;
-            }
-
-            &:focus {
-                outline: none;
-            }
-
-            // optgroup {
-            //     font-size: 14px;
-            //     font-weight: 500;
-
-                option {
-                    cursor: pointer;
-                    font-size: 14px;
-                    color: var(--black);
-                    background-color: #fff;
-                    padding: 5px;
-                    cursor: pointer;
-                }
-            // }
-        }
-
         /* 검색옵션 선택박스 */
         .selectDiv {
             position: relative;
