@@ -8,7 +8,7 @@ const MyPage = () => {
         <main>
             <MyNav />
 
-            <section className={ styles.myContainer }>
+            <section className={ styles.myInfoSection }>
                 <h1>마이 페이지 &gt; 회원 정보</h1>
                 <h2>Alert Modal Test</h2>
                     언젠가 하겠지

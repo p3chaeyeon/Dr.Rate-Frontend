@@ -26,13 +26,14 @@
     .favoriteDeleteSearchDiv {
         padding: 10px 5px;
         display: flex;
-        justify-content: flex-start;
+        justify-content: space-between;
         align-items: center;
         gap: 15px;
         font-size: 14px;
         border-bottom: 1px solid var(--font2);
 
-        .favoriteDeleteBtn, .favoriteSearchBtn {
+        .favoriteDeleteBtn,
+        .favoriteSearchBtn {
             width: 100px;
             height: 36px;
             border-radius: 3px;
@@ -61,7 +62,8 @@
         }
 
 
-        select, input.favoriteSearchText {
+        select,
+        input.favoriteSearchText {
             font-size: 14px;
             padding: 5px 10px;
             border: 1px solid var(--divider-border);
@@ -89,10 +91,11 @@
                 font-weight: 500;
 
                 option {
+                    cursor: pointer;
                     font-size: 14px;
                     color: var(--black);
-                    background-color: #fff; 
-                    padding: 5px; 
+                    background-color: #fff;
+                    padding: 5px;
                     cursor: pointer;
                 }
             }
@@ -106,3 +109,284 @@
     }
 
 }
+
+
+
+
+
+
+
+
+
+/* ====================================== 가로 1000px 이하 ====================================== */
+@media (max-width: 1000px) {
+    .favoritePanel {
+
+        .favoriteDeleteSearchDiv {
+            gap: 10px;
+        }
+    }
+}
+
+
+/* ====================================== 가로 900px 이하 ====================================== */
+@media (max-width: 900px) {
+    .favoritePanel {
+
+        .favoriteDeleteSearchDiv {
+
+            .favoriteDeleteBtn,
+            .favoriteSearchBtn {
+                width: 90px;
+                height: 32px;
+                font-size: 14px;
+            }
+
+            select,
+            input.favoriteSearchText {
+                height: 32px;
+                padding: 2px 8px;
+            }
+        }
+    }
+}
+
+
+/* ====================================== 가로 800px 이하 ====================================== */
+@media (max-width: 800px) {
+    .favoritePanel {
+
+        .favoriteDeleteSearchDiv {
+            .allCheck {
+                transform: scale(1.3);
+            }
+
+            .favoriteDeleteBtn,
+            .favoriteSearchBtn {
+                width: 80px;
+            }
+        }
+    }
+}
+
+/* ====================================== 가로 700px 이하 ====================================== */
+@media (max-width: 700px) {
+    .favoritePanel {
+
+        .favoriteDeleteSearchDiv {
+            gap: 7px;
+
+            .allCheck {
+                transform: scale(1.3);
+                // width: 15px;
+                height: 14px;
+            }
+
+        }
+    }
+}
+
+
+
+/* ====================================== 가로 600px 이하 ====================================== */
+@media (max-width: 600px) {
+    .favoritePanel {
+
+        .favoriteDeleteSearchDiv {
+            // justify-content: flex-start;
+            gap: 5px;
+
+            .favoriteDeleteBtn,
+            .favoriteSearchBtn {
+                width: 60px;
+                height: 28px;
+                font-size: 13px;
+            }
+
+            select,
+            input.favoriteSearchText {
+                height: 28px;
+            }
+
+            select {
+                max-width: 80px;
+            }
+
+            input.favoriteSearchText {
+                max-width: 180px;
+            }
+        }
+    }
+}
+
+
+/* ====================================== 가로 430px 이하 ====================================== */
+@media (max-width: 430px) {
+    .favoritePanel {
+        .favoriteCategoryDiv {
+            margin: 10px 0;
+
+            .favoriteCategoryItem {
+                font-size: 15px;
+            }
+        }
+
+        .favoriteDeleteSearchDiv {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            // align-items: center;
+            justify-content: space-between;
+
+            /* 첫 번째 행 : 체크박스 & select 박스, & 검색 input */
+            .allCheck {
+                // flex: 1 1 calc(2% - 5px);
+            }
+
+            select {
+                flex: 1 1 calc(33% - 10px);
+
+                optgroup {
+                    font-size: 12px;
+    
+                    option {
+                        font-size: 12px;
+                    }
+                }
+            }
+
+            input.favoriteSearchText {
+                flex: 2 1 calc(64% - 10px); // 검색창은 더 넓게
+                max-width: 220px;
+            }
+
+
+            /* 두 번째 행  : 삭제 버튼 & 검색 버튼 */
+            .favoriteDeleteBtn {
+                flex: 1 1 calc(50% - 5px);
+                order: 1;
+            }
+
+            .favoriteSearchBtn {
+                flex: 1 1 calc(50% - 5px);
+                order: 2;
+            }
+
+        }
+    }
+}
+
+
+
+/* ====================================== 가로 420px 이하 ====================================== */
+@media (max-width: 420px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+            gap: 6px;
+
+            select {
+                max-width: 74px;
+                flex: 1 1 calc(32% - 10px);
+            }
+
+            input.favoriteSearchText {
+                flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
+                max-width: 210px;
+            }
+        }
+    }
+}
+
+
+
+
+/* ====================================== 가로 410px 이하 ====================================== */
+@media (max-width: 410px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+            // gap: 6px;
+
+            input.favoriteSearchText {
+                max-width: 202px;
+            }
+        }
+    }
+}
+
+
+
+/* ====================================== 가로 400px 이하 ====================================== */
+@media (max-width: 400px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+            select {
+                max-width: 70px;
+            }
+
+            input.favoriteSearchText {
+                flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
+                max-width: 190px;
+            }
+        }
+    }
+}
+
+
+
+/* ====================================== 가로 380px 이하 ====================================== */
+@media (max-width: 380px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+            select {
+                max-width: 70px;
+            }
+
+            input.favoriteSearchText {
+                flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
+                max-width: 180px;
+            }
+        }
+    }
+}
+
+
+/* ====================================== 가로 370px 이하 ====================================== */
+@media (max-width: 370px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+            select {
+                max-width: 66px;
+            }
+
+            input.favoriteSearchText {
+                flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
+                max-width: 174px;
+            }
+        }
+    }
+}
+
+
+/* ====================================== 가로 344px 이하 ====================================== */
+@media (max-width: 344px) {
+    .favoritePanel {
+        .favoriteDeleteSearchDiv {
+
+            .allCheck {
+                max-width: 12px;
+                max-height: 12px;
+            }
+
+            select {
+                max-width: 64px;
+            }
+
+            input.favoriteSearchText {
+                flex: 2 1 calc(63% - 10px); // 검색창은 더 넓게
+                max-width: 166px;
+            }
+        }
+    }
+}
+
+
