@@ -3,7 +3,7 @@
 import HomePage from "./HomePage";
 import MyDepositPage from "./MyDepositPage";
 import MyInstallmentPage from "./MyInstallmentPage";
-import MyPage from "./MyPage";
+import MyInfoPage from "./MyInfoPage";
 import MyEditPage from "./MyEditPage";
 import MyWithdrawPage from "./MyWithdrawPage";
 import MyCalendarPage from "./MyCalendarPage";
@@ -22,7 +22,7 @@ const PageRoutes = {
   HomePage,
   MyDepositPage,
   MyInstallmentPage,
-  MyPage,
+  MyInfoPage,
   MyEditPage,
   MyWithdrawPage,
   MyCalendarPage,
