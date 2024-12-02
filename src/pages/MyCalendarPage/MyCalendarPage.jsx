@@ -31,6 +31,7 @@ const amountAtom = atom(''); // 금액 저장
 const logoUrlAtom = atom(''); // 로고 URL 저장
 const endDateAtom = atom(''); // 만기일 저장
 const isSmallScreenAtom = atom(window.innerWidth <= 1000); //화면 크기 변경 시 상태 업데이트
+const expandedDatesAtom = atom({}); // 특정 날짜의 이벤트가 펼쳐졌는지 관리
 
 // 은행 로고 URL 매핑
 const bankLogos = {
@@ -55,6 +56,27 @@ const MyCalendarPage = () => {
   const [amount, setAmount] = useAtom(amountAtom); //금액
   const [events, setEvents] = useAtom(eventsAtom); //이벤트목록
   const [isSmallScreen, setIsSmallScreen] = useAtom(isSmallScreenAtom);
+  const [expandedDates, setExpandedDates] = useAtom(expandedDatesAtom);
+
+  // 이벤트 필터링 로직
+  const smallScreenFilteredEvents = events.filter((event) => {
+    if (isSmallScreen) {
+      return (
+        expandedDates[event.date] || // 확장된 날짜면 모든 이벤트 표시
+        events.findIndex((e) => e.date === event.date) ===
+        events.indexOf(event) // 아니면 첫 번째 이벤트만 표시
+      );
+    }
+    return true; // 전체 화면에서는 모든 이벤트 표시
+  });
+
+  // 로고 클릭 핸들러
+  const handleLogoClick = (date) => {
+    setExpandedDates((prev) => ({
+      ...prev,
+      [date]: !prev[date], // 클릭한 날짜의 확장 상태를 토글
+    }));
+  };
 
   //화면크기 상태
   useEffect(() => {
@@ -173,7 +195,7 @@ const MyCalendarPage = () => {
               next: '',
             }}
             titleFormat={{ year: 'numeric', month: 'long' }}
-            events={filteredEvents} //이벤트목록
+            events={isSmallScreen ? smallScreenFilteredEvents : filteredEvents} //이벤트목록
             contentHeight="auto" // 달력 주 고정된 높이
             dateClick={handleDateClick} //날짜클릭
             dayCellClassNames={({ date }) => {
@@ -245,28 +267,54 @@ const MyCalendarPage = () => {
             }}
             eventContent={(eventInfo) => {
               const logo = eventInfo.event.extendedProps.logoUrl;
+              const date = eventInfo.event.startStr;
+
+              // 현재 날짜에 해당하는 모든 이벤트 가져오기
+              const eventsForDate = events.filter((event) => event.date === date);
+              // 현재 이벤트가 해당 날짜의 첫 번째 이벤트인지 확인
+              const isFirstEvent = eventsForDate.length > 0 && eventsForDate[0].title === eventInfo.event.title;
+
+              const isExpanded = expandedDates[date]; // 확장 상태 확인
+
+              // 작은 화면에서 첫 번째 이벤트에만 버튼 표시
+              const showButton = isSmallScreen && isFirstEvent;
+
               return (
-                <div className={styles.eventContainer}>
+                <div
+                  className={`${styles.eventContainer} ${isFirstEvent ? styles.firstEvent : ''}`}
+                >
                   {logo && (
-                    <img
-                      src={logo}
-                      alt="Bank Logo"
-                      className={styles.eventLogo}
-                    />
+                    <div className={styles.logoWrapper}>
+                      <img
+                        src={logo}
+                        alt="Bank Logo"
+                        className={styles.eventLogo}
+                      />
+                      {showButton && ( // 첫 번째 이벤트에만 버튼 유지
+                        <button
+                          className={`${styles.expandButton} ${styles.hoverOnly}`}
+                          onClick={() => handleLogoClick(date)} // 버튼 클릭 시 확장 상태 토글
+                        >
+                          {isExpanded ? '－' : '＋'}
+                        </button>
+                      )}
+                    </div>
                   )}
-                  <div>
-                    <div className={styles.eventTitleContainer}>
-                      <div className={styles.eventTitle}>
-                        {eventInfo.event.title.split(' - ')[0]}
+                  {(isExpanded || !isSmallScreen) && ( // 확장 상태에서만 정보 표시
+                    <div>
+                      <div className={styles.eventTitleContainer}>
+                        <div className={styles.eventTitle}>
+                          {eventInfo.event.title.split(" - ")[0]}
+                        </div>
+                        <div className={styles.tooltip}>
+                          {eventInfo.event.title.split(" - ")[0]}
+                        </div>
                       </div>
-                      <div className={styles.tooltip}>
-                        {eventInfo.event.title.split(' - ')[0]}
+                      <div className={styles.eventAmount}>
+                        {eventInfo.event.title.split(" - ")[1]}
                       </div>
                     </div>
-                    <div className={styles.eventAmount}>
-                      {eventInfo.event.title.split(' - ')[1]}
-                    </div>
-                  </div>
+                  )}
                 </div>
               );
             }}
