@@ -267,12 +267,12 @@ body {
       .eventLogo {
         width: 40px;
         height: 40px;
-        margin-right: 1px; 
+        margin: 0 auto; 
       }
 
       .expandButton {
         position: absolute; /* 버튼을 고정 위치로 설정 */
-        right: -19px; /* 로고 오른쪽으로 버튼을 밀기 */
+        right: -20px; /* 로고 오른쪽으로 버튼을 밀기 */
         top: 50%; /* 버튼을 로고 높이의 정중앙에 배치 */
         transform: translateY(-50%); /* 세로 가운데 정렬 */
         opacity: 0; /* 기본적으로 버튼 숨김 */
@@ -287,10 +287,6 @@ body {
         text-align: center; /* 텍스트 가운데 정렬 */
         padding: 0; /* 버튼 내부 여백 제거 */
       } 
-      .eventContainer:hover .expandButton {
-        opacity: 1; /* 호버 시 버튼 보이기 */
-        pointer-events: auto; /* 클릭 가능 */
-      }      
     }
   }
 
@@ -359,7 +355,6 @@ body {
       }
     }
   }
-
   .eventTitle,
   .eventAmount {
     display: none !important;
@@ -424,7 +419,6 @@ body {
       }
     }
   }
-
   .eventTitle,
   .eventAmount {
     display: none !important;

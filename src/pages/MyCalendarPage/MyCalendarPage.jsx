@@ -1,5 +1,5 @@
 //Jotai 및 관련 라이브러리 import
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { atom, useAtom } from 'jotai';
 import FullCalendar from '@fullcalendar/react'; // React용 FullCalendar
 import dayGridPlugin from '@fullcalendar/daygrid'; // 월간 보기
@@ -57,6 +57,7 @@ const MyCalendarPage = () => {
   const [events, setEvents] = useAtom(eventsAtom); //이벤트목록
   const [isSmallScreen, setIsSmallScreen] = useAtom(isSmallScreenAtom);
   const [expandedDates, setExpandedDates] = useAtom(expandedDatesAtom);
+  const [animatingDates, setAnimatingDates] = useState({});
 
   // 이벤트 필터링 로직
   const smallScreenFilteredEvents = events.filter((event) => {
@@ -72,10 +73,24 @@ const MyCalendarPage = () => {
 
   // 로고 클릭 핸들러
   const handleLogoClick = (date) => {
-    setExpandedDates((prev) => ({
+    // 기존 이벤트 흐림 처리
+    setAnimatingDates((prev) => ({
       ...prev,
-      [date]: !prev[date], // 클릭한 날짜의 확장 상태를 토글
+      [date]: true, // 애니메이션 시작
     }));
+
+    setTimeout(() => {
+      setExpandedDates((prev) => ({
+        ...prev,
+        [date]: !prev[date], // 클릭한 날짜의 확장 상태를 토글
+      }));
+
+      // 애니메이션 종료 후 기존 이벤트 밝기 복구
+      setAnimatingDates((prev) => ({
+        ...prev,
+        [date]: false, // 애니메이션 종료
+      }));
+    }, 1000); // 애니메이션 지속 시간
   };
 
   //화면크기 상태
@@ -271,6 +286,11 @@ const MyCalendarPage = () => {
 
               // 현재 날짜에 해당하는 모든 이벤트 가져오기
               const eventsForDate = events.filter((event) => event.date === date);
+              // 해당 이벤트의 순서를 계산
+              const eventIndex = eventsForDate.findIndex(
+                (e) => e.title === eventInfo.event.title
+              );
+
               // 현재 이벤트가 해당 날짜의 첫 번째 이벤트인지 확인
               const isFirstEvent = eventsForDate.length > 0 && eventsForDate[0].title === eventInfo.event.title;
 
@@ -278,10 +298,14 @@ const MyCalendarPage = () => {
 
               // 작은 화면에서 첫 번째 이벤트에만 버튼 표시
               const showButton = isSmallScreen && isFirstEvent;
-
+              const isAnimating = animatingDates[date];
               return (
                 <div
-                  className={`${styles.eventContainer} ${isFirstEvent ? styles.firstEvent : ''}`}
+                  className={`${styles.eventContainer}`}
+                  style={{
+                    opacity: isAnimating ? 0.2 : 1, // 애니메이션 동안 로고 흐림
+                    transition: 'opacity 10s linear !important', // 애니메이션 효과
+                  }}
                 >
                   {logo && (
                     <div className={styles.logoWrapper}>
@@ -289,6 +313,10 @@ const MyCalendarPage = () => {
                         src={logo}
                         alt="Bank Logo"
                         className={styles.eventLogo}
+                        style={{
+                          visibility: 'visible', // 작은 화면에서도 항상 보이게
+                          opacity: 1, // 로고는 항상 완전한 불투명도로 유지
+                        }}
                       />
                       {showButton && ( // 첫 번째 이벤트에만 버튼 유지
                         <button
