@@ -1,0 +1,296 @@
+/* src/pages/MyDepositPage/MyInstallmentPage.module.scss */
+
+.favoriteSection {
+    padding-top: 70px;
+
+    .favoriteListDiv {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .favoriteList {
+            border: 1px solid var(--font2);
+            border-radius: 3px;
+            height: 100px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+
+            .check {
+                position: absolute;
+                top: 7px;
+                left: 7px;
+                border: none;
+                box-shadow: 0 0 0 0.7px var(--font2);
+            }
+
+            .favoriteLogoDiv {
+                width: 140px;
+                padding-right: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .favoriteLogoImg {
+                    object-fit: contain;
+                    width: 70px;
+                }
+            }
+
+            .favoriteInfoDiv {
+                flex: 1;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: var(--black);
+                padding: 0 10px;
+
+                .favoriteBankProDiv {
+                    .favoriteBank {
+                        font-weight: 600;
+                    }
+                }
+
+                .favoriteHighestRateDiv,
+                .favoriteSBaseRateDiv {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 5px;
+                }
+
+                .favoriteHighestRateDiv {
+                    color: var(--red2);
+                }
+
+                .favoriteHighestRatePer,
+                .favoriteBaseRatePer {
+                    width: 50px;
+                    display: flex;
+                    justify-content: flex-end;
+                }
+
+                .spcl_rate,
+                .basic_rate {
+                    margin-right: 3px;
+                }
+            }
+        }
+    }
+}
+
+.heartIcon {
+    color: var(--red2);
+    font-size: 26px;
+}
+
+.searchDiv {
+    // border: 1px solid blue;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+
+    input[type="checkbox"] {
+        transform: scale(1.4);
+        margin-right: 20px;
+    }
+
+    button {
+        font-size: 15px;
+        height: 40px;
+    }
+
+}
+
+
+
+/* ====================================== 가로 1000px 이하 ====================================== */
+@media (max-width: 1000px) {
+    .favoriteSection {
+        padding-top: 60px;
+    }
+}
+
+
+
+
+/* ====================================== 가로 800px 이하 ====================================== */
+@media (max-width: 800px) {
+    .favoriteSection {
+        .favoriteListDiv {
+            .favoriteList {
+                .check {
+                    transform: scale(1.3);
+                }
+
+
+                .favoriteLogoDiv {
+                    width: 130px;
+
+                    .favoriteLogoImg {
+                        width: 60px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* ====================================== 가로 700px 이하 ====================================== */
+@media (max-width: 700px) {
+    .favoriteSection {
+        .favoriteListDiv {
+            .favoriteList {
+                .check {
+                    transform: scale(1.3);
+                    height: 14px;
+                }
+
+
+                .favoriteLogoDiv {
+                    width: 90px;
+                    justify-content: flex-end;
+
+                    .favoriteLogoImg {
+                        width: 50px;
+                    }
+                }
+
+                .favoriteInfoDiv {
+                    padding: 0 5px;
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+/* ====================================== 가로 600px 이하 ====================================== */
+@media (max-width: 600px) {
+    .favoriteSection {
+        padding: 20px 10px;
+        padding-top: 60px;
+        width: 84%;
+
+        .favoriteListDiv {
+            .favoriteList {
+                height: 90px;
+            }
+        }
+    }
+}
+
+
+
+/* ====================================== 가로 560px 이하 ====================================== */
+@media (max-width: 560px) {
+    .favoriteSection {
+        .favoriteListDiv {
+            .favoriteList {
+                .favoriteInfoDiv {
+                    padding: 5px 0 5px 20px;
+                    flex-direction: column;
+                    align-items: flex-start;
+
+                    .favoriteBankProDiv {
+                        font-size: 13px;
+                    }
+                    .favoriteRateDiv {
+                        display: flex;
+                        gap: 8px;
+
+                        .favoriteHighestRateDiv,
+                        .favoriteSBaseRateDiv {
+                            font-size: 12px;
+                        }
+
+                        .favoriteHighestRatePer,
+                        .favoriteBaseRatePer {
+                            width: 36px;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+/* ====================================== 가로 430px 이하 ====================================== */
+@media (max-width: 430px) {
+    .favoriteSection {
+        padding-top: 50px;
+
+        .favoriteListDiv {
+            .favoriteList {
+                height: 80px;
+
+                .favoriteInfoDiv {
+                    padding: 5px 0 5px 10px;
+                }
+            }
+        }
+    }
+}
+
+
+/* ====================================== 가로 375px 이하 ====================================== */
+@media (max-width: 375px) {
+    .favoriteSection {
+        .favoriteListDiv {
+            .favoriteList {
+                height: 76px;
+
+                .favoriteLogoDiv {
+                    width: 84px;
+                    .favoriteLogoImg {
+                        width: 44px;
+                    }
+                }
+
+                .favoriteInfoDiv {
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+}
+
+
+/* ====================================== 가로 344px 이하 ====================================== */
+@media (max-width: 344px) {
+    .favoriteSection {
+        .favoriteListDiv {
+            .favoriteList {
+                height: 76px;
+
+                .check {
+                    max-width: 12px;
+                    max-height: 12px;
+                }                    
+
+                .favoriteLogoDiv {
+                    width: 74px;
+                    padding: 0 5px 0 0;
+                    .favoriteLogoImg {
+                        width: 42px;
+                    }
+                }
+
+                .favoriteInfoDiv {
+                    padding: 5px 0;
+                }
+            }
+        }
+    }
+}
+
+

@@ -8,7 +8,8 @@
 
 html, body {
     width: 100%;
-    height: auto; /* auto로 설정해 콘텐츠 높이에 따라 확장 */
+    /* height: auto; /* auto 로 설정해 콘텐츠 높이에 따라 확장 */
+    height: 100%;
     overflow-x: hidden;
     overflow-y: auto; /* 스크롤 허용 */   
     font-size: 16px;
@@ -38,6 +39,11 @@ h3 {
 
 ul, ol, li {
     list-style: none;
+    background: transparent;
+}
+
+ul:hover, ol:hover, li:hover {
+    background: transparent;
 }
 
 a {
@@ -49,7 +55,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.4em 1.0em;
+    /* padding: 0.4em 1.0em; */
     border: 1px solid #1a1a1a;
     border-radius: 5px;    
     color: #1a1a1a;
@@ -85,7 +91,7 @@ input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none; /* Safari 호환 */
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid var(--divider-border);
     width: 16px;
     height: 16px;
     border-radius: 3px; 
@@ -102,7 +108,14 @@ input[type="checkbox"]:checked::after {
     font-family: Arial, sans-serif; /* 명확한 글꼴 지정 */
     line-height: 1;
 }
-  
+
+
+/* select {
+    appearance: none; 
+    -webkit-appearance: none; 
+    -moz-appearance: none; 
+    outline: none;
+} */
 
 
 

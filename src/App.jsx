@@ -3,20 +3,45 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'; 
 import { PATH } from "./utils/path";
 import PageRoutes from "./pages";
+import UserLayout from "./layouts/UserLayout";
+import AdminLayout from "./layouts/AdminLayout";
 
 function App() {
   return (
     <div className="app">
       <Routes>
-      <Route path="*" element={<PageRoutes.HomePage />} /> {/* 모든 경로 fallback */}
-        <Route path={PATH.HOME} element={<PageRoutes.HomePage />} />
-        <Route path={PATH.MY_SAVINGS} element={<PageRoutes.MySavingsPage />} />
-        <Route path={PATH.MY_RECURRING} element={<PageRoutes.MyRecurringPage />} />
-        <Route path={PATH.MY} element={<PageRoutes.MyPage />} />
-        <Route path={PATH.MY_EDIT} element={<PageRoutes.MyEditPage />} />
-        <Route path={PATH.MY_WITHDRAW} element={<PageRoutes.MyWithdrawPage />} />
-        <Route path={PATH.MY_CALENDAR} element={<PageRoutes.MyCalendarPage />} />
+          {/* 사용자 페이지 라우트 */}
+          <Route path="/" element={<UserLayout />}>
+              <Route index element={<PageRoutes.HomePage />} /> {/* 기본 경로 */}
+              <Route path={PATH.MY_DEPOSIT} element={<PageRoutes.MyDepositPage />} />
+              <Route path={PATH.MY_INSTALLMENT} element={<PageRoutes.MyInstallmentPage />} />
+              <Route path={PATH.MY_INFO} element={<PageRoutes.MyInfoPage />} />
+              <Route path={PATH.MY_EDIT} element={<PageRoutes.MyEditPage />} />
+              <Route path={PATH.MY_WITHDRAW} element={<PageRoutes.MyWithdrawPage />} />
+              <Route path={PATH.MY_CALENDAR} element={<PageRoutes.MyCalendarPage />} />
+              <Route path={PATH.INSTALLMENT_LIST} element={<PageRoutes.ProductInsListPage />} />
+              <Route path={PATH.DEPOSIT_LIST} element={<PageRoutes.ProductDepListPage />} />
+              <Route path={PATH.SERVICE_CENTER} element={<PageRoutes.ServiceCenterPage />} />
+              <Route path={PATH.PRODUCT_DETAIL} element={<PageRoutes.ProductDetailPage />} />{/* path={`${PATH.PRODUCT_DETAIL}/:productId`} */}
+          </Route>
+
+
+
+
+
+          
+
+          {/* 관리자 페이지 라우트 */}
+          <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<PageRoutes.AdminMainPage />} /> {/* /admin 기본 경로 */}
+              <Route path={PATH.ADMIN_MAIN} element={<PageRoutes.AdminMainPage />} />
+              <Route path={PATH.ADMIN_INQUIRE_LIST} element={<PageRoutes.AdminInquireListPage/>} />
+              <Route path={PATH.ADMIN_INQUIRE} element={<PageRoutes.AdminInquirePage />} />{/* path={`${PATH.ADMIN_INQUIRE}/:inquireId`} */}
+              <Route path={PATH.ADMIN_USER_LIST} element={<PageRoutes.AdminUserListPage/>} />
+          </Route>
       </Routes>
+
+
     </div>
   );
 }
