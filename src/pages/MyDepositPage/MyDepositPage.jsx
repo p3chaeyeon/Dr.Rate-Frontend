@@ -57,8 +57,7 @@ const MyDepositPage = () => {
                             <div className={styles.favoriteLogoDiv}>
                                 {/* img 'src/assets/bank/' + '파일명' 으로 src/assets/bank 폴더에서 이미지 가져옴 */}
                                 <img
-                                    src={`/src/assets/bank/${item.bank_logo}`}
-                                    // src={item.bank_logo}
+                                    src={`https://kr.object.ncloudstorage.com/dr-rate/bankLogo/${item.bank_logo}`}
                                     alt={`${item.bank_name} 로고`}
                                     className={styles.favoriteLogoImg}
                                 />

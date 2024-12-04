@@ -56,8 +56,7 @@ const MyInstallmentPage = () => {
                             />
                             <div className={styles.favoriteLogoDiv}>
                                 <img
-                                    src={`/src/assets/bank/${item.bank_logo}`}
-                                    // src={item.bank_logo}
+                                    src={`https://kr.object.ncloudstorage.com/dr-rate/bankLogo/${item.bank_logo}`}
                                     alt={`${item.bank_name} 로고`}
                                     className={styles.favoriteLogoImg}
                                 />
