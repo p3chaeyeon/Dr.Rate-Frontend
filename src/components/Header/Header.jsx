@@ -279,7 +279,7 @@ const Header = () => {
 
 
                                 {/* (비회원, 회원) 비회원은 고객센터만 보여야함 */}
-                                <li className={ styles.sideMainItem }>
+                                <li className={ styles.sideMainItem } onClick={() => sideNavigation(PATH.SERVICE_CENTER)}> 
                                     고객센터
                                 </li>
 
