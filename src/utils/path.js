@@ -14,12 +14,15 @@ export const PATH = {
   DEPOSIT_LIST: "/product/depositList", // 상품-예금리스트페이지; 필터페이지 -혜진
   PRODUCT_DETAIL: "/product/detail", // 상품페이지; 상품 상세페이지
 
+  SERVICE_CENTER: '/serviceCenter',
+
   /* 관리자 경로 */
   ADMIN_MAIN: "/admin/adminMain",
   ADMIN_USER_LIST: "/admin/userList",
   ADMIN_INQUIRE_LIST: "/admin/adminInquireList",
   ADMIN_INQUIRE: "/admin/adminInquire",
 
+  STORAGE_BANK: "https://kr.object.ncloudstorage.com/dr-rate/bankLogo",
   SERVER: "http://localhost:8080", // 배포 후 여기만 수정
 };
 

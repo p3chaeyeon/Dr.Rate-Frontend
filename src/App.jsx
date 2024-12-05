@@ -15,12 +15,13 @@ function App() {
               <Route index element={<PageRoutes.HomePage />} /> {/* 기본 경로 */}
               <Route path={PATH.MY_DEPOSIT} element={<PageRoutes.MyDepositPage />} />
               <Route path={PATH.MY_INSTALLMENT} element={<PageRoutes.MyInstallmentPage />} />
-              <Route path={PATH.MY_INFO} element={<PageRoutes.MyPage />} />
+              <Route path={PATH.MY_INFO} element={<PageRoutes.MyInfoPage />} />
               <Route path={PATH.MY_EDIT} element={<PageRoutes.MyEditPage />} />
               <Route path={PATH.MY_WITHDRAW} element={<PageRoutes.MyWithdrawPage />} />
               <Route path={PATH.MY_CALENDAR} element={<PageRoutes.MyCalendarPage />} />
               <Route path={PATH.INSTALLMENT_LIST} element={<PageRoutes.ProductInsListPage />} />
               <Route path={PATH.DEPOSIT_LIST} element={<PageRoutes.ProductDepListPage />} />
+              <Route path={PATH.SERVICE_CENTER} element={<PageRoutes.ServiceCenterPage />} />
               <Route path={PATH.PRODUCT_DETAIL} element={<PageRoutes.ProductDetailPage />} />{/* path={`${PATH.PRODUCT_DETAIL}/:productId`} */}
           </Route>
 

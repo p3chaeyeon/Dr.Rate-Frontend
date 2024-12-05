@@ -99,15 +99,15 @@ const Header = () => {
                         비교
                         <img src={downArrowIcon} alt="Down arrow" className={styles.headerDownArrow} />
                         {isDropdownOpen && (
-                        <ul className={styles.HeaderDropdownMenu} ref={dropdownRef}>
-                            <li className={styles.HeaderDropdownItem} onClick={() => navigate(PATH.DEPOSIT_COMPARE)}>
-                                예금 비교
-                            </li>
-                            <li className={styles.HeaderDropdownItem} onClick={() => navigate(PATH.INSTALLMENT_COMPARE)}>
-                                적금 비교
-                            </li>
-                        </ul>
-                    )}                        
+                            <ul className={styles.headerDropdownMenu} ref={dropdownRef}>
+                                <li className={styles.headerDropdownItem} onClick={() => navigate(PATH.DEPOSIT_COMPARE)}>
+                                    예금 비교
+                                </li>
+                                <li className={styles.headerDropdownItem} onClick={() => navigate(PATH.INSTALLMENT_COMPARE)}>
+                                    적금 비교
+                                </li>
+                            </ul>
+                        )}                        
                     </li>
                 </ul>
             </nav>
@@ -125,7 +125,7 @@ const Header = () => {
                     <li className={styles.userMenuItem}>
                         <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
                     </li>
-                    <li className={styles.userMenuItem}>
+                    <li className={styles.userMenuItem} onClick={() => navigate(PATH.SERVICE_CENTER)}>
                         고객센터
                     </li>
                 </ul>

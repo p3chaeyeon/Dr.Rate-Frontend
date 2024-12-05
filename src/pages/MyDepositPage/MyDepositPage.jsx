@@ -1,5 +1,6 @@
 import styles from './MyDepositPage.module.scss';
 import React, { useEffect } from 'react';
+import { PATH } from "src/utils/path";
 import MyNav from 'src/components/MyNav';
 import FavoritePanel from 'src/components/FavoritePanel';
 import useFavorite from 'src/hooks/useFavorite';
@@ -8,7 +9,7 @@ const favoriteData = [
     {
         bank_logo: 'kookminLogo.png',
         bank_name: '국민은행',
-        prd_name: '청년들을 위한 Kstar 예금',
+        prd_name: '국민수퍼정기예금 (CD금리연동형)',
         spcl_rate: '4.2',
         basic_rate: '3.32'
     },
@@ -22,7 +23,7 @@ const favoriteData = [
     {
         bank_logo: 'shinhanLogo.png',
         bank_name: '신한은행',
-        prd_name: '청년 처음예금',
+        prd_name: '신한프리미어 토지보상 정기예금',
         spcl_rate: '4.0',
         basic_rate: '3.3'
     }
@@ -57,8 +58,7 @@ const MyDepositPage = () => {
                             <div className={styles.favoriteLogoDiv}>
                                 {/* img 'src/assets/bank/' + '파일명' 으로 src/assets/bank 폴더에서 이미지 가져옴 */}
                                 <img
-                                    src={`/src/assets/bank/${item.bank_logo}`}
-                                    // src={item.bank_logo}
+                                    src={`${PATH.STORAGE_BANK}/${item.bank_logo}`}
                                     alt={`${item.bank_name} 로고`}
                                     className={styles.favoriteLogoImg}
                                 />
