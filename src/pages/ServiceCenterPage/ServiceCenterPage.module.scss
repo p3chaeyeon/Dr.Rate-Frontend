@@ -101,9 +101,26 @@
           cursor: pointer;
           text-align: center;
           font-size: 14px;
-
+          font-weight: normal;
+          position: relative; /* 내부 .newAnswerSection 배치를 위한 설정 */
+        
           &:hover {
             background-color: var(--main1);
+          }
+        
+          .newAnswerSection {
+            position: absolute; /* 부모(.chatButton)를 기준으로 배치 */
+            top: 4px; 
+            left: 4px; 
+            background-color: var(--red1);
+            color: white;
+            font-size: 6px; 
+            font-weight: normal;
+            padding: 1px 13px; 
+            border-radius: 50px; 
+            z-index: 1; /* 다른 요소 위에 표시 */
+            white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+            display: none;
           }
         }
 
@@ -124,6 +141,7 @@
             cursor: pointer;
             text-align: center;
             font-size: 10px;
+            font-weight: normal;
 
             &:hover {
               background-color: #eaf0fa; /* 호버 시 배경색 변경 */
