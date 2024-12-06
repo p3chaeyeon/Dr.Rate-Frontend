@@ -10,15 +10,9 @@ import MyNav from 'src/components/MyNav'; //MyNav
 import AlertModal from "src/components/Modal/AlertModal/AlertModal"; //AlertModal
 import useModal from 'src/hooks/useModal'; //useModal 훅 추가
 
+import { PATH } from "src/utils/path"; //경로
 import leftArrowIcon from 'src/assets/icons/leftArrow.svg'; //icon
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
-import kookminLogo from '/src/assets/bank/kookminLogo.png';
-import shinhanLogo from '/src/assets/bank/shinhanLogo.png';
-import hanaLogo from '/src/assets/bank/hanaLogo.png';
-import wooriLogo from '/src/assets/bank/wooriLogo.png';
-import kakaoLogo from '/src/assets/bank/kakaoLogo.png';
-import nonghyupLogo from '/src/assets/bank/nonghyupLogo.png';
-import tossLogo from '/src/assets/bank/tossLogo.png';
 
 import styles from './MyCalendarPage.module.scss';
 
@@ -35,13 +29,13 @@ const expandedDatesAtom = atom({}); // 특정 날짜의 이벤트가 펼쳐졌�
 
 // 은행 로고 URL 매핑
 const bankLogos = {
-  국민은행: kookminLogo,
-  신한은행: shinhanLogo,
-  하나은행: hanaLogo,
-  우리은행: wooriLogo,
-  카카오뱅크: kakaoLogo,
-  농협은행: nonghyupLogo,
-  토스뱅크: tossLogo,
+  국민은행: "kookminLogo.png",
+  신한은행: "shinhanLogo.png",
+  하나은행: "hanaLogo.png",
+  우리은행: "wooriLogo.png",
+  카카오뱅크: "kakaoLogo.png",
+  농협은행: "nonghyupLogo.png",
+  토스뱅크: "tossLogo.png",
 };
 
 // 모달 초기 설정
@@ -86,11 +80,13 @@ const MyCalendarPage = () => {
       }));
 
       // 애니메이션 종료 후 기존 이벤트 밝기 복구
-      setAnimatingDates((prev) => ({
-        ...prev,
-        [date]: false, // 애니메이션 종료
-      }));
-    }, 1000); // 애니메이션 지속 시간
+      setTimeout(() => {
+        setAnimatingDates((prev) => ({
+          ...prev,
+          [date]: false, // 애니메이션 종료
+        }));
+      }, 500); // CSS `transition` 속성과 동일한 시간
+    }, 500); // CSS `transition` 속성과 동일한 시간
   };
 
   //화면크기 상태
@@ -154,7 +150,7 @@ const MyCalendarPage = () => {
           title: `${savingName} - ${formattedAmount}원`,
           date: startDate.toISOString().split('T')[0],
           extendedProps: {
-            logoUrl: bankLogos[logoUrl], // 로고 URL 추가
+            logoUrl: bankLogos[logoUrl], // 파일명만 저장
             amount: numericAmount, //금액
           },
         });
@@ -234,7 +230,9 @@ const MyCalendarPage = () => {
               info.el.classList.add(styles.eventStyle); // 이벤트 스타일
             }}
             dayCellContent={({ date }) => {
-              return <span>{date.getDate()}</span>; // 일 표시
+              const day = date.getDate(); //날짜 가져오기
+              const formattedDay = day < 10 ? `0${day}` : `${day}`; //한 자릿수면 앞에 0 추가
+              return <span>{formattedDay}</span>; //날짜 표시
             }}
             datesSet={() => {
               const frames = document.querySelectorAll('.fc-daygrid-day-frame');
@@ -281,65 +279,59 @@ const MyCalendarPage = () => {
               }
             }}
             eventContent={(eventInfo) => {
-              const logo = eventInfo.event.extendedProps.logoUrl;
+              const logoFileName = eventInfo.event.extendedProps.logoUrl; // 파일명만 가져옴
+              const logoUrl = `${PATH.STORAGE_BANK}/${logoFileName}`; // 경로 결합
               const date = eventInfo.event.startStr;
 
-              // 현재 날짜에 해당하는 모든 이벤트 가져오기
               const eventsForDate = events.filter((event) => event.date === date);
-              // 해당 이벤트의 순서를 계산
-              const eventIndex = eventsForDate.findIndex(
-                (e) => e.title === eventInfo.event.title
-              );
+              const isFirstEvent =
+                eventsForDate.length > 0 && eventsForDate[0].title === eventInfo.event.title;
 
-              // 현재 이벤트가 해당 날짜의 첫 번째 이벤트인지 확인
-              const isFirstEvent = eventsForDate.length > 0 && eventsForDate[0].title === eventInfo.event.title;
-
-              const isExpanded = expandedDates[date]; // 확장 상태 확인
-
-              // 작은 화면에서 첫 번째 이벤트에만 버튼 표시
-              const showButton = isSmallScreen && isFirstEvent;
+              const isExpanded = expandedDates[date];
               const isAnimating = animatingDates[date];
+
               return (
                 <div
                   className={`${styles.eventContainer}`}
                   style={{
-                    opacity: isAnimating ? 0.2 : 1, // 애니메이션 동안 로고 흐림
-                    transition: 'opacity 10s linear !important', // 애니메이션 효과
+                    opacity: isAnimating ? 0.5 : 1, // 애니메이션 동안 흐림 효과
+                    transition: 'opacity 1s ease-in-out',
                   }}
                 >
-                  {logo && (
+                  {logoFileName && (
                     <div className={styles.logoWrapper}>
                       <img
-                        src={logo}
+                        src={logoUrl} // 완전한 URL
                         alt="Bank Logo"
                         className={styles.eventLogo}
                         style={{
-                          visibility: 'visible', // 작은 화면에서도 항상 보이게
-                          opacity: 1, // 로고는 항상 완전한 불투명도로 유지
+                          visibility: 'visible',
+                          opacity: 1,
+                          transition: 'opacity 1s ease-in-out',
                         }}
                       />
-                      {showButton && ( // 첫 번째 이벤트에만 버튼 유지
+                      {isSmallScreen && isFirstEvent && (
                         <button
                           className={`${styles.expandButton} ${styles.hoverOnly}`}
-                          onClick={() => handleLogoClick(date)} // 버튼 클릭 시 확장 상태 토글
+                          onClick={() => handleLogoClick(date)}
                         >
                           {isExpanded ? '－' : '＋'}
                         </button>
                       )}
                     </div>
                   )}
-                  {(isExpanded || !isSmallScreen) && ( // 확장 상태에서만 정보 표시
+                  {(isExpanded || !isSmallScreen) && (
                     <div>
                       <div className={styles.eventTitleContainer}>
                         <div className={styles.eventTitle}>
-                          {eventInfo.event.title.split(" - ")[0]}
+                          {eventInfo.event.title.split(' - ')[0]}
                         </div>
                         <div className={styles.tooltip}>
-                          {eventInfo.event.title.split(" - ")[0]}
+                          {eventInfo.event.title.split(' - ')[0]}
                         </div>
                       </div>
                       <div className={styles.eventAmount}>
-                        {eventInfo.event.title.split(" - ")[1]}
+                        {eventInfo.event.title.split(' - ')[1]}
                       </div>
                     </div>
                   )}
@@ -420,3 +412,4 @@ const MyCalendarPage = () => {
 };
 
 export default MyCalendarPage;
+
