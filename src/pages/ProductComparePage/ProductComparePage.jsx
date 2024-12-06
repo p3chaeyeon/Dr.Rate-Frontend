@@ -3,8 +3,12 @@ import historyIcon from 'src/assets/icons/rightArrow.svg';
 import { PATH } from 'src/utils/path';
 
 import React from 'react';
+import useProducts from '../../hooks/useProducts';
 
 const ProductComparePage = () => {
+
+    const id = 1;
+    const { products, optionNum, options, product, conditions } = useProducts(id);
 
     const bankLogo ='wooriLogo.png';
 
