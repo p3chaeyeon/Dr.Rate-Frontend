@@ -3,6 +3,7 @@
 export const PATH = {
   /* 사용자 경로 */
   HOME: "/",
+  SIGN_IN: "/signIn",
   MY_DEPOSIT: "/myDeposit", // 마이페이지; 예금 즐겨찾기
   MY_INSTALLMENT: "/myInstallment", // 마이페이지; 적금 즐겨찾기
   MY_INFO: "/myInfo", // 마이페이지; 회원 정보 (조회)

@@ -16,11 +16,14 @@ import ProductInsListPage from "./ProductInsListPage";
 import ProductDepListPage from "./ProductDepListPage";
 import ServiceCenterPage from "./ServiceCenterPage";
 import UserInquirePage from "./UserInquirePage/UserInquirePage";
+import SignInPage from "./SignInPage/index.js";
+
 
 // 각 페이지 컴포넌트를 PageRoutes 객체에 모아 내보내기
 const PageRoutes = {
   // 사용자 페이지 컴포넌트
   HomePage,
+  SignInPage,
   MyDepositPage,
   MyInstallmentPage,
   MyInfoPage,

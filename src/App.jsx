@@ -13,6 +13,7 @@ function App() {
           {/* 사용자 페이지 라우트 */}
           <Route path="/" element={<UserLayout />}>
               <Route index element={<PageRoutes.HomePage />} /> {/* 기본 경로 */}
+              <Route path={PATH.SIGN_IN} element={<PageRoutes.SignInPage />} />
               <Route path={PATH.MY_DEPOSIT} element={<PageRoutes.MyDepositPage />} />
               <Route path={PATH.MY_INSTALLMENT} element={<PageRoutes.MyInstallmentPage />} />
               <Route path={PATH.MY_INFO} element={<PageRoutes.MyInfoPage />} />
