@@ -1,20 +1,9 @@
 import React, { useEffect } from 'react';
 
 const SignInPage = () => {
-    // 페이지 로드 시 URL에서 토큰을 추출하고 처리
+    // 로그인 성공 후 accessToken을 로컬 스토리지 대신 쿠키를 사용
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search); // URL의 쿼리 파라미터를 추출
-        const accessToken = urlParams.get('accessToken'); // 'accessToken' 값 가져오기
-
-        if (accessToken) {
-            // 로컬 스토리지에 accessToken 저장
-            localStorage.setItem('accessToken', accessToken);
-
-            // URL에서 accessToken 파라미터 제거
-            const currentUrl = window.location.href;
-            const newUrl = currentUrl.split('?')[0]; // 쿼리 파라미터를 제외한 URL만 남기기
-            window.history.replaceState({}, document.title, newUrl); // URL 업데이트
-        }
+        console.log('SignInPage mounted');
     }, []);
 
     // 네이버 로그인
@@ -32,36 +21,42 @@ const SignInPage = () => {
         window.location.href = "http://localhost:8080/oauth2/authorization/google";
     };
 
-    // 데이터를 가져오는 함수
+    // 서버로부터 데이터를 가져오는 함수
     const getData = () => {
-        // 로컬 스토리지에서 accessToken 가져오기
-        const accessToken = localStorage.getItem('accessToken');
-
-        if (!accessToken) {
-            alert("No access token found.");
-            return;
-        }
+        // CSRF 토큰 가져오기 (쿠키에서)
+        const csrfToken = document.cookie.split(';').find(cookie => cookie.trim().startsWith('XSRF-TOKEN=')).split('=')[1];
 
         fetch("http://localhost:8080/login", {
             method: "GET",
             headers: {
-                "Authorization": `Bearer ${accessToken}`, // 토큰을 헤더에 추가
+                "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
+                "X-CSRF-TOKEN": csrfToken  // CSRF 토큰 헤더에 포함
             },
-            credentials: "include",
+            credentials: "include",  // 쿠키를 함께 전송
         })
-        .then((res) => res.json())
+        .then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("Failed to fetch data");
+            }
+        })
         .then((data) => {
-            alert(data);
+            console.log('Response Data:', data);  // 서버 응답 데이터
         })
-        .catch((error) => alert(error));
+        .catch((error) => {
+            console.error('Error:', error);
+            alert("Error occurred while fetching data.");
+        });
     };
 
     return (
         <main>
             <section>
-                <button onClick={onNaverLogin}>naver</button>
-                <button onClick={onKakaoLogin}>kakao</button>
-                <button onClick={onGoogleLogin}>google</button>
+                <h1>OAuth2 로그인</h1>
+                <button onClick={onNaverLogin}>Naver Login</button>
+                <button onClick={onKakaoLogin}>Kakao Login</button>
+                <button onClick={onGoogleLogin}>Google Login</button>
                 <button onClick={getData}>GET DATA</button>
             </section>
         </main>
