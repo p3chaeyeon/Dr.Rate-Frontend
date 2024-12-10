@@ -15,7 +15,9 @@ import AdminInquireListPage from "./AdminInquireListPage/AdminInquireListPage";
 import ProductInsListPage from "./ProductInsListPage";
 import ProductDepListPage from "./ProductDepListPage";
 import ServiceCenterPage from "./ServiceCenterPage";
+import UserInquirePage from "./UserInquirePage/UserInquirePage";
 import SignInPage from "./SignInPage/index.js";
+
 
 // 각 페이지 컴포넌트를 PageRoutes 객체에 모아 내보내기
 const PageRoutes = {
@@ -31,7 +33,10 @@ const PageRoutes = {
   ProductInsListPage,
   ProductDepListPage,
   ProductDetailPage,
+
+  // 고객센터
   ServiceCenterPage,
+  UserInquirePage,
 
   // 관리자 페이지 컴포넌트
   AdminMainPage,
