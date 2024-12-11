@@ -9,14 +9,13 @@
     justify-content: center;
     align-items: center;
 
-    position: fixed;
     /* 스크롤해도 화면 상단에 고정 */
+    position: fixed;
     top: 90px;
     left: 0;
     width: 100%;
-    background-color: white;
-    /* 배경색 지정하여 아래 요소와 겹침 방지 */
-    z-index: 2000;
+    background-color: white; // 배경색 지정하여 아래 요소와 겹침 방지
+    z-index: 1999;
 
     font-size: 17px;
     font-weight: 700;

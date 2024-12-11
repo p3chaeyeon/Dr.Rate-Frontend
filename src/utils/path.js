@@ -3,6 +3,7 @@
 export const PATH = {
   /* 사용자 경로 */
   HOME: "/",
+  SIGN_IN: "/signIn",
   MY_DEPOSIT: "/myDeposit", // 마이페이지; 예금 즐겨찾기
   MY_INSTALLMENT: "/myInstallment", // 마이페이지; 적금 즐겨찾기
   MY_INFO: "/myInfo", // 마이페이지; 회원 정보 (조회)
@@ -15,12 +16,17 @@ export const PATH = {
   PRODUCT_DETAIL: "/product/detail", // 상품페이지; 상품 상세페이지
   PRODUCT_COMPARE: "/product/compare", // 비교 페이지
 
+  /* 고객센터 경로 */
+  SERVICE_CENTER: '/serviceCenter',
+  USER_INQUIRE: "/userInquire",
+
   /* 관리자 경로 */
   ADMIN_MAIN: "/admin/adminMain",
   ADMIN_USER_LIST: "/admin/userList",
   ADMIN_INQUIRE_LIST: "/admin/adminInquireList",
   ADMIN_INQUIRE: "/admin/adminInquire",
 
+  STORAGE_BANK: "https://kr.object.ncloudstorage.com/dr-rate/bankLogo",
   SERVER: "http://localhost:8080", // 배포 후 여기만 수정
 };
 

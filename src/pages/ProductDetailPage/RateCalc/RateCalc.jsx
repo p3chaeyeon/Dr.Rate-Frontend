@@ -10,7 +10,7 @@ import { atom, useAtom } from 'jotai';
 const RateCalc = ({isOpen, onClose, conditions, options}) => {
     
   const {basicRate, products, rateType, saveTime} = options || {};
-  const {ctg, max} = products;
+  const {ctg, max} = products || {};
 
   // useModal 훅
   const { 
