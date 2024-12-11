@@ -1,7 +1,9 @@
 import styles from './ProductDetailPage.module.scss';
 import RateCalc from 'src/pages/ProductDetailPage/RateCalc';
 import downArrowIcon2 from 'src/assets/icons/downDetailArrow.svg';
+
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import AlertModal from 'src/components/Modal/AlertModal';
 import useModal from 'src/hooks/useModal';
 
 import React, { useEffect, useState } from 'react';
@@ -11,7 +13,7 @@ import { PATH } from "src/utils/path";
 import { atom, useAtom } from 'jotai';
 
 // Jotai 상태 관리
-const idAtom = atom(2);
+const idAtom = atom(5);
 const productsAtom = atom({
     optionNum: {},
     options: [],
@@ -33,7 +35,11 @@ const ProductDetailPage = () => {
         isConfirmOpen,
         openConfirmModal,
         closeConfirmModal,
-        confirmContent
+        confirmContent,
+        isAlertOpen, 
+        openAlertModal, 
+        closeAlertModal, 
+        alertContent
     } = useModal();
     
 
@@ -73,6 +79,11 @@ const ProductDetailPage = () => {
                 '로그인 후 이자계산기를 사용할 수 있어요! '
             );
         }
+
+        if(options == null || options[i] == null){
+            openAlertModal('오류',`옵션이 없는 상품입니다.` );
+            setIsOpen(false);
+        }
         
     };
 
@@ -91,6 +102,10 @@ const ProductDetailPage = () => {
     // 취소 클릭 시
     const handleCancel = () => {
         closeConfirmModal();
+    };
+
+    const handleCancel2 = () => {
+        closeAlertModal();
     };
 
     // Test용
@@ -115,7 +130,7 @@ const ProductDetailPage = () => {
             <section>
                 <h3 className={styles.title}>{product.ctg === 'i' ? '적금' : '예금'}</h3>
                 <div className={styles.topDiv}>
-                    <div className={styles.image}><img src={`/src/assets/bank/${product?.bankLogo || 'remainLogo.png'} `} /></div>
+                    <div className={styles.image}><img src={`${PATH.STORAGE_BANK}/${product?.bankLogo || 'remainLogo.png'} `} /></div>
                     <div className={styles.name}>
                         <p className={styles.nameOne}>{product?.bankName || '은행명 없음'}</p>
                         <p className={styles.nameTwo}>{product?.prdName || '상품명 없음'}</p>
@@ -141,7 +156,7 @@ const ProductDetailPage = () => {
                 </div>
                 )}
 
-                {isOpen && (
+                {isOpen && options && options[i] && (
                     <RateCalc isOpen={isOpen} options={options[i] || {}} conditions={conditions}  onClose={handleToggle}/>
                 )}
 
@@ -162,6 +177,19 @@ const ProductDetailPage = () => {
                     }
                     onConfirm={handleConfirm}
                     onCancel={handleCancel}
+                />
+                )}
+                {isAlertOpen && (
+                <AlertModal
+                    isOpen={isAlertOpen}
+                    closeModal={closeAlertModal}
+                    title={alertContent.title}
+                    message={
+                        <>
+                            {alertContent.message}
+                        </>
+                    }
+                    onCancel={handleCancel2}
                 />
                 )}
                 <div className={styles.detailDiv}>

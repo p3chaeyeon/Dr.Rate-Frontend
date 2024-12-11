@@ -15,12 +15,16 @@
 
 .compareDiv{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
     gap: 30px;
-    margin: 30px;
+
+    max-width: 100%;
+    padding: 30px 0 ;
 
     .comparePrd{
-        flex: 1 1 30%;
+        flex: 0 0 auto;
+        width: 30%;
         background: var(--bg1);
         text-align: center;
 
@@ -125,6 +129,34 @@
             &:hover{
                 background: var(--bg2);
             }
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .comparePrd {
+        flex: 1 1 45%; /* For screens smaller than 1200px, show 2 items per row */
+    }
+}
+
+@media (max-width: 768px) {
+    .comparePrd {
+        flex: 1 1 100%; /* For screens smaller than 768px, show 1 item per row */
+    }
+
+    .compareDiv {
+        margin: 15px; /* Reduce margin on small screens */
+    }
+
+    .history {
+        font-size: 16px; /* Adjust font size for smaller screens */
+    }
+
+    .noneComparePrd {
+        .addComparePrd {
+            width: 80px;
+            height: 80px;
+            font-size: 24px;
         }
     }
 }

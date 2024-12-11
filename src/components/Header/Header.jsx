@@ -100,10 +100,10 @@ const Header = () => {
                         <img src={downArrowIcon} alt="Down arrow" className={styles.headerDownArrow} />
                         {isDropdownOpen && (
                             <ul className={styles.headerDropdownMenu} ref={dropdownRef}>
-                                <li className={styles.headerDropdownItem} onClick={() => navigate(PATH.DEPOSIT_COMPARE)}>
+                                <li className={styles.headerDropdownItem} onClick={() => navigate(PATH.PRODUCT_COMPARE)}>
                                     예금 비교
                                 </li>
-                                <li className={styles.headerDropdownItem} onClick={() => navigate(PATH.INSTALLMENT_COMPARE)}>
+                                <li className={styles.headerDropdownItem} onClick={() => navigate(PATH.PRODUCT_COMPARE)}>
                                     적금 비교
                                 </li>
                             </ul>
