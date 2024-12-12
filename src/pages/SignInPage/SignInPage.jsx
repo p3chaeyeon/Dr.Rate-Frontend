@@ -35,7 +35,7 @@ const SignInPage = () => {
                     <h4>로그인&nbsp;&nbsp;&nbsp;/</h4>
                     <h4 className={styles.signupText}>&nbsp;&nbsp;&nbsp;회원가입</h4>
                 </div>
-                <hr />
+
                 <div className={styles.loginForm}>
                     <form>
                         <div className={styles.inputWrapper}>
@@ -45,14 +45,16 @@ const SignInPage = () => {
                                 id="username"
                                 placeholder="아이디"
                             />
+                            <label htmlFor="username">아이디</label>
                         </div>
                         <div className={styles.inputWrapper}>
-                            <input
+                        <input
                                 type="password"
                                 name="password"
                                 id="password"
                                 placeholder="비밀번호"
                             />
+                            <label htmlFor="password">비밀번호</label>
                         </div>
                     </form>
                 </div>
