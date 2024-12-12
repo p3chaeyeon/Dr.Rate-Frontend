@@ -5,13 +5,13 @@ import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import useModal from 'src/hooks/useModal';
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { PATH } from "src/utils/path";
 import { atom, useAtom } from 'jotai';
 
 // Jotai 상태 관리
-const idAtom = atom(2);
+const idAtom = atom(1);
 const productsAtom = atom({
     optionNum: {},
     options: [],
@@ -23,8 +23,17 @@ const isOpenAtom = atom(false);
 const ProductDetailPage = () => {
     const navigate = useNavigate();
 
-    // Jotai 상태 관리
+    // 경로에서 받은 id 값
+    const { prdId } = useParams();
     const [id, setId] = useAtom(idAtom);
+
+    useEffect(() => {
+        if (prdId && prdId !== id) {
+            setId(prdId);
+        }
+    }, [prdId, setId]);
+
+    // Jotai 상태 관리
     const [products, setProducts] = useAtom(productsAtom);
     const [isOpen, setIsOpen] = useAtom(isOpenAtom); //이자 계산기
 
@@ -39,7 +48,9 @@ const ProductDetailPage = () => {
 
     // 상품 정보 불러오기
     useEffect(() => {
-        axios.get(`${PATH.SERVER}/product/getOneProduct/${id}`)
+        if(id) {
+            console.log(id);
+            axios.get(`${PATH.SERVER}/product/getOneProduct/${id}`)
             .then((res) => {
                 setProducts({
                     optionNum: res.data.optionNum,
@@ -50,7 +61,8 @@ const ProductDetailPage = () => {
                 console.log(res.data);
             })
             .catch((e) => console.log(e));
-    }, [id]);
+        }
+    }, [prdId]);
     
 
     // 객체 변환
