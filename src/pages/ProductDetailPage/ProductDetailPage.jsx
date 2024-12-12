@@ -1,7 +1,9 @@
 import styles from './ProductDetailPage.module.scss';
 import RateCalc from 'src/pages/ProductDetailPage/RateCalc';
 import downArrowIcon2 from 'src/assets/icons/downDetailArrow.svg';
+
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import AlertModal from 'src/components/Modal/AlertModal';
 import useModal from 'src/hooks/useModal';
 
 import React, { useEffect, useState } from 'react';
@@ -11,7 +13,6 @@ import { PATH } from "src/utils/path";
 import { atom, useAtom } from 'jotai';
 
 // Jotai 상태 관리
-const idAtom = atom(1);
 const productsAtom = atom({
     optionNum: {},
     options: [],
@@ -25,13 +26,6 @@ const ProductDetailPage = () => {
 
     // 경로에서 받은 id 값
     const { prdId } = useParams();
-    const [id, setId] = useAtom(idAtom);
-
-    useEffect(() => {
-        if (prdId && prdId !== id) {
-            setId(prdId);
-        }
-    }, [prdId, setId]);
 
     // Jotai 상태 관리
     const [products, setProducts] = useAtom(productsAtom);
@@ -42,15 +36,19 @@ const ProductDetailPage = () => {
         isConfirmOpen,
         openConfirmModal,
         closeConfirmModal,
-        confirmContent
+        confirmContent,
+        isAlertOpen, 
+        openAlertModal, 
+        closeAlertModal, 
+        alertContent
     } = useModal();
     
 
     // 상품 정보 불러오기
     useEffect(() => {
-        if(id) {
-            console.log(id);
-            axios.get(`${PATH.SERVER}/product/getOneProduct/${id}`)
+        if(prdId) {
+            console.log(prdId);
+            axios.get(`${PATH.SERVER}/product/getOneProduct/${prdId}`)
             .then((res) => {
                 setProducts({
                     optionNum: res.data.optionNum,
@@ -66,9 +64,9 @@ const ProductDetailPage = () => {
     
 
     // 객체 변환
-    const i = products.optionNum;
-    const options = products.options; 
-    const product = options.length > 0 ? options[i].products : "null";
+    const i = products?.optionNum || 0;
+    const options = products?.options || null;
+    const product = options?.[i]?.products || {};
     const conditions = products.conditions;
 
     // 이자 계산기
@@ -84,6 +82,11 @@ const ProductDetailPage = () => {
                 '회원가입 하시겠습니까?', 
                 '로그인 후 이자계산기를 사용할 수 있어요! '
             );
+        }
+
+        if(options == null || options[i] == null){
+            openAlertModal('오류',`옵션이 없는 상품입니다.` );
+            setIsOpen(false);
         }
         
     };
@@ -105,6 +108,10 @@ const ProductDetailPage = () => {
         closeConfirmModal();
     };
 
+    const handleCancel2 = () => {
+        closeAlertModal();
+    };
+
     // Test용
     const getSessionToken = () => {
         return localStorage.getItem('sessionToken'); // Or use a cookie or another method
@@ -124,13 +131,13 @@ const ProductDetailPage = () => {
 
     return (
         <main>
-            <section>
+            <section className={styles.detailSection}>
                 <h3 className={styles.title}>{product.ctg === 'i' ? '적금' : '예금'}</h3>
                 <div className={styles.topDiv}>
-                    <div className={styles.image}><img src={`/src/assets/bank/${product.bankLogo}`} /></div>
+                    <div className={styles.image}><img src={`${PATH.STORAGE_BANK}/${product?.bankLogo || 'remainLogo.png'} `} /></div>
                     <div className={styles.name}>
-                        <p className={styles.nameOne}>{product.bankName}</p>
-                        <p className={styles.nameTwo}>{product.prdName}</p>
+                        <p className={styles.nameOne}>{product?.bankName || '은행명 없음'}</p>
+                        <p className={styles.nameTwo}>{product?.prdName || '상품명 없음'}</p>
 
                         <p className={styles.nameThree}>{options?.[i]?.rsrvTypeName ?? '자유적립식'}</p>
                     </div>
@@ -143,7 +150,7 @@ const ProductDetailPage = () => {
                 <div className={styles.btnDiv}>
                     <button className={styles.heartIcon} onClick={favoriteInsert}><span className={styles.heart}>&hearts;</span> 즐겨찾기</button>
                     <button className={styles.intobtn}>비교담기</button>
-                    <button className={styles.gotoHomePage} onClick={() =>window.open(product.url, '_blank')}>가입하기</button>
+                    <button className={styles.gotoHomePage} onClick={() =>window.open(product?.url, '_blank')}>가입하기</button>
                 </div>
 
                 {isOpen || (
@@ -153,8 +160,8 @@ const ProductDetailPage = () => {
                 </div>
                 )}
 
-                {isOpen && (
-                    <RateCalc isOpen={isOpen} options={options[i]} conditions={conditions}  onClose={handleToggle}/>
+                {isOpen && options && options[i] && (
+                    <RateCalc isOpen={isOpen} options={options[i] || {}} conditions={conditions}  onClose={handleToggle}/>
                 )}
 
                 {/* Confirm Modal을 사용할 때 */}
@@ -166,35 +173,45 @@ const ProductDetailPage = () => {
                     message={
                         <>
                             {confirmContent.message}
-                            <p>
-                                <span>이미 회원이세요? </span> <span className={styles.arrow}>  </span>
-                                <span className={styles.modalLogin} onClick={handleLoginClick}>로그인</span>
-                            </p>
+                            <span>이미 회원이세요? </span> <span className={styles.arrow}>  </span>
+                            <span className={styles.modalLogin} onClick={handleLoginClick}>로그인</span>
                         </>
                     }
                     onConfirm={handleConfirm}
                     onCancel={handleCancel}
                 />
                 )}
+                {isAlertOpen && (
+                <AlertModal
+                    isOpen={isAlertOpen}
+                    closeModal={closeAlertModal}
+                    title={alertContent.title}
+                    message={
+                        <>
+                            {alertContent.message}
+                        </>
+                    }
+                    onCancel={handleCancel2}
+                />
+                )}
                 <div className={styles.detailDiv}>
-                    <h3 className={styles.detailTitle}>상세정보</h3>
-                    <ul>
-                        <li>
-                            <span>가입대상 / 가입제한</span>
-                            <p>{product.joinMember}</p>
-                        </li>
-                        <li>
-                            <span>가입기간 / 가입금액</span>
-                            <p>{product.etc}</p>
-                        </li>
-                        <li>
-                            <span>납입금액</span>
-                            <p>최대 {product.max || '금액 제한없음'}</p>
-                        </li>
-                        <li>
-                            <span>적용이율 / 적용방식</span>
-                            
-                            <table className={styles.rateTable}>
+                <h3 className={styles.detailTitle}>상세정보</h3>
+                <ul>
+                    <li>
+                        <span>가입대상 / 가입제한</span>
+                        <p>{product?.joinMember || '정보 없음'}</p>
+                    </li>
+                    <li>
+                        <span>가입기간 / 가입금액</span>
+                        <p>{product?.etc || '정보 없음'}</p>
+                    </li>
+                    <li>
+                        <span>납입금액</span>
+                        <p>최대 {product?.max || '금액 제한없음'}</p>
+                    </li>
+                    <li>
+                        <span>적용이율 / 적용방식</span>
+                        <table className={styles.rateTable}>
                             <thead>
                                 <tr>
                                     <td>기간</td>
@@ -205,62 +222,60 @@ const ProductDetailPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                            {options.map((option, index) => (
-                                <tr key={index}>
-                                    <td>{option.saveTime} 개월</td>
-                                    <td>{option.basicRate}%</td>
-                                    <td>{option.spclRate}%</td>
-                                    <td>{option.rateTypeKo}</td>
-                                    <td>{option.rsrvTypeName && option.rsrvTypeName}</td>
-                                </tr>
-                            ))}
+                                {options?.map((option, index) => (
+                                    <tr key={index}>
+                                        <td>{option.saveTime} 개월</td>
+                                        <td>{option.basicRate}%</td>
+                                        <td>{option.spclRate}%</td>
+                                        <td>{option.rateTypeKo}</td>
+                                        <td>{option.rsrvTypeName || '정보 없음'}</td>
+                                    </tr>
+                                ))}
                             </tbody>
-                            </table>
-                            
-                        </li>
-                        
-                        <li>
-                            <span>이자 계산 방법</span>
-                            
-                            <table className={styles.rateCalcTable}>
-                                <thead>
+                        </table>
+                    </li>
+                    
+                    <li>
+                        <span>이자 계산 방법</span>
+                        <table className={styles.rateCalcTable}>
+                            <thead>
                                 <tr>
                                     <td>계산 방법</td>
                                     <td>계산식</td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>단리 계산 (적금)</td>
-                                        <td>월 적립액 × 10000 × 이자율 × 기간</td>
-                                    </tr>
-                                    <tr>
-                                        <td>복리 계산 (적금)</td>
-                                        <td>(월 적립액 × 10000) × ((1 + (이자율 × 0.01) / 12) ^ (12 × 기간) - 1) / (이자율 / 12)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>단리 계산 (예금)</td>
-                                        <td>월 적립액 × 10000 × 이자율 × 기간</td>
-                                    </tr>
-                                    <tr>
-                                        <td>복리 계산 (예금)</td>
-                                        <td>(월 적립액 × 10000) × (1 + (이자율 × 0.01) / 12) ^ (12 × 기간)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            
-                        </li>
-                        <li>
-                            <span>만기 후 이율</span>
-                            <p className={styles.mtrtInt}>{product.mtrtInt}</p>
-                        </li>
-                        <li>
-                            <span>우대조건</span>
-                            <p className={styles.spclCnd}>{product.spclCnd}</p>
-                        </li>
-                    </ul>
-                </div>
-            </section>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>단리 계산 (적금)</td>
+                                    <td>월 적립액 × 10000 × 이자율 × 기간</td>
+                                </tr>
+                                <tr>
+                                    <td>복리 계산 (적금)</td>
+                                    <td>(월 적립액 × 10000) × ((1 + (이자율 × 0.01) / 12) ^ (12 × 기간) - 1) / (이자율 / 12)</td>
+                                </tr>
+                                <tr>
+                                    <td>단리 계산 (예금)</td>
+                                    <td>월 적립액 × 10000 × 이자율 × 기간</td>
+                                </tr>
+                                <tr>
+                                    <td>복리 계산 (예금)</td>
+                                    <td>(월 적립액 × 10000) × (1 + (이자율 × 0.01) / 12) ^ (12 × 기간)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </li>
+
+                    <li>
+                        <span>만기 후 이율</span>
+                        <p className={styles.mtrtInt}>{product?.mtrtInt || '정보 없음'}</p>
+                    </li>
+                    <li>
+                        <span>우대조건</span>
+                        <p className={styles.spclCnd}>{product?.spclCnd || '정보 없음'}</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
         </main>
     );
 };
