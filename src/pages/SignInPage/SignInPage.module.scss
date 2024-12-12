@@ -1,31 +1,135 @@
 .signinPage {
-    font-family: 'Noto Sans KR', sans-serif;
-    padding: 0 16rem;
-    .title {
-        display: flex;
-        flex-direction: row;
-        .signupText {
-            color: gray;
-        }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* 위로 배치 */
+    height: 100vh;
+    padding: 10px;
+    width: 50%; /* 로그인 폼 너비를 50%로 설정 */
+    margin-top: 80px; /* 상단에 여백을 추가하여 위로 올리기 */
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    gap: 4px; /* 로그인과 회원가입 사이 간격 */
+    width: 100%;
+    font-size: 16px; /* placeholder와 동일한 폰트 크기 */
+    color: #888;
+}
+
+.titleText {
+    cursor: pointer;
+    font-weight: normal;
+    color: #aaa; /* 비활성 상태 색상 */
+    transition: font-weight 0.3s, color 0.3s;
+
+    &.active {
+        font-weight: bold; /* 활성 상태 진하게 */
+        color: #333; /* 활성 상태 색상 */
     }
-    .icons {
-        text-align: center;
-        img:hover {
-            cursor: pointer;
-        }
-    }
-    .loginForm {
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-    }
-    .findUser {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        p {
-            padding-right: 0.5rem;
-        }
-    }
+}
+
+.separator {
+    color: #ccc; /* 구분선 색상 */
+    font-weight: normal;
+}
+
+.signupText {
+    color: #00b894;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+hr {
+    width: 100%;
+    border: 0;
+    border-top: 2px solid #e1e1e1;
+    margin: 5px;
+}
+
+.loginForm {
+    width: 100%;  /* 부모 너비에 맞춰서 100%로 설정 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputWrapper {
+    position: relative;
+    width: 100%;
+}
+
+input {
+    padding: 10px 0;
+    border: none;
+    font-size: 16px;
+    width: 100%;  /* 입력 필드가 부모 너비에 맞춰지도록 설정 */
+    box-sizing: border-box;
+    outline: none;
+    border-bottom: 2px solid #ccc; /* 기본 밑줄 */
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #3498db; /* 포커스 시 밑줄 색상 변경 */
+}
+
+input:focus::placeholder {
+    color: transparent; /* 포커스 시 placeholder 숨기기 */
+}
+
+input:not(:placeholder-shown) {
+    /* 텍스트 입력 시에도 밑줄이 활성화된 상태 유지 */
+    border-color: #3498db;
+}
+
+.icons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.icons img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+}
+
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    width: 100%;  /* 버튼 길이를 로그인 폼과 동일하게 설정 */
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.findUser {
+    display: flex;
+    justify-content: flex-end;  /* 아이디 찾기와 비밀번호 찾기를 오른쪽으로 배치 */
+    width: 100%;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #888;
+    text-align: right; /* 텍스트를 오른쪽 정렬 */
+}
+
+.findUser p {
+    cursor: pointer;
+    transition: color 0.3s;
+    margin: 0 10px;  /* 양옆에 간격 추가 */
+}
+
+.findUser p:hover {
+    color: #3498db;
 }
