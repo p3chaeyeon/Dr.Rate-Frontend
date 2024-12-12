@@ -1,0 +1,31 @@
+.signinPage {
+    font-family: 'Noto Sans KR', sans-serif;
+    padding: 0 16rem;
+    .title {
+        display: flex;
+        flex-direction: row;
+        .signupText {
+            color: gray;
+        }
+    }
+    .icons {
+        text-align: center;
+        img:hover {
+            cursor: pointer;
+        }
+    }
+    .loginForm {
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    .findUser {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        p {
+            padding-right: 0.5rem;
+        }
+    }
+}
