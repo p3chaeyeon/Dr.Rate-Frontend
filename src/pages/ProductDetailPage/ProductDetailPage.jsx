@@ -7,10 +7,10 @@ import AlertModal from 'src/components/Modal/AlertModal';
 import useModal from 'src/hooks/useModal';
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from "src/utils/path";
 import { atom, useAtom } from 'jotai';
+import { getProductDetails } from 'src/apis/productsAPI';
 
 // Jotai 상태 관리
 const productsAtom = atom({
@@ -23,9 +23,14 @@ const isOpenAtom = atom(false);
 
 const ProductDetailPage = () => {
     const navigate = useNavigate();
-
-    // 경로에서 받은 id 값
     const { prdId } = useParams();
+
+    useEffect(() => {
+        // prdId가 없으면 기본적으로 /1로 리다이렉트
+        if (!prdId) {
+            navigate("/product/detail/1", { replace: true });
+        }
+    }, [prdId, navigate]);
 
     // Jotai 상태 관리
     const [products, setProducts] = useAtom(productsAtom);
@@ -46,20 +51,24 @@ const ProductDetailPage = () => {
 
     // 상품 정보 불러오기
     useEffect(() => {
-        if(prdId) {
-            console.log(prdId);
-            axios.get(`${PATH.SERVER}/product/getOneProduct/${prdId}`)
-            .then((res) => {
-                setProducts({
-                    optionNum: res.data.optionNum,
-                    options: res.data.options,
-                    product: res.data.product,
-                    conditions: res.data.conditions
-                });
-                console.log(res.data);
-            })
-            .catch((e) => console.log(e));
-        }
+        const fetchProductDetails = async () => {
+            if(prdId) {
+                try {
+                    const productDetails = await getProductDetails(prdId);
+                    setProducts({
+                        optionNum: productDetails.optionNum,
+                        options: productDetails.options,
+                        product: productDetails.product,
+                        conditions: productDetails.conditions
+                    });
+                    console.log(productDetails);
+                } catch (error) {
+                    console.error("Failed to fetch product details:", error);
+                }
+            }
+        };
+    
+        fetchProductDetails();
     }, [prdId]);
     
 
@@ -117,16 +126,6 @@ const ProductDetailPage = () => {
         return localStorage.getItem('sessionToken'); // Or use a cookie or another method
     };
 
-    // 즐겨찾기 넣기
-    const favoriteInsert = () => {
-        const sessionToken = 'se';//getSessionToken();
-
-        axios.post(`${PATH.SERVER}/product/favoriteInsert/${id}`, null, {
-            headers: {'userId' : `${sessionToken}`}
-        })
-        .then(response => console.log(response.data))
-        .catch(e => console.log(e))
-    }
 
 
     return (
