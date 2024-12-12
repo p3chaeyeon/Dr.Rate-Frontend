@@ -246,3 +246,61 @@
     background-color: #aaa; 
   }
   
+
+@media (max-width: 1200px) {
+    
+}
+
+@media (max-width: 768px) {
+  .compareModal{
+
+    .compareModalContent{
+      margin: 50px 0;
+      width: 100%;
+
+      .mainTitle{
+        margin: 0 0 10px 0; padding: 10px;
+        font-size: 15px;
+      }
+
+      .bankList{
+        display: -webkit-box;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        margin: 0;
+      }
+
+      .search{
+        margin-top: 20px;
+      }
+
+      .product{
+        font-size: 15px;
+
+        .bankLogo{
+          margin: 0 !important;
+        }
+
+        .productText{
+          gap: 0 !important;
+          .bankName{
+            margin: 0 !important;
+          }
+          .productName{
+            margin: 0 !important;
+            font-size: 12px !important;
+          }
+        }
+      }
+    }
+
+
+  }
+}
+
+@media (max-height: 750px) {
+  .list{
+    height: 250px !important;
+  }
+
+}

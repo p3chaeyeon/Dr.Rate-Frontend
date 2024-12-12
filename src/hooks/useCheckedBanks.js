@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const useCheckedBanks = (banks, limit) => {
+const useCheckedBanks = (banks, limit, openAlertModal) => {
     const [checkedBanks, setCheckedBanks] = useState([]);
     
     const [addProduct, setAddProduct] = useState([]);
@@ -31,6 +31,7 @@ const useCheckedBanks = (banks, limit) => {
 
     const handleAddProduct = (product) => {
         if(addPrdCo.length === limit &&  !addPrdCo.includes(product.prdCo)){
+            openAlertModal('비교 상품개수 한도 초과','더 이상 상품을 담을 수 없습니다.' );
             return;
         }
 

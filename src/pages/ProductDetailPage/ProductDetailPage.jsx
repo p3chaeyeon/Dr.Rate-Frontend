@@ -127,7 +127,7 @@ const ProductDetailPage = () => {
 
     return (
         <main>
-            <section>
+            <section className={styles.detailSection}>
                 <h3 className={styles.title}>{product.ctg === 'i' ? '적금' : '예금'}</h3>
                 <div className={styles.topDiv}>
                     <div className={styles.image}><img src={`${PATH.STORAGE_BANK}/${product?.bankLogo || 'remainLogo.png'} `} /></div>

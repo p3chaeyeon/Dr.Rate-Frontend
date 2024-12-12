@@ -71,7 +71,7 @@ const ProductComparePage = ({ctg}) => {
 
     return (
         <main>
-            <section>
+            <section className={styles.compareSection}>
                 <p className={styles.history}>
                     <span>즐겨찾기</span> 
                     <img src={historyIcon}/>
@@ -93,30 +93,28 @@ const ProductComparePage = ({ctg}) => {
                                 <span className={styles.basicRate}>기본금리 {product.basicRate}</span>
                             </p>
 
-                            <table className={styles.compareDetailTable}>
-                                <tbody>
-                                    <tr>
-                                        <td>가입대상</td>
-                                        <td>{product.target}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>가입방식</td>
-                                        <td>{product.joinMethod}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>금액한도</td>
-                                        <td>{product.limit}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>이자계산방식</td>
-                                        <td>{product.interestType}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>적금기간</td>
-                                        <td>{product.period}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div className={styles.compareDetailTable}>
+                                    <p>
+                                        <span>가입대상</span>
+                                        <span>{product.target}</span>
+                                    </p>
+                                    <p>
+                                        <span>가입방식</span>
+                                        <span>{product.joinMethod}</span>
+                                    </p>
+                                    <p>
+                                        <span>금액한도</span>
+                                        <span>{product.limit}</span>
+                                    </p>
+                                    <p>
+                                        <span>이자계산방식</span>
+                                        <span>{product.interestType}</span>
+                                    </p>
+                                    <p>
+                                        <span>적금기간</span>
+                                        <span>{product.period}</span>
+                                    </p>
+                            </div>
 
                             <div className={styles.btn}>
                                 <button className={styles.deleteBtn}>삭제</button>
@@ -126,8 +124,8 @@ const ProductComparePage = ({ctg}) => {
                     ))}
 
                     {products.length < 3 && (
-                        <div className={`${styles.comparePrd} ${styles.noneComparePrd}`} onClick={handleToggle}>
-                            <div className={styles.addComparePrd}>+</div>
+                        <div className={`${styles.comparePrd} ${styles.noneComparePrd}`}>
+                            <div className={styles.addComparePrd}  onClick={handleToggle}>+</div>
                         </div>
                     )}
                 </div>
