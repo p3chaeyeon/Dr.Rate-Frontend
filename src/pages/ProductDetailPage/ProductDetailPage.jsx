@@ -82,21 +82,10 @@ const ProductDetailPage = () => {
 
     /* 이자 계산기 */
     const handleToggle = () => {
-
-        // 옵션 유효성 검사; 옵션이 유효하지 않으면 Alert Modal 표시
-        if (!options || !options[i]) {
-            openAlertModal(
-                '오류', 
-                `옵션이 없는 상품입니다.`
-            );
-            return;
-        }
-
-        // 사용자가 로그인되어 있는지 확인 (Test 용)
+        // Test 용
         const isUserLoggedIn = sessionStorage.getItem('userLoggedIn');
 
         // session값 맏아오면 변경해야됨
-        // // 사용자 로그인 상태 검사; 로그인되지 않은 경우 Confirm Modal 표시
         if (!isUserLoggedIn) {
             setIsOpen((prev) => !prev);
         } else {
@@ -113,14 +102,15 @@ const ProductDetailPage = () => {
             );
             openConfirmModal('회원가입 하시겠습니까?', confirmMessage, handleConfirm, handleCancel);
 
-            return;
         }
 
-
-        // 이자 계산기 상태 토글
-        setIsOpen((prev) => !prev);
+        if(options == null || options[i] == null){
+            openAlertModal('오류',`옵션이 없는 상품입니다.` );
+            setIsOpen(false);
+        }
         
     };
+
 
     /* Confirm Modal 로그인 클릭 시 */
     const handleLoginClick = () => {
