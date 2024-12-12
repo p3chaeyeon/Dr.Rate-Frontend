@@ -1,7 +1,7 @@
 .signinPage {
-    height: 100vh;
-    width: 40%; /* 로그인 폼 너비를 50%로 설정 */
-    margin-top: 80px; /* 상단에 약간의 여백을 추가하여 위로 올리기 */
+    
+    width: 50%; /* 로그인 폼 너비를 50%로 설정 */
+    margin: 100px auto;
 
     .title {
         display: flex;
@@ -40,7 +40,7 @@
             outline: none;
             border-bottom: 2px solid var(--divider-border); /* 기본 밑줄 */
             transition: border-color 0.3s;
-            margin-top: 5px;
+            margin-top: 15px;
 
             &:focus {
                 border-color: var(--main2); /* 포커스 시 밑줄 색상 변경 */
@@ -60,7 +60,7 @@
                 top: -12px;
                 font-size: 12px;
                 color: var(--main2); /* 포커스 시 라벨 색상 변경 */
-                margin-top: 18px;
+                margin-top: 25px;
             }
         }
         label {
