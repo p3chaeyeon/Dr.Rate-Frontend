@@ -14,6 +14,7 @@ export const PATH = {
   INSTALLMENT_LIST: "/product/installmentList", // 상품-적금리스트페이지; 필터페이지 -혜진
   DEPOSIT_LIST: "/product/depositList", // 상품-예금리스트페이지; 필터페이지 -혜진
   PRODUCT_DETAIL: "/product/detail", // 상품페이지; 상품 상세페이지
+  PRODUCT_COMPARE: "/product/compare", // 비교 페이지
 
   /* 고객센터 경로 */
   SERVICE_CENTER: '/serviceCenter',

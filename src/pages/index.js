@@ -14,10 +14,10 @@ import AdminUserListPage from "./AdminUserListPage/AdminUserListPage";
 import AdminInquireListPage from "./AdminInquireListPage/AdminInquireListPage";
 import ProductInsListPage from "./ProductInsListPage";
 import ProductDepListPage from "./ProductDepListPage";
+import ProductComparePage from "./ProductComparePage";
 import ServiceCenterPage from "./ServiceCenterPage";
 import UserInquirePage from "./UserInquirePage/UserInquirePage";
 import SignInPage from "./SignInPage/index.js";
-
 
 // 각 페이지 컴포넌트를 PageRoutes 객체에 모아 내보내기
 const PageRoutes = {
@@ -33,6 +33,7 @@ const PageRoutes = {
   ProductInsListPage,
   ProductDepListPage,
   ProductDetailPage,
+  ProductComparePage,
 
   // 고객센터
   ServiceCenterPage,
