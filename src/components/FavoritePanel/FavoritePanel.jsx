@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { PATH } from "src/utils/path";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { allCheckedAtom, setAllCheckedAtom } from 'src/atoms/favoriteAtom';
+import { allCheckedAtom, setAllCheckedAtom } from 'src/atoms/myFavoriteAtom';
 import useMyFavorite from 'src/hooks/useMyFavorite';
 import useSelectDropdown from 'src/hooks/useSelectDropdown';
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';

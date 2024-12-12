@@ -1,4 +1,5 @@
 /* src/apis/favoriteAPI.js */
+/* 상품상세페이지; ProductDetailPage */
 
 import axios from 'axios';
 

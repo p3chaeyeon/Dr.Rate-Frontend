@@ -1,4 +1,5 @@
 /* src/hooks/useFavorite.js */
+/* 상품상세페이지; ProductDetailPage */
 
 import { useAtom } from 'jotai';
 import { favoriteAtom } from '../atoms/favoriteAtom';

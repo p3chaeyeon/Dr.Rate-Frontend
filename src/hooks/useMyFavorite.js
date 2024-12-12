@@ -1,7 +1,8 @@
 /* src/hooks/useMyFavorite.js */
+/* 마이페이지 즐겨찾기; MyDepositPage, MyInstallmentPage */
 
 import { useAtom } from 'jotai';
-import { individualCheckedAtom, setIndividualCheckedAtom } from 'src/atoms/favoriteAtom';
+import { individualCheckedAtom, setIndividualCheckedAtom } from 'src/atoms/myFavoriteAtom';
 import { useEffect } from 'react';
 
 const useMyFavorite = (dataLength) => {
