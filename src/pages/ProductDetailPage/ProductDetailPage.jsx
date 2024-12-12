@@ -121,7 +121,7 @@ const ProductDetailPage = () => {
     const favoriteInsert = () => {
         const sessionToken = 'se';//getSessionToken();
 
-        axios.post(`${PATH.SERVER}/product/favoriteInsert/${id}`, null, {
+        axios.post(`${PATH.SERVER}/product/favoriteInsert/${prdId}`, null, {
             headers: {'userId' : `${sessionToken}`}
         })
         .then(response => console.log(response.data))

@@ -28,15 +28,18 @@
         background: var(--bg3);
         text-align: center;
 
-        .deleteBtnX{
-            text-align: center;
-            width: 30px; height: 30px; line-height: 30px;
-            background: #555;
-            color: var(--white);
-            cursor: pointer;
-
-            &:hover{
-                background: var(--bg2);
+        .dtnDiv{
+            text-align:-webkit-right;
+            .deleteBtnX{
+                text-align: center;
+                width: 30px; height: 30px; line-height: 30px;
+                background: #555;
+                color: var(--white);
+                cursor: pointer;
+    
+                &:hover{
+                    background: var(--bg2);
+                }
             }
         }
 

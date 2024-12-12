@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import styles from './CompareModal.module.scss';
 import { PATH } from 'src/utils/path';
 
+import styles from './CompareModal.module.scss';
+
 import useCheckedBanks from 'src/hooks/useCheckedBanks';
-import {banks, products} from 'src/apis/productsAPI';
+import {banks, product} from 'src/apis/productsAPI';
 
 import AlertModal from 'src/components/Modal/AlertModal';
 import useModal from 'src/hooks/useModal';
@@ -17,6 +18,24 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
           closeModal();
         }
     };
+
+    const bankCodes = [10001, 10927, 11625, 13175, 13909, 15130, 17801];
+    const [products, setProducts] = useState(product);
+
+    useEffect(() => {
+        const updatedProducts = product.map(prd => {
+            if (!bankCodes.includes(prd.bankCo)) {
+                return { ...prd, bankCo: 10000 };
+            }
+            return prd;
+        });
+
+        updatedProducts.sort((a, b) => {
+            return b.spclRate - a.spclRate
+        });
+        
+        setProducts(updatedProducts);
+    }, [])
 
 
 
@@ -41,7 +60,7 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
         handleAddProduct,
         deletePrd,
         addProduct,
-        addPrdCo
+        addPrdId
     } = useCheckedBanks(banks, limit, openAlertModal);
     
 
@@ -53,8 +72,8 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
     // 은행 체크박스, 검색창 필터링 
     const filterProductsByBanks = () => {
         let filtered = checkedBanks.length === 0 || checkedBanks.includes(null)
-            ? products  // '전체' 선택이면 모든 상품 표시
-            : products.filter(product => checkedBanks.includes(product.bankCode));  // 선택된 은행에 해당하는 상품만 필터링
+            ? products
+            : products.filter(product => checkedBanks.includes(product.bankCo));
         
         if (search) {
             filtered = filtered.filter(product => 
@@ -62,6 +81,11 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
                 product.bankName.toLowerCase().includes(search.toLowerCase())
             );
         }
+
+        filtered.sort((a, b) => {
+            return b.spclRate - a.spclRate
+        });
+
         setFilteredProducts(filtered);
     };
 
@@ -78,20 +102,20 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
 
 
 
-    // 상품 선택
-    const addComparePrd = (addPrdCo) => {
+    /* 상품 선택 */
+    const addComparePrd = (addPrdId) => {
 
-        if(addPrdCo.length === 0) {
+        if(addPrdId.length === 0) {
             openAlertModal('선택한 상품이 없습니다','상품을 선택해주세요.' );
         }else{
-            const productsToAdd = Array.isArray(addPrdCo) ? addPrdCo : [addPrdCo];
+            const productsToAdd = Array.isArray(addPrdId) ? addPrdId : [addPrdId];
     
             // 서버 연결되면 수정
              Promise.all(productsToAdd.map(product =>
-                axios.post(`${PATH.SERVER}/product/compare/add`, { productId: product.id })
+                axios.post(`${PATH.SERVER}/product/compare/add`, { prdId: product.id })
             ))
             .then(response => {
-                console.log( response);
+                console.log(response);
                 closeModal();
             })
             .catch(error => {
@@ -143,7 +167,7 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
             <div className={styles.list}>
             {filteredProducts.length > 0 ? filteredProducts.map((product, index) => (
                 <div key={index} 
-                className={`${styles.product} ${addPrdCo.includes(product.prdCo) ? styles.selected : ''}`}
+                className={`${styles.product} ${addPrdId.includes(product.prdId) ? styles.selected : ''}`}
                 onClick={() => handleAddProduct(product)}>
                     <div className={styles.productbox}>
                         <img 
@@ -157,8 +181,8 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
                         </div>
                     </div>
                     <div className={styles.rate}>
-                        <span className={styles.spclrate}>{product.spclrate}</span>
-                        <span className={styles.basicRate}>{product.basicRate}</span>
+                        <span className={styles.spclrate}>최고금리 {product.spclRate}%</span>
+                        <span className={styles.basicRate}>기본금리 {product.basicRate}%</span>
                     </div>
                 </div>
                 )) : <span>상품이 없습니다.</span>
@@ -183,7 +207,7 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
             </div>
 
             <div className={styles.buttonContainer}>
-                <button onClick={() => addComparePrd(addPrdCo)} className={styles.compareButton}>추가</button>
+                <button onClick={() => addComparePrd(addPrdId)} className={styles.compareButton}>추가</button>
                 <button onClick={onCancel} className={styles.cancelButton}>취소</button>
             </div>
         </div>
