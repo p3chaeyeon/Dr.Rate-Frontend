@@ -2,17 +2,17 @@ import styles from './ProductDetailPage.module.scss';
 import RateCalc from 'src/pages/ProductDetailPage/RateCalc';
 import downArrowIcon2 from 'src/assets/icons/downDetailArrow.svg';
 
-import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import AlertModal from 'src/components/Modal/AlertModal';
+import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import useModal from 'src/hooks/useModal';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from "src/utils/path";
 import { atom, useAtom } from 'jotai';
 import { getProductDetails } from 'src/apis/productsAPI';
 
-// Jotai 상태 관리
+/* Jotai 상태 관리 */
 const productsAtom = atom({
     optionNum: {},
     options: [],
@@ -21,20 +21,21 @@ const productsAtom = atom({
 }); 
 const isOpenAtom = atom(false);
 
+
 const ProductDetailPage = () => {
     const navigate = useNavigate();
     const { prdId } = useParams();
 
+    /* prdId가 없으면 기본적으로 /1로 리다이렉트 */
     useEffect(() => {
-        // prdId가 없으면 기본적으로 /1로 리다이렉트
         if (!prdId) {
             navigate("/product/detail/1", { replace: true });
         }
     }, [prdId, navigate]);
 
-    // Jotai 상태 관리
+    /* Jotai 상태 관리 */
     const [products, setProducts] = useAtom(productsAtom);
-    const [isOpen, setIsOpen] = useAtom(isOpenAtom); //이자 계산기
+    const [isOpen, setIsOpen] = useAtom(isOpenAtom); // 이자 계산기 열림/닫힘 상태 관리
 
     //useModal 훅
     const {
@@ -61,7 +62,7 @@ const ProductDetailPage = () => {
                         product: productDetails.product,
                         conditions: productDetails.conditions
                     });
-                    console.log(productDetails);
+                    // console.log(productDetails);
                 } catch (error) {
                     console.error("Failed to fetch product details:", error);
                 }
@@ -72,65 +73,78 @@ const ProductDetailPage = () => {
     }, [prdId]);
     
 
-    // 객체 변환
+    /* 객체 변환 */
     const i = products?.optionNum || 0;
     const options = products?.options || null;
     const product = options?.[i]?.products || {};
     const conditions = products.conditions;
 
-    // 이자 계산기
+
+    /* 이자 계산기 */
     const handleToggle = () => {
-        // Test 용
+
+        // 옵션 유효성 검사; 옵션이 유효하지 않으면 Alert Modal 표시
+        if (!options || !options[i]) {
+            openAlertModal(
+                '오류', 
+                `옵션이 없는 상품입니다.`
+            );
+            return;
+        }
+
+        // 사용자가 로그인되어 있는지 확인 (Test 용)
         const isUserLoggedIn = sessionStorage.getItem('userLoggedIn');
 
         // session값 맏아오면 변경해야됨
+        // // 사용자 로그인 상태 검사; 로그인되지 않은 경우 Confirm Modal 표시
         if (!isUserLoggedIn) {
             setIsOpen((prev) => !prev);
         } else {
-            openConfirmModal(
-                '회원가입 하시겠습니까?', 
-                '로그인 후 이자계산기를 사용할 수 있어요! '
+            const confirmMessage = (
+                <>
+                    로그인 후 이자계산기를 사용할 수 있어요! <br />
+                    <span>이미 회원이세요? </span> <span className={styles.arrow}></span>
+                    <span 
+                        className={styles.modalLogin} 
+                        onClick={handleLoginClick}>
+                        로그인
+                    </span>
+                </>
             );
+            openConfirmModal('회원가입 하시겠습니까?', confirmMessage, handleConfirm, handleCancel);
+
+            return;
         }
 
-        if(options == null || options[i] == null){
-            openAlertModal('오류',`옵션이 없는 상품입니다.` );
-            setIsOpen(false);
-        }
+
+        // 이자 계산기 상태 토글
+        setIsOpen((prev) => !prev);
         
     };
 
-    // 로그인 클릭 시
+    /* Confirm Modal 로그인 클릭 시 */
     const handleLoginClick = () => {
-        navigate(PATH.HOME);
         closeConfirmModal();
+        navigate(PATH.HOME);
     };
 
-    // 확인 클릭 시
+    /* Confirm Modal 확인 클릭 시 */
     const handleConfirm = () => {
         navigate(PATH.HOME);
         closeConfirmModal();
     };
 
-    // 취소 클릭 시
+    /* Confirm Modal 취소 클릭 시 */
     const handleCancel = () => {
         closeConfirmModal();
     };
-
-    const handleCancel2 = () => {
-        closeAlertModal();
-    };
-
-    // Test용
-    const getSessionToken = () => {
-        return localStorage.getItem('sessionToken'); // Or use a cookie or another method
-    };
-
 
 
     return (
         <main>
             <section className={styles.detailSection}>
+
+                {/* 상품 제목 및 상단 정보 */}
                 <h3 className={styles.title}>{product.ctg === 'i' ? '적금' : '예금'}</h3>
                 <div className={styles.topDiv}>
                     <div className={styles.image}><img src={`${PATH.STORAGE_BANK}/${product?.bankLogo || 'remainLogo.png'} `} /></div>
@@ -146,13 +160,16 @@ const ProductDetailPage = () => {
                     </div>
                 </div>
 
+                {/* 버튼 영역 */}
                 <div className={styles.btnDiv}>
-                    <button className={styles.heartIcon} onClick={favoriteInsert}><span className={styles.heart}>&hearts;</span> 즐겨찾기</button>
+                    <button className={styles.heartIcon}><span className={styles.heart}>&hearts;</span> 즐겨찾기</button>
                     <button className={styles.intobtn}>비교담기</button>
                     <button className={styles.gotoHomePage} onClick={() =>window.open(product?.url, '_blank')}>가입하기</button>
                 </div>
 
-                {isOpen || (
+
+                {/* 이자 계산기 */}
+                {!isOpen && (
                 <div className={`${styles.serviceDiv} ${isOpen ? styles.open : ''}`} onClick={handleToggle}>
                     <span className={styles.serviceOne}>이자계산기</span>
                     <span className={styles.serviceTwo}>자세히 <img src={downArrowIcon2} className={styles.downArrowIcon2}/></span>
@@ -163,36 +180,29 @@ const ProductDetailPage = () => {
                     <RateCalc isOpen={isOpen} options={options[i] || {}} conditions={conditions}  onClose={handleToggle}/>
                 )}
 
-                {/* Confirm Modal을 사용할 때 */}
+                {/* Confirm Modal */}
                 {isConfirmOpen && (
                 <ConfirmModal
                     isOpen={isConfirmOpen}
                     closeModal={closeConfirmModal}
                     title={confirmContent.title}
-                    message={
-                        <>
-                            {confirmContent.message}
-                            <span>이미 회원이세요? </span> <span className={styles.arrow}>  </span>
-                            <span className={styles.modalLogin} onClick={handleLoginClick}>로그인</span>
-                        </>
-                    }
-                    onConfirm={handleConfirm}
-                    onCancel={handleCancel}
+                    message={confirmContent.message}
+                    onConfirm={confirmContent.onConfirm}
+                    onCancel={confirmContent.onCancel}
                 />
                 )}
+
+                 {/* Alert Modal */}
                 {isAlertOpen && (
                 <AlertModal
                     isOpen={isAlertOpen}
                     closeModal={closeAlertModal}
                     title={alertContent.title}
-                    message={
-                        <>
-                            {alertContent.message}
-                        </>
-                    }
-                    onCancel={handleCancel2}
+                    message={ alertContent.message}
                 />
                 )}
+
+                {/* 상세 정보 */}
                 <div className={styles.detailDiv}>
                 <h3 className={styles.detailTitle}>상세정보</h3>
                 <ul>
