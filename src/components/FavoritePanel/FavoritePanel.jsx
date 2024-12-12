@@ -5,8 +5,8 @@ import React, { useState } from 'react';
 import { PATH } from "src/utils/path";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { allCheckedAtom, setAllCheckedAtom } from 'src/atoms/favoriteAtoms';
-import useFavorite from 'src/hooks/useFavorite';
+import { allCheckedAtom, setAllCheckedAtom } from 'src/atoms/favoriteAtom';
+import useMyFavorite from 'src/hooks/useMyFavorite';
 import useSelectDropdown from 'src/hooks/useSelectDropdown';
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
@@ -18,7 +18,7 @@ const FavoritePanel = ({ favoriteDataLength }) => {
     const [allChecked] = useAtom(allCheckedAtom);
     const [, setAllCheckedState] = useAtom(setAllCheckedAtom);
 
-    const { handleIndividualCheck } = useFavorite(favoriteDataLength);
+    const { handleIndividualCheck } = useMyFavorite(favoriteDataLength);
     const handleAllCheck = (e) => {
         setAllCheckedState(e.target.checked); // 전체 체크박스 상태 업데이트
     };

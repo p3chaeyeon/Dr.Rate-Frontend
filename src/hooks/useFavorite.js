@@ -1,33 +1,26 @@
-// src/hooks/useFavorite.js
-
-// API 호출 및 로직 분리를 담당
-// 재사용 가능한 로직을 분리하여 관리; Custom Hook 
+/* src/hooks/useFavorite.js */
 
 import { useAtom } from 'jotai';
-import { individualCheckedAtom, setIndividualCheckedAtom } from 'src/atoms/favoriteAtoms';
-import { useEffect } from 'react';
+import { favoriteAtom } from '../atoms/favoriteAtom';
+import { addFavorite, removeFavorite } from '../apis/favorite';
 
-const useFavorite = (dataLength) => {
-    const [individualChecked, setIndividualChecked] = useAtom(setIndividualCheckedAtom);
+export const useFavorite = () => {
+  const [favorites, setFavorites] = useAtom(favoriteAtom);
 
-    // 개별 체크박스 상태를 데이터 길이에 맞게 초기화
-    useEffect(() => {
-        if (individualChecked.length === 0) {
-            setIndividualChecked(new Array(dataLength).fill(false));
-        }
-    }, [dataLength, individualChecked, setIndividualChecked]);
+  const toggleFavorite = async (id) => {
+    if (favorites.has(id)) {
+      await removeFavorite(id);
+      setFavorites((prev) => {
+        const newFavorites = new Set(prev);
+        newFavorites.delete(id);
+        return newFavorites;
+      });
+    } else {
+      await addFavorite(id);
+      setFavorites((prev) => new Set(prev).add(id));
+    }
+  };
 
-    // 개별 체크박스를 클릭했을 때 상태 업데이트
-    const handleIndividualCheck = (index, isChecked) => {
-        const updatedArray = [...individualChecked];
-        updatedArray[index] = isChecked;
-        setIndividualChecked(updatedArray);
-    };
-
-    return {
-        individualChecked,
-        handleIndividualCheck,
-    };
+  return { favorites, toggleFavorite };
 };
 
-export default useFavorite;
