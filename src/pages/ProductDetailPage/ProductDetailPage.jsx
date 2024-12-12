@@ -37,7 +37,7 @@ const ProductDetailPage = () => {
     const [products, setProducts] = useAtom(productsAtom);
     const [isOpen, setIsOpen] = useAtom(isOpenAtom); // 이자 계산기 열림/닫힘 상태 관리
 
-    //useModal 훅
+    /* useModal 훅 */
     const {
         isConfirmOpen,
         openConfirmModal,
@@ -50,7 +50,7 @@ const ProductDetailPage = () => {
     } = useModal();
     
 
-    // 상품 정보 불러오기
+    /* 상품 정보 불러오기 */
     useEffect(() => {
         const fetchProductDetails = async () => {
             if(prdId) {
@@ -92,7 +92,8 @@ const ProductDetailPage = () => {
             const confirmMessage = (
                 <>
                     로그인 후 이자계산기를 사용할 수 있어요! <br />
-                    <span>이미 회원이세요? </span> <span className={styles.arrow}></span>
+                    <span>이미 회원이세요?</span> 
+                    <span className={styles.arrow}>&gt;&gt;</span>
                     <span 
                         className={styles.modalLogin} 
                         onClick={handleLoginClick}>
@@ -115,7 +116,7 @@ const ProductDetailPage = () => {
     /* Confirm Modal 로그인 클릭 시 */
     const handleLoginClick = () => {
         closeConfirmModal();
-        navigate(PATH.HOME);
+        navigate(PATH.SIGN_IN);
     };
 
     /* Confirm Modal 확인 클릭 시 */
