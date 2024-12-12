@@ -9,6 +9,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { PATH } from "src/utils/path";
 import { atom, useAtom } from 'jotai';
+import { useFavorite } from '../../hooks/useFavorite';
 
 // Jotai 상태 관리
 const idAtom = atom(2);
@@ -27,6 +28,9 @@ const ProductDetailPage = () => {
     const [id, setId] = useAtom(idAtom);
     const [products, setProducts] = useAtom(productsAtom);
     const [isOpen, setIsOpen] = useAtom(isOpenAtom); //이자 계산기
+
+    // 즐겨찾기
+    const { favorite, toggleFavorite } = useFavorite(id);
 
     //useModal 훅
     const {
@@ -98,17 +102,6 @@ const ProductDetailPage = () => {
         return localStorage.getItem('sessionToken'); // Or use a cookie or another method
     };
 
-    // 즐겨찾기 넣기
-    const favoriteInsert = () => {
-        const sessionToken = 'se';//getSessionToken();
-
-        axios.post(`${PATH.SERVER}/product/favoriteInsert/${id}`, null, {
-            headers: {'userId' : `${sessionToken}`}
-        })
-        .then(response => console.log(response.data))
-        .catch(e => console.log(e))
-    }
-
 
     return (
         <main>
@@ -129,7 +122,11 @@ const ProductDetailPage = () => {
                 </div>
 
                 <div className={styles.btnDiv}>
-                    <button className={styles.heartIcon} onClick={favoriteInsert}><span className={styles.heart}>&hearts;</span> 즐겨찾기</button>
+                    <button 
+                        className={styles.heartIcon} 
+                        onClick={() => toggleFavorite(id)}>
+                        <span className={`${styles.heart} ${favorite.has(id) ? styles.active : ''}`}>&hearts;</span> 즐겨찾기
+                    </button>
                     <button className={styles.intobtn}>비교담기</button>
                     <button className={styles.gotoHomePage} onClick={() =>window.open(product.url, '_blank')}>가입하기</button>
                 </div>

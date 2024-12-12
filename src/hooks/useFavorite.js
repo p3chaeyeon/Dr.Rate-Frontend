@@ -3,25 +3,49 @@
 
 import { useAtom } from 'jotai';
 import { favoriteAtom } from '../atoms/favoriteAtom';
-import { addFavorite, removeFavorite } from '../apis/favorite';
+import { checkFavorite, addFavorite, removeFavorite } from '../apis/favoriteAPI';
+import { useEffect } from 'react';
 
-export const useFavorite = () => {
-  const [favorites, setFavorites] = useAtom(favoriteAtom);
+export const useFavorite = (id) => {
+  const [favorite, setFavorite] = useAtom(favoriteAtom);
 
-  const toggleFavorite = async (id) => {
-    if (favorites.has(id)) {
-      await removeFavorite(id);
-      setFavorites((prev) => {
-        const newFavorites = new Set(prev);
-        newFavorites.delete(id);
-        return newFavorites;
-      });
-    } else {
-      await addFavorite(id);
-      setFavorites((prev) => new Set(prev).add(id));
+  useEffect(() => {
+    const fetchFavoriteStatus = async () => {
+      try {
+        const isFavorite = await checkFavorite(id);
+        setFavorite((prev) => {
+          const newFavorite = new Set(prev);
+          if (isFavorite) newFavorite.add(id);
+          else newFavorite.delete(id);
+          return newFavorite;
+        });
+      } catch (error) {
+        console.error("Error fetching favorite status:", error);
+      }
+    };
+
+    fetchFavoriteStatus();
+  }, [id, setFavorite]);
+  
+
+  const toggleFavorite = async () => {
+    try {
+      if (favorite.has(id)) {
+        await removeFavorite(id);
+        setFavorite((prev) => {
+          const newFavorite = new Set(prev);
+          newFavorite.delete(id);
+          return newFavorite;
+        });
+      } else {
+        await addFavorite(id);
+        setFavorite((prev) => new Set(prev).add(id));
+      }
+    } catch (error) {
+      console.error("Error toggling favorite status:", error);
     }
   };
 
-  return { favorites, toggleFavorite };
+  return { favorite, toggleFavorite };
 };
 
