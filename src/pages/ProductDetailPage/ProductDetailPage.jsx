@@ -13,7 +13,6 @@ import { PATH } from "src/utils/path";
 import { atom, useAtom } from 'jotai';
 
 // Jotai 상태 관리
-const idAtom = atom(1);
 const productsAtom = atom({
     optionNum: {},
     options: [],
@@ -27,13 +26,6 @@ const ProductDetailPage = () => {
 
     // 경로에서 받은 id 값
     const { prdId } = useParams();
-    const [id, setId] = useAtom(idAtom);
-
-    useEffect(() => {
-        if (prdId && prdId !== id) {
-            setId(prdId);
-        }
-    }, [prdId, setId]);
 
     // Jotai 상태 관리
     const [products, setProducts] = useAtom(productsAtom);
@@ -54,9 +46,9 @@ const ProductDetailPage = () => {
 
     // 상품 정보 불러오기
     useEffect(() => {
-        if(id) {
-            console.log(id);
-            axios.get(`${PATH.SERVER}/product/getOneProduct/${id}`)
+        if(prdId) {
+            console.log(prdId);
+            axios.get(`${PATH.SERVER}/product/getOneProduct/${prdId}`)
             .then((res) => {
                 setProducts({
                     optionNum: res.data.optionNum,
@@ -181,10 +173,8 @@ const ProductDetailPage = () => {
                     message={
                         <>
                             {confirmContent.message}
-                            <p>
-                                <span>이미 회원이세요? </span> <span className={styles.arrow}>  </span>
-                                <span className={styles.modalLogin} onClick={handleLoginClick}>로그인</span>
-                            </p>
+                            <span>이미 회원이세요? </span> <span className={styles.arrow}>  </span>
+                            <span className={styles.modalLogin} onClick={handleLoginClick}>로그인</span>
                         </>
                     }
                     onConfirm={handleConfirm}

@@ -6,8 +6,11 @@ import useModal from 'src/hooks/useCompare';
 
 import React, { useEffect, useState } from 'react';
 import { PATH } from 'src/utils/path';
+import { useParams } from 'react-router-dom';
 
-const ProductComparePage = ({ctg}) => {
+const ProductComparePage = () => {
+    // 경로에서 받은 ctg 값
+    const { ctg } = useParams();
 
     const [products, setProducts] = useState([]);
 
