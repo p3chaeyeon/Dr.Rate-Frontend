@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between; /* 요소들 사이에 간격을 넣어줌 */
+    gap: 30px;
 
     .image{
         width: 120px; height: 120px;
@@ -164,6 +165,10 @@
             line-height: 30px;
         }
     }
+}
+
+.arrow {
+    margin: 0 10px;
 }
 
 .modalLogin{
