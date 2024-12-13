@@ -1,5 +1,5 @@
 .signinPage {
-    
+
     width: 50%; /* 로그인 폼 너비를 50%로 설정 */
     margin: 100px auto;
 
@@ -17,6 +17,7 @@
         }
         .signinText {
             color: var(--black);
+            cursor: pointer;
         }
     }
 
@@ -90,7 +91,7 @@
 
     button {
         background-color: var(--main2);
-        color: white;
+        color: var(--white);
         border: none;
         padding: 12px;
         font-size: 16px;
