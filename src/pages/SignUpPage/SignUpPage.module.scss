@@ -1,0 +1,160 @@
+.signUpPage {
+    width: 50%;
+    margin: 100px auto;
+
+    .title {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        font-size: 16px;
+        font-weight: normal;
+        border-bottom: 2px solid var(--divider-border);
+
+        .signupText {
+            color: var(--black);
+            font-family: 'Noto Sans KR';
+            cursor: pointer;
+        }
+        .signinText {
+            color: #a9a9a9;
+            cursor: pointer;
+        }
+    }
+
+    .signUpForm {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin-top: 10px;
+
+        .inputWrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            flex-direction: row; /* 필드를 세로로 배치 */
+            border-bottom: 2px solid var(--divider-border);
+            transition: border-color 0.3s;
+        }
+
+        input {
+            padding: 10px 0;
+            border: none;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            outline: none;
+            margin-top: 15px;
+
+            &:focus {
+                border-color: var(--main2);
+            }
+
+            &:focus::placeholder {
+                color: transparent;
+            }
+
+            &:not(:placeholder-shown) {
+                border-color: var(--main2);
+            }
+
+            &:focus + label,
+            &:not(:placeholder-shown) + label {
+                top: -12px;
+                font-size: 12px;
+                color: var(--main2);
+                margin-top: 25px;
+            }
+        }
+
+        label {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: transparent;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .errorText {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px; /* 유효성 메시지 아래 마진 추가 */
+            align-self: flex-start; /* 왼쪽 정렬 */
+            width: 100%; /* 오류 메시지가 부모 너비에 맞게 표시되도록 설정 */
+        }
+        .verifyButton {
+            background-color: var(--main2);
+            color: var(--white);
+            border: none;
+            padding:8px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 120px;
+
+            &:hover {
+                background-color: var(--main1);
+            }
+        }
+    }
+    .icons {
+        display: flex;
+        justify-content: space-evenly;
+        width: 100%;
+        margin-top: 20px;
+
+        img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+    }
+
+    .findUser {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #7c7b7b;
+        text-align: right;
+
+        p {
+            cursor: pointer;
+            transition: color 0.3s;
+            margin: 0 10px;
+
+            &:hover {
+                color: var(--main2);
+            }
+        }
+    }
+
+    .errorText {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px; /* 유효성 메시지 아래 마진 추가 */
+        align-self: flex-start; /* 왼쪽 정렬 */
+        width: 100%; /* 오류 메시지가 부모 너비에 맞게 표시되도록 설정 */
+    }
+    button {
+            background-color: var(--main2);
+            color: var(--white);
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+
+            &:hover {
+                background-color: var(--main1);
+            }
+        }
+}
