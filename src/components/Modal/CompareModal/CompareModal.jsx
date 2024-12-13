@@ -4,7 +4,7 @@ import { PATH } from 'src/utils/path';
 import styles from './CompareModal.module.scss';
 
 import useCheckedBanks from 'src/hooks/useCheckedBanks';
-import {banks, product} from 'src/apis/productsAPI';
+import {banks, getAllProducts} from 'src/apis/productsAPI';
 
 import AlertModal from 'src/components/Modal/AlertModal';
 import useModal from 'src/hooks/useModal';
@@ -20,22 +20,43 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
     };
 
     const bankCodes = [10001, 10927, 11625, 13175, 13909, 15130, 17801];
-    const [products, setProducts] = useState(product);
-
+    const [products, setProducts] = useState([]);
+    const [options, setOptions] = useState([]);
+    
     useEffect(() => {
-        const updatedProducts = product.map(prd => {
-            if (!bankCodes.includes(prd.bankCo)) {
-                return { ...prd, bankCo: 10000 };
-            }
-            return prd;
-        });
+        const fetchAllProduct = async () => {
+            try {
+                const allProducts = await getAllProducts();
+                console.log(allProducts);
 
-        updatedProducts.sort((a, b) => {
-            return b.spclRate - a.spclRate
-        });
-        
-        setProducts(updatedProducts);
-    }, [])
+                const allProductData = allProducts.map(item => item.product);
+
+                const highestSpclRateOptions = allProducts.map(item => {
+                    const highestSpclRateOption = item.options.reduce((maxOption, currentOption) => {
+                        return (currentOption.spclRate > maxOption.spclRate) ? currentOption : maxOption;
+                    }, item.options[0]); // 처음 옵션을 기준으로 비교 시작
+                    return highestSpclRateOption;
+                });
+
+                setProducts(allProductData);
+                setOptions(highestSpclRateOptions);
+
+                const updatedProducts = allProductData.map(prd => {
+                    if (!bankCodes.includes(prd.bankCo)) {
+                        return { ...prd, bankCo: 10000 };
+                    }
+                    return prd;
+                });
+
+                updatedProducts.sort((a, b) => b.spclRate - a.spclRate);
+                setProducts(updatedProducts);
+            } catch (error) {
+                console.error("Failed to fetch product details:", error);
+            }
+        };
+
+        fetchAllProduct();
+    }, []);
 
 
 
@@ -77,7 +98,7 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
         
         if (search) {
             filtered = filtered.filter(product => 
-                product.productName.toLowerCase().includes(search.toLowerCase()) || 
+                product.prdName.toLowerCase().includes(search.toLowerCase()) || 
                 product.bankName.toLowerCase().includes(search.toLowerCase())
             );
         }
@@ -125,7 +146,6 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
         }
     };
 
-
     return (
         <div
         className={styles.compareModal}
@@ -166,6 +186,7 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
 
             <div className={styles.list}>
             {filteredProducts.length > 0 ? filteredProducts.map((product, index) => (
+                
                 <div key={index} 
                 className={`${styles.product} ${addPrdId.includes(product.prdId) ? styles.selected : ''}`}
                 onClick={() => handleAddProduct(product)}>
@@ -177,12 +198,12 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
                         />
                         <div className={styles.productText}>
                             <span className={styles.bankName}>{product.bankName}</span>
-                            <span className={styles.productName}>{product.productName}</span>
+                            <span className={styles.productName}>{product.prdName}</span>
                         </div>
                     </div>
                     <div className={styles.rate}>
-                        <span className={styles.spclrate}>최고금리 {product.spclRate}%</span>
-                        <span className={styles.basicRate}>기본금리 {product.basicRate}%</span>
+                        <span className={styles.spclrate}>최고금리 {options.spclRate}%</span>
+                        <span className={styles.basicRate}>기본금리 {options.basicRate}%</span>
                     </div>
                 </div>
                 )) : <span>상품이 없습니다.</span>

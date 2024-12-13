@@ -85,7 +85,7 @@ const ProductDetailPage = () => {
         // Test 용
         const isUserLoggedIn = sessionStorage.getItem('userLoggedIn');
 
-        // session값 맏아오면 변경해야됨
+        // session값 받아오면 변경해야됨
         if (!isUserLoggedIn) {
             setIsOpen((prev) => !prev);
         } else {
@@ -121,7 +121,7 @@ const ProductDetailPage = () => {
 
     /* Confirm Modal 확인 클릭 시 */
     const handleConfirm = () => {
-        navigate(PATH.HOME);
+        navigate(PATH.SIGN_IN);
         closeConfirmModal();
     };
 

@@ -30,15 +30,25 @@ export const getProductDetails = async (prdId) => {
 
 export const banks = [
     { name: '전체', code: null },
-    { name: '국민은행', code: 10001 },
-    { name: '농협은행', code: 10927 },
+    { name: '국민은행', code: 10927 },
+    { name: '농협은행', code: 13175 },
     { name: '신한은행', code: 11625 },
-    { name: '우리은행', code: 13175 },
-    { name: '카카오뱅크', code: 13909 },
-    { name: '토스뱅크', code: 15130 },
-    { name: '하나은행', code: 17801 },
+    { name: '우리은행', code: 10001 },
+    { name: '카카오뱅크', code: 15130 },
+    { name: '토스뱅크', code: 17801 },
+    { name: '하나은행', code: 13909 },
     { name: '기타', code: 10000 }
 ];
+
+export const getAllProducts = async () => {
+    try {
+        const response = await axios.get(`${PATH.SERVER}/product/getAllProducts`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching product details:", error);
+        throw error;
+    }
+};
 
 /* 상품 가져오면 사라질 부분 */
 export const product = [
