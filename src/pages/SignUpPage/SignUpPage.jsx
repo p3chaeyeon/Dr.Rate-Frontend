@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // useNavigate 추가
+import { useNavigate } from 'react-router-dom';
+import AlertModal from '../../components/modal/AlertModal';  // AlertModal import
 import styles from './SignUpPage.module.scss';
 
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
@@ -8,7 +9,7 @@ import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
 
 const SignUpPage = () => {
-    const navigate = useNavigate();  // navigate 훅 사용
+    const navigate = useNavigate();
 
     // 상태 관리
     const [user_id, setUserId] = useState('');
@@ -17,8 +18,10 @@ const SignUpPage = () => {
     const [user_email, setUserEmail] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [confirmPwdError, setConfirmPwdError] = useState('');
+    const [showModal, setShowModal] = useState(false); // 모달 표시 상태 관리
+    const [modalTitle, setModalTitle] = useState(''); // 모달 제목
+    const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
 
-    // 비밀번호 유효성 검사 함수
     const validatePassword = (password) => {
         const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
         return regex.test(password);
@@ -44,21 +47,28 @@ const SignUpPage = () => {
     const handleEmailVerification = async () => {
         try {
             await axios.post('http://localhost:8080/api/email/verify', { email: user_email });
-            alert('인증 메일이 전송되었습니다.');
+            // 인증 성공 시
+            setModalTitle("메일 인증 성공");
+            setModalMessage("인증 메일이 전송되었습니다.");
+            setShowModal(true);
         } catch (error) {
             console.error("메일 인증 오류:", error);
-            alert("메일 인증 중 오류가 발생했습니다.");
+            // 인증 실패 시
+            setModalTitle("메일 인증 실패");
+            setModalMessage("메일 인증 중 오류가 발생했습니다.");
+            setShowModal(true);
         }
     };
 
     // 회원가입 처리 함수
     const handleSignUp = async () => {
         if (passwordError || confirmPwdError || !user_pwd || !confirmPwd) {
-            alert("입력 정보를 확인해주세요.");
+            setModalTitle("회원가입 오류");
+            setModalMessage("입력 정보를 확인해주세요.");
+            setShowModal(true);
             return;
         }
         try {
-            // 서버로 회원가입 요청
             const response = await axios.post('http://localhost:8080/api/signup', {
                 user_id,
                 user_pwd,
@@ -66,47 +76,58 @@ const SignUpPage = () => {
             });
 
             if (response.data.success) {
-                alert("회원가입이 완료되었습니다.");
-                window.location.href = "http://localhost:5173/signIn"; // 로그인 페이지로 이동
+                setModalTitle("회원가입 성공");
+                setModalMessage("회원가입이 완료되었습니다.");
+                setShowModal(true);
+                setTimeout(() => {
+                    window.location.href = "http://localhost:5173/signIn"; // 로그인 페이지로 이동
+                }, 2000);
             }
         } catch (error) {
             console.error("회원가입 오류:", error);
-            alert("회원가입 중 오류가 발생했습니다.");
+            setModalTitle("회원가입 실패");
+            setModalMessage("회원가입 중 오류가 발생했습니다.");
+            setShowModal(true);
         }
     };
 
     // 소셜로그인 후 JWT 처리 함수
     const handleOAuthLogin = async (provider) => {
         try {
-            // 소셜 로그인 URL 요청
             const response = await axios.get(`http://localhost:8080/oauth2/authorization/${provider}`, {
-                withCredentials: true, // 쿠키를 함께 전송
+                withCredentials: true,
             });
 
-            // 백엔드로부터 JWT를 가져옴
             const { token } = response.data;
             if (token) {
                 console.log("Received JWT:", token);
-                localStorage.setItem("accessToken", token); // JWT를 localStorage에 저장
-                window.location.href = "http://localhost:5173/"; // 메인 페이지로 이동
+                localStorage.setItem("accessToken", token);
+                window.location.href = "http://localhost:5173/";
             }
         } catch (error) {
             console.error(`Failed to login with ${provider}:`, error);
-            alert(`${provider} 로그인 중 오류가 발생했습니다.`);
+            setModalTitle("로그인 실패");
+            setModalMessage("로그인 중 오류가 발생했습니다.");
+            setShowModal(true);
         }
     };
 
     // 로그인 타이틀 클릭시 로그인 페이지로 이동
     const handleTitleClick = () => {
-        navigate('/signIn');  // 로그인 페이지로 이동
+        navigate('/signIn');
+    };
+
+    // 모달 닫기
+    const handleCloseModal = () => {
+        setShowModal(false);
     };
 
     return (
         <main>
             <section className={styles.signUpPage}>
                 <div className={styles.title}>
-                    <h4 >회원가입&nbsp;&nbsp;&nbsp;/</h4>
-                    <h4 onClick={handleTitleClick} className={styles.signinText}>&nbsp;&nbsp;&nbsp;로그인</h4>
+                    <h4 onClick={handleTitleClick} className={styles.signinText}>로그인&nbsp;&nbsp;&nbsp;/</h4>
+                    <h4>&nbsp;&nbsp;&nbsp;회원가입</h4>
                 </div>
 
                 <div className={styles.signUpForm}>
@@ -142,7 +163,6 @@ const SignUpPage = () => {
                             </button>
                         </div>
 
-
                         <div className={styles.inputWrapper}>
                             <input
                                 type="password"
@@ -154,8 +174,9 @@ const SignUpPage = () => {
                                 onBlur={handlePasswordBlur}
                             />
                             <label htmlFor="user_pwd">비밀번호</label>
-                            {passwordError && <p className={styles.errorText}>{passwordError}</p>}
                         </div>
+                        {passwordError && <p className={styles.errorText}>{passwordError}</p>}
+
 
                         <div className={styles.inputWrapper}>
                             <input
@@ -168,8 +189,8 @@ const SignUpPage = () => {
                                 onBlur={handleConfirmPwdBlur}
                             />
                             <label htmlFor="confirmPassword">비밀번호 확인</label>
-                            {confirmPwdError && <p className={styles.errorText}>{confirmPwdError}</p>}
                         </div>
+                        {confirmPwdError && <p className={styles.errorText}>{confirmPwdError}</p>}
                     </form>
                 </div>
 
@@ -197,6 +218,14 @@ const SignUpPage = () => {
                     <p>아이디 찾기</p>/<p>비밀번호 찾기</p>
                 </div>
             </section>
+
+            {/* 모달 표시 */}
+            <AlertModal
+                isOpen={showModal} // 모달 표시 여부
+                closeModal={handleCloseModal} // 모달 닫기
+                title={modalTitle} // 모달 제목
+                message={modalMessage} // 모달 메시지
+            />
         </main>
     );
 };

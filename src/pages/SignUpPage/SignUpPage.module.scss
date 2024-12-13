@@ -13,6 +13,7 @@
         .signupText {
             color: var(--black);
             font-family: 'Noto Sans KR';
+            cursor: pointer;
         }
         .signinText {
             color: #a9a9a9;
@@ -32,7 +33,9 @@
             width: 100%;
             display: flex;
             align-items: center;
-            flex-direction: column; /* 필드를 세로로 배치 */
+            flex-direction: row; /* 필드를 세로로 배치 */
+            border-bottom: 2px solid var(--divider-border);
+            transition: border-color 0.3s;
         }
 
         input {
@@ -42,8 +45,6 @@
             width: 100%;
             box-sizing: border-box;
             outline: none;
-            border-bottom: 2px solid var(--divider-border);
-            transition: border-color 0.3s;
             margin-top: 15px;
 
             &:focus {
@@ -78,27 +79,6 @@
             transition: all 0.3s ease;
         }
 
-        .verifyButton {
-            background-color: var(--main2);
-            color: var(--white);
-            border: none;
-            padding: 5px 10px;
-            font-size: 12px;
-            margin-left: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            position: absolute;
-            right: 0;
-            top: 37%;
-            transform: translateY(-50%);
-            width: 120px;
-
-            &:hover {
-                background-color: var(--main1);
-            }
-        }
-
         .errorText {
             color: red;
             font-size: 12px;
@@ -106,24 +86,22 @@
             align-self: flex-start; /* 왼쪽 정렬 */
             width: 100%; /* 오류 메시지가 부모 너비에 맞게 표시되도록 설정 */
         }
-    }
+        .verifyButton {
+            background-color: var(--main2);
+            color: var(--white);
+            border: none;
+            padding:8px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 120px;
 
-    button {
-        background-color: var(--main2);
-        color: var(--white);
-        border: none;
-        padding: 12px;
-        font-size: 16px;
-        width: 100%;
-        border-radius: 8px;
-        cursor: pointer;
-        margin-top: 20px;
-
-        &:hover {
-            background-color: var(--main1);
+            &:hover {
+                background-color: var(--main1);
+            }
         }
     }
-
     .icons {
         display: flex;
         justify-content: space-evenly;
@@ -164,4 +142,19 @@
         align-self: flex-start; /* 왼쪽 정렬 */
         width: 100%; /* 오류 메시지가 부모 너비에 맞게 표시되도록 설정 */
     }
+    button {
+            background-color: var(--main2);
+            color: var(--white);
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+
+            &:hover {
+                background-color: var(--main1);
+            }
+        }
 }
