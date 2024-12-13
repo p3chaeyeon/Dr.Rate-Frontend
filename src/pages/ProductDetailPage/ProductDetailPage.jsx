@@ -6,7 +6,7 @@ import AlertModal from 'src/components/Modal/AlertModal';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import useModal from 'src/hooks/useModal';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from "src/utils/path";
 import { atom, useAtom } from 'jotai';
@@ -26,7 +26,7 @@ const isOpenAtom = atom(false);
 const ProductDetailPage = () => {
     const navigate = useNavigate();
     const { prdId } = useParams();
-    const { favorite, toggleFavorite } = useFavorite(prdId);
+    const { isFavorite, toggleFavorite } = useFavorite(prdId);
 
 
     /* prdId가 없으면 기본적으로 /1로 리다이렉트 */
@@ -160,8 +160,8 @@ const ProductDetailPage = () => {
                 <div className={styles.btnDiv}>
                     <button 
                         className={styles.heartIcon} 
-                        onClick={() => toggleFavorite(id)}>
-                        <span className={`${styles.heart} ${favorite.has(prdId) ? styles.active : ''}`}>&hearts;</span> 즐겨찾기
+                        onClick={() => toggleFavorite(prdId)}>
+                        <span className={`${styles.heart} ${isFavorite ? styles.active : ''}`}>&hearts;</span> 즐겨찾기
                     </button>
                     <button className={styles.intobtn}>비교담기</button>
                     <button className={styles.gotoHomePage} onClick={() =>window.open(product?.url, '_blank')}>가입하기</button>

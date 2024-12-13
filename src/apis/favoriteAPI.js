@@ -6,7 +6,7 @@ import { PATH } from 'src/utils/path';
 
 const getSessionToken = () => {
   // return localStorage.getItem('sessionToken'); 
-  return "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OCwiY2F0ZWdvcnkiOiJhY2Nlc3MiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzM0MDcxNTY3LCJleHAiOjE3MzQwNzIxNjd9.fN_ruDMeZYRTa2iyVbTnhzAW5hBTqvFLiI86wPFYKHI";
+  return "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OCwiY2F0ZWdvcnkiOiJhY2Nlc3MiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzM0MDc3MjQ1LCJleHAiOjE3MzQxNjM2NDV9.t2-TjsJ4_5NaBRkWh6ozjjlo9PQv-Hx6Tzf607uwSuo";
 };
 
 
