@@ -1,8 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ProductDepListPage.module.scss";
+import axios from "axios";
+import { PATH } from "src/utils/path";
 
 const ProductDepListPage = () => {
   const [selectedBanks, setSelectedBanks] = useState([]); // 선택된 은행 목록
+  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+
+
+  useEffect(() => {
+    fetchProductsByCtg("d"); // 초기에는 "d" 카테고리 데이터 가져오기
+    fetchAllProducts(); // 모든 제품 가져오기
+  }, []); // 빈 배열로 한 번만 호출
+
+  const fetchProductsByCtg = async (ctg) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/product/getProductsByCtg/${ctg}`
+      );
+      setProducts(response.data); // 가져온 데이터 설정
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+  console.log(products)
+  console.log(allProducts);
+  
+
+  const fetchAllProducts = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/product/getAllProducts`
+      );
+      setAllProducts(response.data); // 가져온 데이터 설정
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
 
   const handleBankChange = (e) => {
     const selectedBank = e.target.value;
@@ -185,52 +220,30 @@ const ProductDepListPage = () => {
           <span>기본 금리순</span>
         </div>
         {/* 리스트 */}
-        <div className={styles.productListDiv}>
-          <div className={styles.productList}>
-            <div className={styles.productListLogo}>로고</div>
-            <div className={styles.productListInfo}>
-              <div>
-                <p>국민은행</p>
-                <p>청년들을 위한 Kstar 적금</p>
-              </div>
-              <div>
-                <p>최고 4.2%</p>
-                <p>기본금리 3.3%</p>
-              </div>
-            </div>
-            <div className={styles.productListBtn}>비교 담기</div>
+            {/** db 연동 상품 리스트  */}
+<div className={styles.productListDiv}>
+    {products.length === 0 ? (
+    <p>표시할 데이터가 없습니다.</p>
+  ) : (
+    allProducts.map((product, index) => (
+      <div key={index} className={styles.productList}>
+         <div className={styles.image}><img src={`${PATH.STORAGE_BANK}/${product.product.bankLogo}`} className={styles.productListLogo}/></div>
+        <div className={styles.productListInfo}>
+          <div>
+            <p>{product.product.bankName}</p>
+            <p>{product.product.prdName}</p>
           </div>
-
-          <div className={styles.productList}>
-            <div className={styles.productListLogo}>로고</div>
-            <div className={styles.productListInfo}>
-              <div>
-                <p>국민은행</p>
-                <p>청년들을 위한 Kstar 적금</p>
-              </div>
-              <div>
-                <p>최고 4.2%</p>
-                <p>기본금리 3.3%</p>
-              </div>
-            </div>
-            <div className={styles.productListBtn}>비교 담기</div>
-          </div>
-
-          <div className={styles.productList}>
-            <div className={styles.productListLogo}>로고</div>
-            <div className={styles.productListInfo}>
-              <div>
-                <p>우리은행</p>
-                <p>청년들을 위한 Kstar 적금</p>
-              </div>
-              <div>
-                <p>최고 4.2%</p>
-                <p>기본금리 3.3%</p>
-              </div>
-            </div>
-            <div className={styles.productListBtn}>비교 담기</div>
+          <div>
+            <p>최고 {product.options[0].basicRate}%</p>
+            <p>기본금리 {product.options[0].spclRate}%</p>
           </div>
         </div>
+        <div className={styles.productListBtn}>비교 담기</div>
+      </div>
+    ))
+
+  )}
+</div>
       </section>
     </main>
   );
