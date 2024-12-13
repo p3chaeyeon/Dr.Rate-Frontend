@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';  // useNavigate 추가
 import styles from './SignInPage.module.scss';
 
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
@@ -7,6 +8,8 @@ import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
 
 const SignInPage = () => {
+    const navigate = useNavigate();  // navigate 훅 사용
+
     // 로그인 후 JWT 처리 함수
     const handleOAuthLogin = async (provider) => {
         try {
@@ -28,12 +31,17 @@ const SignInPage = () => {
         }
     };
 
+    // 회원가입 페이지로 이동
+    const handleSignUpClick = () => {
+        navigate('/signUp');  // 회원가입 페이지로 이동
+    };
+
     return (
         <main>
             <section className={styles.signinPage}>
                 <div className={styles.title}>
                     <h4>로그인&nbsp;&nbsp;&nbsp;/</h4>
-                    <h4 className={styles.signupText}>&nbsp;&nbsp;&nbsp;회원가입</h4>
+                    <h4 className={styles.signupText} onClick={handleSignUpClick}>&nbsp;&nbsp;&nbsp;회원가입</h4>
                 </div>
 
                 <div className={styles.loginForm}>
@@ -41,20 +49,20 @@ const SignInPage = () => {
                         <div className={styles.inputWrapper}>
                             <input
                                 type="text"
-                                name="username"
-                                id="username"
+                                name="user_id"
+                                id="user_id"
                                 placeholder="아이디"
                             />
-                            <label htmlFor="username">아이디</label>
+                            <label htmlFor="user_id">아이디</label>
                         </div>
                         <div className={styles.inputWrapper}>
-                        <input
+                            <input
                                 type="password"
-                                name="password"
-                                id="password"
+                                name="user_pwd"
+                                id="user_pwd"
                                 placeholder="비밀번호"
                             />
-                            <label htmlFor="password">비밀번호</label>
+                            <label htmlFor="user_pwd">비밀번호</label>
                         </div>
                     </form>
                 </div>
