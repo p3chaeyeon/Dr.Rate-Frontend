@@ -11,7 +11,7 @@ import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
 const SignUpPage = () => {
     const navigate = useNavigate();
 
-    // 상태 관리
+    /* 상태 관리 */
     const [user_id, setUserId] = useState('');
     const [user_pwd, setUserPwd] = useState('');
     const [confirmPwd, setConfirmPwd] = useState('');
