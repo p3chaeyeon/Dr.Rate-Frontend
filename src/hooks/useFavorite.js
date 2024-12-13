@@ -29,7 +29,6 @@ export const useFavorite = (prdId) => {
   /* 즐겨찾기 토글 */
   const toggleFavorite = async () => {
       try {
-        console.log("토글 시작 - 현재 상태:", isFavorite); // 디버깅
           if (isFavorite) {
               await removeFavorite(prdId);
               setIsFavorite(false);
