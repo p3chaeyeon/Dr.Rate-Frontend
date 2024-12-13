@@ -6,17 +6,17 @@ import { favoriteAtom } from '../atoms/favoriteAtom';
 import { checkFavorite, addFavorite, removeFavorite } from '../apis/favoriteAPI';
 import { useEffect } from 'react';
 
-export const useFavorite = (id) => {
+export const useFavorite = (prdId) => {
   const [favorite, setFavorite] = useAtom(favoriteAtom);
 
   useEffect(() => {
     const fetchFavoriteStatus = async () => {
       try {
-        const isFavorite = await checkFavorite(id);
+        const isFavorite = await checkFavorite(prdId); 
         setFavorite((prev) => {
           const newFavorite = new Set(prev);
-          if (isFavorite) newFavorite.add(id);
-          else newFavorite.delete(id);
+          if (isFavorite) newFavorite.add(prdId);
+          else newFavorite.delete(prdId);
           return newFavorite;
         });
       } catch (error) {
@@ -24,22 +24,28 @@ export const useFavorite = (id) => {
       }
     };
 
-    fetchFavoriteStatus();
-  }, [id, setFavorite]);
+    if (prdId) {
+      fetchFavoriteStatus();
+    }
+  }, [prdId, setFavorite]);
   
 
   const toggleFavorite = async () => {
     try {
-      if (favorite.has(id)) {
-        await removeFavorite(id);
+      if (favorite.has(prdId)) {
+        await removeFavorite(prdId); 
         setFavorite((prev) => {
           const newFavorite = new Set(prev);
-          newFavorite.delete(id);
+          newFavorite.delete(prdId);
           return newFavorite;
         });
       } else {
-        await addFavorite(id);
-        setFavorite((prev) => new Set(prev).add(id));
+        await addFavorite(prdId);
+        setFavorite((prev) => {
+          const newFavorite = new Set(prev);
+          newFavorite.add(prdId);
+          return newFavorite;
+        });
       }
     } catch (error) {
       console.error("Error toggling favorite status:", error);

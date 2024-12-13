@@ -26,7 +26,7 @@ const isOpenAtom = atom(false);
 const ProductDetailPage = () => {
     const navigate = useNavigate();
     const { prdId } = useParams();
-    const { favorite, toggleFavorite } = useFavorite();
+    const { favorite, toggleFavorite } = useFavorite(prdId);
 
 
     /* prdId가 없으면 기본적으로 /1로 리다이렉트 */

@@ -5,29 +5,29 @@ import axios from 'axios';
 import { PATH } from 'src/utils/path';
 
 const getSessionToken = () => {
-  return localStorage.getItem('sessionToken'); 
-  // return "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OCwiY2F0ZWdvcnkiOiJhY2Nlc3MiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzMzOTc5ODkxLCJleHAiOjE3MzM5ODA0OTF9.sWCa1BBuKf2zprl7QdnjGEEBcGaerGy_nGaculqhLVo";
+  // return localStorage.getItem('sessionToken'); 
+  return "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OCwiY2F0ZWdvcnkiOiJhY2Nlc3MiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzM0MDcxNTY3LCJleHAiOjE3MzQwNzIxNjd9.fN_ruDMeZYRTa2iyVbTnhzAW5hBTqvFLiI86wPFYKHI";
 };
 
 
-const checkFavorite = async (id) => {
-  const response = await axios.get(`${PATH.SERVER}/api/favorite/checkFavorite`, { 
-    params : { prdId: id },
+const checkFavorite = async (prdId) => {
+  const response = await axios.get(`${PATH.SERVER}/api/favorite/checkFavorite/${prdId}`, { 
     headers : { 'Authorization' : `Bearer ${getSessionToken()}`}
   });
-  return response.data;
+  return response.data.result;
 }
 
 
-const addFavorite = async (id) => {
-  const response = await axios.post(`${PATH.SERVER}/api/favorite/addFavorite/${id}`, {
-    headers : { 'Authorization' : `Bearer ${getSessionToken()}`}
-  });
+const addFavorite = async (prdId) => {
+  const response = await axios.post(`${PATH.SERVER}/api/favorite/addFavorite/$`, 
+    { prdId },
+    { headers : { 'Authorization' : `Bearer ${getSessionToken()}`}}
+  );
   return response.data;
 };
 
-const removeFavorite = async (id) => {
-  const response = await axios.post(`${PATH.SERVER}/api/favorite/removeFavorite/${id}`, {
+const removeFavorite = async (prdId) => {
+  const response = await axios.post(`${PATH.SERVER}/api/favorite/removeFavorite/${prdId}`, {
     headers : { 'Authorization' : `Bearer ${getSessionToken()}`}
   });
   return response.data;
