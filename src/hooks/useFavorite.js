@@ -9,7 +9,7 @@ import { checkFavorite, addFavorite, removeFavorite } from '../apis/favoriteAPI'
 export const useFavorite = (prdId) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
-  // 즐겨찾기 상태 확인
+  /* 즐겨찾기 상태 확인 */
   useEffect(() => {
       const fetchFavoriteStatus = async () => {
           try {
@@ -17,17 +17,19 @@ export const useFavorite = (prdId) => {
               setIsFavorite(isFavoriteStatus);
           } catch (error) {
               console.error("Error fetching favorite status:", error);
-          }
+          } 
       };
 
-      if (prdId) {
-          fetchFavoriteStatus();
-      }
+      if (prdId) { 
+        fetchFavoriteStatus();
+    }
   }, [prdId]);
 
-  // 즐겨찾기 토글
+
+  /* 즐겨찾기 토글 */
   const toggleFavorite = async () => {
       try {
+        console.log("토글 시작 - 현재 상태:", isFavorite); // 디버깅
           if (isFavorite) {
               await removeFavorite(prdId);
               setIsFavorite(false);
@@ -44,54 +46,3 @@ export const useFavorite = (prdId) => {
 
 
 };
-
-
-// const [favorite, setFavorite] = useAtom(favoriteAtom);
-
-// useEffect(() => {
-//   const fetchFavoriteStatus = async () => {
-//     try {
-//       console.log("Fetching favorite status for prdId:", prdId);
-//       const isFavorite = await checkFavorite(prdId); 
-//       console.log("Favorite status:", isFavorite);
-//       setFavorite((prev) => {
-//         const newFavorite = new Set(prev);
-//         if (isFavorite) newFavorite.add(prdId);
-//         else newFavorite.delete(prdId);
-//         return newFavorite;
-//       });
-//     } catch (error) {
-//       console.error("Error fetching favorite status:", error);
-//     }
-//   };
-
-//   if (prdId) {
-//     fetchFavoriteStatus();
-//   }
-// }, [prdId, setFavorite]);
-
-
-// const toggleFavorite = async () => {
-//   try {
-//     if (favorite.has(prdId)) {
-//       await removeFavorite(prdId); 
-//       setFavorite((prev) => {
-//         const newFavorite = new Set(prev);
-//         newFavorite.delete(prdId);
-//         return newFavorite;
-//       });
-//     } else {
-//       await addFavorite(prdId);
-//       setFavorite((prev) => {
-//         const newFavorite = new Set(prev);
-//         newFavorite.add(prdId);
-//         return newFavorite;
-//       });
-//     }
-//   } catch (error) {
-//     console.error("Error toggling favorite status:", error);
-//   }
-// };
-
-// return { favorite, toggleFavorite };
-

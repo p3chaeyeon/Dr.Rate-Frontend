@@ -23,26 +23,19 @@ const productsAtom = atom({
 const isOpenAtom = atom(false);
 
 
+
 const ProductDetailPage = () => {
     const navigate = useNavigate();
     const { prdId } = useParams();
     const { isFavorite, toggleFavorite } = useFavorite(prdId);
 
 
-    /* prdId가 없으면 기본적으로 /1로 리다이렉트 */
-    useEffect(() => {
-        if (!prdId) {
-            navigate("/product/detail/1", { replace: true });
-        }
-    }, [prdId, navigate]);
-
-
     /* Jotai 상태 관리 */
     const [products, setProducts] = useAtom(productsAtom);
     const [isOpen, setIsOpen] = useAtom(isOpenAtom); // 이자 계산기 열림/닫힘 상태 관리
 
+    
     /* useModal 훅 */
-
     const {
         isConfirmOpen,
         openConfirmModal,
@@ -83,6 +76,7 @@ const ProductDetailPage = () => {
     const options = products?.options || null;
     const product = options?.[i]?.products || {};
     const conditions = products.conditions;
+
 
 
     /* 이자 계산기 */
@@ -158,9 +152,10 @@ const ProductDetailPage = () => {
 
                 {/* 버튼 영역 */}
                 <div className={styles.btnDiv}>
-                    <button 
+                    <button  
                         className={styles.heartIcon} 
-                        onClick={() => toggleFavorite(prdId)}>
+                        onClick={() => toggleFavorite(prdId)}
+                    >
                         <span className={`${styles.heart} ${isFavorite ? styles.active : ''}`}>&hearts;</span> 즐겨찾기
                     </button>
                     <button className={styles.intobtn}>비교담기</button>
