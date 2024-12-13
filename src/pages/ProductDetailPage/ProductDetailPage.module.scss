@@ -81,6 +81,10 @@
         .heart{
             padding-right: 10px;
 
+            &.active {
+                color: var(--red2); // isFavorite 상태가 true일 때 색상 변경
+            }
+            
             &:active{
                 color: var(--red2);
             }

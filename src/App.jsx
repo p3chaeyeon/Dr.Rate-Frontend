@@ -1,5 +1,5 @@
 /* src/App.jsx */
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate  } from "react-router-dom";
 import './App.css'; 
 import { PATH } from "./utils/path";
 import PageRoutes from "./pages";
@@ -25,6 +25,7 @@ function App() {
               <Route path={PATH.DEPOSIT_LIST} element={<PageRoutes.ProductDepListPage />} />
               <Route path={`${PATH.PRODUCT_COMPARE}/:ctg`} element={<PageRoutes.ProductComparePage />} />
               <Route path={`${PATH.PRODUCT_DETAIL}/:prdId`} element={<PageRoutes.ProductDetailPage />} />
+              <Route path={PATH.PRODUCT_DETAIL} element={<Navigate to={`${PATH.PRODUCT_DETAIL}/1`} replace />} />
               <Route path={PATH.SERVICE_CENTER} element={<PageRoutes.ServiceCenterPage />} />
               <Route path={PATH.USER_INQUIRE} element = {<PageRoutes.UserInquirePage/>}/>
 
