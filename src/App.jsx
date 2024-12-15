@@ -26,6 +26,7 @@ function App() {
               <Route path={`${PATH.PRODUCT_DETAIL}/:prdId`} element={<PageRoutes.ProductDetailPage />} />
               <Route path={PATH.SERVICE_CENTER} element={<PageRoutes.ServiceCenterPage />} />
               <Route path={PATH.USER_INQUIRE} element = {<PageRoutes.UserInquirePage/>}/>
+              <Route path={PATH.EMAIL_INQUIRE} element = {<PageRoutes.EmailInquirePage/>}/>
 
           </Route>
 
