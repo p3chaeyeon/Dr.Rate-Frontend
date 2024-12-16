@@ -71,19 +71,6 @@ const ProductComparePage = () => {
                 period: '6개월, 12개월, 36개월'
             },
             {
-                prdId : 2,
-                bankName: '우리은행',
-                bankLogo: 'wooriLogo.png',
-                productName: '우리은행의 행복 적금',
-                maxRate: '0.0%',
-                basicRate: '0.0%',
-                target: '만 19 이상 만 29세 미만',
-                joinMethod: '영업점, 스마트뱅킹',
-                limit: '100,000 원',
-                interestType: '단리',
-                period: '6개월, 12개월, 36개월'
-            },
-            {
                 prdId : 3,
                 bankName: '토스은행',
                 bankLogo: 'tossLogo.png',

@@ -21,44 +21,50 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
 
     const bankCodes = [10001, 10927, 11625, 13175, 13909, 15130, 17801];
     const [products, setProducts] = useState([]);
-    const [options, setOptions] = useState([]);
     
     useEffect(() => {
         const fetchAllProduct = async () => {
             try {
-                const allProducts = await getAllProducts();
-                console.log(allProducts);
+                const allProduts = await getAllProducts();
 
-                const allProductData = allProducts.map(item => item.product);
-
-                const highestSpclRateOptions = allProducts.map(item => {
-                    const highestSpclRateOption = item.options.reduce((maxOption, currentOption) => {
-                        return (currentOption.spclRate > maxOption.spclRate) ? currentOption : maxOption;
-                    }, item.options[0]); // 처음 옵션을 기준으로 비교 시작
-                    return highestSpclRateOption;
-                });
-
-                setProducts(allProductData);
-                setOptions(highestSpclRateOptions);
-
-                const updatedProducts = allProductData.map(prd => {
-                    if (!bankCodes.includes(prd.bankCo)) {
-                        return { ...prd, bankCo: 10000 };
+                const updatedProducts = allProduts.map(product => {
+                    if (!bankCodes.includes(product.product.bankCo)) {
+                        return {
+                            ...product,
+                            product: {
+                                ...product.product,
+                                bankCo: 10000  // bankCo를 10000으로 변경
+                            }
+                        };
                     }
-                    return prd;
+                    return product; // bankCo가 포함되어 있으면 그대로 반환
                 });
 
-                updatedProducts.sort((a, b) => b.spclRate - a.spclRate);
-                setProducts(updatedProducts);
+                const sortedProducts = updatedProducts.map(product => {
+                    const maxOption = product.options.reduce((max, option) => {
+                        return option.spclRate > max.spclRate ? option : max;
+                    }, product.options[0]);
+    
+                    return {
+                        ...product,
+                        maxSpclRate: maxOption.spclRate,  // 가장 높은 spclRate를 maxSpclRate로 저장
+                    };
+                }).sort((a, b) => b.maxSpclRate - a.maxSpclRate);
+
+                setProducts(sortedProducts);
+
             } catch (error) {
                 console.error("Failed to fetch product details:", error);
             }
         };
 
+        if (products.length > 0) {
+            filterProductsByBanks();
+            console.log(products);
+        }
+
         fetchAllProduct();
     }, []);
-
-
 
     //Alert 훅
     const {
@@ -94,20 +100,32 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
     const filterProductsByBanks = () => {
         let filtered = checkedBanks.length === 0 || checkedBanks.includes(null)
             ? products
-            : products.filter(product => checkedBanks.includes(product.bankCo));
+            : products.filter(product => checkedBanks.includes(product.product.bankCo));
         
         if (search) {
             filtered = filtered.filter(product => 
-                product.prdName.toLowerCase().includes(search.toLowerCase()) || 
-                product.bankName.toLowerCase().includes(search.toLowerCase())
+                product.product.prdName.toLowerCase().includes(search.toLowerCase()) || 
+                product.product.bankName.toLowerCase().includes(search.toLowerCase())
             );
         }
+
+        filtered = filtered.map(product => {
+            const spcl = product.options.reduce((max, option) => {
+                return option.spclRate > max.spclRate ? option : max;
+            }, product.options[0]);
+
+            return {
+                ...product,
+                maxOption : spcl
+            }
+        })
 
         filtered.sort((a, b) => {
             return b.spclRate - a.spclRate
         });
-
+        
         setFilteredProducts(filtered);
+        console.log(filteredProducts);
     };
 
     // 검색 핸들러
@@ -120,6 +138,13 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
         filterProductsByBanks();
     }, [checkedBanks, search]);
 
+    // 상품 로드 후 필터링 및 정렬
+    useEffect(() => {
+        if (products.length > 0) {
+            filterProductsByBanks();
+        }
+
+    }, [products]);
 
 
 
@@ -187,23 +212,23 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
             <div className={styles.list}>
             {filteredProducts.length > 0 ? filteredProducts.map((product, index) => (
                 
-                <div key={index} 
-                className={`${styles.product} ${addPrdId.includes(product.id) ? styles.selected : ''}`}
+                <div key={product.product.id} 
+                className={`${styles.product} ${addPrdId.includes(product.product.id) ? styles.selected : ''}`}
                 onClick={() => handleAddProduct(product)}>
-                    <div className={styles.productbox}>
+                    <div className={styles.productbox}>{console.log(addPrdId)}
                         <img 
-                            src={`${PATH.STORAGE_BANK}/${product.bankLogo}`} 
+                            src={`${PATH.STORAGE_BANK}/${product.product.bankLogo}`} 
                             className={styles.bankLogo} 
-                            alt={`${product.bankName} Logo`} 
+                            alt={`${product.product.bankName} Logo`} 
                         />
                         <div className={styles.productText}>
-                            <span className={styles.bankName}>{product.bankName}</span>
-                            <span className={styles.productName}>{product.prdName}</span>
+                            <span className={styles.bankName}>{product.product.bankName}</span>
+                            <span className={styles.productName}>{product.product.prdName}</span>
                         </div>
                     </div>
                     <div className={styles.rate}>
-                        <span className={styles.spclrate}>최고금리 {options.spclRate}%</span>
-                        <span className={styles.basicRate}>기본금리 {options.basicRate}%</span>
+                        <span className={styles.spclrate}>최고금리 {product.maxOption.spclRate}%</span>
+                        <span className={styles.basicRate}>기본금리 {product.maxOption .basicRate}%</span>
                     </div>
                 </div>
                 )) : <span>상품이 없습니다.</span>
@@ -212,14 +237,14 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
 
             <div className={styles.addPrd}>
                 {addProduct.map((product, index) => (
-                    <div className={styles.addProduct} key={index}>
+                    <div className={styles.addProduct} key={product.product.id}>
                         <img 
-                            src={`${PATH.STORAGE_BANK}/${product.bankLogo}`} 
+                            src={`${PATH.STORAGE_BANK}/${product.product.bankLogo}`} 
                             className={styles.bankLogo} 
-                            alt={`${product.bankName} Logo`} 
+                            alt={`${product.product.bankName} Logo`} 
                         />
                         <div className={styles.productText}>
-                            <span className={styles.productName}>{product.productName}</span>
+                            <span className={styles.productName}>{product.product.prdName}</span>
                         </div>
                         
                         <div className={styles.deleteBtn} onClick={() => deletePrd(product)}>X</div>
