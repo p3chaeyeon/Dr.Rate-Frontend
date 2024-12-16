@@ -107,112 +107,95 @@
       }
     }
   }
+  
 
-  //회원 필터; 은행선택 박스
-  .filterTotalDiv {
-    border: 1px solid gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 50px;
-    padding: 20px 10px;
-    gap: 30px;
-
-    .filterDiv {
-      // margin: 10px 0;
-
-      width: 40%;
+      // 회원 필터; 은행 선택 박스
+    .filterTotalDiv {
+      border: 1px solid gray;
       display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+      flex-wrap: wrap;
+      margin-top: 50px ;
+      padding: 20px 10px ;
+      gap: 30px;
 
-      h4 {
-        font-size: 20px;
-        font-weight: 400;
-      }
-
-      .toggle {
-        //토글버튼 적용
+      .filterDiv {
+        width: 40%;
         display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: space-between;
+        align-items: center;
 
-        .ratetype {
+        h4 {
+          font-size: 20px;
+          font-weight: 400;
+         }
+
+         //1216 토글 추가후 추가작업 버튼 중간 radicus 제거후 전체테두리는 radius 적용
+        .toggle {
+          display: flex;
+          overflow: hidden;
           width: 100%;
-          border: 1px solid #ccc;
-          //width: 100%;
-          .button {
-            font-size: 12px;
-            font-weight: bold;
+          max-width: 200px; /* 최대 너비 설정 */
+          // margin-left: auto; /* 오른쪽 정렬 */
+        
+          button {
+            width: 100px;
+            font-size: 15px;
+            // font-weight: bold;
+            height: 39px; 
             cursor: pointer;
-            //width: 100%;
-
-            // border-radius: 4px;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 0; /* 원형 모서리 제거하기(버튼중간) */
+            color: #333;
+            // transition: background-color 0.3s ease;
+            &:first-child {
+              border-top-left-radius: 5px; /* 첫 번째 버튼의 왼쪽 상단 모서리 */
+              border-bottom-left-radius: 5px; /* 첫 번째 버튼의 왼쪽 하단 모서리 */
+            }
+          
+            &:last-child {
+              border-top-right-radius: 5px; /* 마지막 버튼의 오른쪽 상단 모서리 */
+              border-bottom-right-radius: 5px; /* 마지막 버튼의 오른쪽 하단 모서리 */
+            }
+          
+            &:not(:last-child) {
+              border-right: none; /* 마지막 버튼을 제외한 버튼들에 오른쪽 테두리 제거 */
+            }
             &:hover {
-              box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-              /* 호버 시 그림자 */
+              background-color: #f0f0f0;
             }
-            .completed,
-            .completedActive {
-              border-radius: 4px 0 0 4px;
-            }
-
-            .completed {
-              background-color: var(--white);
-              /* 기본 상태 */
-              color: var(--black);
-              border: 1px solid var(--divider-border);
-              border-right: none;
-
+        
+            &.active {
+              background-color: #407BFF;
+              color: #fff;
+              border-color: #407BFF;
+        
               &:hover {
-                background-color: var(--admin-body);
-                /* 호버 시 색상 변경 */
+                background-color:  #407BFF;
               }
             }
           }
         }
-
-        .completedActive {
-          background-color: #0056b3;
-          border: 1px solid #0056b3;
-          /* 답변 완료 활성 상태 */
-          color: #fff;
-
-          &:hover {
-            background-color: #003f87;
-            border: 1px solid #003f87;
-            /* 호버 시 더 진한 색 */
-          }
-        }
-
-        .pending,
-        .pendingActive {
-          border-radius: 0 4px 4px 0;
-        }
-
-        .pendingActive {
-          background-color: #0056b3;
-          border: 1px solid #0056b3;
-
-          /* 기본 상태 */
-          color: #fff;
-          &:hover {
-            background-color: #003f87;
-            border: 1px solid #003f87;
-            /* 호버 시 더 진한 색 */
-          }
-        }
-      }
-    }
   }
+}
 
   .rateStandard {
     margin-top: 10px;
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
   }
+  /* 세로구분선 추가후 금리 텍스트 간격 조정 */
+  .textItem {
+    margin: 0 10px; /* 텍스트 주변 간격 */
+  }
+  
+  // .verticalDivider {
+  //   margin: 0 10px; /* 세로 구분선 간격 */
+  // }
 
   .toggle-button:first-child {
     border-radius: 8px 0 0 8px;
@@ -234,7 +217,30 @@
     display: flex;
     flex-wrap: wrap; /* 자식 요소가 자동으로 줄 바꿈 */
     gap: 5px;
+    
+    //1216 은행명 볼드, 금리% 오른쪽 정렬
+    .Bank {
+          font-weight: 600;
+      }
 
+    .HighestRateDiv,
+    .BaseRateDiv {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .HighestRateDiv {
+        color: var(--red2);
+      }
+
+      .HighestRatePer,
+      .BaseRatePer {
+                    width: 50px;
+                    display: flex;
+                    justify-content: flex-end;
+                }
     // @media (max-width: 1020px) {
     //   flex-direction: column; /* 세로 정렬 */
     // }
@@ -276,7 +282,8 @@
 
     .productListBtn {
       background-color: var(--bg2); /* 버튼 배경색 */
-      padding: 5px 10px;
+      padding: 5px 15px;
+      font-weight: 600;
       border-radius: 5px;
       font-size: 12px;
       cursor: pointer;
@@ -287,5 +294,77 @@
     .productListBtn:hover {
       background-color: #c0c0c0; /* 호버 시 색상 변경 */
     }
+
+  
+  
+    
   }
+  //페이지네이션 adminInquireList 참고 추가 
+  .pagination {
+    display: flex;
+    height: 20%;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    width: 100%;
+
+    .pageBtn {
+        display: flex;
+        gap: 8px;
+        /* 버튼 간의 간격 추가 */
+        align-items: center;
+        /* 버튼들을 수직 가운데 정렬 */
+        height: 40%;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        background-color: #fff;
+
+        button {
+            padding: 8px 16px;
+            /* 버튼 내부 여백 */
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+            /* 배경, 그림자, 크기 전환 효과 */
+
+            &:hover {
+                background-color: #f7f7f7;
+                /* 버튼 배경 밝게 */
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                /* 그림자 추가 */
+                transform: scale(1.05);
+                /* 버튼 확대 */
+            }
+
+            &:active {
+                background-color: #ececec;
+                /* 클릭 시 배경 변경 */
+                box-shadow: none;
+                /* 클릭 시 그림자 제거 */
+                transform: scale(0.95);
+                /* 클릭 시 축소 */
+            }
+        }
+
+        .active {
+            background-color: #007bff;
+            color: #fff;
+
+            &:hover {
+                background-color: #9fc5ee;
+                transform: scale(1.05);
+            }
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            color: #aaa;
+            background-color: #f5f5f5;
+        }
+    }
+}
+  //추가끝
 }
