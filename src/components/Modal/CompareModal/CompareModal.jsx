@@ -188,7 +188,7 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
             {filteredProducts.length > 0 ? filteredProducts.map((product, index) => (
                 
                 <div key={index} 
-                className={`${styles.product} ${addPrdId.includes(product.prdId) ? styles.selected : ''}`}
+                className={`${styles.product} ${addPrdId.includes(product.id) ? styles.selected : ''}`}
                 onClick={() => handleAddProduct(product)}>
                     <div className={styles.productbox}>
                         <img 
