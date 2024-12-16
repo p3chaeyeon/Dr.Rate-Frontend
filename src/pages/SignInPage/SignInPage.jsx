@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';  // useNavigate 추가
+import AlertModal from '../../components/modal/AlertModal'; // AlertModal import
 import styles from './SignInPage.module.scss';
 
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
@@ -7,6 +9,17 @@ import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
 
 const SignInPage = () => {
+    const navigate = useNavigate();  // navigate 훅 사용
+
+    // 모달 상태 관리
+    const [showModal, setShowModal] = useState(false);
+    const [modalTitle, setModalTitle] = useState('');
+    const [modalMessage, setModalMessage] = useState('');
+
+    // 일반 로그인 상태 관리
+    const [userId, setUserId] = useState('');
+    const [userPwd, setUserPwd] = useState('');
+
     // 로그인 후 JWT 처리 함수
     const handleOAuthLogin = async (provider) => {
         try {
@@ -24,8 +37,49 @@ const SignInPage = () => {
             }
         } catch (error) {
             console.error(`Failed to login with ${provider}:`, error);
-            alert(`${provider} 로그인 중 오류가 발생했습니다.`);
+            // OAuth 로그인 실패 시 모달 띄우기
+            setModalTitle("로그인 실패");
+            setModalMessage("로그인 중 오류가 발생했습니다.");
+            setShowModal(true);
         }
+    };
+
+    // 일반 로그인 처리 함수
+    const handleLogin = async () => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/login', {
+                user_id: userId,
+                user_pwd: userPwd,
+            });
+
+            const { token } = response.data;
+            if (token) {
+                console.log("Received JWT:", token);
+                localStorage.setItem("accessToken", token); // JWT를 localStorage에 저장
+                window.location.href = "http://localhost:5173/"; // 메인 페이지로 이동
+            } else {
+                // 로그인 실패 시 모달 띄우기
+                setModalTitle("로그인 실패");
+                setModalMessage("아이디 또는 비밀번호가 잘못되었습니다.");
+                setShowModal(true);
+            }
+        } catch (error) {
+            console.error("로그인 오류:", error);
+            // 로그인 오류 시 모달 띄우기
+            setModalTitle("로그인 실패");
+            setModalMessage("로그인 중 오류가 발생했습니다.");
+            setShowModal(true);
+        }
+    };
+
+    // 회원가입 페이지로 이동
+    const handleSignUpClick = () => {
+        navigate('/signUp');  // 회원가입 페이지로 이동
+    };
+
+    // 모달 닫기
+    const handleCloseModal = () => {
+        setShowModal(false);
     };
 
     return (
@@ -33,7 +87,7 @@ const SignInPage = () => {
             <section className={styles.signinPage}>
                 <div className={styles.title}>
                     <h4>로그인&nbsp;&nbsp;&nbsp;/</h4>
-                    <h4 className={styles.signupText}>&nbsp;&nbsp;&nbsp;회원가입</h4>
+                    <h4 className={styles.signupText} onClick={handleSignUpClick}>&nbsp;&nbsp;&nbsp;회원가입</h4>
                 </div>
 
                 <div className={styles.loginForm}>
@@ -41,23 +95,30 @@ const SignInPage = () => {
                         <div className={styles.inputWrapper}>
                             <input
                                 type="text"
-                                name="username"
-                                id="username"
+                                name="user_id"
+                                id="user_id"
                                 placeholder="아이디"
+                                value={userId}
+                                onChange={(e) => setUserId(e.target.value)} // 아이디 상태 관리
                             />
-                            <label htmlFor="username">아이디</label>
+                            <label htmlFor="user_id">아이디</label>
                         </div>
                         <div className={styles.inputWrapper}>
-                        <input
+                            <input
                                 type="password"
-                                name="password"
-                                id="password"
+                                name="user_pwd"
+                                id="user_pwd"
                                 placeholder="비밀번호"
+                                value={userPwd}
+                                onChange={(e) => setUserPwd(e.target.value)} // 비밀번호 상태 관리
                             />
-                            <label htmlFor="password">비밀번호</label>
+                            <label htmlFor="user_pwd">비밀번호</label>
                         </div>
                     </form>
                 </div>
+
+                <button onClick={handleLogin}>로그인</button>
+
                 <div className={styles.icons}>
                     <img
                         src={naverIcon}
@@ -75,11 +136,18 @@ const SignInPage = () => {
                         onClick={() => handleOAuthLogin('google')}
                     />
                 </div>
-                <button>로그인</button>
                 <div className={styles.findUser}>
                     <p>아이디 찾기</p>/<p>비밀번호 찾기</p>
                 </div>
             </section>
+
+            {/* 모달 표시 */}
+            <AlertModal
+                isOpen={showModal} // 모달 표시 여부
+                closeModal={handleCloseModal} // 모달 닫기
+                title={modalTitle} // 모달 제목
+                message={modalMessage} // 모달 메시지
+            />
         </main>
     );
 };

@@ -1,33 +1,47 @@
-// src/hooks/useFavorite.js
+/* src/hooks/useFavorite.js */
+/* 상품상세페이지; ProductDetailPage */
 
-// API 호출 및 로직 분리를 담당
-// 재사용 가능한 로직을 분리하여 관리; Custom Hook 
+// import { useAtom } from 'jotai';
+// import { favoriteAtom } from '../atoms/favoriteAtom';
+import { useState, useEffect } from 'react';
+import { checkFavorite, addFavorite, removeFavorite } from '../apis/favoriteAPI';
 
-import { useAtom } from 'jotai';
-import { individualCheckedAtom, setIndividualCheckedAtom } from 'src/atoms/favoriteAtoms';
-import { useEffect } from 'react';
+export const useFavorite = (prdId) => {
+  const [isFavorite, setIsFavorite] = useState(false);
 
-const useFavorite = (dataLength) => {
-    const [individualChecked, setIndividualChecked] = useAtom(setIndividualCheckedAtom);
+  /* 즐겨찾기 상태 확인 */
+  useEffect(() => {
+      const fetchFavoriteStatus = async () => {
+          try {
+              const isFavoriteStatus = await checkFavorite(prdId);
+              setIsFavorite(isFavoriteStatus);
+          } catch (error) {
+              console.error("Error fetching favorite status:", error);
+          } 
+      };
 
-    // 개별 체크박스 상태를 데이터 길이에 맞게 초기화
-    useEffect(() => {
-        if (individualChecked.length === 0) {
-            setIndividualChecked(new Array(dataLength).fill(false));
-        }
-    }, [dataLength, individualChecked, setIndividualChecked]);
+      if (prdId) { 
+        fetchFavoriteStatus();
+    }
+  }, [prdId]);
 
-    // 개별 체크박스를 클릭했을 때 상태 업데이트
-    const handleIndividualCheck = (index, isChecked) => {
-        const updatedArray = [...individualChecked];
-        updatedArray[index] = isChecked;
-        setIndividualChecked(updatedArray);
-    };
 
-    return {
-        individualChecked,
-        handleIndividualCheck,
-    };
+  /* 즐겨찾기 토글 */
+  const toggleFavorite = async () => {
+      try {
+          if (isFavorite) {
+              await removeFavorite(prdId);
+              setIsFavorite(false);
+          } else {
+              await addFavorite(prdId);
+              setIsFavorite(true);
+          }
+      } catch (error) {
+          console.error("Error toggling favorite status:", error);
+      }
+  };
+
+  return { isFavorite, toggleFavorite };
+
+
 };
-
-export default useFavorite;
