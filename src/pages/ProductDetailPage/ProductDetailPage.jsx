@@ -5,11 +5,13 @@ import downArrowIcon2 from 'src/assets/icons/downDetailArrow.svg';
 import AlertModal from 'src/components/Modal/AlertModal';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import useModal from 'src/hooks/useModal';
+import AutoClosePopup from 'src/components/Popup';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PATH } from "src/utils/path";
 import { atom, useAtom } from 'jotai';
+import { useFavorite } from '../../hooks/useFavorite';
 import { getProductDetails } from 'src/apis/productsAPI';
 
 /* Jotai 상태 관리 */
@@ -22,21 +24,20 @@ const productsAtom = atom({
 const isOpenAtom = atom(false);
 
 
+
 const ProductDetailPage = () => {
     const navigate = useNavigate();
     const { prdId } = useParams();
+    const { isFavorite, toggleFavorite, errorMessage } = useFavorite(prdId);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [favoriteClicked, setFavoriteClicked] = useState(false);
 
-    /* prdId가 없으면 기본적으로 /1로 리다이렉트 */
-    useEffect(() => {
-        if (!prdId) {
-            navigate("/product/detail/1", { replace: true });
-        }
-    }, [prdId, navigate]);
 
     /* Jotai 상태 관리 */
     const [products, setProducts] = useAtom(productsAtom);
     const [isOpen, setIsOpen] = useAtom(isOpenAtom); // 이자 계산기 열림/닫힘 상태 관리
 
+    
     /* useModal 훅 */
     const {
         isConfirmOpen,
@@ -78,6 +79,7 @@ const ProductDetailPage = () => {
     const options = products?.options || null;
     const product = options?.[i]?.products || {};
     const conditions = products.conditions;
+
 
 
     /* 이자 계산기 */
@@ -131,9 +133,98 @@ const ProductDetailPage = () => {
     };
 
 
+
+    /* 즐겨찾기 에러 Alert Modal */
+    useEffect(() => {
+        if (errorMessage) {
+            openAlertModal(
+                '오류가 발생했습니다.', 
+                errorMessage
+            ); 
+        }
+    }, [errorMessage, openAlertModal]);
+
+
+    /* 즐겨찾기 버튼 핸들러 */
+    const handleFavoriteClick = async () => {
+        setFavoriteClicked(true); // 버튼 클릭 여부 설정
+        try {
+            await toggleFavorite(prdId);
+
+            // 즐겨찾기 등록 시 Confirm 모달 표시
+            if (!isFavorite) { 
+                openConfirmModal(
+                    '즐겨찾기가 등록되었습니다.',
+                    '마이페이지로 이동하시겠습니까?',
+                    handleFavoriteConfirm,
+                    handleFavoriteCancel
+                );
+            } else {
+                // 즐겨찾기 취소 시 Alert Modal 표시
+                openAlertModal('즐겨찾기가 삭제되었습니다.');
+
+            }
+        } catch (error) {
+            openAlertModal(
+                '오류가 발생했습니다.',
+                error.message
+            );
+        }
+    };
+
+
+    /* 즐겨찾기 Confirm Modal */
+    const handleFavoriteConfirm = () => {
+        closeConfirmModal();
+        if (product.ctg === 'd') {
+            navigate(PATH.MY_DEPOSIT); // 예금 즐겨찾기
+        } else {
+            navigate(PATH.MY_INSTALLMENT); // 적금 즐겨찾기
+        }
+    };
+
+    const handleFavoriteCancel = () => {
+        closeConfirmModal();
+    };
+
+    /* 즐겨찾기 등록 시 Confirm 모달 */
+    useEffect(() => {
+        if (favoriteClicked && isFavorite) { 
+            openConfirmModal(
+                '즐겨찾기가 등록되었습니다.',
+                '마이페이지로 이동하시겠습니까?',
+                handleFavoriteConfirm,
+                handleFavoriteCancel
+            );
+        }
+    }, [favoriteClicked, isFavorite, openConfirmModal, closeConfirmModal, navigate]);
+
+
+
+    /* 유효하지 않은 상품 리다이렉트 팝업 */
+    useEffect(() => {
+        if (errorMessage === "유효하지 않은 상품 ID입니다.") {
+          setIsPopupOpen(true); // 팝업 열기
+        }
+      }, [errorMessage]);
+
+    const popupMessage = (
+    <>
+        유효하지 않은 상품 ID입니다. <br />
+        목록으로 이동합니다.
+    </>
+    );
+
     return (
         <main>
             <section className={styles.detailSection}>
+
+            <AutoClosePopup
+                isOpen={isPopupOpen}
+                message={popupMessage}
+                redirectPath={PATH.DEPOSIT_LIST}
+                duration={3000} // 3초 후 이동
+            />
 
                 {/* 상품 제목 및 상단 정보 */}
                 <h3 className={styles.title}>{product.ctg === 'i' ? '적금' : '예금'}</h3>
@@ -153,11 +244,16 @@ const ProductDetailPage = () => {
 
                 {/* 버튼 영역 */}
                 <div className={styles.btnDiv}>
-                    <button className={styles.heartIcon}><span className={styles.heart}>&hearts;</span> 즐겨찾기</button>
+                    <button  
+                        className={styles.heartIcon} 
+                        onClick={() => handleFavoriteClick(prdId)}
+                    >
+                        <span className={`${styles.heart} ${isFavorite ? styles.active : ''}`}>&hearts;</span> 즐겨찾기
+                    </button>
                     <button className={styles.intobtn}>비교담기</button>
                     <button className={styles.gotoHomePage} onClick={() =>window.open(product?.url, '_blank')}>가입하기</button>
                 </div>
-
+                
 
                 {/* 이자 계산기 */}
                 {!isOpen && (
