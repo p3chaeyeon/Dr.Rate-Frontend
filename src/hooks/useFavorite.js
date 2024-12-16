@@ -4,10 +4,11 @@
 // import { useAtom } from 'jotai';
 // import { favoriteAtom } from '../atoms/favoriteAtom';
 import { useState, useEffect } from 'react';
-import { checkFavorite, addFavorite, removeFavorite } from '../apis/favoriteAPI';
+import { checkFavorite, addFavorite, cancelFavorite } from '../apis/favoriteAPI';
 
 export const useFavorite = (prdId) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   /* 즐겨찾기 상태 확인 */
   useEffect(() => {
@@ -15,8 +16,13 @@ export const useFavorite = (prdId) => {
           try {
               const isFavoriteStatus = await checkFavorite(prdId);
               setIsFavorite(isFavoriteStatus);
+              setErrorMessage(null);
           } catch (error) {
-              console.error("Error fetching favorite status:", error);
+                if (error.response && error.response.data && error.response.data.message) {
+                    setErrorMessage(error.response.data.message); // 메시지 저장
+                } else {
+                    console.error("Error fetching favorite status:", error);
+                }
           } 
       };
 
@@ -30,18 +36,26 @@ export const useFavorite = (prdId) => {
   const toggleFavorite = async () => {
       try {
           if (isFavorite) {
-              await removeFavorite(prdId);
+              await cancelFavorite(prdId);
               setIsFavorite(false);
+              setErrorMessage(null);
           } else {
               await addFavorite(prdId);
               setIsFavorite(true);
+              setErrorMessage(null);
           }
       } catch (error) {
-          console.error("Error toggling favorite status:", error);
+        if (error.response?.data?.message) {
+            setErrorMessage(error.response.data.message); 
+            throw new Error(error.response.data.message); // 에러를 호출한 곳으로 전달
+          } else {
+            setErrorMessage("즐겨찾기 작업 중 알 수 없는 오류가 발생했습니다.");
+            throw new Error(defaultError); // 기본 메시지 전달
+          }
       }
   };
 
-  return { isFavorite, toggleFavorite };
+  return { isFavorite, toggleFavorite, errorMessage };
 
 
 };
