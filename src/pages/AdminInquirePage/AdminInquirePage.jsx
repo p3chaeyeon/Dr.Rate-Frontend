@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from './AdminInquirePage.module.scss';
 import { useLocation } from 'react-router-dom';
 import { Stomp } from '@stomp/stompjs';
-import { parseJwt } from "../../utils/jwt";
+import { parseJwt } from "src/utils/jwt";
 import useModal from 'src/hooks/useModal';
 import AlertModal from 'src/components/Modal/AlertModal';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import { PATH } from 'src/utils/path';
 
 const AdminInquirePage = () => {
     const { state } = useLocation();
@@ -131,7 +132,7 @@ const AdminInquirePage = () => {
     // WebSocket 연결 및 STOMP 클라이언트 설정
     useEffect(() => {
         if (roomId) {
-            const socket = new WebSocket('http://localhost:8080/ws');
+            const socket = new WebSocket(`${PATH.SERVER}/ws`);
             const client = Stomp.over(socket);
 
             client.connect(
@@ -145,6 +146,7 @@ const AdminInquirePage = () => {
                 },
                 (error) => {
                     console.error("WebSocket connection error:", error);
+                    setTimeout(connectWebSocket, 5000); 
                 }
             );
 
@@ -167,7 +169,7 @@ const AdminInquirePage = () => {
             const phoneScreen = phoneScreenRef.current;
             const previousScrollHeight = phoneScreen ? phoneScreen.scrollHeight : 0; // 이전 scrollHeight 저장
 
-            const response = await fetch(`http://localhost:8080/api/chatmessages/list?roomId=${roomId}&page=${currentPage}&size=15`);
+            const response = await fetch(`${PATH.SERVER}/api/chatmessages/list?roomId=${roomId}&page=${currentPage}&size=15`);
             const data = await response.json();
             if (data.success) {
                 const reversedMessages = data.result.content.reverse(); // 메시지 최신순 정렬
@@ -196,7 +198,7 @@ const AdminInquirePage = () => {
         formData.append("senderId", adminId);
 
         try {
-            const response = await fetch(`http://localhost:8080/chat/upload/${roomId}`, {
+            const response = await fetch(`${PATH.SERVER}/chat/upload/${roomId}`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData,

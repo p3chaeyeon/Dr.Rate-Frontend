@@ -31,7 +31,7 @@ const AdminInquireListPage = () => {
             }
 
             const response = await fetch(
-                `http://localhost:8080/api/chatrooms/inquireList?${queryParams.toString()}`
+                `${PATH.SERVER}/api/chatrooms/inquireList?${queryParams.toString()}`
             );
             const data = await response.json();
 

@@ -16,7 +16,6 @@ export default defineConfig(({ mode }) => {
       port: parseInt(env.VITE_PORT) || 5173, // .env에서 VITE_PORT 가져오기, 기본값 5173
       proxy: {
         '/ws': {
-          target: 'http://localhost:8080', // Spring Boot 서버 URL
           changeOrigin: true,
           ws: true, // WebSocket 프록시 활성화
         },

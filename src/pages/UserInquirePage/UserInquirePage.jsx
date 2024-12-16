@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './UserInquirePage.module.scss'
 import { Stomp } from '@stomp/stompjs';
-import { parseJwt } from "../../utils/jwt";
+import { parseJwt } from "src/utils/jwt";
 import useModal from 'src/hooks/useModal';
 import AlertModal from 'src/components/Modal/AlertModal';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import { PATH } from 'src/utils/path';
 
 const UserInquirePage = () => {
     const token = localStorage.getItem("authToken");
@@ -87,7 +88,7 @@ const UserInquirePage = () => {
         e.preventDefault();
         e.stopPropagation();
         setIsDragging(true); // 드래그 상태 활성화
-    };    
+    };
 
     const handleDragLeave = (e) => {
         e.preventDefault();
@@ -117,10 +118,10 @@ const UserInquirePage = () => {
 
     // 이미지를 클릭했을 때 모달에 표시
     const handleImageClick = (imageUrl) => {
-        openAlertModal("이미지 보기", imageUrl);
+        openAlertModal("이미지 보기", { type: "image", content: imageUrl });
     };
 
-    
+
     /* Api 처리 영역 */
 
     // Websocket 연결
@@ -130,7 +131,7 @@ const UserInquirePage = () => {
             return;
         }
 
-        const socket = new WebSocket("http://localhost:8080/ws");
+        const socket = new WebSocket(`${PATH.SERVER}/ws`);
         const client = Stomp.over(socket);
 
         client.connect(
@@ -144,6 +145,7 @@ const UserInquirePage = () => {
             },
             (error) => {
                 console.error("WebSocket connection error:", error);
+                setTimeout(connectWebSocket, 5000);
             }
         );
 
@@ -165,7 +167,7 @@ const UserInquirePage = () => {
             const phoneScreen = phoneScreenRef.current;
             const previousScrollHeight = phoneScreen ? phoneScreen.scrollHeight : 0; // 이전 scrollHeight 저장
 
-            const response = await fetch(`http://localhost:8080/api/chatmessages/list?roomId=${userId}&page=${currentPage}&size=15`);
+            const response = await fetch(`${PATH.SERVER}/api/chatmessages/list?roomId=${userId}&page=${currentPage}&size=15`);
             const data = await response.json();
             if (data.success) {
                 const reversedMessages = data.result.content.reverse();
@@ -195,7 +197,7 @@ const UserInquirePage = () => {
         formData.append("senderId", userId);
 
         try {
-            const response = await fetch(`http://localhost:8080/chat/upload/${userId}`, {
+            const response = await fetch(`${PATH.SERVER}/chat/upload/${userId}`, {
                 method: "POST",
                 headers: { Authorization: `Bearer ${token}` },
                 body: formData,
@@ -214,29 +216,24 @@ const UserInquirePage = () => {
 
 
     const handleInquiryClose = async () => {
-        if (!window.confirm("정말로 문의를 종료하시겠습니까?")) return;
-
         try {
-            const response = await fetch(`http://localhost:8080/api/chatrooms/${userId}`, {
+            const response = await fetch(`${PATH.SERVER}/api/chatrooms/${userId}`, {
                 method: "DELETE",
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
+                headers: { Authorization: `Bearer ${token}` },
             });
 
             const data = await response.json();
 
+            closeConfirmModal();
             if (data.success) {
-                alert("문의가 성공적으로 종료되었습니다.");
-                // 페이지 이동 또는 상태 초기화 등 추가 작업
-                window.location.href = "/"; // 메인 페이지로 이동 (필요에 따라 수정)
+                openAlertModal("성공", { title: "문의 종료", message: "문의가 성공적으로 종료되었습니다." }, () => {
+                    window.location.href = "/"; // 메인 페이지로 리다이렉트
+                });
             } else {
-                console.error("문의 종료 실패:", data.message);
-                alert("문의 종료 중 문제가 발생했습니다.");
+                openAlertModal("오류", { type: "text", content: "문의 종료 중 문제가 발생했습니다." });
             }
         } catch (error) {
-            console.error("문의 종료 API 호출 중 에러:", error);
-            alert("문의 종료 중 문제가 발생했습니다.");
+            openAlertModal("오류", { type: "text", content: "문의 종료 중 문제가 발생했습니다." });
         }
     };
 
@@ -256,7 +253,14 @@ const UserInquirePage = () => {
                         </div>
                         <div className={styles.userInquireQuitArea}>
                             <button
-                                className={styles.userInquireQuitBtn} onClick={handleInquiryClose}>
+                                className={styles.userInquireQuitBtn}
+                                onClick={() => openConfirmModal(
+                                    "문의 종료",
+                                    "정말로 문의를 종료하시겠습니까?",
+                                    handleInquiryClose,
+                                    closeConfirmModal
+                                )}
+                            >
                                 <h4>문의 종료</h4>
                             </button>
                         </div>
@@ -277,8 +281,6 @@ const UserInquirePage = () => {
                                         className={`${styles.chatMessage} ${message.senderId === String(userId) ? styles.myMessage : ""}`}
                                     >
                                         {message.senderId === String(userId) ? (
-                                            // myMessage일 경우
-                                            // myMessage일 경우
                                             <>
                                                 <span className={styles.messageTimestamp}>
                                                     {new Date(message.createdAt).toLocaleString()} {/* 날짜와 시간 표시 */}
@@ -341,32 +343,35 @@ const UserInquirePage = () => {
                         </div>
                     </div>
                     {/* AlertModal - 이미지 보기 */}
-                    {isAlertOpen && (
-                        <AlertModal
-                            isOpen={isAlertOpen}
-                            closeModal={closeAlertModal}
-                            title={alertContent.title}
-                            message={
+                    <AlertModal
+                        isOpen={isAlertOpen}
+                        closeModal={closeAlertModal}
+                        title={alertContent.title}
+                        message={
+                            alertContent.message.type === "image" ? (
                                 <img
-                                    src={alertContent.message}
+                                    src={alertContent.message.content}
                                     alt="이미지 보기"
                                     style={{ maxWidth: "100%", maxHeight: "100%" }}
                                 />
-                            }
-                        />
-                    )}
+                            ) : (
+                                alertContent.message.content // 텍스트 렌더링
+                            )
+                        }
+                        onConfirm={alertContent.onConfirm}
+                    />
 
                     {/* ConfirmModal - 파일 업로드 확인 */}
-                    {isConfirmOpen && (
-                        <ConfirmModal
-                            isOpen={isConfirmOpen}
-                            closeModal={closeConfirmModal}
-                            title={confirmContent.title}
-                            message={confirmContent.message}
-                            onConfirm={confirmContent.onConfirm}
-                            onCancel={confirmContent.onCancel}
-                        />
-                    )}
+
+                    <ConfirmModal
+                        isOpen={isConfirmOpen}
+                        closeModal={closeConfirmModal}
+                        title={confirmContent.title}
+                        message={confirmContent.message}
+                        onConfirm={confirmContent.onConfirm}
+                        onCancel={confirmContent.onCancel}
+                    />
+
                 </section>
             </section>
         </main>
