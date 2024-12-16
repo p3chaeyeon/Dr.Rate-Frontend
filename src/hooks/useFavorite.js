@@ -4,7 +4,7 @@
 // import { useAtom } from 'jotai';
 // import { favoriteAtom } from '../atoms/favoriteAtom';
 import { useState, useEffect } from 'react';
-import { checkFavorite, addFavorite, removeFavorite } from '../apis/favoriteAPI';
+import { checkFavorite, addFavorite, cancelFavorite } from '../apis/favoriteAPI';
 
 export const useFavorite = (prdId) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -36,7 +36,7 @@ export const useFavorite = (prdId) => {
   const toggleFavorite = async () => {
       try {
           if (isFavorite) {
-              await removeFavorite(prdId);
+              await cancelFavorite(prdId);
               setIsFavorite(false);
               setErrorMessage(null);
           } else {
