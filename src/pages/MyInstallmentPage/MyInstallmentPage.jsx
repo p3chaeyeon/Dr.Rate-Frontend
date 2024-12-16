@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { PATH } from "src/utils/path";
 import MyNav from 'src/components/MyNav'; 
 import FavoritePanel from 'src/components/FavoritePanel';
-import useFavorite from 'src/hooks/useFavorite';
+import useMyFavorite from 'src/hooks/useMyFavorite';
 
 
 const favoriteData = [
@@ -33,7 +33,7 @@ const favoriteData = [
 const MyInstallmentPage = () => {
 
     const favoriteDataLength = favoriteData.length;
-    const { individualChecked, handleIndividualCheck } = useFavorite(favoriteDataLength);
+    const { individualChecked, handleIndividualCheck } = useMyFavorite(favoriteDataLength);
 
     return (
         <main>
