@@ -15,14 +15,15 @@ const getSessionToken = () => {
 
 const getFavorite= async () => {
     const response = await axios.get(`${PATH.SERVER}/api/favorite/getFavorite`, { 
+        params: { category }, // 예금인지 적금인지도 보내야 함
         headers : { 'Authorization' : `Bearer ${getSessionToken()}`}
-        // 예금인지 적금인지도 보내야 함
       });
       return response.data.result;
 };
 
 const searchFavorite= async () => {
-    const response = await axios.get(`${PATH.SERVER}/api/favorite/searchFavorite`, { 
+    const response = await axios.get(`${PATH.SERVER}/api/favorite/searchFavorite`, {
+        params: { category }, // 예금인지 적금인지도 보내야 함 
         headers : { 'Authorization' : `Bearer ${getSessionToken()}`}
       });
       return response.data.result;
