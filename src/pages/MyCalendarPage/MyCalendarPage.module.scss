@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
 
 // 공통 스타일
-body {
+* {
   font-family: 'Noto Sans KR', sans-serif;
 }
 
@@ -135,6 +135,12 @@ body {
   &:hover {
     background-color: #006bbd;  /* 버튼 호버 색상 */
   }
+}
+
+.logoImage {
+  width: 50px; // 너비
+  height: 50px; // 높이
+  object-fit: contain; // 비율을 유지하면서 이미지 크기를 맞춤
 }
 
 /* 달력 흐리게 처리 */
