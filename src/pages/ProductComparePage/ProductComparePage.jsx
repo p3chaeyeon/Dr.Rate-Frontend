@@ -3,6 +3,7 @@ import historyIcon from 'src/assets/icons/rightArrow.svg';
 
 import CompareModal from 'src/components/Modal/CompareModal';
 import useModal from 'src/hooks/useCompare';
+import {getCompareProducts} from 'src/apis/compareAPI';
 
 import React, { useEffect, useState } from 'react';
 import { PATH } from 'src/utils/path';
@@ -54,37 +55,17 @@ const ProductComparePage = () => {
     }
 
     /* 상품 불러오기 */
-    // const { products, optionNum, options, product, conditions } = useProducts(id);
-    useEffect(() => {
-        const simulatedProducts = [
-            {
-                prdId : 1,
-                bankName: '국민은행',
-                bankLogo: 'kookminLogo.png',
-                productName: '국민은행의 적금',
-                maxRate: '0.0%',
-                basicRate: '0.0%',
-                target: '만 19 이상 만 29세 미만',
-                joinMethod: '영업점, 스마트뱅킹',
-                limit: '100,000 원',
-                interestType: '단리',
-                period: '6개월, 12개월, 36개월'
-            },
-            {
-                prdId : 3,
-                bankName: '토스은행',
-                bankLogo: 'tossLogo.png',
-                productName: '토스은행의 한달 적금',
-                maxRate: '0.0%',
-                basicRate: '0.0%',
-                target: '만 19 이상 만 29세 미만',
-                joinMethod: '영업점, 스마트뱅킹',
-                limit: '100,000 원',
-                interestType: '단리',
-                period: '6개월, 12개월, 36개월'
-            }
-        ];
-        setProducts(simulatedProducts);
+    const { prd, option, conditions } = products;
+    useEffect(async () => {
+        try {
+            const response = await getCompareProducts();
+            setProducts(response);
+            
+            console.log('비교 항목 가져오기 성공:', response);
+
+        } catch (error) {
+            console.error('상품 비교 가져오기 실패:', error);
+        }
     }, []);
 
     return (

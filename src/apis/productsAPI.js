@@ -40,6 +40,10 @@ export const banks = [
     { name: '기타', code: 10000 }
 ];
 
+/**
+ * 모든 상품을 가져오는 API
+ * @returns {Promise<Array>} - 상품 목록
+ */
 export const getAllProducts = async () => {
     try {
         const response = await axios.get(`${PATH.SERVER}/product/getAllProducts`);

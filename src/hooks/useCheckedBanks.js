@@ -37,38 +37,38 @@ const useCheckedBanks = (banks, limit, openAlertModal) => {
     };
 
     const handleAddProduct = (product) => {
-        if(addPrdId.length === limit &&  !addPrdId.includes(product.prdId)){
+        if(addPrdId.length === limit &&  !addPrdId.includes(product.product.id)){
             openAlertModal('상품 비교 한도 초과', '최대 3개의 상품만 비교할 수 있습니다.');
             return;
         }
 
         setAddPrdId((prevProducts) => {
-            if (!prevProducts.includes(product.prdId)) {
-              return [...prevProducts, product.prdId];
+            if (!prevProducts.includes(product.product.id)) {
+              return [...prevProducts, product.product.id];
             } else {
-                return prevProducts.filter((prd) => prd !== product.prdId);
+                return prevProducts.filter((prd) => prd !== product.product.id);
             }
         });
 
         setAddProduct((prevProducts) => {
-            if (!prevProducts.some((prd) => prd.prdId === product.prdId)) {
-              return [...prevProducts, product];
+            if (!prevProducts.some((prd) => prd.id === product.product.id)) {
+              return [...prevProducts, product.product];
             } else {
-                return prevProducts.filter((prd) => prd.prdId !== product.prdId);
+                return prevProducts.filter((prd) => prd.id !== product.product.id);
             }
         });
     }
 
     const deletePrd = (product) => {
         setAddPrdId((prevProducts) => {
-            if (prevProducts.includes(product.prdId)) {
-                return prevProducts.filter((prd) => prd !== product.prdId);
+            if (prevProducts.includes(product.id)) {
+                return prevProducts.filter((prd) => prd !== product.id);
             }
         });
 
         setAddProduct((prevProducts) => {
-            if (prevProducts.some((prd) => prd.prdId === product.prdId)) {
-                return prevProducts.filter((prd) => prd.prdId !== product.prdId);
+            if (prevProducts.some((prd) => prd.id === product.id)) {
+                return prevProducts.filter((prd) => prd.id !== product.id);
             }
         });
     }
