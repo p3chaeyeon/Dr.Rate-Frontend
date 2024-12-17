@@ -28,6 +28,13 @@ const useMyFavorite = () => {
     const [error, setError] = useState(null); // 에러 상태
 
 
+    /* API 호출 및 상태 초기화 */
+    useEffect(() => {
+        fetchFavorites();
+    }, [category]);
+
+
+
     /* 개별 체크박스 상태 업데이트 */
     const handleIndividualCheck = (index, isChecked) => {
         setIndividualChecked((prev) => {
@@ -38,10 +45,10 @@ const useMyFavorite = () => {
     };
 
 
-    /* API 호출 및 상태 초기화 */
-    useEffect(() => {
-        fetchFavorites();
-    }, [category]);
+    
+
+
+
 
 
     /* 마이페이지 즐겨찾기 조회 */
@@ -84,7 +91,9 @@ const useMyFavorite = () => {
 
 
 
-
+    useEffect(() => {
+        console.log("Updated favoriteData:", favoriteData);
+    }, [favoriteData]);
 
 
 
