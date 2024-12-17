@@ -2,38 +2,31 @@
 /* 마이페이지 즐겨찾기; MyDepositPage, MyInstallmentPage */
 
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
-import { 
-    categoryAtom, 
-    searchKeyAtom, 
-    searchValueAtom, 
-    individualCheckedAtom, 
-    setIndividualCheckedAtom ,
-    setAllCheckedAtom 
+import {
+    categoryAtom,
+    searchKeyAtom,
+    searchValueAtom,
+    individualCheckedAtom,
+    setIndividualCheckedAtom,
+    setAllCheckedAtom,
+    favoriteDataAtom,
 } from 'src/atoms/myFavoriteAtom';
-import { useEffect, useState } from 'react';
-import { getFavorite, searchFavorite, deleteFavorite } from 'src/apis/myFavoriteAPI';
+import { useCallback, useState, useEffect } from 'react';
+import { getFavorite, searchFavorite } from 'src/apis/myFavoriteAPI';
 
 // const useMyFavorite = (dataLength) => {
 const useMyFavorite = () => {
-    // Atom 상태 불러오기
-    const category = useAtomValue(categoryAtom); // category 상태
-    const [searchKey, setSearchKey] = useAtom(searchKeyAtom); // 검색 키 상태
-    const [searchValue, setSearchValue] = useAtom(searchValueAtom); // 검색 값 상태
-    const individualChecked = useAtomValue(individualCheckedAtom); // 개별 체크박스 상태
-    const setIndividualChecked = useSetAtom(setIndividualCheckedAtom); // 개별 체크박스 상태 업데이트 함수
-    const setAllCheckedState = useSetAtom(setAllCheckedAtom); // 전체 체크박스 상태 업데이트
-
-    // 로컬 상태 관리
-    const [favoriteData, setFavoriteData] = useState([]); // API 데이터
+    // 상태 및 Atom 관리
+    const category = useAtomValue(categoryAtom);
+    const [favoriteData, setFavoriteData] = useAtom(favoriteDataAtom);
+    const [searchKey, setSearchKey] = useAtom(searchKeyAtom);
+    const [searchValue, setSearchValue] = useAtom(searchValueAtom);
+    const individualChecked = useAtomValue(individualCheckedAtom);
+    const setIndividualChecked = useSetAtom(setIndividualCheckedAtom);
+    const setAllCheckedState = useSetAtom(setAllCheckedAtom);
 
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 에러 상태
-
-
-    /* API 호출 및 상태 초기화 */
-    useEffect(() => {
-        fetchFavorites();
-    }, [category]);
 
 
 
@@ -47,44 +40,37 @@ const useMyFavorite = () => {
     };
 
 
-    
-
-
-
-
-
     /* 마이페이지 즐겨찾기 조회 */
-    const fetchFavorites = async () => {
+    const fetchFavorites = useCallback(async () => {
         try {
             setLoading(true);
             const data = await getFavorite(category);
             setFavoriteData(data);
             setIndividualChecked(new Array(data.length).fill(false));
-            setAllCheckedState(false); // 전체 체크박스 해제
+            setAllCheckedState(false);
         } catch (err) {
             setError(err);
         } finally {
             setLoading(false);
         }
-    };
-
+    }, [category, setFavoriteData, setIndividualChecked, setAllCheckedState]);
 
 
     /* 마이페이지 즐겨찾기 검색 */
-    const handleSearch = async () => {
+    const handleSearch = useCallback(async () => {
         try {
             setLoading(true);
-            const searchResults = await searchFavorite(category, searchKey, searchValue); // 파라미터 전달
-            console.log('Search Results:', searchResults); // 콘솔에 결과 출력
+            const searchResults = await searchFavorite(category, searchKey, searchValue);
             setFavoriteData(searchResults);
             setIndividualChecked(new Array(searchResults.length).fill(false));
+            setAllCheckedState(false);
         } catch (err) {
-            console.error('Error fetching search results:', err);
             setError(err);
         } finally {
             setLoading(false);
         }
-    };
+    }, [category, searchKey, searchValue, setFavoriteData, setIndividualChecked, setAllCheckedState]);
+
     
 
 
@@ -94,9 +80,7 @@ const useMyFavorite = () => {
 
 
 
-    useEffect(() => {
-        console.log("Updated favoriteData:", favoriteData);
-    }, [favoriteData]);
+
 
 
 
@@ -104,6 +88,7 @@ const useMyFavorite = () => {
         individualChecked,
         handleIndividualCheck,
         favoriteData,
+        fetchFavorites,
         loading,
         error,
         searchKey,

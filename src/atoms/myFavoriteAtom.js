@@ -6,7 +6,10 @@ import { atom } from 'jotai';
 // category 상태 관리 (deposit 또는 installment)
 export const categoryAtom = atom('deposit'); // 기본값: deposit
 
-// 검색 키와 검색 값 상태 추가
+// favoriteData 상태
+export const favoriteDataAtom = atom([]);
+
+// 검색 키와 검색 값 상태
 export const searchKeyAtom = atom('bankName'); // 기본 검색 키
 export const searchValueAtom = atom(''); // 검색 값
 
@@ -35,3 +38,4 @@ export const setIndividualCheckedAtom = atom(
         set(allCheckedAtom, allChecked);
     }
 );
+
