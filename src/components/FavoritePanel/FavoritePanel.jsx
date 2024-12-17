@@ -1,10 +1,11 @@
 /* src/components/FavoritePanel/FavoritePanel.jsx */
 
 import styles from './FavoritePanel.module.scss';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PATH } from "src/utils/path";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
+import { categoryAtom } from 'src/atoms/myFavoriteAtom';
 import { allCheckedAtom, setAllCheckedAtom } from 'src/atoms/myFavoriteAtom';
 import useMyFavorite from 'src/hooks/useMyFavorite';
 import useSelectDropdown from 'src/hooks/useSelectDropdown';
@@ -14,6 +15,16 @@ import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
 const FavoritePanel = ({ favoriteDataLength }) => {
     const location = useLocation();
     // const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
+    const [, setCategory] = useAtom(categoryAtom); // category 설정
+
+    /* 페이지 경로에 따라 category 설정 */
+    useEffect(() => {
+        if (location.pathname.includes(PATH.MY_DEPOSIT)) {
+            setCategory('deposit');
+        } else {
+            setCategory('installment');
+        }
+    }, [location.pathname, setCategory]);
 
     const [allChecked] = useAtom(allCheckedAtom);
     const [, setAllCheckedState] = useAtom(setAllCheckedAtom);

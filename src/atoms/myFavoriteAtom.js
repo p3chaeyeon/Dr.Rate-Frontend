@@ -3,6 +3,9 @@
 
 import { atom } from 'jotai';
 
+// category 상태 관리 (deposit 또는 installment)
+export const categoryAtom = atom('deposit'); // 기본값: deposit
+
 // 전체 체크박스 상태
 export const allCheckedAtom = atom(false);
 

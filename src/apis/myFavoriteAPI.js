@@ -13,7 +13,7 @@ const getSessionToken = () => {
 
 
 
-const getFavorite= async () => {
+const getFavorite= async (category) => {
     const response = await axios.get(`${PATH.SERVER}/api/favorite/getFavorite`, { 
         params: { category }, // deposit or installment
         headers : { 'Authorization' : `Bearer ${getSessionToken()}`}
@@ -21,7 +21,7 @@ const getFavorite= async () => {
       return response.data.result;
 };
 
-const searchFavorite= async () => {
+const searchFavorite= async (category) => {
     const response = await axios.get(`${PATH.SERVER}/api/favorite/searchFavorite`, {
         params: { category }, // deposit or installment
         headers : { 'Authorization' : `Bearer ${getSessionToken()}`}
