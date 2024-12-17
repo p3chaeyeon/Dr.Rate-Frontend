@@ -133,6 +133,11 @@ const FavoritePanel = () => {
                     type="text"
                     value={searchValue} 
                     onChange={(e) => setSearchValue(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            handleSearch();
+                        }
+                    }}                    
                     className={styles.favoriteSearchText}
                     placeholder="검색어"
                 />
