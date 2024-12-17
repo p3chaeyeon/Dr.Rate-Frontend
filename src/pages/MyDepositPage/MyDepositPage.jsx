@@ -8,6 +8,7 @@ import FavoritePanel from 'src/components/FavoritePanel';
 import useMyFavorite from 'src/hooks/useMyFavorite';
 
 
+
 const MyDepositPage = () => {
     const { favoriteData, loading, error, individualChecked, handleIndividualCheck } = useMyFavorite();
 

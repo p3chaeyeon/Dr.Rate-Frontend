@@ -15,15 +15,19 @@ const getSessionToken = () => {
 
 const getFavorite= async (category) => {
     const response = await axios.get(`${PATH.SERVER}/api/favorite/getFavorite`, { 
-        params: { category }, // deposit or installment
+        params: { category }, // deposit 또는 installment
         headers : { 'Authorization' : `Bearer ${getSessionToken()}`}
       });
       return response.data.result;
 };
 
-const searchFavorite= async (category) => {
+const searchFavorite= async (category, searchKey, searchValue) => {
     const response = await axios.get(`${PATH.SERVER}/api/favorite/searchFavorite`, {
-        params: { category }, // deposit or installment
+      params: { 
+        category,   // deposit 또는 installment
+        searchKey,  // bankName 또는 prdName
+        searchValue // 입력값
+      }, 
         headers : { 'Authorization' : `Bearer ${getSessionToken()}`}
       });
       return response.data.result;
