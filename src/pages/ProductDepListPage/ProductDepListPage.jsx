@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
-import styles from "./ProductDepListPage.module.scss";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { PATH } from "src/utils/path";
+import styles from "./ProductDepListPage.module.scss";
 import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
+import AlertModal from 'src/components/Modal/AlertModal';
+import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import useModal from "../../hooks/useModal";
 
 const ProductDepListPage = () => {
   const [selectedBanks, setSelectedBanks] = useState([]); // 선택된 은행 목록
@@ -10,11 +14,19 @@ const ProductDepListPage = () => {
   const [allProducts, setAllProducts] = useState([]);
   const [active, setActive] = useState("단리");   //단리 디폴트
   const [joinType, setJoinType] = useState("비대면"); //비대면 디폴트
+  const navigate = useNavigate();
+ 
 
   useEffect(() => {
     fetchProductsByCtg("d"); // 초기에는 "d" 카테고리 데이터 가져오기
     fetchAllProducts(); // 모든 제품 가져오기
   }, []); // 빈 배열로 한 번만 호출
+
+  //241217 - 비교담기버튼 클릭
+  const handleClick = () => {
+    console.log("비교담기");
+    window.location.href = "http://localhost:5173/product/compare";
+  };
 
   const fetchProductsByCtg = async (ctg) => {
     try {
@@ -29,7 +41,6 @@ const ProductDepListPage = () => {
   console.log(products)
   console.log(allProducts);
   
-
   const fetchAllProducts = async () => {
     try {
       const response = await axios.get(
@@ -69,8 +80,35 @@ const ProductDepListPage = () => {
     console.log("금리 높은 순 버튼 클릭"); // 테스트용
     // 추가 로직 구현
   };
-  //테스트 주석 
 
+  const {
+    isConfirmOpen,
+    openConfirmModal,
+    closeConfirmModal,
+    confirmContent,
+    isAlertOpen, 
+    openAlertModal, 
+    closeAlertModal, 
+    alertContent
+  } = useModal();
+
+  // Confirm Modal 로그인 클릭 시
+  const handleLoginClick = () => {
+    closeConfirmModal();
+    navigate(PATH.SIGN_IN);
+  };
+
+  // Confirm Modal 확인 클릭 시
+  const handleConfirm = () => {
+    closeConfirmModal();
+    navigate(PATH.SIGN_UP);
+  };
+
+  // Confirm Modal 취소 클릭 시
+  const handleCancel = () => {
+    closeConfirmModal();
+  };
+   /* useModal 훅 */
   return (
     <main className={styles.productListMain}>
       <section>
@@ -107,15 +145,45 @@ const ProductDepListPage = () => {
           </div>
         </div>
 
-        {/* 비회원 보이는 배너 */}
-        <div className={styles.nonMemberBanner}>
-          <div className={styles.banner}>
-            <h3>
-              나에게 맞는 예금 상품이 궁금하다면? <span>Click</span>
-            </h3>
-          </div>
-        </div>
+{/* 비회원 보이는 배너 */}
+{/* 241217 - 모달 적용 */}
+<div className={styles.nonMemberBanner}>
+  <div className={styles.banner}
+    onClick={() => openConfirmModal(
+      '회원가입 하시겠습니까?', 
+      <><span><li>회원가입을 하면 나에게 딱 맞는 상품을</li>검색하고, 추천받을 수 있어요!</span><br />이미 회원이에요 <span className={styles.arrow}>&gt;&gt;</span><span className={styles.modalLogin} onClick={handleLoginClick}>로그인</span></>,
+      handleConfirm,
+      handleCancel
+    )}
+  >
+    <h3>
+      나에게 맞는 예금 상품이 궁금하다면? <span>Click</span>
+    </h3>
+  </div>
 
+  {/* Alert Modal */}
+  {isAlertOpen && (
+    <AlertModal
+      isOpen={isAlertOpen}
+      closeModal={closeAlertModal}
+      title={alertContent.title}
+      message={alertContent.message}
+    />
+  )}
+  {/* Confirm Modal */}
+  {isConfirmOpen && (
+    <ConfirmModal
+      isOpen={isConfirmOpen}
+      closeModal={closeConfirmModal}
+      title={confirmContent.title}
+      message={confirmContent.message}
+      // onConfirm={handleCancel}       
+      // onCancel={handleConfirm}    
+       onConfirm={handleConfirm}
+       onCancel={handleCancel}
+    />
+  )}
+</div>
         {/* 로그인 후 보이는 필터 */}
         <div className={styles.filterTotalDiv}>
           <div className={styles.filterDiv}>
@@ -161,7 +229,6 @@ const ProductDepListPage = () => {
 
        
           {/*1216 test 시작 ------------------------*/}
-         
             <div className={styles.filterDiv}>
               <h4>이자 계산 방식</h4>
               <div className={styles.toggle}>
@@ -225,12 +292,17 @@ const ProductDepListPage = () => {
         </div>
         {/* 리스트 */}
             {/** db 연동 상품 리스트  */}
-<div className={styles.productListDiv}>
-    {products.length === 0 ? (
-    <p>표시할 데이터가 없습니다.</p>
-  ) : (
-    allProducts.map((product, index) => (
-      <div key={index} className={styles.productList}>
+            <div className={styles.productListDiv}>
+          {allProducts.length === 0 ? (
+            <p>표시할 데이터가 없습니다.</p>
+          ) : (
+            allProducts.map((product, index) => (
+              <div
+                key={index}
+                className={styles.productList}
+                onClick={() => navigate(`/product/detail/${product.product.id}`)}
+                style={{ cursor: "pointer" }}
+              >
          <div className={styles.image}><img src={`${PATH.STORAGE_BANK}/${product.product.bankLogo}`} className={styles.productListLogo}/></div>
         <div className={styles.productListInfo}>
           <div>
@@ -251,13 +323,16 @@ const ProductDepListPage = () => {
         </div>
 
       
-        <div className={styles.productListBtn}><li>비교</li> 담기</div>
-
-        
+        {/* <div className={styles.productListBtn}><li>비교</li> 담기</div> */}
+        <div className={styles.productListBtn} onClick={() => handleClick()} // 클릭 이벤트 추가
+>
+  <li>비교</li> 담기
+</div>     
       </div>
     ))
-
+    
   )}
+
   
 {/*페이징처리*/ }
   <div className={styles.pagination}>
