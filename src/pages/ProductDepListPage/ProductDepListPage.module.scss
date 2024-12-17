@@ -90,6 +90,13 @@
   .nonMemberBanner {
     margin-top: 50px;
 
+    .modalLogin{
+      color: var(--main1);
+      text-decoration-line:underline;
+      font-weight: 700;
+      cursor: pointer;
+  }
+
     .banner {
       // padding: 50px;
       height: 100px;
