@@ -137,7 +137,7 @@ const FavoritePanel = () => {
                         if (e.key === 'Enter') {
                             handleSearch();
                         }
-                    }}                    
+                    }}              
                     className={styles.favoriteSearchText}
                     placeholder="검색어"
                 />

@@ -7,7 +7,8 @@ import {
     searchKeyAtom, 
     searchValueAtom, 
     individualCheckedAtom, 
-    setIndividualCheckedAtom 
+    setIndividualCheckedAtom ,
+    setAllCheckedAtom 
 } from 'src/atoms/myFavoriteAtom';
 import { useEffect, useState } from 'react';
 import { getFavorite, searchFavorite, deleteFavorite } from 'src/apis/myFavoriteAPI';
@@ -20,10 +21,11 @@ const useMyFavorite = () => {
     const [searchValue, setSearchValue] = useAtom(searchValueAtom); // 검색 값 상태
     const individualChecked = useAtomValue(individualCheckedAtom); // 개별 체크박스 상태
     const setIndividualChecked = useSetAtom(setIndividualCheckedAtom); // 개별 체크박스 상태 업데이트 함수
-
+    const setAllCheckedState = useSetAtom(setAllCheckedAtom); // 전체 체크박스 상태 업데이트
 
     // 로컬 상태 관리
     const [favoriteData, setFavoriteData] = useState([]); // API 데이터
+
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 에러 상태
 
@@ -58,6 +60,7 @@ const useMyFavorite = () => {
             const data = await getFavorite(category);
             setFavoriteData(data);
             setIndividualChecked(new Array(data.length).fill(false));
+            setAllCheckedState(false); // 전체 체크박스 해제
         } catch (err) {
             setError(err);
         } finally {

@@ -1,7 +1,7 @@
 /* src/pages/MyDepositPage/MyDepositPage.jsx */
 
 import styles from './MyDepositPage.module.scss';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PATH } from "src/utils/path";
 import MyNav from 'src/components/MyNav';
 import FavoritePanel from 'src/components/FavoritePanel';
