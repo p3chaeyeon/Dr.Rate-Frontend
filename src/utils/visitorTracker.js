@@ -3,7 +3,14 @@ import { PATH } from "src/utils/path";
 export const trackVisitor = async (authToken = null) => {
     const today = new Date().toISOString().split("T")[0]; // 'YYYY-MM-DD' 형식
     const storedToday = localStorage.getItem("visited_today");
-    const guestId = getGuestId();
+
+    // 회원일 경우 guestId를 사용하지 않음
+    const isGuest = !authToken;
+
+    let guestId = null;
+    if (isGuest) {
+        guestId = getGuestId(); // 비회원일 경우에만 guestId 가져오기
+    }
 
     // 오늘 날짜와 저장된 날짜가 다르면 업데이트 및 API 호출
     if (storedToday !== today) {
@@ -16,7 +23,7 @@ export const trackVisitor = async (authToken = null) => {
                     "Content-Type": "application/json",
                     Authorization: authToken ? `Bearer ${authToken}` : "",
                 },
-                body: JSON.stringify({ guestId }),
+                body: JSON.stringify({ guestId }), // 비회원일 경우 guestId 전달
             });
 
             if (response.ok) {
