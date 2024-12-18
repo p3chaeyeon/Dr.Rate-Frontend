@@ -1,0 +1,81 @@
+.my1v1InquireSection {
+    padding-top: 70px;
+
+    .inquireTypeContainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .inquireTypeDiv {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 180px;
+            font-size: 15px;
+            cursor: pointer;
+
+            .inquireType {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 90px;
+                height: 40px;
+
+                &:first-child {
+                    border-top: 1px solid var(--divider-border);
+                    border-left: 1px solid var(--divider-border);
+                    border-bottom: 1px solid var(--divider-border);
+                    border-radius: 5px 0 0 5px;
+                    color: var(--font2);
+
+                    &:hover {
+                        background: var(--bg1);
+                    }
+                }
+
+                &:last-child {
+                    border-radius: 0 5px 5px 0;
+                    color: var(--white);
+                    background: var(--main2);
+
+                    &:hover {
+                        background: var(--main1);
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ====================================== 가로 1000px 이하 ====================================== */
+@media (max-width: 1000px) {
+    .my1v1InquireSection {
+        padding-top: 60px;
+    }
+}
+
+
+
+
+/* ====================================== 가로 430px 이하 ====================================== */
+@media (max-width: 430px) {
+    .my1v1InquireSection{
+        padding-top: 50px;
+    }
+}
