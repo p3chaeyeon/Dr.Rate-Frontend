@@ -1,5 +1,7 @@
+// src/apis/axiosInstanceAPI.js
+
 import axios from 'axios';
-import {PATH} from "../utils/path.js";
+import { PATH } from "../utils/path"; // 경로 import
 
 // axios 인스턴스 생성
 const api = axios.create({
@@ -10,13 +12,14 @@ const api = axios.create({
 // Request 인터셉터
 api.interceptors.request.use(
   (config) => {
-    // JWT 토큰을 localStorage에서 가져옴
+    // 토큰을 가져옴
     const token = localStorage.getItem('accessToken');
+
+    // 토큰이 있으면 헤더에 추가
     if (token) {
-      // 요청 헤더에 JWT 토큰 추가
       config.headers['Authorization'] = `Bearer ${token}`;
     }
-    return config;
+    return config;  // 요청 계속 진행
   },
   (error) => {
     return Promise.reject(error);
@@ -59,7 +62,7 @@ api.interceptors.response.use(
       } catch (refreshError) {
         console.error("토큰 갱신 실패", refreshError);
         // 토큰 갱신 실패 시 처리 (예: 로그인 페이지로 이동)
-        window.location.href = `${PATH.SIGN_IN}`;
+        window.location.href = PATH.SIGN_IN;
         return Promise.reject(refreshError);
       }
     }
