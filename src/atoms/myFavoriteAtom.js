@@ -1,4 +1,6 @@
-// src/atoms/favoriteAtoms.js
+/* src/atoms/myFavoriteAtom.js */
+/* 마이페이지 즐겨찾기; MyDepositPage, MyInstallmentPage */
+
 import { atom } from 'jotai';
 
 // 전체 체크박스 상태
