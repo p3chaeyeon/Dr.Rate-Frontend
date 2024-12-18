@@ -18,6 +18,7 @@ import ProductComparePage from "./ProductComparePage";
 import ServiceCenterPage from "./ServiceCenterPage";
 import UserInquirePage from "./UserInquirePage/UserInquirePage";
 import SignInPage from "./SignInPage/index.js";
+import SignUpPage from "./SignUpPage/index.js";
 import EmailInquirePage from "./EmailInquirePage";
 import SignUpPage from "./SignUpPage/index.js";
 
