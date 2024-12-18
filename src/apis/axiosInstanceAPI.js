@@ -8,8 +8,8 @@ const api = axios.create({
   baseURL: 'http://localhost:8080', // 서버의 기본 URL
   timeout: 10000,  // 타임아웃 설정
   headers: {
-      'Content-Type': 'application/json',
-    },
+    'Content-Type': 'application/json',
+  },
 });
 
 // Request 인터셉터
@@ -21,7 +21,7 @@ api.interceptors.request.use(
     // 토큰이 있으면 헤더에 추가
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
-      console.warn('토큰이 담겼습니다.')
+      console.warn('토큰이 담겼습니다.');
     } else {
       console.warn('토큰이 없습니다!');
     }
@@ -43,7 +43,7 @@ api.interceptors.response.use(
   },
   async (error) => {
     // 응답 에러가 발생하고, 토큰 만료가 원인인 경우
-    if (error.response && error.response.status === 401) {
+    if (error.response && error.response.data.code === "SESSION403") {  // "SESSION403" 코드 확인
       const originalRequest = error.config;  // 원래 요청 정보
 
       // 이미 토큰 재발급 요청 중인 경우 재시도 하지 않도록 설정

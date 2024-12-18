@@ -8,7 +8,7 @@ const getSessionToken = () => {
   // return localStorage.getItem('sessionToken'); 
   // 그냥 토큰키 넣어서 함.
 
-  return "Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OCwiY2F0ZWdvcnkiOiJhY2Nlc3MiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzM0NDg0NTUyLCJleHAiOjE3MzQ1NzA5NTJ9.hTBolZi4LYfZ9vwOxVtxOjQW0ZNthnUEh9kwDCCORpA";
+  return "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6OCwiY2F0ZWdvcnkiOiJhY2Nlc3MiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNzM0NDg0NTUyLCJleHAiOjE3MzQ1NzA5NTJ9.hTBolZi4LYfZ9vwOxVtxOjQW0ZNthnUEh9kwDCCORpA";
 
 };
 
