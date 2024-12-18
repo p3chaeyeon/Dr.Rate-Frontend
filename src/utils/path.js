@@ -11,6 +11,7 @@ export const PATH = {
   MY_EDIT: "/myEdit", // 마이페이지; 회원 정보 수정
   MY_WITHDRAW: "/myWithdraw", // 마이페이지; 회원 탈퇴
   MY_CALENDAR: "/myCalendar", // 마이페이지; 나의 적금 달력
+  MY_INQUIRY:"/myInquiry",    // 마이페이지; 나의 문의 내역
   OAUTH_HANDLER: "/oauthHandler",
 
   INSTALLMENT_LIST: "/product/installmentList", // 상품-적금리스트페이지; 필터페이지 -혜진
