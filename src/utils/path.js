@@ -3,6 +3,8 @@
 export const PATH = {
   /* 사용자 경로 */
   HOME: "/",
+  SIGN_UP: "/signUp",
+  SIGN_IN: "/signIn",
   MY_DEPOSIT: "/myDeposit", // 마이페이지; 예금 즐겨찾기
   MY_INSTALLMENT: "/myInstallment", // 마이페이지; 적금 즐겨찾기
   MY_INFO: "/myInfo", // 마이페이지; 회원 정보 (조회)
@@ -13,8 +15,12 @@ export const PATH = {
   INSTALLMENT_LIST: "/product/installmentList", // 상품-적금리스트페이지; 필터페이지 -혜진
   DEPOSIT_LIST: "/product/depositList", // 상품-예금리스트페이지; 필터페이지 -혜진
   PRODUCT_DETAIL: "/product/detail", // 상품페이지; 상품 상세페이지
+  PRODUCT_COMPARE: "/product/compare", // 비교 페이지
 
+  /* 고객센터 경로 */
   SERVICE_CENTER: '/serviceCenter',
+  USER_INQUIRE: "/userInquire",
+  EMAIL_INQUIRE: "/emailInquire",
 
   /* 관리자 경로 */
   ADMIN_MAIN: "/admin/adminMain",

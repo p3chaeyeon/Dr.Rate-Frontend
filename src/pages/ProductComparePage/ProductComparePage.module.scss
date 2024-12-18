@@ -1,0 +1,211 @@
+.history{
+    font-size: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--black);
+
+    img{
+        margin: 0 15px;
+    }
+
+    .historyAction{
+        font-weight: 700;
+        cursor: pointer;
+    }
+}
+
+.compareDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+
+    max-width: 100%;
+    padding: 30px 0 ;
+
+    .comparePrd{
+        flex: 0 0 auto;
+        width: 30%;
+        background: var(--bg3);
+        text-align: center;
+
+        .deleteBtnX{
+            text-align: center;
+            width: 30px; height: 30px; line-height: 30px;
+            background: #555;
+            color: var(--white);
+            cursor: pointer;
+
+            &:hover{
+                background: var(--bg2);
+            }
+        }
+
+        .bankLogo{
+            width: 80px; height: 80px;
+        }
+
+        .compareTitle, .rate, .compareDetailTable{
+            margin: 30px;
+        }
+
+        .compareTitle{
+            text-align: left;
+
+            .bankName, .prdName{
+                line-height: 1.8em;
+                display: block;
+                margin-bottom: 10px;
+            }
+        }
+
+        .rate{
+            text-align: right;
+
+            .spclRate, .basicRate{
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            .spclRate{
+                font-size: 18px; font-weight: 700;
+                color: var(--red1);
+            }
+        }
+
+        .compareDetailTable{
+            text-align: left;
+            font-size: 14px;
+
+            p{
+                width: 100%;
+
+                span{
+                    padding: 10px;
+                    display: inline-block;
+                }
+
+                span:nth-child(2){
+                    color: var(--main2);
+                }
+            }
+
+        }
+
+        .btn{
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            
+            .deleteBtn, .joinBtn{
+                flex: 0 1 40%;
+                padding: 8px 0;
+                border: 0;
+                cursor: pointer;
+            }
+
+            .deleteBtn{
+                background: var(--bg2);
+
+                &:hover{
+
+                }
+            }
+            .joinBtn{
+                background: var(--main2);
+                color: var(--white);
+
+                &:hover{
+                    background: var(--main1);
+                }
+            }
+
+        }
+    }
+
+    .noneComparePrd{
+        display: flex;
+        justify-content: center; /* 가로 중앙 정렬 */
+        align-items: center; 
+        background: none;
+
+        .addComparePrd{
+            width: 100px; height: 100px; line-height: 100px;
+            border: 2px solid var(--divider-border); border-radius: 30px;
+            font-size: 30px; color: var(--divider-border);
+            cursor: pointer;
+
+            &:hover{
+                background: var(--divider-border);
+                color: var(--white);
+            }
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    .comparePrd {
+        flex: 1 1 45%; /* For screens smaller than 1200px, show 2 items per row */
+    }
+}
+
+@media (max-width: 768px) {
+    .compareSection{
+        width: 90%;
+    }
+
+    .compareDiv {
+        display: flex;
+        flex-direction: column;
+
+        .comparePrd{
+           width: 100%;
+
+           .bankLogo{
+            width: 50px; height: 50px;
+           }
+
+           .compareTitle{
+            margin: 10px 10px 10px 20px;
+            font-size: 15px;
+            display: inline-block;
+           }
+
+           .rate{
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0 10px 0;
+
+            .spclRate, .basicRate{
+                font-size: 15px !important;
+            }
+           }
+
+           .compareDetailTable{
+                margin: 0 10px;
+           }
+
+           .btn{
+                margin: 10px;
+                display: block;
+               .deleteBtn{
+                display: none;
+               }
+
+               .joinBtn{
+                width: 100% !important; 
+               }
+           }
+
+        }
+    }
+
+    .history {
+        font-size: 16px; 
+    }
+
+    .noneComparePrd {
+        margin-top: 30px;
+    }
+}

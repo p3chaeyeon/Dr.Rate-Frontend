@@ -18,6 +18,8 @@ yarn add @fullcalendar/react @fullcalendar/daygrid @fullcalendar/interaction @fu
 yarn add react-modal                # @FullCalendar 라이브러리 설치, modal
 yarn add chart.js react-chartjs-2   # 관리자 페이지 그래프 라이브러리
 yarn add jsonwebtoken               # JWT 토큰 생성 라이브러리
+npm install sockjs-client           # WebSocket 연결을 위한 라이브러리
+npm install @stomp/stompjs          # STOMP Protocol 라이브러리
 
 
 yarn dev

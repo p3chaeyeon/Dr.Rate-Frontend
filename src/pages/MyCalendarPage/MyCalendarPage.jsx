@@ -40,6 +40,10 @@ const bankLogos = {
   카카오뱅크: "kakaoLogo.png",
   농협은행: "nonghyupLogo.png",
   토스뱅크: "tossLogo.png",
+  전북은행: "jeonbukLogo.png",
+  기업은행: "ibkLogo.png",
+  부산은행: "bnkLogo.png",
+  대구은행: "imbankLogo.png",
 };
 
 // 모달 초기 설정
@@ -57,7 +61,7 @@ const MyCalendarPage = () => {
   const [isSmallScreen, setIsSmallScreen] = useAtom(isSmallScreenAtom); // 화면크기
   const [expandedDates, setExpandedDates] = useAtom(expandedDatesAtom); // + , - 버튼 
   const [animatingDates, setAnimatingDates] = useState({}); //애니메이션 효과
-  const [selectedEventId, setSelectedEventId] = useState(null);
+  const [selectedEventId, setSelectedEventId] = useState(null); // 이벤트ID 저장
   const [isConfirmOpen, setIsConfirmOpen] = useState(false); // ConfirmModal 열림 상태
   const [confirmContent, setConfirmContent] = useState({}); // ConfirmModal의 제목, 메시지, onConfirm 함수
 
@@ -81,13 +85,13 @@ const MyCalendarPage = () => {
     calendarApi.today();
   };
 
-  //화면크기 상태
+  // 화면크기 상태 (반응형)
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 1000); // 화면 크기 변경 시 상태 업데이트
     };
-    window.addEventListener('resize', handleResize); // resize 이벤트 리스너 등록
-    return () => window.removeEventListener('resize', handleResize); // 컴포넌트 언마운트 시 리스너 제거
+    window.addEventListener('resize', handleResize); // resize 화면크기 에 따라 작업 수행
+    return () => window.removeEventListener('resize', handleResize);
   }, [setIsSmallScreen]);
 
   // 작은 화면에서는 각 날짜의 첫 번째 이벤트만 표시
@@ -140,6 +144,7 @@ const MyCalendarPage = () => {
     }, 500); // 0.5초 후에 실행
   };
 
+  // 모달 초기화
   const resetModal = () => {
     setEndDate('');
     setSavingName('');
@@ -401,11 +406,10 @@ const MyCalendarPage = () => {
               const logoUrl = `${PATH.STORAGE_BANK}/${logoFileName}`; // 경로 결합
               const date = eventInfo.event.startStr; // 이벤트 시작 날짜
 
-              const eventsForDate = events.filter((event) => event.date === date); //같은 날짜의 이벤트
-              const isFirstEvent = eventsForDate.length > 0 && eventsForDate[0].title === eventInfo.event.title;
-
-              const isExpanded = expandedDates[date];
-              const isAnimating = animatingDates[date];
+              const eventsForDate = events.filter((event) => event.date === date); // 같은 날짜의 이벤트
+              const isFirstEvent = eventsForDate.length > 0 && eventsForDate[0].title === eventInfo.event.title; // 첫번째 이벤트인지 확인
+              const isExpanded = expandedDates[date]; // 확장(펼쳐짐) 되었는지 확인
+              const isAnimating = animatingDates[date]; // 확장, 줄어듬 애니메이션
 
               // 길게 누르기 관련 변수
               let pressTimer;
@@ -422,20 +426,20 @@ const MyCalendarPage = () => {
                   {logoFileName && (
                     <div
                       className={styles.logoWrapper}
-                      // **길게 클릭 (long press) 이벤트 핸들러 추가**
+                      // 길게 클릭 이벤트
                       onMouseDown={(e) => {
                         e.stopPropagation(); // 상위 클릭 이벤트 막기
                         isLongPress = false; // 초기화
                         pressTimer = setTimeout(() => {
                           isLongPress = true; // 길게 누른 상태로 전환
-                          handleEventClick({ event: eventInfo.event }); // 길게 누르면 수정/삭제 모달 열림
-                        }, 1500); // 500ms 이후에 길게 누르기로 인식
+                          handleEventClick({ event: eventInfo.event }); // 길게 누르면 + / -
+                        }, 1500); // 1.5초 이후에 길게 누르기로 인식
                       }}
                       onMouseUp={(e) => {
                         clearTimeout(pressTimer); // 길게 누르기 타이머 정리
                         if (!isLongPress) {
                           e.stopPropagation(); // 클릭 이벤트 전파 막기
-                          handleLogoClick(date); // 클릭 시 + / - 버튼 표시
+                          handleLogoClick(date); // 클릭 시 모달
                         }
                       }}
                       onMouseLeave={(e) => {
@@ -561,44 +565,50 @@ const MyCalendarPage = () => {
         />
         {selectedEventId ? (
           <>
-            <button
-              onClick={() => openConfirmModal(
-                '수정 확인',
-                '이벤트를 수정하시겠습니까?',
-                async () => {
-                  await updateEvent(); // 수정 작업 후에
-                  closeConfirmModal(); // ConfirmModal 닫기
-                  resetModal(); // 모달 창도 닫기
+            <div className={styles.buttonContainer}>
+              <button
+                onClick={() =>
+                  openConfirmModal(
+                    '수정 확인',
+                    '이벤트를 수정하시겠습니까?',
+                    async () => {
+                      await updateEvent();
+                      closeConfirmModal();
+                      resetModal();
+                    }
+                  )
                 }
-              )}
-              className={styles.updateButton}
-            >
-              수정
-            </button>
-            <button
-              onClick={() => openConfirmModal(
-                '삭제 확인',
-                '정말로 삭제하시겠습니까?',
-                async () => {
-                  await deleteEvent(); // 삭제 작업 후에
-                  closeConfirmModal(); // ConfirmModal 닫기
-                  resetModal(); // 모달 창도 닫기
+                className={styles.updateButton}
+              >
+                수정
+              </button>
+              <button
+                onClick={() =>
+                  openConfirmModal(
+                    '삭제 확인',
+                    '정말로 삭제하시겠습니까?',
+                    async () => {
+                      await deleteEvent();
+                      closeConfirmModal();
+                      resetModal();
+                    }
+                  )
                 }
-              )}
-              className={styles.deleteButton}
+                className={styles.deleteButton}
+              >
+                삭제
+              </button>
+            </div> 
+            </>
+            ) : (
+            <button
+              onClick={saveEvent}
+              className={styles.modalButton}
             >
-              삭제
+              저장
             </button>
-          </>
-        ) : (
-          <button
-            onClick={saveEvent}
-            className={styles.modalButton}
-          >
-            저장
-          </button>
         )}
-      </Modal>
+          </Modal>
     </main>
   );
 };

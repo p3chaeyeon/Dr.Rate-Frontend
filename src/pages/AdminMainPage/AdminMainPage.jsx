@@ -1,11 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './AdminMainPage.module.scss';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { PATH } from "src/utils/path";
+import userLogo from 'src/assets/icons/userIcon.png'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const AdminMainPage = () => {
+    const [newUsers, setNewUsers] = useState([]);  // 신규 회원 데이터를 저장
+    const [inquireList, setInquireList] = useState([]);  // 신규 회원 데이터를 저장
+    const token = localStorage.getItem("authToken");
+
+    // 신규 회원 데이터를 가져오는 함수
+    const fetchNewUsers = async (page = 0) => {
+        try {
+            const response = await fetch(
+                `${PATH.SERVER}/api/userList?page=${page}&size=4`, {
+                method: "GET",
+                headers: { Authorization: `Bearer ${token}` },
+            }
+            );
+            const data = await response.json();
+
+            if (data.success) {
+                setNewUsers(data.result.content); // 회원 데이터 저장
+            } else {
+                console.error("유저 목록 조회 실패:", data.message);
+            }
+        } catch (error) {
+            console.error("API 호출 중 오류:", error);
+        }
+    };
+
+    const fetchInquiryList = async (page = 0) => {
+        try {
+            const response = await fetch(
+                `${PATH.SERVER}/api/chatrooms/inquireList?page=${page}&size=4`, {
+                method: "GET",
+                headers: { Authorization: `Bearer ${token}` },
+            }
+            );
+            const data = await response.json();
+
+            if (data.success) {
+                setInquireList(data.result.content); // 회원 데이터 저장
+            } else {
+                console.error("유저 목록 조회 실패:", data.message);
+            }
+        } catch (error) {
+            console.error("API 호출 중 오류:", error);
+        }
+    }
+
+    // 컴포넌트가 마운트될 때 데이터 가져오기
+    useEffect(() => {
+        fetchNewUsers();
+        fetchInquiryList();
+    }, []);
+
+
     const data = {
         labels: ['12-05', '12-06', '12-07', '12-08', '12-09', '12-10', '12-11'], // 날짜 라벨
         datasets: [
@@ -67,7 +121,7 @@ const AdminMainPage = () => {
                         <div className={styles.dashboardItemHeader}>
                             <div className={styles.dashboardItemTitle}>
                                 <h4>방문자 현황</h4>
-                            </div>                            
+                            </div>
                         </div>
                         {/* 방문자 현황 body : 그래프 */}
                         <div className={styles.dashboardItemBody}>
@@ -145,7 +199,7 @@ const AdminMainPage = () => {
                     </div>
                 </div>
             </div>
-             {/* 두번째 행 영역 */}
+            {/* 두번째 행 영역 */}
             <div className={styles.dashboardRow}>
                 {/* 3. 신규 회원 영역 */}
                 <div className={styles.dashboardItemArea}>
@@ -158,25 +212,24 @@ const AdminMainPage = () => {
                         {/* 신규 회원 body */}
                         <div className={styles.dashboardItemBody}>
                             <ul className={styles.newUserList}>
-                                {[
-                                    { name: "김유진", email: "yu****@example.com", date: "2024-11-14" },
-                                    { name: "박현지", email: "ph****@example.com", date: "2024-11-14" },
-                                    { name: "이준호", email: "lj****@example.com", date: "2024-11-14" },
-                                    { name: "정하나", email: "jh****@example.com", date: "2024-11-14" },
-                                    { name: "정하나", email: "jh****@example.com", date: "2024-11-14" },
-                                    { name: "정하나", email: "jh****@example.com", date: "2024-11-14" },
-                                ].map((user, index) => (
-                                    <li key={index} className={styles.newUserItem}>
-                                        <div className={styles.profileImage}>
-                                            <img src="/src/assets/icons/userIcon.png" alt='사용자 프로필'></img>
-                                        </div>
-                                        <div className={styles.userInfo}>
-                                            <span className={styles.userName}>{user.name}</span>
-                                            <span className={styles.userEmail}>{user.email}</span>
-                                        </div>
-                                        <div className={styles.joinDate}>{user.date}</div>
-                                    </li>
-                                ))}
+                                {newUsers.map((user) => {
+                                    return ( // 명시적으로 반환
+                                        <li key={user.id} className={styles.newUserItem}>
+                                            <div className={styles.profileImage}>
+                                                <img src={userLogo} alt="사용자 프로필"></img>
+                                            </div>
+                                            <div className={styles.userInfo}>
+                                                <span className={styles.userName}>{user.username}</span>
+                                                <span className={styles.userEmail}>{user.email}</span>
+                                            </div>
+                                            <div className={styles.joinDate}>
+                                                {user.createdAt
+                                                    ? new Date(user.createdAt).toLocaleDateString()
+                                                    : "알 수 없음"}
+                                            </div>
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
                     </div>
@@ -192,53 +245,40 @@ const AdminMainPage = () => {
                         {/* 1:1 문의 내역 body */}
                         <div className={styles.dashboardItemBody}>
                             <ul className={styles.inquiryList}>
-                                {[
-                                    {
-                                        title: "게시판 작성 위젯별 기능 설명(상단전용)",
-                                        author: "관리자",
-                                        date: "2020-12-11 14:38",
-                                        badge: "N"
-                                    },
-                                    {
-                                        title: "게시판 작성 상단 디자인 설정 주요 기능 알아보기",
-                                        author: "관리자",
-                                        date: "2020-12-10 14:48"
-                                    },
-                                    {
-                                        title: "게시판 작성 커스텀 하단 만들기(푸터)",
-                                        author: "관리자",
-                                        date: "2020-12-10 14:36"
-                                    },
-                                    {
-                                        title: "게시판 작성 하단 설정하기(푸터)",
-                                        author: "관리자",
-                                        date: "2020-12-10 11:06"
-                                    },
-                                    {
-                                        title: "게시판 작성 하단 설정하기(푸터)",
-                                        author: "관리자",
-                                        date: "2020-12-10 11:06"
-                                    },
-                                    {
-                                        title: "게시판 작성 하단 설정하기(푸터)",
-                                        author: "관리자",
-                                        date: "2020-12-10 11:06"
-                                    },
-                                ].map((item, index) => (
-                                    <li key={index} className={styles.inquiryItem}>
-                                        <div className={styles.profileImage}>
-                                            <img src="/src/assets/icons/userIcon.png" alt="사용자 프로필" />
-                                        </div>
-                                        <div className={styles.inquiryContent}>
-                                            <div className={styles.inquiryTitle}>
-                                                {item.title} {item.badge && <span className={styles.newBadge}>{item.badge}</span>}
+                                {inquireList.map((inquire) => {
+                                    return (
+                                        <li key={inquire.id} className={styles.inquiryItem}>
+                                            <div className={styles.profileImage}>
+                                                <img src={userLogo} alt="사용자 프로필"></img>
                                             </div>
-                                            <div className={styles.inquiryMeta}>
-                                                <span>{item.author}</span> | <span>{item.date}</span>
+                                            <div className={styles.inquiryContent}>
+                                                <div className={styles.inquiryTitle}>
+                                                    {inquire.topicName}
+                                                    {inquire.status && (
+                                                        <span
+                                                            className={`${styles.newBadge} ${inquire.status === "OPEN" ? styles.openStatus : styles.closedStatus
+                                                                }`}
+                                                        >
+                                                            {inquire.status === "OPEN" ? "OPEN" : "CLOSED"}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <div className={styles.inquiryMeta}>
+                                                    <span>{inquire.userName}</span> |
+                                                    <span className={styles.inquiryDate}>
+                                                        {inquire.updatedAt
+                                                            ? `${new Date(inquire.updatedAt).toLocaleDateString()} ${new Date(inquire.updatedAt).toLocaleTimeString([], {
+                                                                hour: '2-digit',
+                                                                minute: '2-digit',
+                                                            })}`
+                                                            : "알 수 없음"}
+                                                    </span>
+                                                </div>
+
                                             </div>
-                                        </div>
-                                    </li>
-                                ))}
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </div>
                     </div>

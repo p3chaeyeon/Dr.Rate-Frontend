@@ -1,5 +1,5 @@
 /* src/App.jsx */
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate  } from "react-router-dom";
 import './App.css'; 
 import { PATH } from "./utils/path";
 import PageRoutes from "./pages";
@@ -13,6 +13,8 @@ function App() {
           {/* 사용자 페이지 라우트 */}
           <Route path="/" element={<UserLayout />}>
               <Route index element={<PageRoutes.HomePage />} /> {/* 기본 경로 */}
+              <Route path={PATH.SIGN_UP} element={<PageRoutes.SignUpPage />} />
+              <Route path={PATH.SIGN_IN} element={<PageRoutes.SignInPage />} />
               <Route path={PATH.MY_DEPOSIT} element={<PageRoutes.MyDepositPage />} />
               <Route path={PATH.MY_INSTALLMENT} element={<PageRoutes.MyInstallmentPage />} />
               <Route path={PATH.MY_INFO} element={<PageRoutes.MyInfoPage />} />
@@ -21,8 +23,13 @@ function App() {
               <Route path={PATH.MY_CALENDAR} element={<PageRoutes.MyCalendarPage />} />
               <Route path={PATH.INSTALLMENT_LIST} element={<PageRoutes.ProductInsListPage />} />
               <Route path={PATH.DEPOSIT_LIST} element={<PageRoutes.ProductDepListPage />} />
+              <Route path={`${PATH.PRODUCT_COMPARE}/:ctg`} element={<PageRoutes.ProductComparePage />} />
+              <Route path={`${PATH.PRODUCT_DETAIL}/:prdId`} element={<PageRoutes.ProductDetailPage />} />
+              <Route path={PATH.PRODUCT_DETAIL} element={<Navigate to={`${PATH.PRODUCT_DETAIL}/1`} replace />} />
               <Route path={PATH.SERVICE_CENTER} element={<PageRoutes.ServiceCenterPage />} />
-              <Route path={PATH.PRODUCT_DETAIL} element={<PageRoutes.ProductDetailPage />} />{/* path={`${PATH.PRODUCT_DETAIL}/:productId`} */}
+              <Route path={PATH.USER_INQUIRE} element = {<PageRoutes.UserInquirePage/>}/>
+              <Route path={PATH.EMAIL_INQUIRE} element = {<PageRoutes.EmailInquirePage/>}/>
+
           </Route>
 
 

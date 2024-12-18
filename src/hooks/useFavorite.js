@@ -1,33 +1,61 @@
-// src/hooks/useFavorite.js
+/* src/hooks/useFavorite.js */
+/* 상품상세페이지; ProductDetailPage */
 
-// API 호출 및 로직 분리를 담당
-// 재사용 가능한 로직을 분리하여 관리; Custom Hook 
+// import { useAtom } from 'jotai';
+// import { favoriteAtom } from '../atoms/favoriteAtom';
+import { useState, useEffect } from 'react';
+import { checkFavorite, addFavorite, cancelFavorite } from '../apis/favoriteAPI';
 
-import { useAtom } from 'jotai';
-import { individualCheckedAtom, setIndividualCheckedAtom } from 'src/atoms/favoriteAtoms';
-import { useEffect } from 'react';
+export const useFavorite = (prdId) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
-const useFavorite = (dataLength) => {
-    const [individualChecked, setIndividualChecked] = useAtom(setIndividualCheckedAtom);
+  /* 즐겨찾기 상태 확인 */
+  useEffect(() => {
+      const fetchFavoriteStatus = async () => {
+          try {
+              const isFavoriteStatus = await checkFavorite(prdId);
+              setIsFavorite(isFavoriteStatus);
+              setErrorMessage(null);
+          } catch (error) {
+                if (error.response && error.response.data && error.response.data.message) {
+                    setErrorMessage(error.response.data.message); // 메시지 저장
+                } else {
+                    console.error("Error fetching favorite status:", error);
+                }
+          } 
+      };
 
-    // 개별 체크박스 상태를 데이터 길이에 맞게 초기화
-    useEffect(() => {
-        if (individualChecked.length === 0) {
-            setIndividualChecked(new Array(dataLength).fill(false));
-        }
-    }, [dataLength, individualChecked, setIndividualChecked]);
+      if (prdId) { 
+        fetchFavoriteStatus();
+    }
+  }, [prdId]);
 
-    // 개별 체크박스를 클릭했을 때 상태 업데이트
-    const handleIndividualCheck = (index, isChecked) => {
-        const updatedArray = [...individualChecked];
-        updatedArray[index] = isChecked;
-        setIndividualChecked(updatedArray);
-    };
 
-    return {
-        individualChecked,
-        handleIndividualCheck,
-    };
+  /* 즐겨찾기 토글 */
+  const toggleFavorite = async () => {
+      try {
+          if (isFavorite) {
+              await cancelFavorite(prdId);
+              setIsFavorite(false);
+              setErrorMessage(null);
+          } else {
+              await addFavorite(prdId);
+              setIsFavorite(true);
+              setErrorMessage(null);
+          }
+      } catch (error) {
+        if (error.response?.data?.message) {
+            setErrorMessage(error.response.data.message); 
+            throw new Error(error.response.data.message); // 에러를 호출한 곳으로 전달
+          } else {
+            setErrorMessage("즐겨찾기 작업 중 알 수 없는 오류가 발생했습니다.");
+            throw new Error(defaultError); // 기본 메시지 전달
+          }
+      }
+  };
+
+  return { isFavorite, toggleFavorite, errorMessage };
+
+
 };
-
-export default useFavorite;

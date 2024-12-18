@@ -10,7 +10,7 @@ import { atom, useAtom } from 'jotai';
 const RateCalc = ({isOpen, onClose, conditions, options}) => {
     
   const {basicRate, products, rateType, saveTime} = options || {};
-  const {ctg, max} = products;
+  const {ctg, max} = products || {};
 
   // useModal 훅
   const { 
@@ -46,7 +46,7 @@ const RateCalc = ({isOpen, onClose, conditions, options}) => {
 
     if (max !== null) {
       if (value > max / 10000) {
-        openAlertModal('입력 오류',`최대 한도금액은 ${max / 10000} 만원 입니다.` );
+        openAlertModal('입력 오류',`최대 한도금액은 ${formatNumber(max / 10000)} 만원 입니다.` );
         e.target.value = max / 10000;
       } else if (value < 0) {
         openAlertModal('입력 오류','최소 금액은 1 만원 입니다.' );

@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between; /* 요소들 사이에 간격을 넣어줌 */
+    gap: 30px;
 
     .image{
         width: 120px; height: 120px;
@@ -80,6 +81,10 @@
         .heart{
             padding-right: 10px;
 
+            &.active {
+                color: var(--red2); // isFavorite 상태가 true일 때 색상 변경
+            }
+            
             &:active{
                 color: var(--red2);
             }
@@ -153,10 +158,10 @@
         }
 
         .rateTable{
-            width: 800px;
+            width: 100%;
         }
         .rateCalcTable{
-            width: 800px;
+            width: 100%;
         }
     
         .mtrtInt, .spclCnd{
@@ -164,6 +169,10 @@
             line-height: 30px;
         }
     }
+}
+
+.arrow {
+    margin: 0 10px;
 }
 
 .modalLogin{
@@ -174,29 +183,43 @@
 }
 
 @media (max-width: 768px) {
+    .detailSection{
+        width: 95%;
+    }
+
+    .title{
+        padding: 0 0 10px 0;
+    }
+
     .topDiv {
       flex-direction: column;
       padding: 50px 20px;
 
       .image {
         width: 80px; height: 80px;
-        margin-bottom: 30px;
           
         img{
             width: 90px;
             height: 80px;
         }
-      }
 
-      .name {
-        text-align: center;
-      }
+        }
 
-      .rate {
-        width: 100%;
-        text-align: center;
-        margin-top: 20px;
-      }
+        .nameThree{
+            font-size: 12px !important;
+            width: 100px !important;
+        }
+
+        .name {
+            text-align: center;
+        }
+
+        .rate {
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            margin-top: 20px;
+        }
     }
   
     .btnDiv {
@@ -204,18 +227,20 @@
       float: none;
 
       .heartIcon, .intobtn{
-        width: 32%;
+        width: 32%; height: 40px !important;
         margin-right: 0.5em;
       }
 
       .gotoHomePage{
-        width: 32%;
+        width: 32%; height: 40px !important;
         margin-right: 0px;
       }
     }
   
     .serviceDiv {
-      margin-top: 100px;
+      margin-top: 50px;
+      font-size: 12px;
+      height: 45px; line-height: 40px;
 
       .serviceTwo {
         float: right;
@@ -226,8 +251,18 @@
     .detailDiv {
       padding: 20px;
 
+      ul li{
+        padding: 10px 0;
+        span{
+            font-size: 13px;
+        }
+        p{
+            font-size: 12px;
+        }
+      }
+
         .rateTable, .rateCalcTable {
-            width: 100% !important;
+            width: 90% !important;
             font-size: 1.0em;
 
             td{
@@ -249,7 +284,7 @@
     }
   
     .topDiv {
-      padding: 30px 10px;
+      padding: 20px 10px;
 
       .image {
         width: 80px;

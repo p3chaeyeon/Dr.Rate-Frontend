@@ -23,11 +23,12 @@ const useModal = () => {
 
     /* Functions : Alert Modal 열기 */
     const openAlertModal = useCallback(
-        (title = '', message = '') => {
-            setAlertContent({ title, message });    // Alert Modal 제목 및 메시지 설정
-            setIsAlertOpen(true);                   // Alert Modal 열림 상태로 변경
-        }, []
-    );
+        (title = "", message = "", onConfirm = null) => {
+          setAlertContent({ title, message, onConfirm }); // onConfirm 콜백 추가
+          setIsAlertOpen(true); // Alert Modal 열림 상태로 변경
+        },
+        []
+      );
 
     /* Functions : Alert Modal 닫기 */
     const closeAlertModal = useCallback(() => {
