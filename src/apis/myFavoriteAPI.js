@@ -12,7 +12,6 @@ const getSessionToken = () => {
 };
 
 
-
 const getFavorite= async (category) => {
     const response = await axios.get(`${PATH.SERVER}/api/favorite/getFavorite`, { 
         params: { category }, // deposit 또는 installment
