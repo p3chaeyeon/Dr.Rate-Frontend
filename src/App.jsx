@@ -21,6 +21,8 @@ function App() {
               <Route path={PATH.MY_EDIT} element={<PageRoutes.MyEditPage />} />
               <Route path={PATH.MY_WITHDRAW} element={<PageRoutes.MyWithdrawPage />} />
               <Route path={PATH.MY_CALENDAR} element={<PageRoutes.MyCalendarPage />} />
+              <Route path={PATH.MY_EMAIL_INQUIRE} element={<PageRoutes.MyEmailInquirePage />} />
+              <Route path={PATH.MY_1V1_INQUIRE} element={<PageRoutes.My1v1InquirePage />} />
               <Route path={PATH.INSTALLMENT_LIST} element={<PageRoutes.ProductInsListPage />} />
               <Route path={PATH.DEPOSIT_LIST} element={<PageRoutes.ProductDepListPage />} />
               <Route path={`${PATH.PRODUCT_COMPARE}/:ctg`} element={<PageRoutes.ProductComparePage />} />
