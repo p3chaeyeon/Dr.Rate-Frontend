@@ -7,6 +7,7 @@ import styles from './SignInPage.module.scss';
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
 import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
+import { PATH } from '../../utils/path';
 
 const SignInPage = () => {
     const navigate = useNavigate();  // navigate 훅 사용
@@ -55,7 +56,7 @@ const SignInPage = () => {
 
     // 회원가입 페이지로 이동
     const handleSignUpClick = () => {
-        navigate('/signUp');  // 회원가입 페이지로 이동
+        navigate(`${PATH.SIGN_UP}`);  // 회원가입 페이지로 이동
     };
 
     // 모달 닫기

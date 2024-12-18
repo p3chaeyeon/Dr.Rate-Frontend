@@ -99,7 +99,7 @@ const SignUpPage = () => {
 
     // 로그인 타이틀 클릭시 로그인 페이지로 이동
     const handleTitleClick = () => {
-        navigate(`/signIn`);
+        navigate(`${PATH.SIGN_IN}`);
     };
 
     // 모달 닫기

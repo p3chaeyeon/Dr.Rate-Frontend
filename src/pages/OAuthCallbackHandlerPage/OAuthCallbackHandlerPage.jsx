@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import {PATH} from "../../utils/path.js";
 
 const OAuthCallbackHandlerPage = () => {
     const navigate = useNavigate();
@@ -14,13 +15,12 @@ const OAuthCallbackHandlerPage = () => {
         if (access) {
             // Access Token을 localStorage에 저장
             localStorage.setItem("access", access);
-            console.log("Access Token 저장 완료:", access);
 
             // 메인 페이지로 이동
-            navigate("/");
+            navigate(`${PATH.HOME}`);
         } else {
             console.error("Access Token이 존재하지 않습니다.");
-            navigate("/signIn");
+            navigate(`${PATH.SIGN_IN}`);
         }
     }, [navigate]);
 
