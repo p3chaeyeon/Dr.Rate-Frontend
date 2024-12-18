@@ -33,7 +33,7 @@ const SignInPage = () => {
             if (token) {
                 console.log("Received JWT:", token);
                 localStorage.setItem("accessToken", token); // JWT를 localStorage에 저장
-                window.location.href = "http://localhost:5173/"; // 메인 페이지로 이동
+                window.location.href = `${PATH.HOME}`; // 메인 페이지로 이동
             }
         } catch (error) {
             console.error(`Failed to login with ${provider}:`, error);
@@ -56,7 +56,7 @@ const SignInPage = () => {
             if (token) {
                 console.log("Received JWT:", token);
                 localStorage.setItem("accessToken", token); // JWT를 localStorage에 저장
-                window.location.href = "http://localhost:5173/"; // 메인 페이지로 이동
+                window.location.href = `${PATH.HOME}`; // 메인 페이지로 이동
             } else {
                 // 로그인 실패 시 모달 띄우기
                 setModalTitle("로그인 실패");

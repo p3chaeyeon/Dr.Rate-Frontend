@@ -7,6 +7,7 @@ import styles from './SignUpPage.module.scss';
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
 import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
+import {PATH} from "../../utils/path.js";
 
 const SignUpPage = () => {
     const navigate = useNavigate();
@@ -80,7 +81,7 @@ const SignUpPage = () => {
                 setModalMessage("회원가입이 완료되었습니다.");
                 setShowModal(true);
                 setTimeout(() => {
-                    window.location.href = "http://localhost:5173/signIn"; // 로그인 페이지로 이동
+                    window.location.href = `${PATH.SIGN_IN}`; // 로그인 페이지로 이동
                 }, 2000);
             }
         } catch (error) {
@@ -102,7 +103,7 @@ const SignUpPage = () => {
             if (token) {
                 console.log("Received JWT:", token);
                 localStorage.setItem("accessToken", token);
-                window.location.href = "http://localhost:5173/";
+                window.location.href = `${PATH.HOME}`;
             }
         } catch (error) {
             console.error(`Failed to login with ${provider}:`, error);
@@ -114,7 +115,7 @@ const SignUpPage = () => {
 
     // 로그인 타이틀 클릭시 로그인 페이지로 이동
     const handleTitleClick = () => {
-        navigate('/signIn');
+        navigate(`/signIn`);
     };
 
     // 모달 닫기
