@@ -21,6 +21,8 @@ import SignInPage from "./SignInPage/index.js";
 import SignUpPage from "./SignUpPage/index.js";
 import EmailInquirePage from "./EmailInquirePage";
 import OAuthCallbackHandlerPage from "./OAuthCallbackHandlerPage";
+import AdminEmailInquireListPage from "./AdminEmailInquireListPage/AdminEmailInquireListPage.jsx";
+import AdminEmailInquirePage from "./AdminEmailInquirePage/AdminEmailInquirePage.jsx";
 
 // 각 페이지 컴포넌트를 PageRoutes 객체에 모아 내보내기
 const PageRoutes = {
@@ -50,6 +52,8 @@ const PageRoutes = {
   AdminInquireListPage,
   AdminInquirePage,
   AdminUserListPage,
+  AdminEmailInquireListPage,
+  AdminEmailInquirePage,
 };
 
 export default PageRoutes;
