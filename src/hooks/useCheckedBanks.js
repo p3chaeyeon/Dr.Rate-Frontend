@@ -51,24 +51,24 @@ const useCheckedBanks = (banks, limit, openAlertModal) => {
         });
 
         setAddProduct((prevProducts) => {
-            if (!prevProducts.some((prd) => prd.id === product.product.id)) {
-              return [...prevProducts, product.product];
+            if (!prevProducts.some((prd) => prd.product.id === product.product.id)) {
+              return [...prevProducts, product];
             } else {
-                return prevProducts.filter((prd) => prd.id !== product.product.id);
+                return prevProducts.filter((prd) => prd.product.id !== product.product.id);
             }
         });
     }
 
     const deletePrd = (product) => {
         setAddPrdId((prevProducts) => {
-            if (prevProducts.includes(product.id)) {
-                return prevProducts.filter((prd) => prd !== product.id);
+            if (prevProducts.includes(product.product.id)) {
+                return prevProducts.filter((prd) => prd !== product.product.id);
             }
         });
 
         setAddProduct((prevProducts) => {
-            if (prevProducts.some((prd) => prd.id === product.id)) {
-                return prevProducts.filter((prd) => prd.id !== product.id);
+            if (prevProducts.some((prd) => prd.product.id === product.product.id)) {
+                return prevProducts.filter((prd) => prd.product.id !== product.product.id);
             }
         });
     }

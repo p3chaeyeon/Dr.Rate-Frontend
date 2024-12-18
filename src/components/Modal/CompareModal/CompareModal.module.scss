@@ -35,6 +35,11 @@
       gap: 10px;
       font-size: 15px;
       margin-bottom: 50px;
+      
+        display: -webkit-box;
+        overflow-x: auto;
+        
+        padding-bottom: 10px;
 
       .bank {
         display: flex;
