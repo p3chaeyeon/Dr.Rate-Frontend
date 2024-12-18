@@ -1,6 +1,7 @@
 /* src/hooks/useMyFavorite.js */
 /* 마이페이지 즐겨찾기; MyDepositPage, MyInstallmentPage */
 
+import { useLocation } from 'react-router-dom';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
     categoryAtom,
@@ -17,6 +18,8 @@ import { getFavorite, searchFavorite, deleteFavorite } from 'src/apis/myFavorite
 
 // const useMyFavorite = (dataLength) => {
 const useMyFavorite = () => {
+    const location = useLocation();
+
     // 상태 및 Atom 관리
     const category = useAtomValue(categoryAtom);
     const [favoriteData, setFavoriteData] = useAtom(favoriteDataAtom);
@@ -25,10 +28,10 @@ const useMyFavorite = () => {
     const individualChecked = useAtomValue(individualCheckedAtom);
     const setIndividualChecked = useSetAtom(setIndividualCheckedAtom);
     const setAllCheckedState = useSetAtom(setAllCheckedAtom);
+    const hasSelectedItems = useAtomValue(hasSelectedItemsAtom); //  선택된 항목이 있는지 확인
 
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 에러 상태
-
 
 
     /* 개별 체크박스 상태 업데이트 */
@@ -41,8 +44,7 @@ const useMyFavorite = () => {
         });
     };
 
-    /* 선택된 항목이 있는지 확인 */
-    const hasSelectedItems = useAtomValue(hasSelectedItemsAtom);
+
 
 
     /* 마이페이지 즐겨찾기 조회 */
@@ -59,6 +61,12 @@ const useMyFavorite = () => {
             setLoading(false);
         }
     }, [category, setFavoriteData, setIndividualChecked, setAllCheckedState]);
+
+
+    /* 페이지 URL 변경 감지 시 데이터 리로드 */
+    useEffect(() => {
+        fetchFavorites();
+    }, [fetchFavorites, location.pathname]);     
 
 
     /* 마이페이지 즐겨찾기 검색 */
