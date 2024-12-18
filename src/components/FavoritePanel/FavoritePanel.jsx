@@ -10,6 +10,8 @@ import useMyFavorite from 'src/hooks/useMyFavorite';
 import useSelectDropdown from 'src/hooks/useSelectDropdown';
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
+import AlertModal from 'src/components/Modal/AlertModal';
+import useModal from 'src/hooks/useModal';
 
 const FavoritePanel = () => {
     const location = useLocation();
@@ -31,6 +33,7 @@ const FavoritePanel = () => {
         searchValue,
         setSearchValue,
         handleSearch,
+        hasSelectedItems,
     } = useMyFavorite();
 
 
@@ -63,6 +66,29 @@ const FavoritePanel = () => {
         }
     };
 
+    const handleDelete = () => {
+        if (!hasSelectedItems()) {
+            handleOpenAlertModal(); // 모달 열기
+            return;
+        }
+    
+        // 선택된 항목이 있을 경우 삭제 로직 실행
+        console.log("선택된 항목 삭제 로직 실행");
+    };
+
+    const {
+        isAlertOpen,      
+        openAlertModal,   
+        closeAlertModal,  
+        alertContent
+    } = useModal();
+
+    const handleOpenAlertModal = () => {
+        openAlertModal( 
+            '삭제할 항목이 없습니다',         
+            '삭제할 상품을 선택해주세요' 
+        );
+    };
 
 
     return (
@@ -148,9 +174,18 @@ const FavoritePanel = () => {
                 >
                     검색</button>
 
-                <button className={styles.favoriteDeleteBtn}>
+                <button 
+                    className={styles.favoriteDeleteBtn}
+                    onClick={handleDelete}
+                >
                     삭제
                 </button>
+                <AlertModal
+                    isOpen={isAlertOpen}           
+                    closeModal={closeAlertModal}   
+                    title={alertContent.title}     
+                    message={alertContent.message} 
+                />
             </div>
             
         </div>

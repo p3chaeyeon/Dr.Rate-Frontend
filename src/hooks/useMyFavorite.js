@@ -35,8 +35,14 @@ const useMyFavorite = () => {
         setIndividualChecked((prev) => {
             const updatedArray = [...prev];
             updatedArray[index] = isChecked;
+            console.log(updatedArray);
             return updatedArray;
         });
+    };
+
+    /* 선택된 항목이 있는지 확인 */
+    const hasSelectedItems = () => {
+        return individualChecked.some((isChecked) => isChecked);
     };
 
 
@@ -96,6 +102,7 @@ const useMyFavorite = () => {
         searchValue,
         setSearchValue,
         handleSearch,
+        hasSelectedItems,
 
     };
 };
