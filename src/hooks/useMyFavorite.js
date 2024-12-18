@@ -10,9 +10,10 @@ import {
     setIndividualCheckedAtom,
     setAllCheckedAtom,
     favoriteDataAtom,
+    hasSelectedItemsAtom,
 } from 'src/atoms/myFavoriteAtom';
 import { useCallback, useState, useEffect } from 'react';
-import { getFavorite, searchFavorite } from 'src/apis/myFavoriteAPI';
+import { getFavorite, searchFavorite, deleteFavorite } from 'src/apis/myFavoriteAPI';
 
 // const useMyFavorite = (dataLength) => {
 const useMyFavorite = () => {
@@ -41,9 +42,7 @@ const useMyFavorite = () => {
     };
 
     /* 선택된 항목이 있는지 확인 */
-    const hasSelectedItems = () => {
-        return individualChecked.some((isChecked) => isChecked);
-    };
+    const hasSelectedItems = useAtomValue(hasSelectedItemsAtom);
 
 
     /* 마이페이지 즐겨찾기 조회 */
@@ -83,6 +82,24 @@ const useMyFavorite = () => {
 
 
     /* 마이페이지 즐겨찾기 삭제 */
+    const handleDelete = async (openAlertModal) => { 
+        if (!hasSelectedItems) {
+            openAlertModal('삭제할 항목이 없습니다', '삭제할 상품을 선택해주세요');
+            return;
+        }
+
+        const selectedIds = favoriteData
+            .filter((_, index) => individualChecked[index]) // 선택된 항목 필터링
+            .map((item) => item.favoriteId); // ID만 추출
+
+        try {
+            await deleteFavorite(selectedIds); // API 호출
+            await fetchFavorites(); // 삭제 후 목록 갱신
+        } catch (error) {
+            console.error('삭제 중 에러 발생:', error);
+            throw error;
+        }
+    };
 
 
 
@@ -103,6 +120,7 @@ const useMyFavorite = () => {
         setSearchValue,
         handleSearch,
         hasSelectedItems,
+        handleDelete,
 
     };
 };

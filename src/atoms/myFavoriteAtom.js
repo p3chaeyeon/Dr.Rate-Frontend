@@ -39,3 +39,7 @@ export const setIndividualCheckedAtom = atom(
     }
 );
 
+// 선택된 항목 여부 atom 추가
+export const hasSelectedItemsAtom = atom(
+    (get) => get(individualCheckedAtom).some((checked) => checked) 
+);

@@ -66,15 +66,7 @@ const FavoritePanel = () => {
         }
     };
 
-    const handleDelete = () => {
-        if (!hasSelectedItems()) {
-            handleOpenAlertModal(); // 모달 열기
-            return;
-        }
-    
-        // 선택된 항목이 있을 경우 삭제 로직 실행
-        console.log("선택된 항목 삭제 로직 실행");
-    };
+    const { handleDelete } = useMyFavorite();
 
     const {
         isAlertOpen,      
@@ -82,13 +74,6 @@ const FavoritePanel = () => {
         closeAlertModal,  
         alertContent
     } = useModal();
-
-    const handleOpenAlertModal = () => {
-        openAlertModal( 
-            '삭제할 항목이 없습니다',         
-            '삭제할 상품을 선택해주세요' 
-        );
-    };
 
 
     return (
@@ -176,7 +161,7 @@ const FavoritePanel = () => {
 
                 <button 
                     className={styles.favoriteDeleteBtn}
-                    onClick={handleDelete}
+                    onClick={() => handleDelete(openAlertModal)}
                 >
                     삭제
                 </button>

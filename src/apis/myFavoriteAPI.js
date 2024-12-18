@@ -33,12 +33,14 @@ const searchFavorite= async (category, searchKey, searchValue) => {
       return response.data.result;
 };
 
-const deleteFavorite= async () => {
-    const response = await axios.get(`${PATH.SERVER}/api/favorite/deleteFavorite`, { 
-        headers : { 'Authorization' : `Bearer ${getSessionToken()}`}
-      });
-      return response.data.result;
+const deleteFavorite = async (favoriteIds) => {
+  const response = await axios.delete(`${PATH.SERVER}/api/favorite/deleteFavorite`, {
+      headers: { 'Authorization': `Bearer ${getSessionToken()}` },
+      data: { favoriteIds }, 
+  });
+  return response.data;
 };
+
 
 
 
