@@ -26,8 +26,8 @@ const MyDepositPage = () => {
                 <FavoritePanel favoriteDataLength={favoriteData.length} />
 
                 {/* 상태에 따라 내부 내용만 바뀜 */}
-                {loading && <div>로딩 중...</div>}
-                {error && <div>데이터를 불러오는 중 에러가 발생했습니다.</div>}
+                {loading && <div></div>}
+                {error && <div className={styles.errorDiv}>데이터를 불러오는 중 에러가 발생했습니다.</div>}
 
                 {/* 정상 데이터 로드 */}
                 {!loading && !error && (
