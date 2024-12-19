@@ -16,7 +16,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     // 토큰을 가져옴
-    const token = localStorage.getItem('access');
+    const token = localStorage.getItem('Authorization');
 
     // 토큰이 있으면 헤더에 추가
     if (token) {
@@ -56,13 +56,13 @@ api.interceptors.response.use(
 
       try {
         // Redis에 저장된 accessToken을 서버로 요청해서 비교하고, 새로운 accessToken 발급 받기
-        const currentAccessToken = localStorage.getItem('access');
+        const currentAccessToken = localStorage.getItem('Authorization');
 
         const response = await api.post('/api/auth/refresh', { access_token: currentAccessToken });
 
         // 새로운 액세스 토큰을 받아온 후
         const newAccessToken = response.data.token;
-        localStorage.setItem('access', newAccessToken); // 새로운 토큰을 저장
+        localStorage.setItem('Authorization', newAccessToken); // 새로운 토큰을 저장
 
         // 새로운 토큰을 요청 헤더에 추가하고, 원래의 요청을 재전송
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
