@@ -106,6 +106,14 @@ const MyEmailInquirePage = () => {
                                     <div className={styles.inquireContentDiv}>
                                         <pre className={styles.inquireContent}>{inquire.inquire_content}</pre>
                                     </div>
+                                    <div className={styles.inquireFileDiv}>
+                                        파일 이미지 div
+                                        {/* <img  나중에 파일 uuid 로 바궈야 함 
+                                            src={`${PATH.STORAGE_BANK}/${item.bankLogo}`} 
+                                            alt={`${item.bankName}`} 
+                                            className={styles.inquireFile}
+                                         /> */}
+                                    </div>
                                 </div>
                             </div>
 
