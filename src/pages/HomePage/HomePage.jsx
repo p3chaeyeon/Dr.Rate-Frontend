@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import styles from "./HomePage.module.scss";
+import scatterKookmin from 'src/assets/images/scatterKookmin.png';
+import scatterToss from 'src/assets/images/scatterToss.png';
+import scatterKaKao from 'src/assets/images/scatterKaKao.png';
+import scatterNonghyup from 'src/assets/images/scatterNonghyup.png';
+import scatterHana from 'src/assets/images/scatterHana.png';
+import scatterWoori from 'src/assets/images/scatterWoori.png';
+import scatterShinhan from 'src/assets/images/scatterShinhan.png';
 import homeBGPhone from "src/assets/images/homeBGPhone.png";
+import { trackVisitor } from "src/utils/visitorTracker";
 
 const HomePage = () => {
     const [scatterCollapsed, setScatterCollapsed] = useState(false);
@@ -9,8 +17,10 @@ const HomePage = () => {
     const [phoneFramePartialVisible, setPhoneFramePartialVisible] = useState(false);
     const [phoneFrameFullVisible, setPhoneFrameFullVisible] = useState(false);
 
-
     useEffect(() => {
+        // 방문자 수 조회 (회원/비회원 구분)
+        const authToken = localStorage.getItem("authToken");
+        trackVisitor(authToken); // 방문자 기록 함수 실행
         // body에 클래스 추가
         document.body.classList.add(styles.homeBody);
 
@@ -57,13 +67,13 @@ const HomePage = () => {
             {/* 은행 로고 섹션 */}
             <div className={`${styles.bankScatter} ${scatterCollapsed ? styles.collapsed : ""}`}>
                 {infoVisible && <p className={styles.scatterText}>흩어진 정보</p>}
-                <img src="src/assets/images/scatterKookmin.png" alt="Kookmin" className={styles.scatterKookmin} />
-                <img src="src/assets/images/scatterToss.png" alt="Toss" className={styles.scatterToss} />
-                <img src="src/assets/images/scatterKaKao.png" alt="KaKao" className={styles.scatterKaKao} />
-                <img src="src/assets/images/scatterNonghyup.png" alt="Nonghyup" className={styles.scatterNonghyup} />
-                <img src="src/assets/images/scatterHana.png" alt="Hana" className={styles.scatterHana} />
-                <img src="src/assets/images/scatterWoori.png" alt="Woori" className={styles.scatterWoori} />
-                <img src="src/assets/images/scatterShinhan.png" alt="Shinhan" className={styles.scatterShinhan} />
+                <img src={scatterKookmin} alt="scatter kookmin" className={styles.scatterKookmin} />
+                <img src={scatterToss} alt="scatter toss" className={styles.scatterToss} />
+                <img src={scatterKaKao} alt="scatter kakao" className={styles.scatterKaKao} />
+                <img src={scatterNonghyup} alt="scatter nonghyup" className={styles.scatterNonghyup} />
+                <img src={scatterHana} alt="scatter hana" className={styles.scatterHana} />
+                <img src={scatterWoori} alt="scatter woori" className={styles.scatterWoori} />
+                <img src={scatterShinhan} alt="scatter shinhan" className={styles.scatterShinhan} />
             </div>
 
             {/* 한 번에 확인 텍스트 섹션 */}

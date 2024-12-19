@@ -100,10 +100,10 @@ const Header = () => {
                         <img src={downArrowIcon} alt="Down arrow" className={styles.headerDownArrow} />
                         {isDropdownOpen && (
                             <ul className={styles.headerDropdownMenu} ref={dropdownRef}>
-                                <li className={styles.headerDropdownItem} onClick={() => navigate(PATH.DEPOSIT_COMPARE)}>
+                                <li className={styles.headerDropdownItem} onClick={() => navigate(`${PATH.PRODUCT_COMPARE}/d`)}>
                                     예금 비교
                                 </li>
-                                <li className={styles.headerDropdownItem} onClick={() => navigate(PATH.INSTALLMENT_COMPARE)}>
+                                <li className={styles.headerDropdownItem} onClick={() => navigate(`${PATH.PRODUCT_COMPARE}/i`)}>
                                     적금 비교
                                 </li>
                             </ul>
@@ -279,7 +279,7 @@ const Header = () => {
 
 
                                 {/* (비회원, 회원) 비회원은 고객센터만 보여야함 */}
-                                <li className={ styles.sideMainItem }>
+                                <li className={ styles.sideMainItem } onClick={() => sideNavigation(PATH.SERVICE_CENTER)}> 
                                     고객센터
                                 </li>
 

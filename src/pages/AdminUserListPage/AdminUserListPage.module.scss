@@ -232,7 +232,7 @@
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 570px) {
     .userListDiv {
         height: auto; /* 높이를 콘텐츠에 맞춤 */
         padding: 10px;
@@ -289,5 +289,44 @@
                 }
             }
         }
+    }
+}
+
+@media (max-width: 510px) {
+    .userListTable table,
+    .userListTable thead,
+    .userListTable tbody,
+    .userListTable th,
+    .userListTable td,
+    .userListTable tr {
+        display: block;
+        width: 100%;
+    }
+
+    .userListTable thead {
+        display: none; /* 헤더 숨기기 */
+    }
+
+    .userListTable tr {
+        margin-bottom: 15px; /* 각 행 사이 간격 */
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    .userListTable td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        padding: 10px 0;
+        text-align: left;
+    }
+
+    .userListTable td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        margin-right: 10px;
+        /* 여기서 data-label로 각 td가 어떤 헤더에 해당하는지 알려줄 수 있음 */
     }
 }

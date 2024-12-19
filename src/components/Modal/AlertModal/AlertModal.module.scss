@@ -9,7 +9,7 @@
     background-color: rgba(0, 0, 0, 0.5); /* 배경색 */
     justify-content: center; /* 자식요소 수평중앙 */
     align-items: center; /* 자식요소 수직중앙 */
-  }
+  
   
   .alertModalContent {
     background-color: var(--white);
@@ -18,31 +18,36 @@
     width: 80%;
     max-width: 400px; /* 최대너비 제한*/
     text-align: center;
+
+      /* title 글자크기 */
+      h2 {
+        font-size: 22px; 
+        font-weight: bold; 
+        margin: 15px 0;
+      }
+
+      p {
+        margin: 30px 0;
+      }
+
+      /* 버튼 */
+      .alertOkBtn {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: var(--main2);
+        color: var(--white);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        
+        &:hover {
+          background-color: var(--main1);
+        }
+      }
   }
 
-  /* title 글자크기 */
-  .alertModalContent h2 {
-    font-size: 23px; 
-    font-weight: bold; 
-    margin-bottom: 15px; 
-  }
-  
-  /* 버튼 */
-  .alertOkBtn {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    font-weight: bold;
-    background-color: var(--main2);
-    color: var(--white);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 15px;
-  }
-  
-  .alertOkBtn:hover {
-    background-color: var(--main1);
-  }
+}
   
