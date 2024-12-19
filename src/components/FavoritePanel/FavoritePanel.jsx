@@ -1,39 +1,82 @@
 /* src/components/FavoritePanel/FavoritePanel.jsx */
 
 import styles from './FavoritePanel.module.scss';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PATH } from "src/utils/path";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useAtom } from 'jotai';
-import { allCheckedAtom, setAllCheckedAtom } from 'src/atoms/myFavoriteAtom';
+import { categoryAtom, allCheckedAtom, setAllCheckedAtom } from 'src/atoms/myFavoriteAtom';
 import useMyFavorite from 'src/hooks/useMyFavorite';
 import useSelectDropdown from 'src/hooks/useSelectDropdown';
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
+import AlertModal from 'src/components/Modal/AlertModal';
+import ConfirmModal from 'src/components/Modal/ConfirmModal';
 
-const FavoritePanel = ({ favoriteDataLength }) => {
+
+const FavoritePanel = () => {
     const location = useLocation();
     // const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
+    const [, setCategory] = useAtom(categoryAtom); // category 설정
 
+
+    /* 체크박스 상태 관리 */
     const [allChecked] = useAtom(allCheckedAtom);
     const [, setAllCheckedState] = useAtom(setAllCheckedAtom);
 
-    const { handleIndividualCheck } = useMyFavorite(favoriteDataLength);
     const handleAllCheck = (e) => {
         setAllCheckedState(e.target.checked); // 전체 체크박스 상태 업데이트
     };
 
-    /* useSelectDropdown hooks 사용 */
-    const { isDropdownOpen, setDropdownOpen, handleToggleDropdown, dropdownRef } = useSelectDropdown();
-    const [searchKey, setSearchKey] = useState('은행'); // 드롭다운 선택된 값
+    const {
+        searchKey,
+        setSearchKey,
+        searchValue,
+        setSearchValue,
+        handleSearch,
+        hasSelectedItems,
+        handleDeleteClick,
+        isAlertOpen, 
+        openAlertModal,
+        closeAlertModal,
+        alertContent,
+        isConfirmOpen,
+        openConfirmModal,
+        closeConfirmModal,
+        confirmContent, 
+    } = useMyFavorite();
 
-    // 드롭다운 아이템 클릭 핸들러
+    /* 드롭다운 상태 관리 */
+    const { isDropdownOpen, setDropdownOpen,handleToggleDropdown, dropdownRef } = useSelectDropdown();
+
+    /* 드롭다운 항목 선택 시 상태 업데이트 */
     const handleSelectItemClick = (value) => {
-        setSearchKey(value); // 선택된 값을 업데이트
+        setSearchKey(value); // 검색 키 설정
         setDropdownOpen(false); // 드롭다운 닫기
     };
-
     
+
+    /* 페이지 경로에 따라 category 설정 */
+    useEffect(() => {
+        if (location.pathname.includes(PATH.MY_DEPOSIT)) {
+            setCategory('deposit');
+        } else {
+            setCategory('installment');
+        }
+    }, [location.pathname, setCategory]);
+    
+    
+    /* searchKey 출력용 변환 함수 */
+    const getDisplayText = (key) => {
+        switch (key) {
+            case 'bankName': return '은행';
+            case 'prdName': return '상품';
+            default: return '은행';
+        }
+    };
+
+
+
     return (
         <div className={ styles.favoritePanel }>
 
@@ -61,16 +104,14 @@ const FavoritePanel = ({ favoriteDataLength }) => {
                     onChange={handleAllCheck}
                 />
 
-                <div
-                    className={ styles.selectDiv }
-                    ref={dropdownRef}
-                >
+                {/* 드롭다운 */}
+                <div className={ styles.selectDiv } ref={dropdownRef} >
                     <div 
                         onClick={ handleToggleDropdown }
                         className={`${styles.selectDefaultDiv} ${isDropdownOpen ? styles.active : ''}`}
                     >
                         <div className={ styles.selectOptionDiv }>
-                            <span className={ styles.selectOption }>{searchKey}</span>
+                            <span className={ styles.selectOption }>{getDisplayText(searchKey)}</span>
                         </div>
                         <div className= {styles.selectArrowDiv }>
                             <img
@@ -80,19 +121,18 @@ const FavoritePanel = ({ favoriteDataLength }) => {
                             />                            
                         </div>
                     </div>
+
                     {isDropdownOpen && (
                         <div className={styles.selectDropdownDiv} ref={dropdownRef}>
                             <div
                                 className={styles.selectDropdownItem}
-                                onClick={() => handleSelectItemClick('은행')}
-                                data-value="bank_name"
+                                onClick={() => handleSelectItemClick('bankName')}
                             >
                                 은행
                             </div>
                             <div
                                 className={styles.selectDropdownItem}
-                                onClick={() => handleSelectItemClick('상품')}
-                                data-value="prd_name"
+                                onClick={() => handleSelectItemClick('prdName')}
                             >
                                 상품
                             </div>
@@ -102,15 +142,44 @@ const FavoritePanel = ({ favoriteDataLength }) => {
 
 
                 <input 
-                    type="text" 
-                    name="favoriteSearchText" 
-                    className={ styles.favoriteSearchText }
-                    placeholder="검색어" 
+                    type="text"
+                    value={searchValue} 
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            handleSearch();
+                        }
+                    }}              
+                    className={styles.favoriteSearchText}
+                    placeholder="검색어"
                 />
 
-                <button className={ styles.favoriteSearchBtn }>검색</button>
+                <button 
+                    className={styles.favoriteSearchBtn}
+                    onClick={handleSearch}
+                >
+                    검색</button>
 
-                <button className={ styles.favoriteDeleteBtn }>삭제</button>
+                <button 
+                    className={styles.favoriteDeleteBtn}
+                    onClick={() => handleDeleteClick()}
+                >
+                    삭제
+                </button>
+                <AlertModal
+                    isOpen={isAlertOpen}           
+                    closeModal={closeAlertModal}   
+                    title={alertContent.title}     
+                    message={alertContent.message} 
+                />
+                <ConfirmModal
+                    isOpen={isConfirmOpen}           
+                    closeModal={closeConfirmModal}   
+                    title={confirmContent.title}     
+                    message={confirmContent.message} 
+                    onConfirm={confirmContent.onConfirm} 
+                    onCancel={confirmContent.onCancel}   
+                />                
             </div>
             
         </div>

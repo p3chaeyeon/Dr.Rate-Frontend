@@ -26,18 +26,18 @@ const ConfirmModal = ({ isOpen, closeModal, title, message, onConfirm, onCancel 
         {/* Confirm Modal 확인, 취소 버튼 */}
         <div className={styles.buttonContainer}>
           <button 
-            className={styles.confirmButton} 
-            onClick={onConfirm} // 확인 버튼 기능 수행
-              // 사용하는 페이지에서 수행할 기능과 closeConfirmModal(); 을 포함한 이벤트 핸들러를 생성해야함
-          >
-            확인
-          </button>
-          <button 
             className={styles.cancelButton} 
             onClick={onCancel} // 취소 버튼 기능 수행
               // 사용하는 페이지에서 수행할 기능과 closeConfirmModal(); 을 포함한 이벤트 핸들러를 생성해야함
           >
             취소
+          </button>
+          <button 
+            className={styles.confirmButton} 
+            onClick={onConfirm} // 확인 버튼 기능 수행
+              // 사용하는 페이지에서 수행할 기능과 closeConfirmModal(); 을 포함한 이벤트 핸들러를 생성해야함
+          >
+            확인
           </button>
         </div>
       </div>
