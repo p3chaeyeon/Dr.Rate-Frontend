@@ -247,6 +247,13 @@
         .sendEmailSection{            
             flex-direction: column !important;
             align-items: flex-start !important;
+
+            p{
+                padding: 10px 0px ;
+            }
+            input{
+                margin-bottom: 10px;
+            }
         }
     }
 
