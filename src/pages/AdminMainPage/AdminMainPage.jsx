@@ -62,7 +62,7 @@ const AdminMainPage = () => {
 
     const fetchVisitorSummary = async () => {
         try {
-            const response = await fetch(`${PATH.SERVER}/api/visitor-summary`, {
+            const response = await fetch(`${PATH.SERVER}/api/admin/visitor-summary`, {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}` }
             });
