@@ -32,7 +32,6 @@ function App() {
               <Route path={PATH.USER_INQUIRE} element = {<PageRoutes.UserInquirePage/>}/>
               <Route path={PATH.EMAIL_INQUIRE} element = {<PageRoutes.EmailInquirePage/>}/>
               <Route path={PATH.OAUTH_HANDLER} element = {<PageRoutes.OAuthCallbackHandlerPage/>}/>
-
           </Route>
 
 
@@ -45,9 +44,11 @@ function App() {
           <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<PageRoutes.AdminMainPage />} /> {/* /admin 기본 경로 */}
               <Route path={PATH.ADMIN_MAIN} element={<PageRoutes.AdminMainPage />} />
+              <Route path={PATH.ADMIN_USER_LIST} element={<PageRoutes.AdminUserListPage/>} />
               <Route path={PATH.ADMIN_INQUIRE_LIST} element={<PageRoutes.AdminInquireListPage/>} />
               <Route path={PATH.ADMIN_INQUIRE} element={<PageRoutes.AdminInquirePage />} />{/* path={`${PATH.ADMIN_INQUIRE}/:inquireId`} */}
-              <Route path={PATH.ADMIN_USER_LIST} element={<PageRoutes.AdminUserListPage/>} />
+              <Route path={PATH.ADMIN_EMAIL_INQUIRE_LIST} element={<PageRoutes.AdminEmailInquireListPage/>} />
+              <Route path={PATH.ADMIN_EMAIL_INQUIRE} element={<PageRoutes.AdminEmailInquirePage/>} />
           </Route>
       </Routes>
 

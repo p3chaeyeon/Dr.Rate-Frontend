@@ -30,6 +30,8 @@ export const PATH = {
   ADMIN_USER_LIST: "/admin/userList",
   ADMIN_INQUIRE_LIST: "/admin/adminInquireList",
   ADMIN_INQUIRE: "/admin/adminInquire",
+  ADMIN_EMAIL_INQUIRE_LIST: "/admin/emailInquireList",
+  ADMIN_EMAIL_INQUIRE: "/admin/emailInquire",
 
   STORAGE_BANK: "https://kr.object.ncloudstorage.com/dr-rate/bankLogo",
   SERVER: "http://localhost:8080", // 배포 후 여기만 수정
