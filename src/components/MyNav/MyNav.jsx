@@ -79,7 +79,7 @@ const MyNav = () => {
                     문의 내역
                     <img src={downArrowIcon} alt="Down arrow" className={styles.myNavDownArrow} />
                     {isInquiryDropdownOpen && (
-                        <ul className={styles.MyDropdownMenu} ref={inquiryDropdownRef}>
+                        <ul className={styles.InquireDropdownMenu} ref={inquiryDropdownRef}>
                             <li className={styles.MyDropdownItem} onClick={() => navigate(PATH.MY_EMAIL_INQUIRE)}>
                                 이메일 문의
                             </li>
