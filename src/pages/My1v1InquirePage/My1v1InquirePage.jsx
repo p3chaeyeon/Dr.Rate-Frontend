@@ -8,12 +8,15 @@ import { PATH } from "src/utils/path";
 import MyNav from 'src/components/MyNav';
 import AlertModal from 'src/components/Modal/AlertModal';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
+import api from 'src/apis/axiosInstanceAPI';
+
 
 
 const My1v1InquirePage = () => {
     const navigate = useNavigate();
 
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem("Authorization");
     const userId = parseJwt(token)?.id;  // access token을 parse하여 id값 가져옴
     const phoneScreenRef = useRef(null);  // 스크롤 처리를 위한 ref
     const [messages, setMessages] = useState([]); // 메세지 데이터 저장
@@ -172,8 +175,14 @@ const My1v1InquirePage = () => {
             const phoneScreen = phoneScreenRef.current;
             const previousScrollHeight = phoneScreen ? phoneScreen.scrollHeight : 0; // 이전 scrollHeight 저장
 
-            const response = await fetch(`${PATH.SERVER}/api/chatmessages/list?roomId=${userId}&page=${currentPage}&size=15`);
-            const data = await response.json();
+            const response = await api.get(`/api/chatmessages/list`, {
+                params: {
+                    roomId: userId,
+                    page: currentPage,
+                    size: 15,
+                },
+            });
+            const data = response.data;
             if (data.success) {
                 const reversedMessages = data.result.content.reverse();
                 setMessages((prevMessages) => [...reversedMessages, ...prevMessages]);
@@ -202,13 +211,11 @@ const My1v1InquirePage = () => {
         formData.append("senderId", userId);
 
         try {
-            const response = await fetch(`${PATH.SERVER}/chat/upload/${userId}`, {
-                method: "POST",
-                headers: { Authorization: `Bearer ${token}` },
-                body: formData,
+            const response = await api.post(`/chat/upload/${userId}`, formData, {
+                headers: { "Content-Type": "multipart/form-data" },
             });
 
-            const data = await response.json();
+            const data = response.data;
             if (data.success) {
                 console.log("파일 업로드 성공: ", data);
             } else {
@@ -222,12 +229,8 @@ const My1v1InquirePage = () => {
 
     const handleInquiryClose = async () => {
         try {
-            const response = await fetch(`${PATH.SERVER}/api/chatrooms/${userId}`, {
-                method: "DELETE",
-                headers: { Authorization: `Bearer ${token}` },
-            });
-
-            const data = await response.json();
+            const response = await api.delete(`/api/chatrooms/${userId}`);
+            const data = response.data;
 
             closeConfirmModal();
             if (data.success) {
@@ -247,21 +250,14 @@ const My1v1InquirePage = () => {
             <MyNav />
 
             <section className={styles.my1v1InquireSection}>
-                <div className={styles.inquireTypeContainer}>
-                    <div className={styles.inquireTypeDiv}>
-                        <div
-                            className={styles.inquireType}
-                            onClick={() => navigate(PATH.MY_EMAIL_INQUIRE)}
-                        >
-                            이메일 문의
-                        </div>
-                        <div
-                            className={styles.inquireType}
-                            onClick={() => navigate(PATH.MY_1V1_INQUIRE)}
-                        >
-                            1:1 문의
-
-                        </div>
+                {/* 문의 내역 카테고리 - 예금 or 적금 */}
+                <div className={ styles.inquireTypeDiv }>
+                    <div className={ styles.inquireTypeItem }>문의 내역</div>
+                    <div className={ styles.inquireTypeItem }>
+                        <img src={rightArrowIcon} alt="오른쪽 화살표" className={styles.rightArrowIcon} />
+                    </div>
+                    <div className={ styles.inquireTypeItem }>
+                        1:1 문의
                     </div>
                 </div>
 
