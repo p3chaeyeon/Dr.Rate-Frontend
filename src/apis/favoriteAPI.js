@@ -1,8 +1,8 @@
-/* src/apis/favoriteAPI.js */
 /* 상품상세페이지; ProductDetailPage */
 
 import axiosInstanceAPI from "./axiosInstanceAPI.js";
 import { PATH } from 'src/utils/path';
+
 
 
 /**
@@ -18,6 +18,7 @@ const checkFavorite = async (prdId) => {
 };
 
 
+
 /**
  * 즐겨찾기 추가
  * @param {number} prdId - 상품 ID
@@ -26,10 +27,11 @@ const checkFavorite = async (prdId) => {
 const addFavorite = async (prdId) => {
   const response = await axiosInstanceAPI.post(
     `${PATH.SERVER}/api/favorite/addFavorite`, 
-    { prdId } // 요청 바디에 상품 ID 전달
+    { prdId } 
   );
   return response.data;
 };
+
 
 
 /**
