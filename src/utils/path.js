@@ -12,7 +12,7 @@ export const PATH = {
   MY_WITHDRAW: "/myWithdraw",       // 마이페이지; 회원 탈퇴
   MY_CALENDAR: "/myCalendar",       // 마이페이지; 나의 적금 달력
   MY_EMAIL_INQUIRE:"/myEmailInquire",    // 마이페이지; 이메일 문의 내역
-  MY_1V1_INQUIRE:"/my1V1Inquire",      // 마이페이지; 1:1 문의 내역
+  MY_1V1_INQUIRE:"/my1v1Inquire",      // 마이페이지; 1:1 문의 내역
   OAUTH_HANDLER: "/oauthHandler",
 
   INSTALLMENT_LIST: "/product/installmentList", // 상품-적금리스트페이지; 필터페이지 -혜진
