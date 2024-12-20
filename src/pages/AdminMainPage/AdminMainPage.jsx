@@ -3,7 +3,7 @@ import styles from './AdminMainPage.module.scss';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import api from 'src/apis/axiosInstanceAPI';
-import userLogo from 'src/assets/icons/userIcon.png'
+import userLogo from 'src/assets/icons/userIcon.png';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
