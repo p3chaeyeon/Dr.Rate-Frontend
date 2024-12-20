@@ -12,7 +12,7 @@ import AlertModal from 'src/components/Modal/AlertModal/AlertModal'; //AlertModa
 import ConfirmModal from 'src/components/Modal/ConfirmModal/ConfirmModal';
 import useModal from 'src/hooks/useModal'; //useModal 훅 추가
 
-import { PATH } from "src/utils/path"; //경로
+import { PATH } from 'src/utils/path'; //경로
 import leftArrowIcon from 'src/assets/icons/leftArrow.svg'; //icon
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 
