@@ -89,7 +89,7 @@ const ProductDetailPage = () => {
         const isUserLoggedIn = localStorage.getItem('sessionToken');
 
         // session값 받아오면 변경해야됨
-        if (isUserLoggedIn) {
+        if (!isUserLoggedIn) {
             setIsOpen((prev) => !prev);
         } else {
             const confirmMessage = (

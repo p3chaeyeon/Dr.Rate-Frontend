@@ -39,14 +39,14 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
   const calculateSimpleInterestForDeposit = (P, r, t) => {
     const annualInterest = P * 10000 * (r * 0.01) * t;
     const afterTaxInterest = annualInterest * (1 - taxRate);
-    return afterTaxInterest + (P * 10000 * t); 
+    return afterTaxInterest +  (P * 10000); 
   };
 
   // 복리 계산 (예금)
   const calculateCompoundInterestForDeposit = (P, r, t) => {
     const compoundInterest = (P * 10000) * Math.pow(1 + (r * 0.01) / 12, 12 * t);
     const afterTaxInterest = compoundInterest * (1 - taxRate);
-    return afterTaxInterest + (P * 10000 * t);
+    return afterTaxInterest + (P * 10000);
   };
 
   // 숫자 변형 #,###
@@ -57,16 +57,16 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
     // 예금
     if (products.ctg === 'd') {
       if (rateType === 'M') {
-        result = calculateSimpleInterestForDeposit(monthM, r, t);
-      } else if (rateType === 'S') {
         result = calculateCompoundInterestForDeposit(monthM, r, t);
+      } else if (rateType === 'S') {
+        result = calculateSimpleInterestForDeposit(monthM, r, t);
       }
     // 적금
     } else if (products.ctg === 'i') {
       if (rateType === 'M') {
-        result = calculateSimpleInterestForSavings(monthM, r, t, months);
-      } else if (rateType === 'S') {
         result = calculateCompoundInterestForSavings(monthM, r, t, months);
+      } else if (rateType === 'S') {
+        result = calculateSimpleInterestForSavings(monthM, r, t, months);
       }
     }
     setTotal(result);
