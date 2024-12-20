@@ -12,6 +12,7 @@ import scatterShinhan from 'src/assets/images/scatterShinhan.png';
 import homeBGPhone from 'src/assets/images/homeBGPhone.png';
 import DepositLink from 'src/assets/images/DepositLink.png';
 import InstallmentLink from 'src/assets/images/InstallmentLink.png';
+import homeCalendar from 'src/assets/images/homeCalendar.png';
 import { trackVisitor } from 'src/utils/visitorTracker';
 
 const HomePage = () => {
@@ -92,9 +93,10 @@ const HomePage = () => {
             </div>
 
             <section className={styles.homeSection}>
-                <div className={styles.divTitle}>
+                <div className={styles.productLinkTitle}>
                     예금 • 적금 서비스 바로가기
                 </div>
+
                 <div className={styles.productLinkDiv}>
                     <div className={styles.depositLinkDiv}>
                         <div className={styles.depositLinkTitle}>
@@ -122,6 +124,33 @@ const HomePage = () => {
                         >
                             바로가기</button>
                     </div>    
+                </div>
+
+
+                <div className={styles.calendarLinkTitle}>
+                    나의 적금 달력
+                </div>
+
+                <div className={styles.calendarLinkDiv}>
+                    <div className={styles.calendarLinkBGDiv}>
+                        <div className={styles.calendarImgExplainDiv}>
+                            <div className={styles.calendarImgDiv}>
+                                    <img className={styles.calendarImg} src={homeCalendar} alt="달력 이미지지" />
+                            </div>
+                            <div className={styles.webExplain}>
+                                가입한 적금을 등록하여 납부일, 납부 금액을 확인할 수 있어요
+                            </div>
+                        </div>
+                        <div className={styles.calendarLinkBtnDiv}>
+                            <div className={styles.calendarLinkExplain}>적금 납부일, 납부금액 확인</div>
+                            <button 
+                                className={styles.calendarLinkBtn}
+                                onClick={() => navigate(PATH.MY_CALENDAR)}
+                            >
+                                바로가기
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </section>
         </main>

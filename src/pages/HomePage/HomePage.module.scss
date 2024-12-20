@@ -186,20 +186,19 @@
 }
 
 .homeSection {
-    padding: 20px 30px;
-    padding-top: 50px;
+    padding: 100px;
     background-color: #fff;
 
-    .divTitle {
-        margin-top: 30px;
+    .productLinkTitle {
         font-size: 26px;
         font-weight: 600;
     }
 
     .productLinkDiv {
-        margin-top: 30px;
+        margin-top: 20px;
+        max-width: 1000px;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
 
         .depositLinkDiv, .installmentLinkDiv {
@@ -302,5 +301,88 @@
             }
         }
     }
+
+    
+    .calendarLinkTitle {
+        margin-top: 70px;
+        font-size: 26px;
+        font-weight: 600;
+    }
+
+    .calendarLinkDiv {
+        max-width: 1000px;
+        
+        .calendarLinkBGDiv {
+            margin-top: 20px;
+            padding: 0 10px;
+            height: 84px;
+            background: var(--admin-body);
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .calendarImgExplainDiv {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 10px;
+
+                .calendarImgDiv {
+                aspect-ratio: 1 / 1;
+                width: 68px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                    .calendarImg {
+                        width: 100%;
+                        object-fit: cover;
+                    }
+                }
+
+                .webExplain {
+                    font-size: 18px;
+                }
+            }
+
+            .calendarLinkBtnDiv {
+                padding-right: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-end;
+                gap: 10px;
+
+                .calendarLinkExplain{
+                    color: var(--font1);
+                    font-size: 14px;
+                }
+
+                .calendarLinkBtn {
+                    width: 90px;
+                    height: 30px;
+                    font-size: 13px;
+                    letter-spacing: 1px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: var(--white);
+                    border: 1px solid var(--red1);
+                    background: var(--red1);
+                    border-radius: 3px;
+
+                    &:hover {
+                        border: 1px solid var(--red2);
+                        background: var(--red2);
+                    }
+                
+                }
+            }
+        }
+    }
+
+
+
 
 }
