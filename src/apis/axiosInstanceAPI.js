@@ -16,7 +16,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     // 토큰을 가져옴
-    const token = localStorage.getItem('Authorization'); // 토큰 가져오기
+    let token = localStorage.getItem('Authorization'); // 토큰 가져오기
 
     // 토큰이 존재하고, "Bearer " 접두사가 없는 경우만 추가
     if (token && !token.startsWith('Bearer ')) {
