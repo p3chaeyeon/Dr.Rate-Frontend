@@ -1,3 +1,3 @@
-import OAuthCallbackHandlerPage from "./OAuthCallbackHandlerPage";
+import OAuthCallbackHandlerPage from "src/OAuthCallbackHandlerPage";
 
 export default OAuthCallbackHandlerPage;
