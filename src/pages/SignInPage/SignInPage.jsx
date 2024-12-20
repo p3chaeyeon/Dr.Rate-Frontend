@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';  // useNavigate 추가
-import AlertModal from '../../components/modal/AlertModal'; // AlertModal import
-import styles from './SignInPage.module.scss';
+import AlertModal from 'src/components/modal/AlertModal'; // AlertModal import
+import styles from 'src/SignInPage.module.scss';
 
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
 import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
-import { PATH } from '../../utils/path';
+import { PATH } from 'src/utils/path';
 
 const SignInPage = () => {
     const navigate = useNavigate();  // navigate 훅 사용

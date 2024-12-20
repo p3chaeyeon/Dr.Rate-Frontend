@@ -1,7 +1,7 @@
 // src/apis/axiosInstanceAPI.js
 
 import axios from 'axios';
-import { PATH } from "../utils/path"; // 경로 import
+import { PATH } from "src/utils/path"; // 경로 import
 
 // axios 인스턴스 생성
 const api = axios.create({
