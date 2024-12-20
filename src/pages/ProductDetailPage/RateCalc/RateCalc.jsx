@@ -1,16 +1,24 @@
 import AlertModal from 'src/components/Modal/AlertModal';
 import useModal from 'src/hooks/useModal';
 
+import downArrowIcon1 from 'src/assets/icons/downDetailArrow.svg';
+
 import styles from './RateCalc.module.scss';
 import useCalc from 'src/hooks/useCalc';
 
 import React, { useEffect, useState } from 'react';
 import { atom, useAtom } from 'jotai';
 
-const RateCalc = ({isOpen, onClose, conditions, options}) => {
+const RateCalc = ({isOpen, conditions, options}) => {
     
   const {basicRate, products, rateType, saveTime} = options || {};
   const {ctg, max} = products || {};
+
+  const [isOpenResult, setIsOpenResult] = useState(false);
+
+  const handleToggle = () => {
+    setIsOpenResult((prev) => !prev);
+  }
 
   // useModal 훅
   const { 
@@ -29,9 +37,13 @@ const RateCalc = ({isOpen, onClose, conditions, options}) => {
   const {
     total,
     spcl,
-    monthM,
-    setMonthM,
-    r,
+    rate,
+    totalPrincipal, 
+    totalInterest, 
+    afterTaxInterest, 
+    totalAmount,
+    deposit,
+    setDeposit,
     formatNumber,
     onChangeRateTotal,
     modalOpen,
@@ -40,9 +52,39 @@ const RateCalc = ({isOpen, onClose, conditions, options}) => {
   const getInputTitle = () => (ctg === 'd' ? "총 저축 금액" : "월 저축 금액");
   const getInputTitle2 = () => (ctg === 'd' ? "총" : "월");
 
+
+
+  const [value, setValue] = useState(formatNumber(max/10000));
+
+  const formatInputNumber = (input) => {
+    const rawValue = input.replace(/[^\d]/g, '');
+    return rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
+  
+  const handleChange = (e) => {
+    const formattedValue = formatInputNumber(e.target.value);
+    setValue(formattedValue);
+  };
+
    // 월 적립 금액 입력값 처리
   const handleInputChange = (e) => {
-    const value = e.target.value;
+    const input = e.target.value;
+    const number = input.replace(/,/g, '').replace(/[^\d.]/g, '');
+
+    if (number === '') {
+      setDeposit(''); // 빈값을 그대로 설정
+      return;
+    }
+
+    if (isNaN(number)) {
+      openAlertModal('입력 오류', '숫자만 입력해 주세요.');
+      e.target.value = '';
+      setDeposit(0);
+      return;
+    }
+    
+    const value = parseFloat(number);
 
     if (max !== null) {
       if (value > max / 10000) {
@@ -61,34 +103,42 @@ const RateCalc = ({isOpen, onClose, conditions, options}) => {
         e.target.value = 0;
       }
     }
-    setMonthM(Number(e.target.value));
+    setDeposit(Number(value));
   };
 
   return (
-    <div className={`${styles.serviceDiv} ${isOpen ? styles.open : ''}`}>
-      <div className={styles.serviceTop} onClick={onClose}>
-          <span className={styles.serviceOne}>이자계산기</span>
-          <span className={styles.serviceTwo}>자세히</span>
-        </div>
+    <div className={`${styles.serviceDiv} ${isOpen ? styles.close : styles.open}`}>
 
         <div className={styles.serviceInput}>
           <p>
               <span className={styles.serviceMonthTitle}>{getInputTitle()}</span>
               <span className={styles.serviceMonthTitleInput}>
-                  <input type="number" placeholder={getInputTitle()}
-                  className={styles.inputType} id="monthM" onChange={handleInputChange} /> 만원
+                  <input type='text' placeholder={getInputTitle()}
+                  className={styles.inputType} value={value} onChange={(e) => {handleInputChange(e); handleChange(e)}} /> 만원
               </span>
           </p>
           <p className={styles.scpl_total_rateTitle}>
-              <span className={styles.scpl_total_rate}>금리 {r} %</span>
+              <span className={styles.scpl_total_rate}>금리 {rate} %</span>
           </p>
           <p className={styles.scpl_total_ratesub}>
               <span>기본 금리 {basicRate} % + <span className={styles.spclStyle}>우대금리 {spcl} %</span></span>
           </p>
           <p className={styles.totalTitle}>
-              {getInputTitle2()} <span className={styles.monthM}>{formatNumber(monthM)} 만원( 총 {saveTime} 개월 )</span>적립 시, 
+              {getInputTitle2()} <span className={styles.monthM}>{formatNumber(deposit)} 만원( 총 {saveTime} 개월 )</span>적립 시, 
               <span className={styles.serviceMonthTotal}>총 금액 {formatNumber(total)}원</span>
           </p>
+          
+          <span onClick={handleToggle} className={styles.btnResult}>자세히 <img src={downArrowIcon1} className={`${styles.downArrowIcon1} ${isOpenResult ? styles.rotated : ''}`} /></span>
+          {isOpenResult && (
+            <div className={styles.resultDiv}>
+            <p className={styles.result}>
+              <div><span>원금합계</span><span>{formatNumber(totalPrincipal)} 원</span></div>
+              <div><span>세전이자</span><span>{formatNumber(totalInterest)} 원</span></div>
+              <div><span>이자과세(15.4%)</span><span>{formatNumber(afterTaxInterest)} 원</span></div>
+              <div><span>{rateType === 'M' ? '단리' : '복리'} {rate}%, 일반과세 기준</span><span className={styles.amount}>{formatNumber(totalAmount)} 원</span></div>
+            </p>
+            </div>
+          )}
           
         </div>
 

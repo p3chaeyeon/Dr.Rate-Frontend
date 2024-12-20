@@ -257,16 +257,16 @@ const ProductDetailPage = () => {
                 
 
                 {/* 이자 계산기 */}
-                {!isOpen && (
-                <div className={`${styles.serviceDiv} ${isOpen ? styles.open : ''}`} onClick={handleToggle}>
-                    <span className={styles.serviceOne}>이자계산기</span>
-                    <span className={styles.serviceTwo}>자세히 <img src={downArrowIcon2} className={styles.downArrowIcon2}/></span>
+                <div className={`${styles.serviceDiv} ${isOpen ? styles.open : styles.close}`} >
+                    <div className={styles.serviceTitle} onClick={handleToggle}>
+                        <span className={styles.serviceOne}>이자계산기</span>
+                        <span className={styles.serviceTwo}>자세히 <img src={downArrowIcon2} className={styles.downArrowIcon2}/></span>
+                    </div>
+                    {options && options[i] && (
+                    <RateCalc isOpen={isOpen} options={options[i] || {}} conditions={conditions}/>
+                    )}
                 </div>
-                )}
-
-                {isOpen && options && options[i] && (
-                    <RateCalc isOpen={isOpen} options={options[i] || {}} conditions={conditions}  onClose={handleToggle}/>
-                )}
+                
 
                 {/* Confirm Modal */}
                 {isConfirmOpen && (

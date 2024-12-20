@@ -1,34 +1,16 @@
+.open{
+    display: none;
+}
+
+.close{
+    display: block;
+}
+
 .serviceDiv{
-    margin-top: 200px;
-    width: 100%;
-    border: 2px solid var(--main2);
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-
-    .serviceTop{
-        width: 100%; height: 50px; line-height: 45px;
-        border-bottom: 2px solid var(--main2);
-        padding: 0 20px;
-        cursor: pointer;
-    
-        .serviceTwo{
-            float: right;
-            color: var(--font2);
-        }
-    }
-    .serviceTitle{
-        border-bottom: 2px solid var(--main2);
-        padding: 10px 20px;
-
-        .serviceTwo{
-            float: right;
-            color: var(--font2);
-        }
-    }
 
     .serviceInput{
-        margin-top: 100px;
+        border-top: 2px solid var(--main1);
+        padding-top: 70px;
         font-size: 1.2em;
         text-align: center;
 
@@ -64,7 +46,7 @@
         }
 
         .scpl_total_rateTitle{
-            margin: 70px 0 30px 0;
+            margin: 50px 0 30px 0;
 
             .scpl_total_rate{
                 padding: 10px 20px;
@@ -76,7 +58,7 @@
         }
 
         .scpl_total_ratesub{
-            margin: 10px 0 70px 0;
+            margin: 10px 0 0 0;
             font-size: 0.8em; font-weight: 700;
             color: var(--font2);
 
@@ -87,7 +69,7 @@
         }
 
         .totalTitle{
-            margin: 30px 0 100px 0;
+            margin: 30px 0 10px 0;
 
             .monthM{
                 padding: 0 10px;
@@ -100,6 +82,75 @@
                 font-size: 1.2em;
                 font-weight: 700;
                 color: var(--red1);
+            }
+
+        }
+        
+        .btnResult{
+            cursor: pointer;
+            font-size: 12px;
+            color: var(--font2);
+
+            .downArrowIcon1{
+                margin-left: 5px;
+                transition: 0.4s;
+                color: var(--font4);
+            }
+
+            .rotated {
+                transform: rotate(-180deg);
+                transition: 0.4s;
+            }
+            
+        }
+        
+        .resultDiv{
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            margin-bottom: 30px; 
+
+            .result {
+                display: flex;
+                flex-direction: column;
+                width: 400px;
+                padding: 20px;
+                border: 1px solid var(--divider-border);
+                border-radius: 8px;
+                
+                
+                div {
+                    display: flex;
+                    gap: 20px;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                
+                span {
+                    font-size: 15px;
+                    color: var(--font2);
+                }
+                
+                span:first-child {
+                    font-weight: bold;
+                    color: var(--font2);
+                }
+                
+                span:last-child {
+                    font-weight: bold;
+                    color: var(--main2);
+                }
+                
+                .amount {
+                    color: var(--main2);
+                    font-size: 15px;
+                    font-weight: bold;
+                }
+                
+                .tax-rate {
+                    color: var(--red2)
+                }
             }
         }
     }

@@ -95,27 +95,37 @@
 
 .serviceDiv{
     clear: both;
+    height: 0;
     margin-top: 200px;
     width: 100%; height: 50px; line-height: 45px;
-    border: 2px solid #407BFF;
+    border: 2px solid var(--main1);
     border-radius: 10px;
     padding: 0 20px;
-    cursor: pointer;
+    transition: height 0.5s ease-in-out;
 
     .downArrowIcon2{
         margin-left: 10px;
     }
 
-    .serviceTwo{
-        float: right;
-        color: var(--font2);
+    .serviceTitle{
+        cursor: pointer;
+        
+        .serviceTwo{
+            float: right;
+            color: var(--font2);
+        }
     }
+
 
 }
 
 .serviceDiv.open{
-    background-color: #407BFF;
-    color: var(--white);
+    height: auto;
+    transition: 0.5s;
+}
+
+.serviceDiv.close{
+    transition: 0.4s;
 }
 
 .detailDiv{
