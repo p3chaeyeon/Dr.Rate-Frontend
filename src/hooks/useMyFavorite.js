@@ -50,7 +50,6 @@ const useMyFavorite = () => {
         setIndividualChecked((prev) => {
             const updatedArray = [...prev];
             updatedArray[index] = isChecked;
-            console.log(updatedArray);
             return updatedArray;
         });
     };
