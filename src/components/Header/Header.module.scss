@@ -195,7 +195,7 @@
                 height: 60px;
 
                 .signInBtn, .signUpBtn {
-                    width: 120px;
+                    width: 48%;
                     height: 40px;
                 }
 
@@ -402,6 +402,17 @@
 
     .mobileSideNav {
         width: 77%;
+
+        .mobileSideHeader {
+            
+            .sideBtnDiv {
+                
+                .signInBtn, .signUpBtn {
+                    width: 48%;
+                    height: 34px;
+                }
+            }
+        }
     }
 
 }
