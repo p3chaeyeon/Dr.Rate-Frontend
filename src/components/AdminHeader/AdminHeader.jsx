@@ -1,7 +1,7 @@
 import {  useNavigate } from 'react-router-dom';
 import styles from './AdminHeader.module.scss';
 import React, { useEffect, useState } from 'react';
-import { PATH } from "src/utils/path";
+import { PATH } from 'src/utils/path';
 
 const AdminHeader = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

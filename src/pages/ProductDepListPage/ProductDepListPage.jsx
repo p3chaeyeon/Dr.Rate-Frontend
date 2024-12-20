@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { PATH } from "src/utils/path";
-import styles from "./ProductDepListPage.module.scss";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from 'src/utils/path';
+import styles from './ProductDepListPage.module.scss';
 import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
 import AlertModal from 'src/components/Modal/AlertModal';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
-import useModal from "../../hooks/useModal";
+import useModal from "src/hooks/useModal";
 
 const ProductDepListPage = () => {
   const [selectedBanks, setSelectedBanks] = useState([]); // 선택된 은행 목록
