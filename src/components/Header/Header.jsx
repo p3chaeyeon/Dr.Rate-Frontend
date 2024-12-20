@@ -22,41 +22,29 @@ const Header = () => {
     const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
     const { isDropdownOpen, dropdownRef, handleMouseEnter, handleMouseLeave } = useDropdown();
 
-    const { session, updateSession, clearSession } = useSession();
-    const [isLoggedIn, setIsLoggedIn] = useState(!!session);
+    // const { isLoggedIn, updateSession, clearSession } = useSession();
+    // const [isLoggedIn, setIsLoggedIn] = useState(!!session);
+    const { isLoggedIn, clearSession } = useSession();
 
     const handleLogin = () => {
-        updateSession('dummy'); 
+        localStorage.setItem('Authorization', 'dummy');
         navigate(PATH.SIGN_IN);
     };
 
     const handleLogout = () => {
-        clearSession(); // 세션 초기화
-        setIsLoggedIn(false); // 즉각적으로 상태 업데이트
-        navigate(PATH.HOME); // 홈 화면으로 이동
+        clearSession();
+        navigate(PATH.HOME); 
     };
 
     const handleMobileLogin = () => {
-        updateSession('dummy'); 
+        localStorage.setItem('Authorization', 'dummy');
         sideNavigation(PATH.SIGN_IN);
     };
 
     const handleMobileLogout = () => {
-        clearSession(); 
-        setIsLoggedIn(false); 
-        sideNavigation(PATH.SIGN_UP);
+        clearSession();
+        sideNavigation(PATH.HOME);
     };
-
-
-    useEffect(() => {
-        setIsLoggedIn(!!session); 
-    }, [session]);
-
-    useEffect(() => {
-        console.log('Page loaded');
-        console.log('Current localStorage Authorization:', localStorage.getItem('Authorization'));
-        console.log('Logged in status:', isLoggedIn);
-    }, [isLoggedIn]);
 
 
     // 모바일 사이드 메뉴
