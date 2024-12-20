@@ -36,16 +36,6 @@ const Header = () => {
         navigate(PATH.HOME); 
     };
 
-    const handleMobileLogin = () => {
-        localStorage.setItem('Authorization', 'dummy');
-        sideNavigation(PATH.SIGN_IN);
-    };
-
-    const handleMobileLogout = () => {
-        clearSession();
-        sideNavigation(PATH.HOME);
-    };
-
 
     // 모바일 사이드 메뉴
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -204,13 +194,16 @@ const Header = () => {
                                 <div className={styles.sideBtnDiv}>
                                     <button
                                         className={styles.signInBtn}
-                                        onClick={handleMobileLogin}
+                                        onClick={() => {
+                                            handleLogin(); 
+                                            setIsMobileMenuOpen(false);
+                                          }}
                                     >
                                         로그인
                                     </button>
                                     <button
                                         className={styles.signUpBtn}
-                                        onClick={handleMobileLogout}
+                                        onClick={() => sideNavigation(PATH.SIGN_UP)}
                                     >
                                         회원가입
                                     </button>
@@ -279,7 +272,13 @@ const Header = () => {
                                     <>
                                         {/* (회원) 로그인 했을 때; 로그아웃, 마이페이지, 고객센터 모두 보여야함 */}
                                         <div className={styles.sideMemberMenu}>
-                                            <li className={styles.sideMainItem} onClick={handleLogout}>
+                                            <li 
+                                            className={styles.sideMainItem} 
+                                            onClick={() => {
+                                                handleLogout(); 
+                                                setIsMobileMenuOpen(false);
+                                              }}
+                                            >
                                                 로그아웃
                                             </li>
                                             <li
