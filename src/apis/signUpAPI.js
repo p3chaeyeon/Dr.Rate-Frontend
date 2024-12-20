@@ -106,5 +106,5 @@ export const signUpUser = async (user_name, user_id, user_pwd, user_email) => {
 
 // 소셜 로그인 처리
 export const handleOAuthLogin = (provider) => {
-    window.location.href = `http://localhost:8080/signIn/${provider}`;
+    window.location.href = `http://localhost:8080/api/signIn/${provider}`;
 };
