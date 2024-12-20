@@ -208,7 +208,7 @@
         .linkDiv {
           padding: 20px;
           width: 48%;
-          max-width: 400px;
+          max-width: 440px;
           aspect-ratio: 1 / 1;
           border-radius: 20px;
           display: flex;
@@ -388,12 +388,10 @@
   /* ====================================== 가로 1100px 이하 ====================================== */
   @media (max-width: 1100px) {
     .homeSection {
-      padding: 80px;
+      padding: 80px 60px;
   
       .productLinkDiv {
         .linkDiv {
-          max-width: 320px;
-          max-height: 320px;
   
           .linkTitle {
             font-size: 22px;
@@ -402,6 +400,25 @@
           .linkImgDiv {
             width: 160px;
           }
+        }
+      }
+
+      .calendarLinkDiv {
+        .calendarLinkBGDiv {
+            .calendarImgExplainDiv {
+                .webExplain {
+                    font-size: 16px;
+                    // max-width: 300px;
+                }
+            }
+
+            .calendarLinkBtnDiv {
+                gap: 8px;
+
+                .calendarLinkExplain {
+                    font-size : 13px;
+                }
+            }
         }
       }
     }
@@ -426,6 +443,25 @@
           .linkImgDiv {
             width: 160px;
           }
+        }
+      }
+
+      .calendarLinkDiv {
+        .calendarLinkBGDiv {
+            .calendarImgExplainDiv {
+                .webExplain {
+                    font-size: 16px;
+                    max-width: 300px;
+                }
+            }
+
+            .calendarLinkBtnDiv {
+                gap: 8px;
+                
+                .calendarLinkExplain {
+                    font-size : 13px;
+                }
+            }
         }
       }
     }
@@ -479,6 +515,21 @@
             }
         }
       }
+
+      .calendarLinkDiv {
+        .calendarLinkBGDiv {
+            .calendarImgExplainDiv {
+                .webExplain {
+                    font-size: 15px;
+                    max-width: 270px;
+                }
+            }
+
+            .calendarLinkBtnDiv {
+                gap: 7px;
+            }
+        }
+      }
     }
   }
 
@@ -497,6 +548,21 @@
             width: 160px;
             font-size: 16px;
           }
+        }
+      }
+
+      .calendarLinkDiv {
+        .calendarLinkBGDiv {
+            .calendarImgExplainDiv {
+                .webExplain {
+                    font-size: 15px;
+                    max-width: 220px;
+                }
+            }
+
+            .calendarLinkBtnDiv {
+                gap: 5px;
+            }
         }
       }
     }
@@ -536,6 +602,21 @@
             }
         }
       }
+
+      .calendarLinkDiv {
+        .calendarLinkBGDiv {
+            .calendarImgExplainDiv {
+                .webExplain {
+                    display: none;
+                }
+            }
+
+            .calendarLinkBtnDiv {
+                gap: 5px;
+            }
+        }
+      }
+
     }
   }
   
