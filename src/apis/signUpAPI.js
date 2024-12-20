@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { PATH } from "src/utils/path";
+import { PATH } from 'src/utils/path';
 
 
 // 비밀번호 정규 표현식 (영문, 숫자, 특수문자를 포함한 8~12자)
