@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { PATH } from 'src/utils/path';
+
 
 // 비밀번호 정규 표현식 (영문, 숫자, 특수문자를 포함한 8~12자)
 export const validatePassword = (password) => {
@@ -20,7 +22,7 @@ export const validateEmail = (email) => {
 
 export const checkIdAvailability = async (user_id) => {
     try {
-        const response = await axios.get(`http://localhost:8080/api/signUp/existId?userId=${user_id}`);
+        const response = await axios.get(`${PATH.SERVER}/api/signUp/existId?userId=${user_id}`);
 
         if (response.status === 200 && response.data.success) {
             return { success: true, message: '사용 가능한 아이디입니다.' };
@@ -53,7 +55,7 @@ export const checkIdAvailability = async (user_id) => {
 // 이메일 인증 요청 API 호출
 export const sendEmailVerification = async (user_email) => {
     try {
-        const response = await axios.post(`http://localhost:8080/api/email/verify?email=${user_email}`);
+        const response = await axios.post(`${PATH.SERVER}/api/email/verify?email=${user_email}`);
         const { success, code, message } = response.data;
         if (success) {
             return { success: true, message: '인증 메일이 전송되었습니다.' };
@@ -74,7 +76,7 @@ export const sendEmailVerification = async (user_email) => {
 // 이메일 인증 코드 확인 API 호출
 export const confirmEmailVerification = async (user_email, authCode) => {
     try {
-        const response = await axios.get(`http://localhost:8080/api/email/verifications?email=${user_email}&code=${authCode}`);
+        const response = await axios.get(`${PATH.SERVER}/api/email/verifications?email=${user_email}&code=${authCode}`);
         if (response.data.success) {
             return { success: true, message: '이메일 인증이 완료되었습니다.' };
         } else {
@@ -88,7 +90,7 @@ export const confirmEmailVerification = async (user_email, authCode) => {
 // 회원가입 API 호출
 export const signUpUser = async (user_name, user_id, user_pwd, user_email) => {
     try {
-        const response = await axios.post('http://localhost:8080/api/signUp', {
+        const response = await axios.post(`${PATH.SERVER}/api/signUp`, {
             username: user_name,
             userId: user_id,
             password: user_pwd,
@@ -106,5 +108,5 @@ export const signUpUser = async (user_name, user_id, user_pwd, user_email) => {
 
 // 소셜 로그인 처리
 export const handleOAuthLogin = (provider) => {
-    window.location.href = `http://localhost:8080/signIn/${provider}`;
+    window.location.href = `${PATH.SERVER}/api/signIn/${provider}`;
 };
