@@ -23,13 +23,13 @@ const SignInPage = () => {
 
     // 로그인 후 JWT 처리 함수
     const handleOAuthLogin = async (provider) => {
-        window.location.href=`http://localhost:8080/api/signIn/${provider}`;
+        window.location.href=`${PATH.SERVER}/api/signIn/${provider}`;
     };
 
     // 일반 로그인 처리 함수
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:8080/api/signIn', {
+            const response = await axios.post(`${PATH.SERVER}/api/signIn`, {
                 user_id: userId,
                 user_pwd: userPwd,
             });
