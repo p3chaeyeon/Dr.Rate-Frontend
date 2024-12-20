@@ -3,7 +3,7 @@
 import styles from './Header.module.scss';
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { PATH } from "src/utils/path";
+import { PATH } from 'src/utils/path';
 import { useSession } from 'src/hooks/useSession';
 import headerLogo from 'src/assets/images/headerLogo.png';
 import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
@@ -23,9 +23,41 @@ const Header = () => {
     const { isDropdownOpen, dropdownRef, handleMouseEnter, handleMouseLeave } = useDropdown();
 
     const { session, updateSession, clearSession } = useSession();
-    const isLoggedIn = !!session;
+    const [isLoggedIn, setIsLoggedIn] = useState(!!session);
 
-    console.log('Header: Is Logged In:', isLoggedIn);
+    const handleLogin = () => {
+        updateSession('dummy'); 
+        navigate(PATH.SIGN_IN);
+    };
+
+    const handleLogout = () => {
+        clearSession(); // 세션 초기화
+        setIsLoggedIn(false); // 즉각적으로 상태 업데이트
+        navigate(PATH.HOME); // 홈 화면으로 이동
+    };
+
+    const handleMobileLogin = () => {
+        updateSession('dummy'); 
+        sideNavigation(PATH.SIGN_IN);
+    };
+
+    const handleMobileLogout = () => {
+        clearSession(); 
+        setIsLoggedIn(false); 
+        sideNavigation(PATH.SIGN_UP);
+    };
+
+
+    useEffect(() => {
+        setIsLoggedIn(!!session); 
+    }, [session]);
+
+    useEffect(() => {
+        console.log('Page loaded');
+        console.log('Current localStorage Authorization:', localStorage.getItem('Authorization'));
+        console.log('Logged in status:', isLoggedIn);
+    }, [isLoggedIn]);
+
 
     // 모바일 사이드 메뉴
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -122,7 +154,7 @@ const Header = () => {
                 <ul className={styles.userMenuList}>
                     <li
                         className={styles.userMenuItem}
-                        onClick={() => (isLoggedIn ? clearSession() : navigate(PATH.SIGN_IN))}
+                        onClick={isLoggedIn ? handleLogout : handleLogin}
                     >
                         {isLoggedIn ? "로그아웃" : "로그인"}
                     </li>
@@ -184,13 +216,13 @@ const Header = () => {
                                 <div className={styles.sideBtnDiv}>
                                     <button
                                         className={styles.signInBtn}
-                                        onClick={() => sideNavigation(PATH.SIGN_IN)}
+                                        onClick={handleMobileLogin}
                                     >
                                         로그인
                                     </button>
                                     <button
                                         className={styles.signUpBtn}
-                                        onClick={() => sideNavigation(PATH.SIGN_UP)}
+                                        onClick={handleMobileLogout}
                                     >
                                         회원가입
                                     </button>
@@ -259,7 +291,7 @@ const Header = () => {
                                     <>
                                         {/* (회원) 로그인 했을 때; 로그아웃, 마이페이지, 고객센터 모두 보여야함 */}
                                         <div className={styles.sideMemberMenu}>
-                                            <li className={styles.sideMainItem} onClick={clearSession}>
+                                            <li className={styles.sideMainItem} onClick={handleLogout}>
                                                 로그아웃
                                             </li>
                                             <li

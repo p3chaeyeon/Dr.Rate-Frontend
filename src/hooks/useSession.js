@@ -6,18 +6,20 @@ import { sessionAtom } from 'src/atoms/sessionAtom';
 export const useSession = () => {
     const [session, setSession] = useAtom(sessionAtom);
 
-    console.log('Current Session Value:', session);
-
     const updateSession = (newToken) => {
-        localStorage.setItem('Authorization', newToken);
-        setSession(newToken);
+        setSession(newToken); // 세션을 업데이트 (로그인)
+        console.log('Session Updated:', newToken);
     };
 
     const clearSession = () => {
-        localStorage.removeItem('Authorization');
-        setSession(null);
+        setSession(null); // 세션을 초기화 (로그아웃)
         console.log('Session Cleared');
     };
 
     return { session, updateSession, clearSession };
 };
+
+
+
+
+
