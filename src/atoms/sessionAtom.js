@@ -2,8 +2,10 @@
 
 import { atom } from 'jotai';
 
-export const sessionAtom = atom(() => {
-    const token = localStorage.getItem('Authorization');
-    console.log('Initial Session Value:', token); // 디버깅 로그 
-    return token || null;
-});
+// Authorization 키가 로컬 스토리지에 있는지 확인하여 초기값 설정
+const isLoggedInAtom = atom(!!localStorage.getItem('Authorization'));
+
+export { isLoggedInAtom };
+
+
+
