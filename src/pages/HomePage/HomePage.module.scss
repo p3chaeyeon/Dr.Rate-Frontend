@@ -185,7 +185,122 @@
     }
 }
 
-section {
-    padding: 20px;
+.homeSection {
+    padding: 20px 30px;
+    padding-top: 50px;
     background-color: #fff;
+
+    .divTitle {
+        margin-top: 30px;
+        font-size: 26px;
+        font-weight: 600;
+    }
+
+    .productLinkDiv {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        .depositLinkDiv, .installmentLinkDiv {
+            width: 48%;
+            max-width: 400px;
+            height: 400px;
+        }
+        
+        .depositLinkDiv {
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #0085E4;
+            border-radius: 20px;
+            background: #0085E4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            .depositLinkTitle {
+                font-size: 24px;
+                text-align: center;
+                color: var(--white);
+            }
+
+            .depositLinkImgDiv {
+                margin-top: 10px;
+                aspect-ratio: 1 / 1;
+                width: 200px;
+                text-align: center;
+                
+                .depositLinkImg {
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .depositLinkBtn {
+                font-size: 20px;
+                width: 250px;
+                height: 70px;
+                border: 1px solid #1A91E7;
+                border-radius: 10px;
+                background: #1A91E7;
+                color: var(--white);
+                text-align: center;
+
+                &:hover {
+                    background-color: #339DE9;
+                    border: 1px solid  #339DE9;
+                }
+            }
+        }
+
+        .installmentLinkDiv {
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #5C44F3;
+            border-radius: 20px;
+            background: #5C44F3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            .installmentLinkTitle {
+                font-size: 24px;
+                text-align: center;
+                color: var(--white);
+            }
+
+            .installmentLinkImgDiv {
+                margin-top: 10px;
+                aspect-ratio: 1 / 1;
+                width: 200px;
+                text-align: center;
+
+                .installmentLinkImg {
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .installmentLinkBtn {
+                font-size: 20px;
+                width: 250px;
+                height: 70px;
+                border: 1px solid #6D57F4;
+                border-radius: 10px;
+                background: #6D57F4;
+                color: var(--white);
+                text-align: center;
+
+                &:hover {
+                    background-color: #7D69F5;
+                    border: 1px solid  #7D69F5;
+                }
+            }
+        }
+    }
+
 }

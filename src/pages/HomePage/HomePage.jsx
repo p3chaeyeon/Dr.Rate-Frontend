@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from 'src/utils/path';
 import styles from './HomePage.module.scss';
 import scatterKookmin from 'src/assets/images/scatterKookmin.png';
 import scatterToss from 'src/assets/images/scatterToss.png';
@@ -8,9 +10,12 @@ import scatterHana from 'src/assets/images/scatterHana.png';
 import scatterWoori from 'src/assets/images/scatterWoori.png';
 import scatterShinhan from 'src/assets/images/scatterShinhan.png';
 import homeBGPhone from 'src/assets/images/homeBGPhone.png';
+import DepositLink from 'src/assets/images/DepositLink.png';
+import InstallmentLink from 'src/assets/images/InstallmentLink.png';
 import { trackVisitor } from 'src/utils/visitorTracker';
 
 const HomePage = () => {
+    const navigate = useNavigate();
     const [scatterCollapsed, setScatterCollapsed] = useState(false);
     const [infoVisible, setInfoVisible] = useState(true);
     const [seeTogetherVisible, setSeeTogetherVisible] = useState(false);
@@ -86,8 +91,38 @@ const HomePage = () => {
                 <img src={homeBGPhone} alt="폰 프레임" />
             </div>
 
-            <section>
-                <div>추가적인 내용 여기에 위치</div>
+            <section className={styles.homeSection}>
+                <div className={styles.divTitle}>
+                    예금 • 적금 서비스 바로가기
+                </div>
+                <div className={styles.productLinkDiv}>
+                    <div className={styles.depositLinkDiv}>
+                        <div className={styles.depositLinkTitle}>
+                            예금 목록
+                        </div>
+                        <div className={styles.depositLinkImgDiv}>
+                            <img className={styles.depositLinkImg} src={DepositLink} alt="예금 목록 링크" />
+                        </div>
+                        <button 
+                            className={styles.depositLinkBtn}
+                            onClick={() => navigate(PATH.DEPOSIT_LIST)}
+                        >
+                            바로가기</button>
+                    </div>    
+                    <div className={styles.installmentLinkDiv}>
+                        <div className={styles.installmentLinkTitle}>
+                            적금 목록
+                        </div>
+                        <div className={styles.installmentLinkImgDiv}>
+                            <img className={styles.installmentLinkImg} src={InstallmentLink} alt="적금 목록 링크" />
+                        </div>
+                        <button 
+                            className={styles.installmentLinkBtn}
+                            onClick={() => navigate(PATH.INSTALLMENT_LIST)}
+                        >
+                            바로가기</button>
+                    </div>    
+                </div>
             </section>
         </main>
     );
