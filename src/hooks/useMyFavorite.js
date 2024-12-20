@@ -150,7 +150,6 @@ const useMyFavorite = () => {
         handleSearch,
         hasSelectedItems,
         handleDeleteClick,
-        isAlertOpen,
         isAlertOpen, // AlertModal 상태
         openAlertModal,
         closeAlertModal,

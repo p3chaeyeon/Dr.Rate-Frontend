@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from './AdminUserListPage.module.scss'
+import styles from './AdminUserListPage.module.scss';
 import api from 'src/apis/axiosInstanceAPI';
 
 const AdminUserListPage = () => {

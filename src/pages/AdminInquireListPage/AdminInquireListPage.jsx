@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import { PATH } from "src/utils/path";
+import { useNavigate } from 'react-router-dom';
+import { PATH } from 'src/utils/path';
 import styles from './AdminInquireListPage.module.scss';
 import api from 'src/apis/axiosInstanceAPI';
 

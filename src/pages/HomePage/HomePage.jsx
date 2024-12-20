@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import styles from "./HomePage.module.scss";
+import React, { useState, useEffect } from 'react';
+import styles from './HomePage.module.scss';
 import scatterKookmin from 'src/assets/images/scatterKookmin.png';
 import scatterToss from 'src/assets/images/scatterToss.png';
 import scatterKaKao from 'src/assets/images/scatterKaKao.png';
@@ -7,8 +7,8 @@ import scatterNonghyup from 'src/assets/images/scatterNonghyup.png';
 import scatterHana from 'src/assets/images/scatterHana.png';
 import scatterWoori from 'src/assets/images/scatterWoori.png';
 import scatterShinhan from 'src/assets/images/scatterShinhan.png';
-import homeBGPhone from "src/assets/images/homeBGPhone.png";
-import { trackVisitor } from "src/utils/visitorTracker";
+import homeBGPhone from 'src/assets/images/homeBGPhone.png';
+import { trackVisitor } from 'src/utils/visitorTracker';
 
 const HomePage = () => {
     const [scatterCollapsed, setScatterCollapsed] = useState(false);

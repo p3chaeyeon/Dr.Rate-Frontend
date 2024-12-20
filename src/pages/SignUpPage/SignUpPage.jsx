@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AlertModal from 'src/components/modal/AlertModal'; // AlertModal import
-import styles from 'src/SignUpPage.module.scss';
+import styles from './SignUpPage.module.scss';
 
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
 import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
-import { PATH } from "src/utils/path.js";
+import { PATH } from 'src/utils/path.js';
 
 const SignUpPage = () => {
     const navigate = useNavigate();

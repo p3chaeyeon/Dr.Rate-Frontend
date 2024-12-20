@@ -1,3 +1,3 @@
-import SignInPage from "src/SignInPage.jsx";
+import SignInPage from './SignInPage.jsx';
 
 export default SignInPage;

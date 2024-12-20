@@ -1,4 +1,4 @@
-import SignUpPage from "src/SignUpPage.jsx";
+import SignUpPage from './SignUpPage.jsx';
 
 
 
