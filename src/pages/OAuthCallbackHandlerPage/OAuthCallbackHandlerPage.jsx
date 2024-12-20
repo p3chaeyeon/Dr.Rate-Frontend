@@ -14,7 +14,7 @@ const OAuthCallbackHandlerPage = () => {
 
         if (access) {
             // Access Token을 localStorage에 저장
-            localStorage.setItem("Authorization", access);
+            localStorage.setItem("Authorization", "Bearer " + access);
 
             // 메인 페이지로 이동
             navigate(`${PATH.HOME}`);
