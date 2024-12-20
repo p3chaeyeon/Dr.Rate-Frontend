@@ -92,39 +92,40 @@ const HomePage = () => {
                 <img src={homeBGPhone} alt="폰 프레임" />
             </div>
 
+
+
             <section className={styles.homeSection}>
                 <div className={styles.productLinkTitle}>
                     예금 • 적금 서비스 바로가기
                 </div>
 
                 <div className={styles.productLinkDiv}>
-                    <div className={styles.depositLinkDiv}>
-                        <div className={styles.depositLinkTitle}>
-                            예금 목록
+                    <div className={`${styles.linkDiv} ${styles.depositLinkDiv}`}>
+                        <div className={styles.linkTitle}>예금 목록</div>
+                        <div className={styles.linkImgDiv}>
+                        <img className={styles.linkImg} src={DepositLink} alt="예금 목록 링크" />
                         </div>
-                        <div className={styles.depositLinkImgDiv}>
-                            <img className={styles.depositLinkImg} src={DepositLink} alt="예금 목록 링크" />
-                        </div>
-                        <button 
-                            className={styles.depositLinkBtn}
-                            onClick={() => navigate(PATH.DEPOSIT_LIST)}
+                        <button
+                        className={`${styles.linkBtn} ${styles.depositLinkBtn}`}
+                        onClick={() => navigate(PATH.DEPOSIT_LIST)}
                         >
-                            바로가기</button>
-                    </div>    
-                    <div className={styles.installmentLinkDiv}>
-                        <div className={styles.installmentLinkTitle}>
-                            적금 목록
+                        바로가기
+                        </button>
+                    </div>
+                    <div className={`${styles.linkDiv} ${styles.installmentLinkDiv}`}>
+                        <div className={styles.linkTitle}>적금 목록</div>
+                        <div className={styles.linkImgDiv}>
+                        <img className={styles.linkImg} src={InstallmentLink} alt="적금 목록 링크" />
                         </div>
-                        <div className={styles.installmentLinkImgDiv}>
-                            <img className={styles.installmentLinkImg} src={InstallmentLink} alt="적금 목록 링크" />
-                        </div>
-                        <button 
-                            className={styles.installmentLinkBtn}
-                            onClick={() => navigate(PATH.INSTALLMENT_LIST)}
+                        <button
+                        className={`${styles.linkBtn} ${styles.installmentLinkBtn}`}
+                        onClick={() => navigate(PATH.INSTALLMENT_LIST)}
                         >
-                            바로가기</button>
-                    </div>    
+                        바로가기
+                        </button>
+                    </div>
                 </div>
+
 
 
                 <div className={styles.calendarLinkTitle}>
