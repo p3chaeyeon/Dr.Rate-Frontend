@@ -27,7 +27,7 @@ const HomePage = () => {
 
     useEffect(() => {
         // 방문자 수 조회 (회원/비회원 구분)
-        const authToken = localStorage.getItem("authToken");
+        const authToken = localStorage.getItem("Authorization");
         trackVisitor(authToken); // 방문자 기록 함수 실행
         // body에 클래스 추가
         document.body.classList.add(styles.homeBody);
