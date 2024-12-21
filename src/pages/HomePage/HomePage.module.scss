@@ -656,74 +656,74 @@
     }
 
     .scatterToss {
-      top: calc((80 / 500) * 100%);
-      left: calc((543 / 1400) * 100%);
+      top: calc((100 / 600) * 100%);
+      left: calc((543 / 1200) * 100%);
     }
-
+    
     .scatterKaKao {
       top: calc((190 / 600) * 100%);
-      left: calc((818 / 1400) * 100%);
+      left: calc((700 / 1200) * 100%);
     }
-
+    
     .scatterNonghyup {
-      top: calc((472 / 800) * 100%);
-      left: calc((774 / 1400) * 100%);
+      top: calc((400 / 600) * 100%);
+      left: calc((774 / 1200) * 100%);
     }
-
+    
     .scatterHana {
-      top: calc((600 / 800) * 100%);
-      left: calc((609 / 1400) * 100%);
+      top: calc((500 / 600) * 100%);
+      left: calc((609 / 1200) * 100%);
     }
-
+    
     .scatterWoori {
-      top: calc((500 / 800) * 100%);
+      top: calc((450 / 600) * 100%);
       left: calc((222 / 1200) * 100%);
     }
-
+    
     .scatterShinhan {
-      top: calc((280 / 750) * 100%);
+      top: calc((220 / 600) * 100%);
       left: calc((80 / 1200) * 100%);
     }
+    
 
     &.collapsed {
       .scatterKookmin {
-        top: calc(50% + 40px);
-        left: calc(30% - 20px);
+        top: calc(50% + 120px);
+        left: calc(30% - 35px);
       }
-
+    
       .scatterToss {
-        top: calc(45% + 20px);
-        left: calc(37% + 20px);
+        top: calc(45% + 100px);
+        left: calc(37% + 5px);
       }
-
+    
       .scatterKaKao {
-        top: calc(60% - 30px);
-        left: calc(50% - 20px);
+        top: calc(60% + 50px);
+        left: calc(50% - 35px);
       }
-
+    
       .scatterNonghyup {
-        top: calc(75% - 80px);
-        left: calc(45% + 40px);
+        top: calc(75% - 0px);
+        left: calc(45% + 25px);
       }
-
+    
       .scatterHana {
-        top: calc(85% - 50px);
-        left: calc(45% + 10px);
+        top: calc(85% + 30px);
+        left: calc(45% - 5px);
       }
-
+    
       .scatterWoori {
-        top: calc(85% - 30px);
-        left: calc(35% - 20px);
+        top: calc(85% + 50px);
+        left: calc(35% - 35px);
       }
-
+    
       .scatterShinhan {
-        top: calc(65% + 30px);
-        /* 적당히 중앙으로 이동 */
-        left: calc(25% - 30px);
+        top: calc(65% + 110px);
+        left: calc(25% - 45px);
       }
     }
-
   }
+    
 
   .seeTogether {
     font-size: 2.4rem;
@@ -747,9 +747,6 @@
       }
     }
   }
-
-
-
 
 
 
@@ -807,6 +804,50 @@
 
 /* ====================================== 가로 360px 이하 ====================================== */
 @media (max-width: 360px) {
+
+  .bankScatter {
+
+
+    &.collapsed {
+      .scatterKookmin {
+        top: calc(50% + 50px);
+        left: calc(30% - 35px);
+      }
+    
+      .scatterToss {
+        top: calc(45% + 30px);
+        left: calc(37% + 5px);
+      }
+    
+      .scatterKaKao {
+        top: calc(60% - 20px);
+        left: calc(50% - 35px);
+      }
+    
+      .scatterNonghyup {
+        top: calc(75% - 70px);
+        left: calc(45% + 25px);
+      }
+    
+      .scatterHana {
+        top: calc(85% - 40px);
+        left: calc(45% - 5px);
+      }
+    
+      .scatterWoori {
+        top: calc(85% - 20px);
+        left: calc(35% - 35px);
+      }
+    
+      .scatterShinhan {
+        top: calc(65% + 40px);
+        left: calc(25% - 45px);
+      }
+    }
+    
+  }
+
+
   .homeSection {
     padding: 70px 10px;
     min-width: 330px;
