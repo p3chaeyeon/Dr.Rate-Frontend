@@ -15,6 +15,7 @@ import InstallmentLink from 'src/assets/images/InstallmentLink.png';
 import homeCalendar from 'src/assets/images/homeCalendar.png';
 import { trackVisitor } from 'src/utils/visitorTracker';
 
+
 const HomePage = () => {
     const navigate = useNavigate();
     const [scatterCollapsed, setScatterCollapsed] = useState(false);
@@ -22,6 +23,7 @@ const HomePage = () => {
     const [seeTogetherVisible, setSeeTogetherVisible] = useState(false);
     const [phoneFramePartialVisible, setPhoneFramePartialVisible] = useState(false);
     const [phoneFrameFullVisible, setPhoneFrameFullVisible] = useState(false);
+    const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
     useEffect(() => {
         // 방문자 수 조회 (회원/비회원 구분)
@@ -35,32 +37,58 @@ const HomePage = () => {
             document.body.classList.remove(styles.homeBody);
         };
     }, []);
+
+
+    // 뷰포트 크기 업데이트
+    useEffect(() => {
+        const handleResize = () => {
+            setViewportWidth(window.innerWidth);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+    
     
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
 
-            // 은행 이미지 단계적 모임 (스크롤 값에 따라 조금 더 유연하게 조정)
-            setScatterCollapsed(scrollY > 1700 && scrollY < 2300);
+            if (viewportWidth > 430) { // 가로 크기가 430px 초과일 때
+                
+                // 은행 이미지 단계적 모임 (스크롤 값에 따라 조금 더 유연하게 조정)
+                setScatterCollapsed(scrollY > 1700 && scrollY < 2400);
+                
+                // '흩어진 정보' 텍스트 가시성 (1750 이 넘으면 사라짐)
+                setInfoVisible(scrollY < 1750);
 
-            // '흩어진 정보' 텍스트 가시성 (1500이 넘으면 사라짐)
-            setInfoVisible(scrollY < 1750);
+                // "한 번에 확인" 글자 표시 (은행 이미지들이 모인 후 나타남)
+                setSeeTogetherVisible(scrollY >= 2000 && scrollY < 2500);
 
-            // "한 번에 확인" 글자 표시 (은행 이미지들이 모인 후 나타남)
-            setSeeTogetherVisible(scrollY >= 2000 && scrollY < 2500);
+                // 폰 프레임 일부 노출 (은행 로고와 '한 번에 확인' 글자가 사라진 후 표시)
+                setPhoneFramePartialVisible(scrollY >= 2000 && scrollY < 2600);
 
-            // 폰 프레임 일부 노출 (은행 로고와 '한 번에 확인' 글자가 사라진 후 표시)
-            setPhoneFramePartialVisible(scrollY >= 2000 && scrollY < 2600);
+                // 폰 프레임 전체 표시 (완전히 노출)
+                setPhoneFrameFullVisible(scrollY >= 2600);
 
-            // 폰 프레임 전체 표시 (완전히 노출)
-            setPhoneFrameFullVisible(scrollY >= 2600);
+
+            } else { // 가로 크기가 430px 이하일 때
+                setScatterCollapsed(scrollY > 1150 && scrollY < 1650);
+                setInfoVisible(scrollY < 1200);
+                setSeeTogetherVisible(scrollY >= 1400 && scrollY < 1800);
+                setPhoneFramePartialVisible(scrollY >= 1500 && scrollY < 1900);
+                setPhoneFrameFullVisible(scrollY >= 1900);
+            }
         };
 
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
-    }, []);
+    }, [viewportWidth]); // 뷰포트 너비가 변경될 때마다 스크롤 조건을 업데이트
+    
+
 
     return (
         <main className={styles.homeMain}>
@@ -91,6 +119,7 @@ const HomePage = () => {
             <div className={`${styles.phoneScroll} ${phoneFramePartialVisible ? styles.partial : ""} ${phoneFrameFullVisible ? styles.full : ""}`}>
                 <img src={homeBGPhone} alt="폰 프레임" />
             </div>
+
 
 
 
