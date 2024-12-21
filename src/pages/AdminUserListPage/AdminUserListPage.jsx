@@ -22,7 +22,7 @@ const AdminUserListPage = () => {
                 queryParams.append("keyword", keywordParam.trim());
             }
 
-            const response = await api.get(`/api/userList`, { params: queryParams });
+            const response = await api.get(`/api/admin/userList`, { params: queryParams });
             const data = response.data;
 
             if (data.success) {
