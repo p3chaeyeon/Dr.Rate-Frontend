@@ -95,7 +95,7 @@ const HomePage = () => {
 
 
             <section className={styles.homeSection}>
-                <div className={styles.homeTitle}>
+                <div className={styles.homeSectionTitle}>
                     예금 • 적금 서비스 바로가기
                 </div>
 
@@ -128,7 +128,7 @@ const HomePage = () => {
 
 
 
-                <div className={`${styles.homeTitle} ${styles.calendarLinkTitle}`} >
+                <div className={`${styles.homeSectionTitle} ${styles.calendarLinkTitle}`} >
                     나의 적금 달력
                 </div>
 
