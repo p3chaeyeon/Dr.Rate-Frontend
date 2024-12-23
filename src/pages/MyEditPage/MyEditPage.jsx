@@ -35,7 +35,7 @@ const MyEditPage = () => {
 
     const myInfoEdit = async (username, email, password) => {
         try {
-            const response = await axios.post(`${PATH.SERVER}/api/myInfoEdit`, {
+            const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfoEdit`, {
                 username: username,
                 userId: userId,
                 password: password,
@@ -54,11 +54,15 @@ const MyEditPage = () => {
     const [initialData, setInitialData] = useState(null);
     //데이터 받아오기
     useEffect(() => {
-        console.log("useEffect 실행");
         const userData = async () => {
             try {
                 const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfo`);
-                
+                if(response.data.result.social !== null) {
+                    setModalTitle("소셜 로그인 접근");
+                    setModalMessage("소셜 로그인은 회원 정보를 수정할 수 없습니다.");
+                    setShowModal(true);
+                    return;
+                }
                 setUsername(response.data.result.username);
                 setEmail(response.data.result.email);
                 setUserId(response.data.result.userId);
@@ -216,32 +220,34 @@ const MyEditPage = () => {
                             value={email}
                             placeholder="이메일입력"
                             onChange={handleEmailChange} />
+                            {isEmailChanged && (
                             <button type="button"
                                 onClick={handleEmailVerification}
                                 className={styles.verifyButton}
                             >
                                 인증 메일 전송
                             </button>
+                            )}
                         </div>
 
                         {isEmailChanged && (
-                            <div className={styles.tagBox}>
-                                <input
-                                    type="text"
-                                    name="auth_code"
-                                    id="auth_code"
-                                    placeholder="인증 코드"
-                                    value={authCode}
-                                    onChange={(e) => setAuthCode(e.target.value)}
-                                />
-                                <button
-                                    type="button"
-                                    onClick={handleEmailConfirmation}
-                                    className={styles.verifyButton}
-                                >
-                                    인증 코드 확인
-                                </button>
-                            </div>
+                        <div className={`${styles.tagBox}`}>
+                            <p className={`${styles.tagName}`}>인증 코드</p>
+                            <input type="text" className={`${styles.myData}`}
+                                name="auth_code"
+                                id="auth_code"
+                                placeholder="인증 코드"
+                                value={authCode}
+                                onChange={(e) => setAuthCode(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={handleEmailConfirmation}
+                                className={styles.verifyButton}
+                            >
+                                인증 코드 확인
+                            </button>
+                        </div>
                         )}
 
                         {emailError && <p className={styles.errorText}>{emailError}</p>}
@@ -288,7 +294,7 @@ const MyEditPage = () => {
                             </div>
                             <div className={`${styles.editandreset}`}>
                                 <button onClick={handleMyInfoEdit}>수정하기</button>
-                                <button onClick={handleReset}>초기화</button>
+                                <button onClick={handleReset} className={`${styles.resetButton}`}>초기화</button>
                             </div>
                         </div>
                     </form>

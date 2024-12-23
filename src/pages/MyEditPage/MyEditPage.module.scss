@@ -44,14 +44,15 @@
                     background-color: var(--main2);
                     color: var(--white);
                     border: none;
-                    padding:8px;
-                    font-size: 12px;
+                    padding: 6px;
+                    font-size: 16px;
                     border-radius: 4px;
                     cursor: pointer;
                     transition: background-color 0.3s;
                     width: 120px;
                     position: relative;
                     margin-bottom: 3px;
+                    z-index: 10;
         
                     &:hover {
                         background-color: var(--main1);
@@ -82,6 +83,7 @@
                     button {
                         margin-top: 1.8rem;
                         background-color: var(--main2);
+                        transition: background-color 0.3s;
                         padding: 5px 15px;
                         color: var(--white);
                         border: 0 ;
@@ -91,6 +93,13 @@
                     }
                     button:first-child {
                         margin-right: 10px;
+                    }
+                    .resetButton {
+                        background-color: var(--font2);
+                        transition: background-color 0.3s;
+                        &:hover {
+                            background-color: var(--font1);
+                        }
                     }
                 }
             }
