@@ -1,5 +1,5 @@
 .history{
-    font-size: 18px;
+    font-size: 15px;
     padding: 20px 0;
     border-bottom: 1px solid var(--black);
 
@@ -10,6 +10,20 @@
     .historyAction{
         font-weight: 700;
         cursor: pointer;
+    }
+
+    .addComparePrd{
+        float: inline-end;
+        width: 200px; height: 30px; line-height: 30px;
+        background: var(--main2);
+        border-radius: 10px;
+        color: var(--white);
+        text-align: center;
+        cursor: pointer;
+
+        &:hover{
+            background: var(--main1);
+        }
     }
 }
 
@@ -22,10 +36,17 @@
     max-width: 100%;
     padding: 30px 0 ;
 
-    .comparePrd{
-        flex: 1 0 auto;
+    .comparePrd2{
         width: 30%;
-        background: var(--bg3);
+        border: 1px dotted var(--divider-border);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .comparePrd{
+        width: 30%;
+        background: var(--bg1);
         text-align: center;
         position: relative;
 
@@ -50,7 +71,7 @@
         }
 
         .compareTitle, .rate, .compareDetailTable{
-            margin: 30px;
+            margin: 20px;
         }
 
         .compareTitle{
@@ -84,6 +105,8 @@
 
             p{
                 width: 100%;
+                display: flex;
+                flex-direction: row;
 
                 span{
                     padding: 10px;
@@ -94,10 +117,29 @@
                     color: var(--main2);
                 }
 
-                .selectOptions{
-                    width: 100%;
-                    padding: 5px 10px;
-                    border: 1px solid var(--black);
+                .allSelect{
+                    width: 80%;
+
+                    .selectOptions{
+                        text-align: center;
+                        padding: 5px 10px;
+                        font-size: 12px;
+                        border: 1px solid var(--black);
+                    }
+    
+                    .options{
+                        padding: 5px 10px;
+                        font-size: 12px;
+                        text-align: center;
+                        border: 1px solid var(--divider-border);
+                        border-top: 0;
+    
+                        cursor: pointer;
+    
+                        &:hover{
+                            background: var(--divider-border);
+                        }
+                    }
                 }
             }
 
@@ -155,6 +197,8 @@
             }
         }
     }
+
+    
 }
 
 @media (max-width: 1200px) {

@@ -51,7 +51,7 @@ export const banks = [
  */
 export const getAllProducts = async () => {
     try {
-        const response = await axios.get(`${PATH.SERVER}/product/getAllProducts`);
+        const response = await axios.get(`${PATH.SERVER}/api/product/getAllProducts`);
         return response.data;
     } catch (error) {
         console.error("Error fetching product details:", error);

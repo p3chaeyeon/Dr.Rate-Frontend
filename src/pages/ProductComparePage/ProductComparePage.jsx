@@ -103,14 +103,33 @@ const ProductComparePage = () => {
         );
     };
 
+    const [dropdownState, setDropdownState] = useState({});
+
+    const toggleDropdown = (prdId) => {
+        setDropdownState((prevState) => ({
+            ...prevState,
+            [prdId]: !prevState[prdId],
+        }));
+    };
+
+    const handleItemClick = (prdId, index) => {
+        setDropdownState((prevState) => ({
+            ...prevState,
+            [prdId]: false, // 드롭다운 닫기
+        }));
+        handleChangeIndex(prdId, index);
+    };
+
     return (
         <main>
             <section className={styles.compareSection}>
-                <p className={styles.history}>
+                <div className={styles.history}>
                     <span>즐겨찾기</span> 
                     <img src={historyIcon}/>
                     <span className={styles.historyAction}>{ctg == 'd' ? '예금' : '적금'}</span>
-                </p>
+                    <div className={styles.addComparePrd}  onClick={handleToggle}>상품 추가하기</div>
+                </div>
+
                 
                 <div className={styles.compareDiv}>
                      {products.length > 0 && products.slice(0, 3).map((product, index) => (
@@ -153,17 +172,24 @@ const ProductComparePage = () => {
                                     </p>
                                     <p>
                                     <span>옵션</span>
-                                        <select
-                                            onChange={(e) => handleChangeIndex(product.product.id, Number(e.target.value))}
-                                            value={product.index}
-                                            className={styles.selectOptions}
-                                        >
-                                            {product.options.map((item, index) => (
-                                                <option key={index} value={index}>
-                                                    {item.saveTime} 개월 | {item.rateTypeKo} | {item.rsrvTypeName}
-                                                </option>
-                                            ))}
-                                        </select>
+                                    <div className={styles.allSelect}>
+                                        <div onClick={() => toggleDropdown(product.product.id)} className={styles.selectOptions}>
+                                            {product.options[product.index].saveTime} 개월 | {product.options[product.index].rsrvTypeName ? `${product.options[product.index].rsrvTypeName}, `: ''}
+                                            {product.options[product.index].rateTypeKo} | 최고 {product.options[product.index].spclRate}%
+                                        </div>
+                                        
+                                    {dropdownState[product.product.id] && (
+                                        <div>
+                                        {product.options.map((item, index) => (
+                                            <div key={index} value={index} className={`${styles.optionItem} ${product.index === index ? styles.selected : ''}`}
+                                                onClick={() => handleItemClick(product.product.id, index)}>
+                                                {item.saveTime} 개월 | {item.rsrvTypeName ? `${item.rsrvTypeName}, `: ''}
+                                                {item.rateTypeKo} | 최고 {item.spclRate}%
+                                            </div>
+                                        ))}
+                                        </div>
+                                    )}
+                                    </div>
                                     </p>
                             </div>
 
@@ -175,9 +201,7 @@ const ProductComparePage = () => {
                     ))}
 
                     {products.length < 3 && (
-                        <div className={`${styles.comparePrd} ${styles.noneComparePrd}`}>
-                            <div className={styles.addComparePrd}  onClick={handleToggle}>+</div>
-                        </div>
+                        <div className={products.length === 0 ? '' : styles.comparePrd2}>비교할 상품이 없습니다.</div>
                     )}
                 </div>
                 {isCompareOpen && (
