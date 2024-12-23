@@ -12,6 +12,7 @@ const MyInfoPage = () => {
     const [myData, setMyData] = useState({
         username: '',
         email: '',
+        password: '',
         userId: '',
         birthdate: ''
     });
