@@ -12,7 +12,7 @@ const useProducts = (prdId) => {
         conditions: []
     });
 
-    // 옵션 번호호
+    // 옵션 번호
     const [i, setI] = useState(0);
 
     const [noIdMessage, setNoIdMessage] = useState(null);
@@ -33,7 +33,7 @@ const useProducts = (prdId) => {
                     // console.log(productDetails);
                 } catch (error) {
                     if (error.response?.data?.message === "존재하지 않는 상품입니다.") {
-                        setNoIdMessage("존재하지 않는 상품입니다."); // 에러 메시지 저장
+                        setNoIdMessage("존재하지 않는 상품입니다.");
                     } else {
                         console.error("Failed to fetch product details:", error);
                     }

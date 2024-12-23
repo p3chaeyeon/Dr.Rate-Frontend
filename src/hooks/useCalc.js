@@ -49,9 +49,9 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
     setTotalPrincipal(totalValue);
     setTotalInterest(interestValue);
     setAfterTaxInterest(afterTaxValue);
-    setTotalAmount(afterTaxValue + totalValue);
+    setTotalAmount(totalValue + interestValue - afterTaxValue);
     
-    return afterTaxValue + totalValue;
+    return totalValue + interestValue - afterTaxValue;
   };
 
   /* 복리 계산 (적금) */
@@ -70,9 +70,9 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
     setTotalPrincipal(totalValue);
     setTotalInterest(interestValue);
     setAfterTaxInterest(afterTaxValue);
-    setTotalAmount(afterTaxInterest + totalValue);
+    setTotalAmount(totalValue + interestValue - afterTaxValue);
 
-    return afterTaxInterest + totalValue; 
+    return totalValue + interestValue - afterTaxValue; 
   };
 
 
@@ -85,9 +85,9 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
     setTotalPrincipal(P);
     setTotalInterest(annualInterest);
     setAfterTaxInterest(afterTaxValue);
-    setTotalAmount(afterTaxValue + P);
+    setTotalAmount(P + annualInterest - afterTaxValue);
 
-    return afterTaxValue + P;
+    return P + annualInterest - afterTaxValue;
   };
 
   /* 복리 계산 (예금) */
@@ -98,9 +98,9 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
     setTotalPrincipal(P);
     setTotalInterest(compoundInterest);
     setAfterTaxInterest(afterTaxValue);
-    setTotalAmount(afterTaxValue + P);
+    setTotalAmount(P + compoundInterest - afterTaxValue);
 
-    return afterTaxInterest + P;
+    return P + compoundInterest - afterTaxValue;
   };
 
   // 숫자 변형 #,###

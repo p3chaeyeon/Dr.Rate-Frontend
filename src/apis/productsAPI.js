@@ -1,7 +1,7 @@
 /* src/apis/productsAPI.js */
 
 import { PATH } from 'src/utils/path';
-import axiosInstanceAPI from 'src/apis/axiosInstanceAPI.js';
+import axios from 'axios';
 
 /**
  * 특정 상품의 상세 정보를 가져오는 API
@@ -10,7 +10,7 @@ import axiosInstanceAPI from 'src/apis/axiosInstanceAPI.js';
  */
 export const getProductDetails = async (prdId) => {
     try {
-        const response = await axiosInstanceAPI.get(`${PATH.SERVER}/api/product/getOneProduct/${prdId}`);
+        const response = await axios.get(`${PATH.SERVER}/api/product/getOneProduct/${prdId}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching product details:", error);

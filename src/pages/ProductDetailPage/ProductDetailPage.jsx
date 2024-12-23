@@ -1,4 +1,4 @@
-import styles from './ProductDetailPage.module.scss';
+import styles from 'src/pages/ProductDetailPage/ProductDetailPage.module.scss';
 import downArrowIcon from 'src/assets/icons/downDetailArrow.svg';
 
 import AlertModal from 'src/components/Modal/AlertModal';
@@ -7,7 +7,7 @@ import useModal from 'src/hooks/useModal';
 
 import RateCalc from 'src/pages/ProductDetailPage/RateCalc';
 import useProducts from 'src/hooks/useProducts';
-import { useFavorite } from '../../hooks/useFavorite';
+import { useFavorite } from 'src/hooks/useFavorite';
 
 import AutoClosePopup from 'src/components/Popup';
 
@@ -256,11 +256,11 @@ const ProductDetailPage = () => {
                 {/* 상품 제목 및 상단 정보 */}
                 <h3 className={styles.title}>{product.ctg === 'i' ? '적금' : '예금'}</h3>
 
-                {/* 옵션 셀렉 박스스 */}
+                {/* 옵션 셀렉 박스 */}
                 <div className={styles.optionCheck}>
                     <span className={styles.optionChkTitle}>옵션선택</span>
                     <div className={`${styles.selectedOption} ${isDropdownOpen ? styles.selected : ''}`} onClick={toggleDropdown}>
-                        {options[i] ? `${options?.[i]?.rsrvTypeName || '자유적립식'}, ${options[i]?.rateTypeKo || '단리'} | 최고 ${options[i].spclRate}% 기본 ${options[i].basicRate}%` : '옵션을 선택하세요'}
+                        {options[i]?.saveTime || ''} 개월 | {options[i] ? `${options?.[i]?.rsrvTypeName || '자유적립식'}, ${options[i]?.rateTypeKo || '단리'} | 최고 ${options[i].spclRate}% 기본 ${options[i].basicRate}%` : '옵션을 선택하세요'}
                     </div>
                     
                     {isDropdownOpen && (
@@ -271,7 +271,7 @@ const ProductDetailPage = () => {
                             className={`${styles.optionChk} ${index === i ? styles.selectedChk : ''}`}
                             onClick={() => handleOptionClick(index)}
                             >
-                            {option?.rsrvTypeName || '자유적립식'}, {option?.rateTypeKo || '단리'} | 최고 {option.spclRate}% 기본 {option.basicRate}%
+                            {option?.saveTime || ''} 개월 | {option?.rsrvTypeName || '자유적립식'}, {option?.rateTypeKo || '단리'} | 최고 {option.spclRate}% 기본 {option.basicRate}%
                             </div>
                         ))}
                         </div>
@@ -285,7 +285,11 @@ const ProductDetailPage = () => {
                         <p className={styles.nameOne}>{product?.bankName || '은행명 없음'}</p>
                         <p className={styles.nameTwo}>{product?.prdName || '상품명 없음'}</p>
 
-                        <p className={styles.nameThree}><span>{options?.[i]?.rsrvTypeName ?? '자유적립식'}</span> <span>{options?.[i]?.rateTypeKo ?? '단리'}</span></p>
+                        <p className={styles.nameThree}>
+                            <span>{options?.[i]?.rsrvTypeName ?? '자유적립식'}</span> 
+                            <span>{options?.[i]?.rateTypeKo ?? '단리'}</span>
+                            <span>{options?.[i]?.saveTime || ''} 개월</span>
+                        </p>
                     </div>
                     <div className={styles.rate}>
                         <p className={styles.rateOne}>{options?.[i]?.spclRate ? `최고 ${options[i].spclRate} %` : '우대조건 해당사항 없음'}</p>
@@ -307,10 +311,10 @@ const ProductDetailPage = () => {
                 
 
                 {/* 이자 계산기 */}
-                <div className={`${styles.serviceDiv} ${isOpen ? styles.open : styles.close}`} >
+                <div className={`${styles.serviceDiv} ${isOpen ? styles.open : ''}`} >
                     <div className={styles.serviceTitle} onClick={() => { handleToggle(); handleToggle2(); }}>
                         <span className={styles.serviceOne}>이자계산기</span>
-                        <span className={styles.serviceTwo}>자세히 <img src={downArrowIcon} className={`${styles.downArrowIcon2} ${isOpenResult ? styles.rotated : styles.uprotated}`}/></span>
+                        <span className={styles.serviceTwo}>자세히 <img src={downArrowIcon} className={`${styles.downArrowIcon} ${isOpenResult ? styles.rotated : styles.uprotated}`}/></span>
                     </div>
                     {options && options[i] && (
                     <RateCalc isOpen={isOpen} options={options[i] || {}} conditions={conditions}/>
