@@ -135,7 +135,7 @@ const RateCalc = ({isOpen, conditions, options}) => {
               <div><span>원금합계</span><span>{formatNumber(totalPrincipal)} 원</span></div>
               <div><span>세전이자</span><span>{formatNumber(totalInterest)} 원</span></div>
               <div><span>이자과세(15.4%)</span><span>{formatNumber(afterTaxInterest)} 원</span></div>
-              <div><span>{rateType === 'M' ? '단리' : '복리'} {rate}%, 일반과세 기준</span><span className={styles.amount}>{formatNumber(totalAmount)} 원</span></div>
+              <div><span>{rateType === 'S' ? '단리' : '복리'} {rate}%, 일반과세 기준</span><span className={styles.amount}>{formatNumber(totalAmount)} 원</span></div>
             </p>
             </div>
           )}

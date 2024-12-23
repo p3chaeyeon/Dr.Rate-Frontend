@@ -21,7 +21,7 @@ export const getSessionToken = () => {
  */
 export const getProductDetails = async (prdId) => {
     try {
-        const response = await axios.get(`${PATH.SERVER}/product/getOneProduct/${prdId}`);
+        const response = await axios.get(`${PATH.SERVER}/api/product/getOneProduct/${prdId}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching product details:", error);
