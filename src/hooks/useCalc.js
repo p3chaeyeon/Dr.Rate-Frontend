@@ -20,7 +20,7 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
   const [totalAmount, setTotalAmount] = useAtom(totalAmountAtom); // 세후 수령액
 
 
-  const [deposit, setDeposit] = useState(max === null ? 100 : max / 10000); // 입력값
+  const [deposit, setDeposit] = useState(max === null ? 100 : max); // 입력값
   const [rate, setRate] = useState(basicRate); // 이율
   
 
@@ -36,34 +36,36 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
 
   /******* 적금 *******/
   /* 단리 계산 (적금) */
-  const calculateSimpleInterestForSavings = (P, rate, saveYear, savemMonth) => {
+  const calculateSimpleInterestForSavings = (P, rate, saveYear, saveMonth) => {
+    totalValue = P * saveMonth;
+
     for (let month = 1; month <= savemMonth; month++) {
-        totalValue += P * 10000;
-        interestValue += (P * 10000) * (rate * 0.01) * (savemMonth - month + 1) / 12;
+      let remainingMonths = savemMonth - month + 1;
+      interestValue += P * (rate * 0.01) * remainingMonths / 12;
     }
 
-    afterTaxValue = totalInterest * (1 - taxRate);
+    afterTaxValue =  interestValue * taxRate;
 
     setTotalPrincipal(totalValue);
     setTotalInterest(interestValue);
     setAfterTaxInterest(afterTaxValue);
-    setTotalAmount(afterTaxInterest + totalValue);
+    setTotalAmount(afterTaxValue + totalValue);
     
-    return afterTaxInterest + totalValue;
+    return afterTaxValue + totalValue;
   };
 
   /* 복리 계산 (적금) */
-  const calculateCompoundInterestForSavings = (P, rate, saveYear, savemMonth) => {
+  const calculateCompoundInterestForSavings = (P, rate, saveYear, saveMonth) => {
     const monthlyRate = rate / 100 / 12;
 
-    for (let month = 1; month <= savemMonth; month++) {
+    for (let month = 1; month <= saveMonth; month++) {
         const time = (savemMonth - month + 1) / 12;
-        const interestForMonth = (P * 10000) * Math.pow(1 + monthlyRate, time * 12) - (P * 10000);
-        totalValue += (P * 10000);
+        const interestForMonth = P * Math.pow(1 + monthlyRate, time * 12) - P;
+        totalValue += P;
         interestValue += interestForMonth;
     }
 
-    afterTaxValue = totalInterest * (1 - taxRate);
+    afterTaxValue = totalInterest * taxRate;
 
     setTotalPrincipal(totalValue);
     setTotalInterest(interestValue);
@@ -77,28 +79,28 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
   /******* 예금 *******/
   /* 단리 계산 (예금) */
   const calculateSimpleInterestForDeposit = (P, rate, saveYear) => {
-    const annualInterest = P * 10000 * (rate * 0.01) * saveYear;
-    afterTaxValue = annualInterest * (1 - taxRate);
+    const annualInterest = P * (rate * 0.01) * saveYear;
+    afterTaxValue = annualInterest * taxRate;
 
-    setTotalPrincipal(P * 10000);
+    setTotalPrincipal(P);
     setTotalInterest(annualInterest);
     setAfterTaxInterest(afterTaxValue);
-    setTotalAmount(afterTaxValue + (P * 10000));
+    setTotalAmount(afterTaxValue + P);
 
-    return afterTaxValue + (P * 10000);
+    return afterTaxValue + P;
   };
 
   /* 복리 계산 (예금) */
   const calculateCompoundInterestForDeposit = (P, rate, saveYear) => {
-    const compoundInterest = (P * 10000) * Math.pow(1 + (rate * 0.01) / 12, 12 * saveYear);
-    afterTaxValue = (compoundInterest - P * 10000) * (1 - taxRate);
+    const compoundInterest = P * Math.pow(1 + (rate * 0.01) / 12, 12 * saveYear);
+    afterTaxValue = (compoundInterest - P) * taxRate;
     
-    setTotalPrincipal(P * 10000);
+    setTotalPrincipal(P);
     setTotalInterest(compoundInterest);
     setAfterTaxInterest(afterTaxValue);
-    setTotalAmount(afterTaxValue + (P * 10000));
+    setTotalAmount(afterTaxValue + P);
 
-    return afterTaxInterest + (P * 10000);
+    return afterTaxInterest + P;
   };
 
   // 숫자 변형 #,###

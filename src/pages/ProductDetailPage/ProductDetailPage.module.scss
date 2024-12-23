@@ -4,6 +4,58 @@
     border-bottom: 2px solid var(--black);
 }
 
+.optionCheck {
+    position: relative;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .optionChkTitle{
+        margin-right: 10px;
+    }
+
+    .selectedOption {
+        padding: 10px;
+        border: 1px solid var(--divider-border);
+        border-radius: 4px;
+        color: var(--main2);
+        background-color: var(--white);
+    }
+
+    .optionList {
+        position: absolute;
+        top: 100%;
+        border: 1px solid var(--divider-border);
+        border-top: none;
+        background-color: var(--white);
+        z-index: 10;
+    }
+    
+    .selected{
+        background-color: var(--main1) !important;
+        color: var(--white);
+    }
+
+    .selectedChk{
+        background-color: var(--admin-body) !important;
+    }
+
+    .optionChk {
+        padding: 10px;
+        background-color: var(--white);
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .optionChk:hover {
+        background-color: var(--admin-body);
+    }
+}
+
 .topDiv{
     padding: 100px 50px;
     display: flex;
@@ -23,6 +75,7 @@
 
     .name{
         line-height: 40px;
+        width: 100%;
 
         .nameOne{
             font-size: 24px;
@@ -36,10 +89,19 @@
         .nameThree{
             font-size: 1.0em;
             margin-top: 20px;
-            width: 160px; height: 30px; line-height: 30px;
-            text-align: center;
-            background-color: var(--font3);
-            color: var(--white);
+            height: 30px; line-height: 30px;
+            
+            span{
+                padding: 5px 15px; /* 패딩 조정 */
+                background-color: var(--font3);
+                color: var(--white);
+                border-radius: 5px; 
+
+                &:nth-child(2){
+                    margin-left: 15px;
+                }
+            }
+            
         }
     }
 
@@ -105,6 +167,15 @@
 
     .downArrowIcon2{
         margin-left: 10px;
+    }
+
+    .rotated{
+        transform: rotate(-180deg);
+        transition: 0.4s;
+    }
+
+    .uprotated{
+        transition: 0.4s;
     }
 
     .serviceTitle{
@@ -208,27 +279,26 @@
       .image {
         width: 80px; height: 80px;
           
-        img{
-            width: 90px;
-            height: 80px;
-        }
+            img{
+                width: 90px;
+                height: 80px;
+            }
 
         }
-
-        .nameThree{
-            font-size: 12px !important;
-            width: 100px !important;
-        }
-
+        
         .name {
             text-align: center;
+
+            .nameThree{
+                font-size: 12px !important;
+            }
         }
 
         .rate {
             width: 100%;
             text-align: center;
             font-size: 12px;
-            margin-top: 20px;
+            margin-bottom: 10px;
         }
     }
   
@@ -291,6 +361,23 @@
   @media (max-width: 480px) {
     .title {
       font-size: 1.0em;
+    }
+
+    .optionCheck {
+        margin-top: 5px;
+        width: 100%;
+
+        .optionChkTitle{
+            width: 100px;
+        }
+
+        .selectedOption{
+            width: 100%;
+        }
+
+        .optionList {
+            width: 100%;
+        }
     }
   
     .topDiv {
