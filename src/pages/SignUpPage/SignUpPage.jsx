@@ -1,13 +1,24 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import AlertModal from '../../components/modal/AlertModal'; // AlertModal import
+import AlertModal from 'src/components/modal/AlertModal'; // AlertModal import
 import styles from './SignUpPage.module.scss';
+import { PATH } from 'src/utils/path.js';
+
+// API 호출 함수들 import
+import {
+    validatePassword,
+    validateUserId,
+    validateEmail,
+    checkIdAvailability,
+    sendEmailVerification,
+    confirmEmailVerification,
+    signUpUser,
+    handleOAuthLogin,
+} from 'src/apis/signUpAPI.js';
 
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
 import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
-import { PATH } from "../../utils/path.js";
 
 const SignUpPage = () => {
     const navigate = useNavigate();
@@ -28,24 +39,7 @@ const SignUpPage = () => {
     const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
     const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 여부 상태 추가
 
-    // 비밀번호 정규 표현식 (영문, 숫자, 특수문자를 포함한 8~12자)
-    const validatePassword = (password) => {
-        const regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,12}$/;
-        return regex.test(password);
-    };
-
-    // 아이디 정규 표현식
-    const validateUserId = (id) => {
-        const regex = /^[a-zA-Z0-9]{5,15}$/; // 알파벳과 숫자 조합, 5~15자
-        return regex.test(id);
-    };
-
-    // 이메일 정규 표현식
-    const validateEmail = (email) => {
-        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        return regex.test(email);
-    };
-
+    // 비밀번호 검증
     const handlePasswordBlur = () => {
         if (!validatePassword(user_pwd)) {
             setPasswordError("비밀번호는 8~12자 영문, 숫자, 특수문자를 포함해야 합니다.");
@@ -54,6 +48,7 @@ const SignUpPage = () => {
         }
     };
 
+    // 비밀번호 확인 검증
     const handleConfirmPwdBlur = () => {
         if (user_pwd !== confirmPwd) {
             setConfirmPwdError("비밀번호가 일치하지 않습니다.");
@@ -72,29 +67,12 @@ const SignUpPage = () => {
             setIdError("아이디는 5~15자의 영문과 숫자만 사용할 수 있습니다.");
             return;
         }
-        try {
-            const response = await axios.get(`http://localhost:8080/api/existId?userId=${user_id}`);
-            console.log(response);
 
-            // 아이디가 사용 가능한 경우
-            if (response.status === 200 && response.data.success) {
-                setIdError('사용 가능한 아이디입니다.');
-            }
-        } catch (error) {
-            if (error.response) {
-                if (error.response.status === 400) {
-                    setIdError('이미 가입된 아이디입니다.');
-                } else {
-                    setIdError('아이디 중복 확인에 실패했습니다.');
-                }
-            } else {
-                console.error("아이디 중복 확인 오류:", error);
-                setIdError('아이디 중복 확인에 실패했습니다.');
-            }
-        }
+        const result = await checkIdAvailability(user_id);
+        setIdError(result.message);
     };
 
-    // 이메일 정규 표현식 추가 및 메일 전송 처리 함수
+    // 이메일 인증 처리
     const handleEmailVerification = async () => {
         if (!validateEmail(user_email)) {
             setEmailError("올바른 이메일 형식이 아닙니다.");
@@ -102,56 +80,24 @@ const SignUpPage = () => {
         }
         setEmailError('');
 
-        try {
-            const response = await axios.post(`http://localhost:8080/api/email/verify?email=${user_email}`);
-            const { success, code, message } = response.data;
-
-            if (success) {
-                setModalTitle("메일 전송");
-                setModalMessage("인증 메일이 전송되었습니다.");
-            } else {
-                if (code === "USER401") {
-                    setModalTitle("중복 이메일");
-                    setModalMessage("이미 가입된 이메일입니다.");
-                } else if (code === "USER500") {
-                    setModalTitle("메일 전송 실패");
-                    setModalMessage("메일 전송에 실패했습니다.");
-                } else {
-                    setModalTitle("오류 발생");
-                    setModalMessage(message || "알 수 없는 오류가 발생했습니다.");
-                }
-            }
-        } catch (error) {
-            console.error("메일 인증 오류:", error);
-            setModalTitle("서버 오류");
-            setModalMessage("서버와의 통신 중 오류가 발생했습니다.");
-        } finally {
-            setShowModal(true);
-        }
+        const result = await sendEmailVerification(user_email);
+        setModalTitle("메일 전송");
+        setModalMessage(result.message);
+        setShowModal(true);
     };
 
-    // 인증 코드 인증 처리 함수
+    // 이메일 인증 코드 확인
     const handleEmailConfirmation = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/email/verifications?email=${user_email}&code=${authCode}`);
-            if (response.data.success) {
-                setIsEmailVerified(true);
-                setModalTitle("인증 성공");
-                setModalMessage("이메일 인증이 완료되었습니다.");
-            } else {
-                setModalTitle("인증 실패");
-                setModalMessage("인증 코드가 올바르지 않습니다.");
-            }
-            setShowModal(true);
-        } catch (error) {
-            console.error("인증 확인 오류:", error);
-            setModalTitle("인증 실패");
-            setModalMessage("인증 확인 중 오류가 발생했습니다.");
-            setShowModal(true);
-        }
+        const result = await confirmEmailVerification(user_email, authCode);
+        setModalTitle(result.success ? "인증 성공" : "인증 실패");
+        setModalMessage(result.message);
+        setShowModal(true);
+        if (result.success) setIsEmailVerified(true);
     };
 
+    // 회원가입 처리
     const handleSignUp = async () => {
+        // 유효성 검사
         if (!user_name || !user_id || !user_pwd || !confirmPwd || !user_email) {
             setModalTitle("회원가입 오류");
             setModalMessage("회원 정보를 입력해주세요.");
@@ -180,42 +126,25 @@ const SignUpPage = () => {
             return;
         }
 
-        try {
-            const response = await axios.post('http://localhost:8080/api/signup', {
-                username: user_name,
-                userId: user_id,
-                password: user_pwd,
-                email: user_email,
-            });
+        const result = await signUpUser(user_name, user_id, user_pwd, user_email);
 
-            if (response.data.success) {
-                setModalTitle("회원가입 성공");
-                setModalMessage("회원가입이 완료되었습니다.");
-                setShowModal(true);
+        setModalTitle(result.success ? "회원가입 성공" : "회원가입 실패");
+        setModalMessage(result.message);
+        setShowModal(true);
 
-                setUserName('');
-                setUserId('');
-                setUserPwd('');
-                setConfirmPwd('');
-                setUserEmail('');
-                setAuthCode('');
-                setIsEmailVerified(false);
+        if (result.success) {
+            setUserName('');
+            setUserId('');
+            setUserPwd('');
+            setConfirmPwd('');
+            setUserEmail('');
+            setAuthCode('');
+            setIsEmailVerified(false);
 
-                setTimeout(() => {
-                    navigate(PATH.SIGN_IN);
-                }, 2000);
-            }
-        } catch (error) {
-            console.error("회원가입 오류:", error);
-            setModalTitle("회원가입 실패");
-            setModalMessage("회원가입 중 오류가 발생했습니다.");
-            setShowModal(true);
+            setTimeout(() => {
+                navigate(PATH.SIGN_IN);
+            }, 2000);
         }
-    };
-
-    // 소셜로그인 후 JWT 처리 함수
-    const handleOAuthLogin = async (provider) => {
-        window.location.href = `http://localhost:8080/login/${provider}`;
     };
 
     // 로그인 타이틀 클릭시 로그인 페이지로 이동
