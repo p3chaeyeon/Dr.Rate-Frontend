@@ -205,13 +205,13 @@ const Header = () => {
                                     <ul className={styles.compareSubMenuList}>
                                         <li
                                             className={styles.compareSubMenuItem}
-                                            onClick={() => sideNavigation(PATH.DEPOSIT_COMPARE)}
+                                            onClick={() => sideNavigation(`${PATH.PRODUCT_COMPARE}/d`)}
                                         >
                                             예금 비교
                                         </li>
                                         <li
                                             className={styles.compareSubMenuItem}
-                                            onClick={() => sideNavigation(PATH.INSTALLMENT_COMPARE)}
+                                            onClick={() => sideNavigation(`${PATH.PRODUCT_COMPARE}/i`)}
                                         >
                                             적금 비교
                                         </li>

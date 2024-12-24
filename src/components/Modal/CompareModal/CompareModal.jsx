@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { PATH } from 'src/utils/path';
 
-import styles from './CompareModal.module.scss';
+import styles from 'src/components/Modal/CompareModal/CompareModal.module.scss';
+import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
+import leftArrow from 'src/assets/icons/leftArrow.svg';
+import rightArrow from 'src/assets/icons/rightArrow.svg';
+import searchIcon from 'src/assets/icons/searchIcon.svg';
 
 import useCheckedBanks from 'src/hooks/useCheckedBanks';
 import {banks, getAllProducts} from 'src/apis/productsAPI';
 
 import AlertModal from 'src/components/Modal/AlertModal';
 import useModal from 'src/hooks/useModal';
+import useDragScroll from 'src/hooks/useDragScroll';
 
-const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLength, ctg}) => {
+const CompareModal = ({isOpen, closeModal, title, onCancel, listLength, ctg}) => {
     if(!isOpen) return null;
     
     /* 모달 배경창 닫기 */
@@ -44,6 +49,14 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
         addProduct,
         addPrdId
     } = useCheckedBanks(banks, limit, openAlertModal);
+
+
+    
+    /* drag 훅 */
+    const {
+        bankListRef, 
+        scrollList 
+    } = useDragScroll();
 
 
     
@@ -105,6 +118,7 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
     /* 필터 기능 */
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [search, setSearch] = useState('');
+    const [sortType, setSortType] = useState(0);
 
     // 은행 체크박스, 검색창 필터링 
     const filterProductsByBanks = () => {
@@ -121,9 +135,15 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
         }
 
         // 정렬
-        filtered.sort((a, b) => {
-            return b.options[b.index].spclRate - a.options[a.index].spclRate;
-        });
+        if(sortType === 0){
+            filtered.sort((a, b) => {
+                return b.options[b.index].spclRate - a.options[a.index].spclRate;
+            })
+        }else if(sortType === 1){
+            filtered.sort((a, b) => {
+                return b.options[b.index].basicRate - a.options[a.index].basicRate;
+            })
+        }
         
         setFilteredProducts(filtered);
     };
@@ -143,6 +163,8 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
         if (products.length > 0) {
             filterProductsByBanks();
         }
+
+        setSortType(0);
     }, [products]);
 
 
@@ -189,11 +211,31 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
         }
     };
 
+
+    /* 정렬 */
+    const sortList = (type) => {
+        const filtered = filteredProducts;
+
+        if(type === 'spcl'){
+            filtered.sort((a, b) => {
+                return b.options[b.index].spclRate - a.options[a.index].spclRate;
+            });
+
+            setSortType(0);
+        }else if(type === 'basic'){
+            filtered.sort((a, b) => {
+                return b.options[b.index].basicRate - a.options[a.index].basicRate;
+            });
+
+            setSortType(1);
+        }
+        setFilteredProducts(filtered);
+    }
+
+
+
     return (
-        <div
-        className={styles.compareModal}
-        onClick={handleBackgroundClick}
-        >
+        <div className={styles.compareModal} onClick={handleBackgroundClick}>
         
         {/* Alert 모달창 */}
         {isAlertOpen && (
@@ -210,64 +252,102 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
             />
         )}
 
+        {/* 모달 */}
         <div className={styles.compareModalContent}>
             <h2 className={styles.mainTitle}>{title}</h2>
 
             {/* 체크박스 */}
-            <div className={styles.bankList}>
+            <div className={styles.bankListWrapper}>
+            <img src={leftArrow} className={styles.scrollButtonLeft} 
+                onClick={() => scrollList('left')}/>
+
+            {/* 은행 체크박스 */}
+            <div className={styles.bankList} ref={bankListRef}>
+
                 {banks.map((bank, key) => (
-                   <div key={key} className={styles.bank}>
-                   <label className={styles.checkboxContainer}>
-                     <input
-                       type='checkbox'
-                       value={bank.name}
-                       checked={bank.code === null ? checkedBanks.length > 7 : checkedBanks.includes(bank.code)}
-                       onChange={handleCheckboxChange}
-                       className={styles.checkbox}
-                     />
-                     <span className={`${styles.customCheckbox} 
+                <div key={key} className={styles.bank}>
+                    
+                    <label className={styles.checkboxContainer}>
+                    <input
+                        type='checkbox'
+                        value={bank.name}
+                        checked={bank.code === null ? checkedBanks.length > 7 : checkedBanks.includes(bank.code)}
+                        onChange={handleCheckboxChange}
+                        className={styles.checkbox}
+                    />
+
+                    <span className={`${styles.customCheckbox} 
                         ${checkedBanks.includes(bank.code) || (bank.code === null && checkedBanks.length > 7) 
-                        ? styles.checked : styles.nonChecked}`
-                    }>{bank.name}</span>
-                   </label>
-                 </div>
+                        ? styles.checked : styles.nonChecked}`}>
+                        {bank.name}
+                    </span>
+                    </label>
+                </div>
                 ))}
+
+            </div>
+
+            <img src={rightArrow} className={styles.scrollButtonRight} 
+                onClick={() => scrollList('right')}/>
             </div>
             
             {/* 검색창 */}
             <div className={styles.search}>
-                <input type='text' name='search' id='search' className={styles.inputSearch} onChange={handleSearch} />
-                <img src=''/>
+                <input type='text' name='search' id='search' 
+                    className={styles.inputSearch} 
+                    onChange={handleSearch} />
+                <img src={searchIcon}/>
             </div>
 
-            {/* Title */}
+            {/* 정렬 */}
             <div className={styles.listTitle}>
                 <span className={styles.title}>적금 리스트</span>
-                <span className={styles.soft}>정렬은 기본 금리순</span>
+
+                <div className={styles.sort}>
+                    <span className={`${styles.sortSpcl} 
+                                    ${sortType === 0 ? styles.sortSelect : ''}`} 
+                                onClick={() => sortList('spcl')}>
+                        최고금리순
+                    </span>
+                    <img src={verticalDividerIcon}/>
+                    <span className={`${styles.sortBasic} 
+                                    ${sortType === 1 ? styles.sortSelect : ''}`} 
+                                onClick={() => sortList('basic')}>
+                        기본금리순
+                    </span>
+                </div>
             </div>
 
             {/* 상품 리스트 */}
             <div className={styles.list}>
             {filteredProducts.length > 0 ? filteredProducts.map((product, index) => (
                 
+                // 상품 박스
                 <div key={product.product.id} 
-                className={`${styles.product} ${addPrdId.includes(product.product.id) ? styles.selected : ''}`}
-                onClick={() => handleAddProduct(product)}>
+                        className={`${styles.product} 
+                                    ${addPrdId.includes(product.product.id) ? styles.selected : ''}`}
+                        onClick={() => handleAddProduct(product)}>
+                    
+                    {/* 상품명 */}
                     <div className={styles.productbox}>
                         <img 
                             src={`${PATH.STORAGE_BANK}/${product.product.bankLogo}`} 
                             className={styles.bankLogo} 
                             alt={`${product.product.bankName} Logo`} 
                         />
+
                         <div className={styles.productText}>
                             <span className={styles.bankName}>{product.product.bankName}</span>
                             <span className={styles.productName}>{product.product.prdName}</span>
                         </div>
                     </div>
+
+                    {/* 금리 */}
                     <div className={styles.rate}>
                         <span className={styles.spclrate}>최고금리 {product.options[product.index].spclRate}%</span>
                         <span className={styles.basicRate}>기본금리 {product.options[product.index].basicRate}%</span>
                     </div>
+
                 </div>
                 )) : <span>상품이 없습니다.</span>
             }
@@ -275,26 +355,30 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, onCompare, listLengt
 
             {/* 추가 상품 */}
             <div className={styles.addPrd}>
-                {addProduct.map((product, index) => (
+                {addProduct.map(product => (
                     <div className={styles.addProduct} key={product.product.id}>
                         <img 
                             src={`${PATH.STORAGE_BANK}/${product.product.bankLogo}`} 
                             className={styles.bankLogo} 
                             alt={`${product.product.bankName} Logo`} 
                         />
+
                         <div className={styles.productText}>
                             <span className={styles.productName}>{product.product.prdName}</span>
                         </div>
                         
-                        <div className={styles.deleteBtn} onClick={() => deletePrd(product)}>X</div>
+                        <div className={styles.deleteBtn}
+                            onClick={() => deletePrd(product)}>X</div>
                     </div>
                 ))}
             </div>
 
             {/* 버튼 */}
             <div className={styles.buttonContainer}>
-                <button onClick={() => addComparePrd(addPrdId, addProduct)} className={styles.compareButton}>추가</button>
-                <button onClick={onCancel} className={styles.cancelButton}>취소</button>
+                <button onClick={() => addComparePrd(addPrdId, addProduct)} 
+                        className={styles.compareButton}>추가</button>
+                <button onClick={onCancel} 
+                        className={styles.cancelButton}>취소</button>
             </div>
         
         </div>
