@@ -19,6 +19,7 @@ export const useSession = () => {
         setIsLoggedIn(false); // 저장된 토큰이 없거나 'undefined'인 경우 false로 설정
       }
     }
+    console.log('로그인 상태 : ', isLoggedIn);
   };
 
 
