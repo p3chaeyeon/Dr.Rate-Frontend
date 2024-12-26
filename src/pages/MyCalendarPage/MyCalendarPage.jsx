@@ -161,11 +161,11 @@ const MyCalendarPage = () => {
   useEffect(() => {
     const fetchBanks = async () => {
       const response = await axiosInstanceAPI.get(`${API_URL}/banks`);
-      setBanks(response.data); // 은행 데이터 저장
+      const result = response.data.result; // ApiResponse에서 result 가져오기
+      setBanks(result || []); // 결과 배열 설정 (없으면 빈 배열)
     };
     fetchBanks();
   }, []);
-
 
   // 이벤트 목록 가져오기
   const fetchEvents = async () => {
@@ -278,7 +278,8 @@ const MyCalendarPage = () => {
 
     // 적금명 목록 가져오기
     const response = await axiosInstanceAPI.get(`${API_URL}/banks/${bankName}/products`);
-    setProducts(response.data);
+    console.log(response.data);
+    setProducts(response.data.result || []);
 
     // 로고 업데이트
     const selectedBank = banks.find((bank) => bank.bankName === bankName);
@@ -372,15 +373,21 @@ const MyCalendarPage = () => {
     // 적금명 리스트 가져오기
     if (bankName) {
       const response = await axiosInstanceAPI.get(`${API_URL}/banks/${bankName}/products`);
-      setProducts(response.data); // 적금명 리스트 업데이트
+      const productList = response.data.result || []; // 적금명 리스트 가져오기
+      setProducts(productList); // 상태에 적금명 리스트 업데이트
 
-      // 현재 적금명을 포함하도록 상태 설정
-      if (response.data.includes(extendedProps.installment_name)) {
-        setSavingName(extendedProps.installment_name);
+      // 적금명이 응답 리스트에 존재하는 경우 상태 업데이트
+      const matchedProduct = productList.find((product) => product === extendedProps.installment_name);
+      if (matchedProduct) {
+        setSavingName(matchedProduct); // 적금명 상태 업데이트
+      } else {
+        setSavingName(''); // 적금명을 찾지 못하면 기본값
       }
+      setProducts([]);
+      setSavingName('');
     }
     setModalIsOpen(true); // 모달 열기
-  }
+  };
 
   // 이벤트 목록을 백엔드(API)에서 가져옵니다
   useEffect(() => {
@@ -611,10 +618,11 @@ const MyCalendarPage = () => {
         <select
           value={selectedBank}
           onChange={(e) => handleBankChange(e.target.value)}
-          className={styles.modalInput}
+          className={styles.modalSelect}
         >
-          <option value="">은행 선택</option>
-          {banks.map((bank) => (
+        <option value="">은행 선택</option>
+        {Array.isArray(banks) &&
+          banks.map((bank) => (
             <option key={bank.bankName} value={bank.bankName}>
               {bank.bankName}
             </option>
@@ -624,10 +632,11 @@ const MyCalendarPage = () => {
         <select
           value={savingName}
           onChange={(e) => setSavingName(e.target.value)}
-          className={styles.modalInput}
+          className={styles.modalSelect}
         >
-          <option value="">적금명 선택</option>
-          {products.map((product, index) => (
+        <option value="">적금명 선택</option>
+        {Array.isArray(products) &&
+          products.map((product, index) => (
             <option key={index} value={product}>
               {product}
             </option>
