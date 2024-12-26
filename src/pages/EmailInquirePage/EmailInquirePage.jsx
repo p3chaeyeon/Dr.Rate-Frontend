@@ -50,36 +50,36 @@ const EmailInquirePage = () => {
     }
   };
 
-    const handleSubmitInquire = async () => {
-      try {
-        const formDataToSend = new FormData();
+  const handleSubmitInquire = async () => {
+    try {
+      const formDataToSend = new FormData();
 
-        // 보내는 폼 데이터에 추가
-        formDataToSend.append("inquireCtg", formData.inquireCtg);
-        formDataToSend.append("inquireUser", formData.inquireUser);
-        formDataToSend.append("inquireEmail", formData.inquireEmail);
-        formDataToSend.append("inquireTitle", formData.inquireTitle);
-        formDataToSend.append("inquireContent", formData.inquireContent);
-        formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
+      // 보내는 폼 데이터에 추가
+      formDataToSend.append("inquireCtg", formData.inquireCtg);
+      formDataToSend.append("inquireUser", formData.inquireUser);
+      formDataToSend.append("inquireEmail", formData.inquireEmail);
+      formDataToSend.append("inquireTitle", formData.inquireTitle);
+      formDataToSend.append("inquireContent", formData.inquireContent);
+      formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
 
-        // 폼데이터에 파일추가
-        if (formData.fileUuid) {
-          formDataToSend.append("fileUuid", formData.fileUuid); // 파일 추가
-        }
-
-        const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/emailinquire/save`, 
-          formDataToSend,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data", // 중요!
-            },
-          }
-        );
-        console.log("이메일 전송 = " + response.data);
-      } catch(error) {
-        console.log(error);
+      // 폼데이터에 파일추가
+      if (formData.fileUuid) {
+        formDataToSend.append("fileUuid", formData.fileUuid); // 파일 추가
       }
+
+      const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/emailinquire/save`, 
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // 중요!
+          },
+        }
+      );
+      console.log("이메일 전송 = " + response.data);
+    } catch(error) {
+      console.log(error);
     }
+  }
 
   return (
     <form className={styles.formContainer}>
