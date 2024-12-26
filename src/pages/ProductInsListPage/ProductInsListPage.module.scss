@@ -67,7 +67,7 @@
           background: var(--white);
           cursor: pointer;
           gap: 8px;
-          width: 110px;
+          width: 120px;
           font-size: 15px;
 
           .selectedBankItem {
@@ -196,10 +196,27 @@
     margin: 20px 0 10px;
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
-    color: var(--font1);
+    align-items: center;
+    gap: 8px;
+    color: var(--font2);
+  
+    .standardItem {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
 
+      &.active {
+        font-weight: 600;
+        color: var(--font1);
+      }
+    }
+
+    :nth-child(2) {
+      cursor: default;
+    }
   }
+  
 
 
 

@@ -29,6 +29,8 @@ const ProductInsListPage = () => {
     handleAgeChange,
     period,
     handlePeriodChange,
+    sortMethod,
+    handleSortMethodClick,
   } = useProductList();
 
   const {
@@ -101,6 +103,7 @@ const ProductInsListPage = () => {
                 <option value="토스뱅크">토스뱅크</option>
                 <option value="카카오뱅크">카카오뱅크</option>
                 <option value="농협은행">농협은행</option>
+                <option value="기타">기타</option>
               </select>
             </div>
 
@@ -213,15 +216,16 @@ const ProductInsListPage = () => {
               </div>{/* memberFilterContainer */}
             </>
           )}
-
-
         </div>{/* filterDiv */}
 
-        {/* 금리순 정렬  */}
+
+        {/* 금리순 정렬 */}
         <div className={styles.rateStandard}>
-          <li
-            className={styles.standardItem}
-            // onClick={handleSortBySpclRate}
+        <li
+            className={`${styles.standardItem} ${
+              sortMethod === "spclRate" ? styles.active : ""
+            }`}
+            onClick={() => handleSortMethodClick("spclRate")}
           >
             최고 금리순
           </li>
@@ -229,12 +233,14 @@ const ProductInsListPage = () => {
               <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
           </li>
           <li
-            className={styles.standardItem}
-            // onClick={handleSortByBaseRate}
+            className={`${styles.standardItem} ${
+              sortMethod === "baseRate" ? styles.active : ""
+            }`}
+            onClick={() => handleSortMethodClick("baseRate")}
           >
             기본 금리순
           </li>
-        </div>
+        </div>{/* rateStandard */}
 
 
       </section>
