@@ -47,8 +47,6 @@ const Header = () => {
         } catch {
             return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
         }
-
-        
     };
 
 
