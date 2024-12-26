@@ -3,12 +3,14 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import {PATH} from 'src/utils/path.js';
-import { useSetAtom } from "jotai";
+import { useSetAtom, useAtom } from "jotai";
 import { userData } from '../../atoms/userData';
+import { isLoggedInAtom } from 'src/atoms/sessionAtom';
 
 const OAuthCallbackHandlerPage = () => {
     const navigate = useNavigate();
     const setUser = useSetAtom(userData);
+    const [isLoggedIn, setIsLoggedIn] = useAtom(isLoggedInAtom);
 
     useEffect(() => {
         const handleOAuthCallback = async () => {
@@ -25,6 +27,7 @@ const OAuthCallbackHandlerPage = () => {
                     // 사용자 정보 요청
                     const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfo`);
                     setUser(response.data.result);
+                    setIsLoggedIn(true);
 
                     // 요청 성공 시 메인 페이지로 이동
                     navigate(`${PATH.HOME}`);

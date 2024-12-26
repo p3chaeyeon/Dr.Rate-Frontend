@@ -24,12 +24,10 @@ const Header = () => {
     const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
     const { isDropdownOpen, dropdownRef, handleMouseEnter, handleMouseLeave } = useDropdown();
 
-    // const { isLoggedIn, updateSession, clearSession } = useSession();
-    // const [isLoggedIn, setIsLoggedIn] = useState(!!session);
     const { isLoggedIn, clearSession } = useSession();
 
     const handleLogin = () => {
-        localStorage.setItem('Authorization', 'dummy');
+        // localStorage.setItem('Authorization', 'dummy');
         navigate(PATH.SIGN_IN);
     };
 
@@ -38,8 +36,7 @@ const Header = () => {
             const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/logout`);
             if(response.data.success) {
                 clearSession();
-                localStorage.clear();
-                navigate(PATH.HOME);
+                sideNavigation(PATH.HOME);
                 return { success: true, message: '로그아웃 완료'};
             } else {
                 return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
@@ -47,6 +44,7 @@ const Header = () => {
         } catch {
             return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
         }
+
     };
 
 
@@ -264,13 +262,13 @@ const Header = () => {
                                     <ul className={styles.compareSubMenuList}>
                                         <li
                                             className={styles.compareSubMenuItem}
-                                            onClick={() => sideNavigation(PATH.DEPOSIT_COMPARE)}
+                                            onClick={() => sideNavigation(`${PATH.PRODUCT_COMPARE}/d`)}
                                         >
                                             예금 비교
                                         </li>
                                         <li
                                             className={styles.compareSubMenuItem}
-                                            onClick={() => sideNavigation(PATH.INSTALLMENT_COMPARE)}
+                                            onClick={() => sideNavigation(`${PATH.PRODUCT_COMPARE}/i`)}
                                         >
                                             적금 비교
                                         </li>
