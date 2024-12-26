@@ -21,7 +21,7 @@ const EmailInquirePage = () => {
     agreeToPrivacy: false,
   });
 
-  // //데이터 받아오기
+  //데이터 
   useEffect(() => {
     const userDTO = async () => {
       try {
