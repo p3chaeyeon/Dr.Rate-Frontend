@@ -1,3 +1,5 @@
+/* src/pages/ProductInsListPage/ProductInsListPage.scss */
+
 .listSection {
   font-size: 16px;
   padding-top: 50px;
@@ -12,7 +14,7 @@
     border-top: 1px solid var(--font1);
     border-bottom: 1px solid var(--font1);
 
-    .commitFilterDiv {
+    .commonFilterDiv {
       padding: 10px;
       background: var(--bg2);
       display: flex;
@@ -55,6 +57,7 @@
         align-items: center;
         gap: 10px;
         max-width: 100%;
+        flex-wrap: wrap;
 
         .bankSelectedItemDiv {
           height: 40px;
@@ -278,7 +281,45 @@
 /* ====================================== 가로 600px 이하 ====================================== */
 @media (max-width: 600px) {
   .listSection {
+    padding: 20px 10px;
+
+    .listTitleDiv {
+      font-size: 18px;
+    }
+
     .filterDiv {
+      .commonFilterDiv {
+        flex-direction: column;
+        gap: 0;
+
+        .bankSelectContainer {
+          .bank {
+            font-size: 16px;
+          }
+
+          .bankSelect {
+            min-width: 170px;
+          }
+        }
+
+
+        .bankSelectedContainer {
+
+          &.hasItems {
+            margin-top: 10px; /* 선택된 은행이 있을 때 */
+          }
+
+          .bankSelectedItemDiv {
+            width: 110px;
+
+            .selectedBankItem {
+              font-size: 14px;
+            }
+          } 
+        } 
+      } 
+
+
       .nonMemberFilterContainer {
         font-size: 20px;
 

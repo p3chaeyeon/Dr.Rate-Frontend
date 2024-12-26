@@ -85,7 +85,7 @@ const ProductInsListPage = () => {
         </div>
 
         <div className={styles.filterDiv}>
-          <div className={styles.commitFilterDiv}>
+          <div className={styles.commonFilterDiv}>
             <div className={styles.bankSelectContainer}>
               <div className={styles.bank}>은행</div>
               <select
@@ -107,7 +107,11 @@ const ProductInsListPage = () => {
               </select>
             </div>
 
-            <div className={styles.bankSelectedContainer}>
+            <div
+              className={`${styles.bankSelectedContainer} ${
+                banks.length > 0 ? styles.hasItems : ""
+              }`}
+            >
               {banks.length > 0 ? (
                 banks.map((bank, index) => (
                   <div
