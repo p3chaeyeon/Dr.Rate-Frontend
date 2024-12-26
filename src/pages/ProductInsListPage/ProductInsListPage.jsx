@@ -7,16 +7,27 @@ import { PATH } from 'src/utils/path';
 import useProductList from 'src/hooks/useProductList';
 import xIcon from 'src/assets/icons/xIcon.svg';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
-import useModal from "src/hooks/useModal"; 
+import useModal from "src/hooks/useModal";
+import { useSession } from 'src/hooks/useSession';
 
 
 const ProductInsListPage = () => {
   const navigate = useNavigate();
 
+  const { isLoggedIn, clearSession } = useSession();
+
   const {
-    selectedBanks,
+    banks,
     handleBankChange,
     removeBank,
+    interestMethod,
+    handleInterestMethodClick,
+    joinMethod,
+    handleJoinMethodClick,
+    age,
+    handleAgeChange,
+    period,
+    handlePeriodChange,
   } = useProductList();
 
   const {
@@ -26,33 +37,38 @@ const ProductInsListPage = () => {
     confirmContent,
   } = useModal();
 
-    // Confirm Modal 로그인 클릭 시
-    const handleLoginClick = () => {
-      closeConfirmModal();
-      navigate(PATH.SIGN_IN);
-    };
-  
-    // Confirm Modal 확인 클릭 시
-    const handleConfirm = () => {
-      closeConfirmModal();
-      navigate(PATH.SIGN_UP);
-    };
-  
-    // Confirm Modal 취소 클릭 시
-    const handleCancel = () => {
-      closeConfirmModal();
-    };
+  /* Confirm Modal 로그인 클릭 시 */
+  const handleLoginClick = () => {
+    closeConfirmModal();
+    navigate(PATH.SIGN_IN);
+  };
+
+  /* Confirm Modal 확인 클릭 시 */
+  const handleConfirm = () => {
+    closeConfirmModal();
+    navigate(PATH.SIGN_UP);
+  };
+
+  /* Confirm Modal 취소 클릭 시 */
+  const handleCancel = () => {
+    closeConfirmModal();
+  };
 
 
   const handleOpenConfirmModal = () => {
     const confirmMessage = (
-        <>
-          회원가입을 하면 나에게 딱 맞는 상품을 검색하고,  <br />
-          추천받을 수 있어요! <br />
-          이미 회원이세요?
-          <span onClick={handleLoginClick}>로그인</span>
-        </>
-      );
+      <>
+        회원가입을 하면 나에게 딱 맞는 상품을  <br />
+        검색하고, 추천받을 수 있어요! <br />
+        이미 회원이세요?
+        <span
+          onClick={handleLoginClick}
+          className={styles.loginLink}
+        >
+          로그인
+        </span>
+      </>
+    );
 
     openConfirmModal('회원가입 하시겠습니까?', confirmMessage, handleConfirm, handleCancel);
   };
@@ -71,7 +87,7 @@ const ProductInsListPage = () => {
               <div className={styles.bank}>은행</div>
               <select
                 className={styles.bankSelect}
-                defaultValue=""
+                value={banks.length > 0 ? banks[banks.length - 1] : ""}
                 onChange={handleBankChange}
               >
                 <option value="" disabled>
@@ -88,8 +104,8 @@ const ProductInsListPage = () => {
             </div>
 
             <div className={styles.bankSelectedContainer}>
-              {selectedBanks.length > 0 ? (
-                selectedBanks.map((bank, index) => (
+              {banks.length > 0 ? (
+                banks.map((bank, index) => (
                   <div
                     key={index}
                     className={styles.bankSelectedItemDiv}
@@ -110,43 +126,93 @@ const ProductInsListPage = () => {
           </div> {/* commitFilterDiv */}
 
 
-          <div className={styles.nonMemberFilterContainer}>
-            {/* ConfirmModal */}
-            <ConfirmModal
-              isOpen={isConfirmOpen}           
-              closeModal={closeConfirmModal}   
-              title={confirmContent.title}     
-              message={confirmContent.message} 
-              onConfirm={confirmContent.onConfirm} 
-              onCancel={confirmContent.onCancel}   
-            />
-            <p className={styles.nonMemberMessage}>
-              나에게 맞는 예금 상품이 궁금하다면?<span onClick={handleOpenConfirmModal}>Click</span>
-            </p>
-          </div>{/* nonMemberFilterContainer */}
+          {!isLoggedIn ? (
+            <>
+              <div className={styles.nonMemberFilterContainer}>
+                <div className={styles.nonMemberMessage}>
+                  나에게 맞는 예금 상품이 궁금하다면?
+                  <span onClick={handleOpenConfirmModal} className={styles.click}>Click</span>
 
+                  {/* ConfirmModal */}
+                  <ConfirmModal
+                    isOpen={isConfirmOpen}
+                    closeModal={closeConfirmModal}
+                    title={confirmContent.title}
+                    message={confirmContent.message}
+                    onConfirm={confirmContent.onConfirm}
+                    onCancel={confirmContent.onCancel}
+                  />
+                </div>
+              </div> {/* nonMemberFilterContainer */}
+            </>
+          ) : (
+            <>
+              <div className={styles.memberFilterContainer}>
+                <div className={styles.memberFilterItemDiv}>
+                  <div className={styles.memberFilterItem}>나이</div>
+                  <input
+                    type="number"
+                    className={`${styles.memberFilterInput} ${styles.noPointer}`}
+                    placeholder="나이 입력"
+                    value={age}
+                    onChange={handleAgeChange}
+                  />
+                </div>
+                <div className={styles.memberFilterItemDiv}>
+                  <div className={styles.memberFilterItem}>저축 예정 기간</div>
+                  <select
+                    className={styles.memberFilterInput}
+                    value={period}
+                    onChange={handlePeriodChange}
+                  >
+                    <option value="3개월">3개월</option>
+                    <option value="6개월">6개월</option>
+                    <option value="12개월">12개월</option>
+                    <option value="24개월">24개월</option>
+                  </select>
+                </div>
+                <div className={styles.memberFilterItemDiv}>
+                  <div className={styles.memberFilterItem}>이자 계산 방식</div>
+                  <div className={styles.toggleButtonGroup}>
+                    <button
+                      className={`${styles.toggleButton} ${interestMethod === "단리" ? styles.active : ""
+                        }`}
+                      onClick={() => handleInterestMethodClick("단리")}
+                    >
+                      단리
+                    </button>
+                    <button
+                      className={`${styles.toggleButton} ${interestMethod === "복리" ? styles.active : ""
+                        }`}
+                      onClick={() => handleInterestMethodClick("복리")}
+                    >
+                      복리
+                    </button>
+                  </div>
+                </div>
+                <div className={styles.memberFilterItemDiv}>
+                  <div className={styles.memberFilterItem}>가입 방식</div>
+                  <div className={styles.toggleButtonGroup}>
+                    <button
+                      className={`${styles.toggleButton} ${joinMethod === "대면" ? styles.active : ""
+                        }`}
+                      onClick={() => handleJoinMethodClick("대면")}
+                    >
+                      대면
+                    </button>
+                    <button
+                      className={`${styles.toggleButton} ${joinMethod === "비대면" ? styles.active : ""
+                        }`}
+                      onClick={() => handleJoinMethodClick("비대면")}
+                    >
+                      비대면
+                    </button>
+                  </div>
+                </div>
+              </div>{/* memberFilterContainer */}
+            </>
+          )}
 
-
-
-        <div className={styles.memberFilterContainer}>
-          <div className={styles.memberFilterItemDiv}>
-            <div className={styles.memberFilterItem}>나이</div>
-            <div className={styles.memberFilterInput}></div>
-          </div>
-          <div className={styles.memberFilterItemDiv}>
-            <div className={styles.memberFilterItem}>저축 예정 기간</div>
-            <div className={styles.memberFilterInput}></div>
-          </div>
-          <div className={styles.memberFilterItemDiv}>
-            <div className={styles.memberFilterItem}>이자 계산 방식</div>
-            <div className={styles.memberFilterInput}></div>
-          </div>
-          <div className={styles.memberFilterItemDiv}>
-            <div className={styles.memberFilterItem}>가입 방식</div>
-            <div className={styles.memberFilterInput}></div>
-          </div>
-
-        </div>{/* memberFilterContainer */}
 
         </div>{/* filterDiv */}
 
