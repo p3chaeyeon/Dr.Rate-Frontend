@@ -24,16 +24,15 @@ const MyEditPage = () => {
     const [email, setEmail] = useState('');
     const [birthdate, setBirthdate] = useState('');
     const [authCode, setAuthCode] = useState('');
-    const [idError, setIdError] = useState(''); // 아이디 중복 오류 메시지 상태 추가
     const [emailError, setEmailError] = useState(''); // 이메일 오류 메시지 상태 추가
     const [passwordError, setPasswordError] = useState('');
     const [confirmPwdError, setConfirmPwdError] = useState('');
     const [showModal, setShowModal] = useState(false); // 모달 표시 상태 관리
     const [modalTitle, setModalTitle] = useState(''); // 모달 제목
     const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
-    const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 여부 상태 추가
+    const [isEmailVerified, setIsEmailVerified] = useState(true); // 이메일 인증 여부 상태 추가
 
-    const myInfoEdit = async (username, email, password) => {
+    const myInfoEdit = async (username, userId, password, email) => {
         try {
             const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfoEdit`, {
                 username: username,
@@ -140,13 +139,6 @@ const MyEditPage = () => {
             return;
         }
 
-        if (idError === '이미 가입된 아이디입니다.') {
-            setModalTitle("아이디 중복 오류");
-            setModalMessage("이미 사용 중인 아이디입니다.");
-            setShowModal(true);
-            return;
-        }
-
         const result = await myInfoEdit(username, userId, password, email);
 
         setModalTitle(result.success ? "정보 수정 성공" : "정보 수정 실패");
@@ -178,7 +170,7 @@ const MyEditPage = () => {
             setConfirmPwd('');
             setEmail(initialData.email || '');
             setBirthdate(initialData.birthdate || '');
-            setAuthCode(''); // 인증 코드는 초기화
+            setAuthCode('');
             setPasswordError('');
             setConfirmPwdError('');
             setEmailError('');
@@ -191,6 +183,7 @@ const MyEditPage = () => {
         const newEmail = e.target.value;
         setEmail(newEmail);
         setIsEmailChanged(newEmail !== (initialData?.email || '')); // 초기 이메일과 비교
+        setIsEmailVerified(false);
     };
 
     // 모달 닫기
@@ -257,11 +250,6 @@ const MyEditPage = () => {
                                     value={userId} 
                                     readOnly />
                         </div>
-                        {idError && (
-                            <p className={`${styles.errorText} ${idError === '사용 가능한 아이디입니다.' ? styles.success : styles.failure}`}>
-                                {idError}
-                            </p>
-                        )}
 
                         <div className={`${styles.tagBox}`}>
                             <p className={`${styles.tagName}`}>비밀번호</p>
