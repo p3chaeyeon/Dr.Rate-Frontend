@@ -81,7 +81,7 @@ const ProductDetailPage = () => {
     /* 이자 계산기 */
     const handleToggle = () => {
 
-        if (!isLoggedIn) {
+        if (isLoggedIn) {
             setIsOpen((prev) => !prev);
         } else {
             const confirmMessage = (
