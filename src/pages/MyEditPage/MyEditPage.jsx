@@ -6,6 +6,9 @@ import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import AlertModal from 'src/components/modal/AlertModal'; // AlertModal import
 import { PATH } from 'src/utils/path';
 
+import { useAtom } from 'jotai';
+import { userData } from '../../atoms/userData';
+
 // API 호출 함수들 import
 import {
     validatePassword,
@@ -16,6 +19,7 @@ import {
 
 const MyEditPage = () => {
     const navigate = useNavigate();
+    const [myData, setMyData] = useAtom(userData); // Jotai Atom 사용
     /* 상태 관리 */
     const [username, setUsername] = useState('');
     const [userId, setUserId] = useState('');
@@ -32,47 +36,17 @@ const MyEditPage = () => {
     const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
     const [isEmailVerified, setIsEmailVerified] = useState(true); // 이메일 인증 여부 상태 추가
 
-    const myInfoEdit = async (username, userId, password, email) => {
-        try {
-            const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfoEdit`, {
-                username: username,
-                userId: userId,
-                password: password,
-                email: email,
-            });
-            if (response.data.success) {
-                return { success: true, message: '회원정보 수정이 완료되었습니다.' };
-            } else {
-                return { success: false, message: '회원정보 수정 중 오류가 발생했습니다.' };
-            }
-        } catch {
-            return { success: false, message: '회원정보 수정 중 오류가 발생했습니다.' };
-        }
-    }
-    //초기화 데이터
-    const [initialData, setInitialData] = useState(null);
     //데이터 받아오기
     useEffect(() => {
-        const userData = async () => {
-            try {
-                const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfo`);
-                if(response.data.result.social !== null) {
-                    setModalTitle("소셜 로그인 접근");
-                    setModalMessage("소셜 로그인은 회원 정보를 수정할 수 없습니다.");
-                    setShowModal(true);
-                    return;
-                }
-                setUsername(response.data.result.username);
-                setEmail(response.data.result.email);
-                setUserId(response.data.result.userId);
-                setBirthdate(response.data.result.birthdate);
-                setInitialData(response.data); // 초기 상태 저장
-            } catch (error) {
-                console.error('데이터 가져오기 실패:', error);
-            }
-        };
-        userData();
-    }, []);
+        if (myData) {
+            setUsername(myData.username || '');
+            setUserId(myData.userId || '');
+            setEmail(myData.email || '');
+            setBirthdate(myData.birthdate || '');
+        } else {
+            navigate(`${PATH.SIGN_IN}`); // 사용자 데이터가 없으면 로그인 페이지로 리다이렉트
+        }
+    }, [myData, navigate]);
 
     // 비밀번호 검증
     const handlePasswordBlur = () => {
@@ -139,37 +113,41 @@ const MyEditPage = () => {
             return;
         }
 
-        const result = await myInfoEdit(username, userId, password, email);
+        try {
+            const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfoEdit`, {
+                username,
+                userId,
+                password,
+                email,
+            });
+            if (response.data.success) {
+                setMyData({ ...myData, username, email }); // Jotai Atom 업데이트
+                setModalTitle('정보 수정 성공');
+                setModalMessage('회원정보가 성공적으로 수정되었습니다.');
+                setShowModal(true);
 
-        setModalTitle(result.success ? "정보 수정 성공" : "정보 수정 실패");
-        setModalMessage(result.message);
-        setShowModal(true);
-
-        if (result.success) {
-            setUsername('');
-            setUserId('');
-            setPassword('');
-            setConfirmPwd('');
-            setEmail('');
-            setAuthCode('');
-            setIsEmailVerified(false);
-
-            setTimeout(() => {
-                navigate(`${PATH.MY_EDIT}`);
-            }, 2000);
+                setTimeout(() => {
+                    navigate(`${PATH.MY_EDIT}`);
+                }, 2000);
+            } else {
+                throw new Error('회원정보 수정 중 오류 발생');
+            }
+        } catch (error) {
+            setModalTitle('정보 수정 실패');
+            setModalMessage('회원정보 수정 중 문제가 발생했습니다.');
+            setShowModal(true);
         }
     };
 
     //초기화 버튼 클릭
     const handleReset = () => {
-        if (initialData) {
-            setMyData(initialData);
-            setUsername(initialData.username || '');
-            setUserId(initialData.userId || '');
-            setPassword(initialData.password || '');
+        if (myData) {
+            setUsername(myData.username || '');
+            setUserId(myData.userId || '');
+            setPassword(myData.password || '');
             setConfirmPwd('');
-            setEmail(initialData.email || '');
-            setBirthdate(initialData.birthdate || '');
+            setEmail(myData.email || '');
+            setBirthdate(myData.birthdate || '');
             setAuthCode('');
             setPasswordError('');
             setConfirmPwdError('');
@@ -182,7 +160,7 @@ const MyEditPage = () => {
     const handleEmailChange = (e) => {
         const newEmail = e.target.value;
         setEmail(newEmail);
-        setIsEmailChanged(newEmail !== (initialData?.email || '')); // 초기 이메일과 비교
+        setIsEmailChanged(newEmail !== (myData?.email || '')); // 초기 이메일과 비교
         setIsEmailVerified(false);
     };
 
@@ -196,7 +174,6 @@ const MyEditPage = () => {
             <MyNav />
 
             <section className={ styles.myEditSection }>
-                {initialData?.result ? (
                 <div className={styles.myInfoEdit}>
                     <form>
                         <div className={`${styles.tagBox}`}>
@@ -287,7 +264,6 @@ const MyEditPage = () => {
                         </div>
                     </form>
                 </div>
-                ) : (<div></div>)}
             </section>
             {/* 모달 표시 */}
             <AlertModal
