@@ -158,7 +158,42 @@ const ProductDetailPage = () => {
 
 
     /* 비교 담기 */
-    
+    const [addProduct, setAddProduct] = useState([]);
+
+    const addComparePrd = () => {
+        let compareList;
+
+        if(ctg === "d"){
+            compareList = JSON.parse(localStorage.getItem('depCompareList')) || [];
+        } else if(ctg === "i"){
+            compareList = JSON.parse(localStorage.getItem('insCompareList')) || [];
+        }
+
+        const duplicateProduct = compareList.some(product => product.product.id === product.id);
+
+        if (duplicateProduct) {
+            openAlertModal('이미 추가된 상품입니다', '이 상품은 이미 비교 목록에 있습니다.');
+            return;
+        }
+
+        if (compareList.length >= 3) {
+            openAlertModal('상품 비교 한도 초과', '비교할 수 있는 상품은 최대 3개입니다.');
+            return;
+        }
+
+        setAddProduct({
+            index : i,
+            options : options,
+            product : product,
+        })
+
+        compareList.push(...product);
+        if(ctg === "d"){
+            localStorage.setItem('depCompareList', JSON.stringify(compareList));
+        } else if(ctg === "i"){
+            localStorage.setItem('insCompareList', JSON.stringify(compareList));
+        }
+    }
 
 
 
@@ -309,7 +344,7 @@ const ProductDetailPage = () => {
                     >
                         <span className={`${styles.heart} ${isFavorite ? styles.active : ''}`}>&hearts;</span> 즐겨찾기
                     </button>
-                    <button className={styles.intobtn}>비교담기</button>
+                    <button className={styles.intobtn} onClick={addComparePrd}>비교담기</button>
                     <button className={styles.gotoHomePage} onClick={() =>window.open(product?.url, '_blank')}>가입하기</button>
                 </div>
                 
