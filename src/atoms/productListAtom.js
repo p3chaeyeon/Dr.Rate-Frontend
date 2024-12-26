@@ -1,6 +1,6 @@
 /* src/atoms/productListAtom.js */
 
-import { atom } from "jotai";
+import { atom } from 'jotai';
 
 /* 공통 필터 상태 관리 */
 export const banksAtom = atom([]); // 은행 선택

@@ -8,8 +8,38 @@ import { useSession } from 'src/hooks/useSession';
 import useProductList from 'src/hooks/useProductList';
 import xIcon from 'src/assets/icons/xIcon.svg';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
-import useModal from "src/hooks/useModal";
-import verticalDividerIcon from "src/assets/icons/verticalDivider.svg";
+import useModal from 'src/hooks/useModal';
+import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
+import spinner from 'src/assets/icons/spinner.gif';
+
+
+const productData = [
+  {
+    productId: 1,
+    bankLogo: "wooriLogo.png",
+    bankName: "우리은행",
+    prdName: "WON플러스예금",
+    spclRate: 4.0,
+    basicRate: 2.6,
+  },
+  {
+    productId: 2,
+    bankLogo: "remainLogo.png",
+    bankName: "한국스탠다드차타드은행",
+    prdName: "e-그린세이브예금",
+    spclRate: 4.0,
+    basicRate: 2.6,
+  },
+  {
+    productId: 3,
+    bankLogo: "remainLogo.png",
+    bankName: "아이엠뱅크",
+    prdName: "iM주거래우대예금(첫만남우대형)",
+    spclRate: 4.0,
+    basicRate: 2.6,
+  },
+];
+
 
 
 const ProductInsListPage = () => {
@@ -246,6 +276,62 @@ const ProductInsListPage = () => {
           </li>
         </div>{/* rateStandard */}
 
+
+        {/* 상태에 따라 내부 내용만 바뀜 */}
+        {/* {loading &&
+            <div className={styles.errorDiv}>
+                <img className={styles.loadingImg} src={spinner} alt="loading" />
+            </div>}
+        {error && <div className={styles.errorDiv}>데이터를 불러오는 중 에러가 발생했습니다.</div>} */}
+
+        {/* 정상 데이터 로드 */}
+        {/* {!loading && !error && ( */}
+            <div className={styles.productListDiv}>
+                {/* 즐겨찾기 데이터가 없을 경우 메시지 출력 */}
+                {/* {productData.length === 0 ? ( */}
+                    {/* <div className={styles.noProductList}>
+                        <h4>상품이 없습니다.</h4>
+                    </div> */}
+                {/*  ) : ( */}
+                    {/* 상품품 데이터가 있을 경우 리스트 출력 */}
+                    {productData.map((item, index) => (
+                        <div key={index} className={styles.productList}>
+                            <input type="hidden" value={item.productId} readOnly />
+                            <div className={styles.productLogoDiv}>
+                                <img
+                                    src={`${PATH.STORAGE_BANK}/${item.bankLogo}`}
+                                    alt={`${item.bankName} 로고`}
+                                    className={styles.productLogoImg}
+                                />
+                            </div>
+                            <div className={styles.productInfoDiv}>
+                                <div className={styles.productBankProDiv}>
+                                    <div className={styles.productBank}>{item.bankName}</div>
+                                    <div className={styles.productPro}>{item.prdName}</div>
+                                </div>
+                                <div className={styles.productRateDiv}>
+                                    <div className={styles.productHighestRateDiv}>
+                                        <div className={styles.productHighestRateText}>최고금리</div>
+                                        <div className={styles.productHighestRatePer}>
+                                            <span className={styles.spclRate}>{item.spclRate.toFixed(2)}</span>%
+                                        </div>
+                                    </div>
+                                    <div className={styles.productSBaseRateDiv}>
+                                        <div className={styles.productBaseRateText}>기본금리</div>
+                                        <div className={styles.productBaseRatePer}>
+                                            <span className={styles.basicRate}>{item.basicRate.toFixed(2)}</span>%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.productBtnDiv}>
+                              <button className={styles.productCompareBtn}></button>
+                            </div>
+                        </div>
+                      ))}
+                 {/* )} */} 
+            </div>
+         {/* )} */}
 
       </section>
 

@@ -1,6 +1,7 @@
 /* src/hooks/useProductList.jsx */
 
-import { useAtom } from "jotai";
+import { useAtom } from 'jotai';
+import { useState } from 'react';
 import {
     banksAtom,
     ageAtom,
@@ -8,15 +9,19 @@ import {
     rateAtom,
     joinAtom,
     sortAtom,
-} from "src/atoms/productListAtom";
+} from 'src/atoms/productListAtom';
 
 const useProductList = () => {
+    const [loading, setLoading] = useState(true); // 로딩 상태
+    const [error, setError] = useState(null); // 에러 상태
+
     const [banks, setBanks] = useAtom(banksAtom);
     const [age, setAge] = useAtom(ageAtom);
     const [period, setPeriod] = useAtom(periodAtom);
     const [rate, setRate] = useAtom(rateAtom);
     const [join, setJoin] = useAtom(joinAtom);
     const [sort, setSort] = useAtom(sortAtom);
+
 
     /* 은행 추가 */
     const handleBankChange = (event) => {
@@ -57,6 +62,8 @@ const useProductList = () => {
       };
 
     return {
+        loading,
+        error,
         banks,
         handleBankChange,
         removeBank,
