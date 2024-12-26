@@ -31,7 +31,10 @@ const CompareNav = ({ctg, handleCancel}) => {
     }, [ctg, handleCancel])
 
 
-    /* 화살표시 */
+
+
+
+    /* 화살표시  */
     const toggleDepProducts = () => {
         setIsDepOpen((prev) => !prev);
         setIsInsOpen((prev) => !prev);
