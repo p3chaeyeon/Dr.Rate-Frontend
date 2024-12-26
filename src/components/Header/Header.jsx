@@ -22,12 +22,10 @@ const Header = () => {
     const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
     const { isDropdownOpen, dropdownRef, handleMouseEnter, handleMouseLeave } = useDropdown();
 
-    // const { isLoggedIn, updateSession, clearSession } = useSession();
-    // const [isLoggedIn, setIsLoggedIn] = useState(!!session);
     const { isLoggedIn, clearSession } = useSession();
 
     const handleLogin = () => {
-        localStorage.setItem('Authorization', 'dummy');
+        // localStorage.setItem('Authorization', 'dummy');
         navigate(PATH.SIGN_IN);
     };
 
