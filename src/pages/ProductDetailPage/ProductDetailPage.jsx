@@ -17,6 +17,7 @@ import { atom, useAtom } from 'jotai';
 import { PATH } from "src/utils/path";
 
 import { useSession } from 'src/hooks/useSession';
+import CompareNav from 'src/components/CompareNav/CompareNav';
 
 
 /* Jotai 상태 관리 */
@@ -110,6 +111,10 @@ const ProductDetailPage = () => {
     // 화살표시 토글
     const handleToggle2 = () => {
         setIsOpenResult((prev) => !prev);
+
+        if (!isLoggedIn) {
+            setIsOpenResult(false);
+        }
     }
 
     // 숫자 변형 #,### 
@@ -170,6 +175,7 @@ const ProductDetailPage = () => {
 
 
     /* 비교 담기 */
+
     const addComparePrd = () => {
         let compareList;
 
@@ -322,6 +328,8 @@ const ProductDetailPage = () => {
                 redirectPath={PATH.DEPOSIT_LIST}
                 duration={3000} // 3초 후 이동
             />
+
+            <CompareNav ctg={product.ctg} handleCancel={handleCancel}/>
 
                 {/* 상품 제목 및 상단 정보 */}
                 <h3 className={styles.title}>{product.ctg === 'i' ? '적금' : '예금'}</h3>
