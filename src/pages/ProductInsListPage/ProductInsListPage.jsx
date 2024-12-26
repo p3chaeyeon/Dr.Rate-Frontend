@@ -2,14 +2,11 @@
 
 import React, { useState } from 'react';
 import styles from './ProductInsListPage.module.scss';
+import useProductList from 'src/hooks/useProductList';
 
 
 const ProductInsListPage = () => {
-  const [selectedBank, setSelectedBank] = useState("");
-
-  const handleChange = (event) => {
-    setSelectedBank(event.target.value);
-  };
+  const { selectedBank, handleBankChange } = useProductList();
 
   return (
     <main>
@@ -25,7 +22,7 @@ const ProductInsListPage = () => {
               <select
                 className={styles.bankSelect}
                 value={selectedBank}
-                onChange={handleChange}
+                onChange={handleBankChange}
               >
                 <option value="" disabled>
                   은행 선택
