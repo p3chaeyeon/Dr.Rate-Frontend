@@ -20,7 +20,7 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
   const [totalAmount, setTotalAmount] = useAtom(totalAmountAtom); // 세후 수령액
 
 
-  const [deposit, setDeposit] = useState(max === null ? 100 : max); // 입력값
+  const [deposit, setDeposit] = useState(max === null ? 300000 : max); // 입력값
   const [rate, setRate] = useState(basicRate); // 이율
   
 
