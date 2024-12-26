@@ -3,17 +3,6 @@
 import { PATH } from 'src/utils/path';
 import axios from 'axios';
 
-
-
-/**
- * 세션 토큰 가져오기
- * @returns {string} - 세션 토큰
- */
-export const getSessionToken = () => {
-    return localStorage.getItem('sessionToken');
-};
-
-
 /**
  * 특정 상품의 상세 정보를 가져오는 API
  * @param {string} prdId - 상품 ID
@@ -21,7 +10,7 @@ export const getSessionToken = () => {
  */
 export const getProductDetails = async (prdId) => {
     try {
-        const response = await axios.get(`${PATH.SERVER}/product/getOneProduct/${prdId}`);
+        const response = await axios.get(`${PATH.SERVER}/api/product/getOneProduct/${prdId}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching product details:", error);
