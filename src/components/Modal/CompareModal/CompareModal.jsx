@@ -6,6 +6,7 @@ import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
 import leftArrow from 'src/assets/icons/leftArrow.svg';
 import rightArrow from 'src/assets/icons/rightArrow.svg';
 import searchIcon from 'src/assets/icons/searchIcon.svg';
+import spinner from 'src/assets/icons/spinner.gif';
 
 import useCheckedBanks from 'src/hooks/useCheckedBanks';
 import {banks, getAllProducts} from 'src/apis/productsAPI';
@@ -349,7 +350,7 @@ const CompareModal = ({isOpen, closeModal, title, onCancel, listLength, ctg}) =>
                     </div>
 
                 </div>
-                )) : <span>상품이 없습니다.</span>
+                )) : <span><img src={spinner}/></span>
             }
             </div>
 
