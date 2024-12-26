@@ -168,7 +168,7 @@ const ProductDetailPage = () => {
             compareList = JSON.parse(localStorage.getItem('insCompareList')) || [];
         }
 
-        const duplicateProduct = compareList.some(product => product.product.id === product.id);
+        const duplicateProduct = compareList.some(comproduct => comproduct.product.id === product.id);
 
         if (duplicateProduct) {
             openAlertModal('이미 추가된 상품입니다', '이 상품은 이미 비교 목록에 있습니다.');
@@ -186,12 +186,14 @@ const ProductDetailPage = () => {
             product: product
         };
 
-        compareList.push(...addProduct);
+        compareList.push(addProduct);
         if(product.ctg === "d"){
             localStorage.setItem('depCompareList', JSON.stringify(compareList));
         } else if(product.ctg === "i"){
             localStorage.setItem('insCompareList', JSON.stringify(compareList));
         }
+
+        openAlertModal('상품이 비교 목록에 추가되었습니다', '비교페이지 이동');
     }
 
 
