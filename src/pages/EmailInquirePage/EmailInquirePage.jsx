@@ -1,89 +1,85 @@
 import React, { useEffect, useState } from 'react';
 import styles from './EmailInquirePage.module.scss';
 import { PATH } from 'src/utils/path';
+import { useNavigate } from 'react-router-dom';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 
+import { useAtom } from 'jotai';
+import { userData } from '../../atoms/userData';
+
 const EmailInquirePage = () => {
+  const navigate = useNavigate();
+  const [myData, setMyData] = useAtom(userData); // Jotai Atom 사용
 
-    //회원 데이터
-    const [myData, setMyData] = useState({
-        username: '',
-        email: '',
-        password: '',
-        userId: '',
-        birthdate: ''
-    });
+  const [formData, setFormData] = useState({
+    inquireCtg: "", //inquiryType
+    inquireUser: "", //name
+    inquireEmail: "", // email
+    inquireTitle: "", // subject
+    inquireContent: "", // message
+    fileUuid: null, // fileUuid(Back)
+    agreeToPrivacy: false,
+  });
 
-    const [formData, setFormData] = useState({
-      inquireCtg: "", //inquiryType
-      inquireUser: "", //name
-      inquireEmail: "", // email
-      inquireTitle: "", // subject
-      inquireContent: "", // message
-      fileUuid: "", // fileUuid(Back)
-      agreeToPrivacy: false,
-    });
-
-    //데이터 받아오기
-    useEffect(() => {
-        const userData = async () => {
-            try {
-                const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfo`);
-                setMyData(response.data);  // 데이터 업데이트
-
-                setFormData((result) => ({
-                  ...result,
-                  inquireEmail: response.data.result.email || "",
-                  inquireUser: response.data.result.username || "",
-                }));
-            } catch (error) {
-                console.error('데이터 가져오기 실패:', error);
-            }
-        };
-        userData();
-    }, []);
-
-    const handleChange = (e) => {
-      const { name, value, type, checked, files } = e.target;
-      if (type === "checkbox") {
-        setFormData({ ...formData, [name]: checked });
-      } else if (type === "file") {
-        setFormData({ ...formData, fileUuid: files[0] });
-      } else {
-        setFormData({ ...formData, [name]: value });
-      }
-    };
-
-    const handleSubmitInquire = async () => {
+  // //데이터 받아오기
+  useEffect(() => {
+    const userDTO = async () => {
       try {
-        const formDataToSend = new FormData();
-
-        // 보내는 폼 데이터에 추가
-        formDataToSend.append("inquireCtg", formData.inquireCtg);
-        formDataToSend.append("inquireUser", formData.inquireUser);
-        formDataToSend.append("inquireEmail", formData.inquireEmail);
-        formDataToSend.append("inquireTitle", formData.inquireTitle);
-        formDataToSend.append("inquireContent", formData.inquireContent);
-        formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
-
-        // 폼데이터에 파일추가
-        if (formData.fileUuid) {
-          formDataToSend.append("fileUuid", formData.fileUuid); // 파일 추가
+        if(myData) {
+          setFormData((prev) => ({
+            ...prev,
+            inquireUser: myData.username,
+            inquireEmail: myData.email,
+          }));
         }
-
-        const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/emailinquire/save`, 
-          formDataToSend,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data", // 중요!
-            },
-          }
-        );
-        console.log("이메일 전송 = " + response.data);
-      } catch(error) {
-        console.log(error);
+      } catch (error) {
+        console.error(error);
       }
     }
+    userDTO();
+  }, [myData, navigate]);
+
+  const handleChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+    if (type === "checkbox") {
+      setFormData({ ...formData, [name]: checked });
+    } else if (type === "file") {
+      setFormData({ ...formData, fileUuid: files[0] });
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleSubmitInquire = async () => {
+    try {
+      const formDataToSend = new FormData();
+
+      // 보내는 폼 데이터에 추가
+      formDataToSend.append("inquireCtg", formData.inquireCtg);
+      formDataToSend.append("inquireUser", formData.inquireUser);
+      formDataToSend.append("inquireEmail", formData.inquireEmail);
+      formDataToSend.append("inquireTitle", formData.inquireTitle);
+      formDataToSend.append("inquireContent", formData.inquireContent);
+      formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
+
+      // 폼데이터에 파일추가
+      if (formData.fileUuid) {
+        formDataToSend.append("fileUuid", formData.fileUuid); // 파일 추가
+      }
+
+      const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/emailinquire/save`, 
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // 중요!
+          },
+        }
+      );
+      console.log("이메일 전송 = " + response.data);
+    } catch(error) {
+      console.log(error);
+    }
+  }
 
   return (
     <form className={styles.formContainer}>
