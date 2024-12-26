@@ -425,6 +425,7 @@
         }
 
         .productName{
+          font-weight: 700;
           margin-left: 10px !important;
         }
     
@@ -434,9 +435,14 @@
       }
       
       .rate{
+        margin-top: 10px;
         width: 100%;
         flex-direction: row !important;
         margin-right: auto !important;
+
+        .basicRate{
+          margin-left: 5px;
+        }
       }
     }
     
