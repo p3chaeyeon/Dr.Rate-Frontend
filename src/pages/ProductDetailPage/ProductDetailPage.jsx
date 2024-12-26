@@ -158,14 +158,13 @@ const ProductDetailPage = () => {
 
 
     /* 비교 담기 */
-    const [addProduct, setAddProduct] = useState([]);
 
     const addComparePrd = () => {
         let compareList;
 
-        if(ctg === "d"){
+        if(product.ctg === "d"){
             compareList = JSON.parse(localStorage.getItem('depCompareList')) || [];
-        } else if(ctg === "i"){
+        } else if(product.ctg === "i"){
             compareList = JSON.parse(localStorage.getItem('insCompareList')) || [];
         }
 
@@ -181,16 +180,16 @@ const ProductDetailPage = () => {
             return;
         }
 
-        setAddProduct({
-            index : i,
-            options : options,
-            product : product,
-        })
+        const addProduct = {
+            index: i,
+            options: options,
+            product: product
+        };
 
-        compareList.push(...product);
-        if(ctg === "d"){
+        compareList.push(...addProduct);
+        if(product.ctg === "d"){
             localStorage.setItem('depCompareList', JSON.stringify(compareList));
-        } else if(ctg === "i"){
+        } else if(product.ctg === "i"){
             localStorage.setItem('insCompareList', JSON.stringify(compareList));
         }
     }
