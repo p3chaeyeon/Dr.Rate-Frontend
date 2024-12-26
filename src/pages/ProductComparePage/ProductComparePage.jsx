@@ -7,6 +7,7 @@ import useModal from 'src/hooks/useCompare';
 import React, { useEffect, useRef, useState } from 'react';
 import { PATH } from 'src/utils/path';
 import { useNavigate, useParams } from 'react-router-dom';
+import useCalc from 'src/hooks/useCalc';
 
 const ProductComparePage = () => {
     const navigate = useNavigate();
@@ -93,6 +94,8 @@ const ProductComparePage = () => {
             return updatedProducts;
         });
     }
+
+    
 
 
     /* 상품 옵션 변경하기 */
