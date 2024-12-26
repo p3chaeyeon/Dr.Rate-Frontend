@@ -82,8 +82,8 @@
             align-items: center;
 
             img {
-              width: 14px;
-              height: 14px;
+              width: 16px;
+              height: 16px;
             }
           }
         }
@@ -136,7 +136,7 @@
         .memberFilterItem {
           font-size: 18px;
           font-weight: 600;
-          min-width: 110px;
+          min-width: 120px;
         }
 
         .memberFilterInput {
@@ -167,7 +167,7 @@
             flex: 1;
             background-color: var(--white);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
             text-align: center;
             height: 40px;
           }
@@ -189,9 +189,19 @@
         }
       }
     }
-    
+  }/* filterDiv */
+
+
+  .rateStandard {
+    margin: 20px 0 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    color: var(--font1);
 
   }
+
+
 
 
 

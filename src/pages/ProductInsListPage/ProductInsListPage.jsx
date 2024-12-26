@@ -4,11 +4,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ProductInsListPage.module.scss';
 import { PATH } from 'src/utils/path';
+import { useSession } from 'src/hooks/useSession';
 import useProductList from 'src/hooks/useProductList';
 import xIcon from 'src/assets/icons/xIcon.svg';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import useModal from "src/hooks/useModal";
-import { useSession } from 'src/hooks/useSession';
+import verticalDividerIcon from "src/assets/icons/verticalDivider.svg";
 
 
 const ProductInsListPage = () => {
@@ -153,7 +154,7 @@ const ProductInsListPage = () => {
                   <input
                     type="number"
                     className={`${styles.memberFilterInput} ${styles.noPointer}`}
-                    placeholder="나이 입력"
+                    placeholder="생년월일(ex:19991109)"
                     value={age}
                     onChange={handleAgeChange}
                   />
@@ -216,6 +217,24 @@ const ProductInsListPage = () => {
 
         </div>{/* filterDiv */}
 
+        {/* 금리순 정렬  */}
+        <div className={styles.rateStandard}>
+          <li
+            className={styles.standardItem}
+            // onClick={handleSortBySpclRate}
+          >
+            최고 금리순
+          </li>
+          <li className={styles.standardItem}>
+              <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
+          </li>
+          <li
+            className={styles.standardItem}
+            // onClick={handleSortByBaseRate}
+          >
+            기본 금리순
+          </li>
+        </div>
 
 
       </section>
