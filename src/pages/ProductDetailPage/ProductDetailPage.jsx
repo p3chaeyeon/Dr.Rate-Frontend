@@ -147,7 +147,7 @@ const ProductDetailPage = () => {
 
     /* Confirm Modal 확인 클릭 시 */
     const handleConfirm = () => {
-        navigate(PATH.HOME);
+        navigate(PATH.SIGN_IN);
         closeConfirmModal();
     };
 
