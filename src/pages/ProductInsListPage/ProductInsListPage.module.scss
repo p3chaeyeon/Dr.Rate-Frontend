@@ -129,14 +129,14 @@
       justify-content: center;
       flex-wrap: wrap;
       gap: 30px;
-    
+
       .memberFilterItemDiv {
         width: 46%;
         display: flex;
         justify-content: flex-start;
         align-items: center;
         gap: 20px;
-    
+
         .memberFilterItem {
           font-size: 18px;
           font-weight: 600;
@@ -158,15 +158,15 @@
         .noPointer {
           cursor: auto;
         }
-    
-    
+
+
         .toggleButtonGroup {
           display: flex;
           justify-content: flex-start;
           align-items: center;
           font-size: 15px;
           flex: 1;
-          
+
           .toggleButton {
             width: 48%;
             border: 1px solid var(--divider-border);
@@ -176,7 +176,7 @@
             text-align: center;
             height: 40px;
           }
-          
+
           .toggleButton:first-child {
             border-radius: 5px 0 0 5px;
           }
@@ -194,7 +194,9 @@
         }
       }
     }
-  }/* filterDiv */
+  }
+
+  /* filterDiv */
 
 
   .rateStandard {
@@ -204,7 +206,7 @@
     align-items: center;
     gap: 8px;
     color: var(--font2);
-  
+
     .standardItem {
       display: flex;
       justify-content: center;
@@ -221,8 +223,103 @@
       cursor: default;
     }
   }
-  
 
+
+  .productListDiv {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .noProductList {
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      h4 {
+        letter-spacing: 2px;
+        font-size: 20px;
+      }
+    }
+
+    .productList {
+      border: 1px solid var(--font2);
+      border-radius: 3px;
+      height: 100px;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+
+      .productLogoDiv {
+        width: 140px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .productLogoImg {
+          object-fit: contain;
+          width: 70px;
+        }
+      }
+
+      .productInfoDiv {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--black);
+
+        .productBankProDiv {
+          .productBank {
+            font-weight: 600;
+          }
+        }
+
+        .productHighestRateDiv,
+        .productSBaseRateDiv {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .productHighestRateDiv {
+          color: var(--red2);
+        }
+
+        .productHighestRatePer,
+        .productBaseRatePer {
+          width: 50px;
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .spclRate,
+        .basicRate {
+          margin-right: 3px;
+        }
+      }
+
+      .productBtnDiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px;
+
+        .productCompareBtn {
+          width: 60px;
+          aspect-ratio: 1 / 1;
+          background: var(--bg2);
+          cursor: pointer;
+          border: 0px;
+          letter-spacing: 1px;
+          font-weight: normal;
+        }
+      }
+    }
+  }
 
 
 
@@ -245,7 +342,55 @@
             min-width: 110px;
 
           }
-        } 
+        }
+      }
+    }
+
+    .productListDiv {
+      .productList {
+        gap: 20px;
+        .productLogoDiv {
+          width: 90px;
+
+          .productLogoImg {
+            width: 60px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/* ====================================== 가로 800px 이하 ====================================== */
+@media (max-width: 800px) {
+  .listSection {
+    .filterDiv {
+      .memberFilterContainer {
+        .memberFilterItemDiv {
+          gap: 10px;
+        }
+      }
+    }
+
+    .productListDiv {
+      .productList {
+        gap: 10px;
+
+        .productLogoDiv {
+          width: 76px;
+
+          .productLogoImg {
+            width: 54px;
+          }
+        }
+
+        .productBtnDiv {
+          .productCompareBtn {
+            width: 54px;
+            font-size: 15px;
+          }
+        }
       }
     }
   }
@@ -272,7 +417,23 @@
           .toggleButtonGroup {
             font-size: 14px;
           }
-        } 
+        }
+      }
+    }
+
+    .productListDiv {
+      .productList {
+        .productLogoDiv {
+          width: 70px;
+
+          .productLogoImg {
+            width: 50px;
+          }
+        }
+
+        .productInfoDiv {
+          padding: 0 5px;
+        }
       }
     }
   }
@@ -282,6 +443,7 @@
 @media (max-width: 600px) {
   .listSection {
     padding: 20px 10px;
+    width: 84%;
 
     .listTitleDiv {
       font-size: 18px;
@@ -307,7 +469,8 @@
         .bankSelectedContainer {
 
           &.hasItems {
-            margin-top: 10px; /* 선택된 은행이 있을 때 */
+            margin-top: 10px;
+            /* 선택된 은행이 있을 때 */
           }
 
           .bankSelectedItemDiv {
@@ -317,9 +480,9 @@
             .selectedBankItem {
               font-size: 14px;
             }
-          } 
-        } 
-      } 
+          }
+        }
+      }
 
 
       .nonMemberFilterContainer {
@@ -353,7 +516,103 @@
               height: 36px;
             }
           }
-        } 
+        }
+      }
+    }
+
+    .productListDiv {
+      .productList {
+        .productLogoDiv {
+          width: 66px;
+          margin-left: 10px;
+
+          .productLogoImg {
+            width: 44px;
+          }
+        }
+
+        .productInfoDiv {
+          padding: 10px 0;
+          flex-direction: column;
+          align-items: flex-start;
+
+          .productBankProDiv {
+              font-size: 13px;
+          }
+          .productRateDiv {
+              display: flex;
+              gap: 8px;
+
+              .productHighestRateDiv,
+              .productSBaseRateDiv {
+                  font-size: 12px;
+              }
+
+              .productHighestRatePer,
+              .productBaseRatePer {
+                  width: 36px;
+              }
+
+          }
+      }
+
+      .productBtnDiv {
+        .productCompareBtn {
+          width: 50px;
+          font-size: 14px;
+        }
+      }
+      }
+    }
+
+
+  }
+}
+
+/* ====================================== 가로 450px 이하 ====================================== */
+@media (max-width: 450px) {
+  .listSection {
+    
+    .productListDiv {
+      .productList {
+        gap: 7px;
+
+        .productLogoDiv {
+          width: 60px;
+
+          .productLogoImg {
+            width: 40px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/* ====================================== 가로 430px 이하 ====================================== */
+@media (max-width: 430px) {
+  .listSection {
+    
+    .productListDiv {
+      .productList {
+        .productLogoDiv {
+          width: 54px;
+          margin: 0;
+        }
+
+        .productInfoDiv {
+          .productRateDiv {
+            flex-direction: column;
+            gap: 0;
+          }
+        }
+
+        .productBtnDiv {
+          .productCompareBtn {
+            font-size: 13px;
+          }
+        }
       }
     }
   }

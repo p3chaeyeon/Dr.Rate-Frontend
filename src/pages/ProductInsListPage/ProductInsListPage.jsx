@@ -28,7 +28,7 @@ const productData = [
     bankName: "한국스탠다드차타드은행",
     prdName: "e-그린세이브예금",
     spclRate: 4.0,
-    basicRate: 2.6,
+    basicRate: 2.64,
   },
   {
     productId: 3,
@@ -325,7 +325,11 @@ const ProductInsListPage = () => {
                                 </div>
                             </div>
                             <div className={styles.productBtnDiv}>
-                              <button className={styles.productCompareBtn}></button>
+                              <button 
+                                className={styles.productCompareBtn}
+                              >
+                                비교<br />담기
+                              </button>
                             </div>
                         </div>
                       ))}
