@@ -112,7 +112,7 @@ const ProductDetailPage = () => {
         setIsOpenResult((prev) => !prev);
     }
 
-    // 숫자 변형 #,###
+    // 숫자 변형 #,### 
     const formatNumber = (num) => Math.floor(num).toLocaleString();
 
     /* 옵션 토글 */
@@ -157,7 +157,7 @@ const ProductDetailPage = () => {
     };
 
 
-    /* 비교담기 */
+    /* 비교 담기 */
     
 
 
