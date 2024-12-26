@@ -1,21 +1,33 @@
-/* src/hooks/useProductList.js */
-
+/* src/hooks/useProductList.jsx */
 import { useState } from "react";
 
 const useProductList = () => {
-  const [selectedBank, setSelectedBank] = useState("");
+  const [selectedBanks, setSelectedBanks] = useState([]);
 
+  // 은행 추가
   const handleBankChange = (event) => {
-    setSelectedBank(event.target.value);
+    const selectedBank = event.target.value;
+    if (!selectedBanks.includes(selectedBank)) {
+      setSelectedBanks([...selectedBanks, selectedBank]);
+    }
+  };
+
+  // 은행 삭제
+  const removeBank = (bankToRemove) => {
+    setSelectedBanks(selectedBanks.filter((bank) => bank !== bankToRemove));
   };
 
   return {
-    selectedBank,
+    selectedBanks,
     handleBankChange,
+    removeBank,
   };
 };
 
 export default useProductList;
+
+
+
 
 
 

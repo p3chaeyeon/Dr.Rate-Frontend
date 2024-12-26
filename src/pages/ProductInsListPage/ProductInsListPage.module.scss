@@ -15,8 +15,12 @@
     .commitFilterDiv {
       padding: 10px;
       background: var(--bg2);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 15px;
 
-      .bankSelectDiv {
+      .bankSelectContainer {
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -31,9 +35,9 @@
           min-width: 200px;
           height: 40px;
           padding: 5px;
-          border: 1px solid #ccc;
+          border: 1px solid var(--divider-border);
           border-radius: 5px;
-          background-color: #f9f9f9;
+          background-color: var(--white);
           cursor: pointer;
 
           option {
@@ -41,7 +45,68 @@
           }
         }
       }
+
+      .bankSelectedContainer {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+
+        .bankSelectedItemDiv {
+          height: 40px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 8px;
+          border: 1px solid var(--black);
+          border-radius: 5px;
+          background: var(--white);
+          cursor: pointer;
+          gap: 10px;
+
+          .selectedBankItem {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .bankSelectedBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+              width: 14px;
+              height: 14px;
+            }
+          }
+        }
+      }
     }
+
+    .nonMemberFilterContainer {
+      margin: 50px 0;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--main2);
+      color: var(--white);
+      font-size: 28px;
+      font-weight: 600;
+
+      span {
+        text-decoration: underline;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+    }
+
+    .memberFilterContainer {
+      margin: 30px 0;
+      border: 1px solid var(--divider-border);
+    }
+
   }
 
 
