@@ -21,16 +21,16 @@ const ProductInsListPage = () => {
     banks,
     handleBankChange,
     removeBank,
-    interestMethod,
-    handleInterestMethodClick,
-    joinMethod,
-    handleJoinMethodClick,
+    rate,
+    handleRateClick,
+    join,
+    handleJoinClick,
     age,
     handleAgeChange,
     period,
     handlePeriodChange,
-    sortMethod,
-    handleSortMethodClick,
+    sort,
+    handleSortClick,
   } = useProductList();
 
   const {
@@ -134,8 +134,8 @@ const ProductInsListPage = () => {
           </div> {/* commitFilterDiv */}
 
 
-          {/* {!isLoggedIn ? (
-            <> */}
+          {!isLoggedIn ? (
+            <>
               <div className={styles.nonMemberFilterContainer}>
                 <div className={styles.nonMemberMessage}>
                   나에게 맞는 예금 상품이 궁금하다면?
@@ -152,16 +152,16 @@ const ProductInsListPage = () => {
                   />
                 </div>
               </div> {/* nonMemberFilterContainer */}
-            {/* </>
+            </>
           ) : (
-            <> */}
+            <>
               <div className={styles.memberFilterContainer}>
                 <div className={styles.memberFilterItemDiv}>
-                  <div className={styles.memberFilterItem}>나이</div>
+                  <div className={styles.memberFilterItem}>나이(생년월일)</div>
                   <input
                     type="number"
                     className={`${styles.memberFilterInput} ${styles.noPointer}`}
-                    placeholder="생년월일(ex:19991109)"
+                    placeholder="예시:19991109"
                     value={age}
                     onChange={handleAgeChange}
                   />
@@ -183,16 +183,16 @@ const ProductInsListPage = () => {
                   <div className={styles.memberFilterItem}>이자 계산 방식</div>
                   <div className={styles.toggleButtonGroup}>
                     <button
-                      className={`${styles.toggleButton} ${interestMethod === "단리" ? styles.active : ""
+                      className={`${styles.toggleButton} ${rate === "단리" ? styles.active : ""
                         }`}
-                      onClick={() => handleInterestMethodClick("단리")}
+                      onClick={() => handleRateClick("단리")}
                     >
                       단리
                     </button>
                     <button
-                      className={`${styles.toggleButton} ${interestMethod === "복리" ? styles.active : ""
+                      className={`${styles.toggleButton} ${rate === "복리" ? styles.active : ""
                         }`}
-                      onClick={() => handleInterestMethodClick("복리")}
+                      onClick={() => handleRateClick("복리")}
                     >
                       복리
                     </button>
@@ -202,24 +202,24 @@ const ProductInsListPage = () => {
                   <div className={styles.memberFilterItem}>가입 방식</div>
                   <div className={styles.toggleButtonGroup}>
                     <button
-                      className={`${styles.toggleButton} ${joinMethod === "대면" ? styles.active : ""
+                      className={`${styles.toggleButton} ${join === "대면" ? styles.active : ""
                         }`}
-                      onClick={() => handleJoinMethodClick("대면")}
+                      onClick={() => handleJoinClick("대면")}
                     >
                       대면
                     </button>
                     <button
-                      className={`${styles.toggleButton} ${joinMethod === "비대면" ? styles.active : ""
+                      className={`${styles.toggleButton} ${join === "비대면" ? styles.active : ""
                         }`}
-                      onClick={() => handleJoinMethodClick("비대면")}
+                      onClick={() => handleJoinClick("비대면")}
                     >
                       비대면
                     </button>
                   </div>
                 </div>
               </div>{/* memberFilterContainer */}
-            {/* </>
-          )} */}
+            </>
+          )}
         </div>{/* filterDiv */}
 
 
@@ -227,9 +227,9 @@ const ProductInsListPage = () => {
         <div className={styles.rateStandard}>
           <li
             className={`${styles.standardItem} ${
-              sortMethod === "spclRate" ? styles.active : ""
+              sort === "spclRate" ? styles.active : ""
             }`}
-            onClick={() => handleSortMethodClick("spclRate")}
+            onClick={() => handleSortClick("spclRate")}
           >
             최고 금리순
           </li>
@@ -238,9 +238,9 @@ const ProductInsListPage = () => {
           </li>
           <li
             className={`${styles.standardItem} ${
-              sortMethod === "baseRate" ? styles.active : ""
+              sort === "baseRate" ? styles.active : ""
             }`}
-            onClick={() => handleSortMethodClick("baseRate")}
+            onClick={() => handleSortClick("baseRate")}
           >
             기본 금리순
           </li>

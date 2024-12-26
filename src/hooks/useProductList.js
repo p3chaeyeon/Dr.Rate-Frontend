@@ -4,19 +4,19 @@ import { useAtom } from "jotai";
 import {
     banksAtom,
     ageAtom,
-    savingPeriodAtom,
-    interestMethodAtom,
-    joinMethodAtom,
-    sortMethodAtom,
+    periodAtom,
+    rateAtom,
+    joinAtom,
+    sortAtom,
 } from "src/atoms/productListAtom";
 
 const useProductList = () => {
     const [banks, setBanks] = useAtom(banksAtom);
-    const [interestMethod, setInterestMethod] = useAtom(interestMethodAtom);
-    const [joinMethod, setJoinMethod] = useAtom(joinMethodAtom);
     const [age, setAge] = useAtom(ageAtom);
-    const [period, setPeriod] = useAtom(savingPeriodAtom);
-    const [sortMethod, setSortMethod] = useAtom(sortMethodAtom);
+    const [period, setPeriod] = useAtom(periodAtom);
+    const [rate, setRate] = useAtom(rateAtom);
+    const [join, setJoin] = useAtom(joinAtom);
+    const [sort, setSort] = useAtom(sortAtom);
 
     /* 은행 추가 */
     const handleBankChange = (event) => {
@@ -42,34 +42,34 @@ const useProductList = () => {
     };
 
     /* 단리/복리 선택 */
-    const handleInterestMethodClick = (method) => {
-        setInterestMethod((prev) => (prev === method ? "" : method));
+    const handleRateClick = (choice) => {
+        setRate((prev) => (prev === choice ? "" : choice));
     };
 
     /* 대면/비대면 선택 */
-    const handleJoinMethodClick = (method) => {
-        setJoinMethod((prev) => (prev === method ? "" : method));
+    const handleJoinClick = (choice) => {
+        setJoin((prev) => (prev === choice ? "" : choice));
     };
 
     /* 정렬 상태 관리 함수 */
-    const handleSortMethodClick = (method) => {
-        setSortMethod(method);
+    const handleSortClick = (choice) => {
+        setSort(choice);
       };
 
     return {
         banks,
         handleBankChange,
         removeBank,
-        interestMethod,
-        handleInterestMethodClick,
-        joinMethod,
-        handleJoinMethodClick,
+        rate,
+        handleRateClick,
+        join,
+        handleJoinClick,
         age,
         handleAgeChange,
         period,
         handlePeriodChange,
-        sortMethod,
-        handleSortMethodClick,
+        sort,
+        handleSortClick,
     };
 };
 
