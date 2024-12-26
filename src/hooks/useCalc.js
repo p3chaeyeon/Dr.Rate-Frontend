@@ -50,7 +50,7 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
   };
 
   // 숫자 변형 #,###
-  const formatNumber = (num) => Math.floor(num).toLocaleString(); // Round down the decimal part
+  const formatNumber = (num) => Math.floor(num).toLocaleString();
 
   // 이자 계산 함수
   const calculateInterest = () => {

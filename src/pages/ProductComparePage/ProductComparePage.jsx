@@ -51,7 +51,7 @@ const ProductComparePage = () => {
     const formatNumber = (num) => Math.floor(num).toLocaleString();
 
 
-    /* 비교 상품 */
+    /* 비교상품 */
     /* 상품 불러오기 */
     useEffect(() => {
         if(EffectRefresh){
