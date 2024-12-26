@@ -75,7 +75,6 @@ const useCalc = ({ basicRate, products, rateType, saveTime, max }) => {
     return totalValue + interestValue - afterTaxValue; 
   };
 
-
   /******* 예금 *******/
   /* 단리 계산 (예금) */
   const calculateSimpleInterestForDeposit = (P, rate, saveYear) => {
