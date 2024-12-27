@@ -14,6 +14,7 @@ import spinner from 'src/assets/icons/spinner.gif';
 
 
 const MyDepositPage = () => {
+
     const navigate = useNavigate();
 
     const { isLoggedIn } = useSession();
@@ -55,14 +56,14 @@ const MyDepositPage = () => {
     return (
         <main>
             <MyNav />
-                <ConfirmModal
-                    isOpen={isConfirmOpen}
-                    closeModal={closeConfirmModal}
-                    title={confirmContent.title}
-                    message={confirmContent.message}
-                    onConfirm={confirmContent.onConfirm}
-                    onCancel={confirmContent.onCancel}
-                />
+            <ConfirmModal
+                isOpen={isConfirmOpen}
+                closeModal={closeConfirmModal}
+                title={confirmContent.title}
+                message={confirmContent.message}
+                onConfirm={confirmContent.onConfirm}
+                onCancel={confirmContent.onCancel}
+            />
 
             <section className={styles.favoriteSection}>
                 {/* FavoritePanel은 항상 렌더링 */}
