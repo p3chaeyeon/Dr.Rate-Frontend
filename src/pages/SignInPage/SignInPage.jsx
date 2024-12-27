@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
-import { useNavigate } from 'react-router-dom';
-import AlertModal from 'src/components/modal/AlertModal';
-=======
 import { useNavigate } from 'react-router-dom';  // useNavigate 추가
 import AlertModal from 'src/components/Modal/AlertModal'; // AlertModal import
->>>>>>> ea0ff1280817ae9d616ac606e2743f56239f5513
 import styles from './SignInPage.module.scss';
 
 import { useAtom } from 'jotai';
@@ -16,14 +11,12 @@ import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
 import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
 import { PATH } from 'src/utils/path';
+import axiosInstanceAPI from "../../apis/axiosInstanceAPI.js";
 
 const SignInPage = () => {
-<<<<<<< HEAD
-    const navigate = useNavigate();
-=======
+
     const navigate = useNavigate();  // navigate 훅 사용
     const [, setMyData] = useAtom(userData); // Jotai Atom 사용
->>>>>>> ea0ff1280817ae9d616ac606e2743f56239f5513
 
     // 모달 상태 관리
     const [showModal, setShowModal] = useState(false);
@@ -53,19 +46,15 @@ const SignInPage = () => {
             // 헤더에서 토큰 가져오기
             const token = response.headers?.authorization?.replace('Bearer ', '');
             if (token) {
-<<<<<<< HEAD
-                localStorage.setItem('Authorization', token);
-                navigate(`${PATH.HOME}`);
-=======
                 console.log("Received JWT:", token);
-                localStorage.setItem("accessToken", token); // JWT를 localStorage에 저장
+                localStorage.setItem("Authorization", token); // JWT를 localStorage에 저장
                 //조타이 추가
                 const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfo`);
                 setMyData(response.data.result);  // 데이터 업데이트
                 console.log("데이터 가져옴");
 
                 window.location.href = `${PATH.HOME}`; // 메인 페이지로 이동
->>>>>>> ea0ff1280817ae9d616ac606e2743f56239f5513
+
             } else {
                 setModalTitle('로그인 실패');
                 setModalMessage('아이디 또는 비밀번호가 잘못되었습니다.');
