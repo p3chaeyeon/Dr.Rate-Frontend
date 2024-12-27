@@ -94,7 +94,7 @@ const ServiceCenterPage = () => {
               <li>・ 토요일: 이메일 상담</li>
               <li>・ 일요일: 휴무</li>
             </ul>
-            <button className={styles.chatButton} onClick={()=>navigate(PATH.USER_INQUIRE)}>
+            <button className={styles.chatButton} onClick={()=>navigate(PATH.MY_1V1_INQUIRE)}>
               관리자 1:1 문의하기
               <div className={styles.newAnswerSection}>새 답변</div>
               </button>

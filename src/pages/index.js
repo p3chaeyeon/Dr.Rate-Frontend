@@ -17,7 +17,6 @@ import ProductInsListPage from './ProductInsListPage';
 import DepositListPage from './DepositListPage';
 import ProductComparePage from './ProductComparePage';
 import ServiceCenterPage from './ServiceCenterPage';
-import UserInquirePage from './UserInquirePage/UserInquirePage';
 import SignInPage from './SignInPage/index.js';
 import SignUpPage from './SignUpPage/index.js';
 import EmailInquirePage from './EmailInquirePage';
@@ -51,7 +50,6 @@ const PageRoutes = {
 
   // 고객센터
   ServiceCenterPage,
-  UserInquirePage,
   EmailInquirePage,
 
   // 관리자 페이지 컴포넌트
