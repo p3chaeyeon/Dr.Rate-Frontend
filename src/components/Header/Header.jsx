@@ -14,6 +14,8 @@ import mobileSideCompare from 'src/assets/icons/mobileSideCompare.png';
 import mobileSideDeposit from 'src/assets/icons/mobileSideDeposit.png';
 import mobileSideInstallment from 'src/assets/icons/mobileSideInstallment.png';
 import useDropdown from 'src/hooks/useDropdown';
+import {userData} from "src/atoms/userData.js";
+import {useAtom} from "jotai";
 
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 
@@ -46,7 +48,23 @@ const Header = () => {
         }
 
     };
+    //로그인시 회원정보 갖고 온 상태
+    const [myData,setMyData] = useAtom(userData);
 
+    //데이터 받아오기 (atom에 데이터가 없을 경우)
+        useEffect(() => {
+            const userDTO = async () => {
+                try {
+                    if(!myData) { // atom에 데이터가 없을경우
+                        const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfo`);
+                        setMyData(response.data.result);  // 데이터 업데이트
+                    }
+                } catch (error) {
+                    console.error('데이터 가져오기 실패:', error);
+                }
+            };
+            userDTO();
+        }, [myData, setMyData]);
 
     // 모바일 사이드 메뉴
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -195,7 +213,7 @@ const Header = () => {
                                         <img src={mobileSideProfile} alt="mobileSideProfile" className={styles.mobileSideProfile} />
                                     </div>
                                     <div className={styles.sideUserName}>
-                                        <span>홍박사</span>님
+                                        <span>{myData.username}</span>님
                                     </div>
                                 </div>
                             </div>
