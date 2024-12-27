@@ -166,7 +166,12 @@ const SignUpPage = () => {
                 </div>
 
                 <div className={styles.signUpForm}>
-                    <form>
+                    <form
+                    onSubmit={(e)=>{
+                        e.preventDefault();
+                        handleSignUp();
+                    }}
+                    >
                         <div className={styles.inputWrapper}>
                             <input
                                 type="text"
@@ -264,10 +269,11 @@ const SignUpPage = () => {
                             <label htmlFor="confirmPassword">비밀번호 확인</label>
                         </div>
                         {confirmPwdError && <p className={styles.errorText}>{confirmPwdError}</p>}
+
+                        <button type="submit">회원가입</button>
                     </form>
                 </div>
 
-                <button onClick={handleSignUp}>회원가입</button>
 
                 <div className={styles.icons}>
                     <img
