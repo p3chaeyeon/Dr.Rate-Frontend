@@ -14,9 +14,10 @@ import spinner from 'src/assets/icons/spinner.gif';
 
 
 const MyDepositPage = () => {
+
     const navigate = useNavigate();
 
-    const { isLoggedIn, clearSession } = useSession();
+    const { isLoggedIn } = useSession();
 
     const {
         isConfirmOpen,
@@ -24,15 +25,6 @@ const MyDepositPage = () => {
         closeConfirmModal,
         confirmContent
     } = useModal();
-
-    // const handleOpenConfirmModal = () => {
-    //     openConfirmModal(
-    //         '로그인 페이지로 이동하시겠습니까?',
-    //         '로그인 후 마이 페이지에 접근할 수 있어요!',
-    //         handleConfirm,
-    //         handleCancel
-    //     );
-    // };
 
     const handleConfirm = () => {
         navigate(PATH.SIGN_IN);
@@ -46,15 +38,11 @@ const MyDepositPage = () => {
 
     const { favoriteData, fetchFavorites, loading, error, individualChecked, handleIndividualCheck } = useMyFavorite();
 
-    // useEffect(() => {
-    //     fetchFavorites();
-    // }, [fetchFavorites]);
-
     useEffect(() => {
         if (!isLoggedIn) {
             openConfirmModal(
+                '로그인이 필요합니다.',
                 '로그인 페이지로 이동하시겠습니까?',
-                '로그인 후 마이 페이지에 접근할 수 있어요!',
                 handleConfirm,
                 handleCancel
             );
@@ -68,14 +56,14 @@ const MyDepositPage = () => {
     return (
         <main>
             <MyNav />
-                <ConfirmModal
-                    isOpen={isConfirmOpen}
-                    closeModal={closeConfirmModal}
-                    title={confirmContent.title}
-                    message={confirmContent.message}
-                    onConfirm={confirmContent.onConfirm}
-                    onCancel={confirmContent.onCancel}
-                />
+            <ConfirmModal
+                isOpen={isConfirmOpen}
+                closeModal={closeConfirmModal}
+                title={confirmContent.title}
+                message={confirmContent.message}
+                onConfirm={confirmContent.onConfirm}
+                onCancel={confirmContent.onCancel}
+            />
 
             <section className={styles.favoriteSection}>
                 {/* FavoritePanel은 항상 렌더링 */}
