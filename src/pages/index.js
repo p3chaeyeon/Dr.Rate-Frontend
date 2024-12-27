@@ -13,10 +13,10 @@ import AdminInquirePage from './AdminInquirePage';
 import AdminUserListPage from './AdminUserListPage/AdminUserListPage';
 import AdminInquireListPage from './AdminInquireListPage/AdminInquireListPage';
 import ProductInsListPage from './ProductInsListPage';
-import ProductDepListPage from './ProductDepListPage';
+//import ProductDepListPage from './ProductDepListPage';
+import DepositListPage from './DepositListPage';
 import ProductComparePage from './ProductComparePage';
 import ServiceCenterPage from './ServiceCenterPage';
-import UserInquirePage from './UserInquirePage/UserInquirePage';
 import SignInPage from './SignInPage/index.js';
 import SignUpPage from './SignUpPage/index.js';
 import EmailInquirePage from './EmailInquirePage';
@@ -25,6 +25,7 @@ import AdminEmailInquireListPage from './AdminEmailInquireListPage/AdminEmailInq
 import AdminEmailInquirePage from './AdminEmailInquirePage/AdminEmailInquirePage.jsx';
 import MyEmailInquirePage from './MyEmailInquirePage/MyEmailInquirePage.jsx';
 import My1v1InquirePage from './My1v1InquirePage/My1v1InquirePage.jsx';
+
 
 // 각 페이지 컴포넌트를 PageRoutes 객체에 모아 내보내기
 const PageRoutes = {
@@ -41,14 +42,14 @@ const PageRoutes = {
   MyEmailInquirePage,
   My1v1InquirePage,
   ProductInsListPage,
-  ProductDepListPage,
+  //ProductDepListPage,
+  DepositListPage,
   ProductDetailPage,
   ProductComparePage,
   OAuthCallbackHandlerPage,
 
   // 고객센터
   ServiceCenterPage,
-  UserInquirePage,
   EmailInquirePage,
 
   // 관리자 페이지 컴포넌트
