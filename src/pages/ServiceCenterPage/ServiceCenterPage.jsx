@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './ServiceCenterPage.module.scss';
 import {  useNavigate } from 'react-router-dom';
 import { PATH } from 'src/utils/path';
+import { useSession } from 'src/hooks/useSession';
+import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import useModal from 'src/hooks/useModal';
+
 
 const categories = [
   { id: "all", name: "전체" },
@@ -49,6 +53,38 @@ const ServiceCenterPage = () => {
 
   const navigate = useNavigate();
 
+      const { isLoggedIn } = useSession();
+  
+      const {
+          isConfirmOpen,
+          openConfirmModal,
+          closeConfirmModal,
+          confirmContent
+      } = useModal();
+  
+      const handleConfirm = () => {
+          navigate(PATH.SIGN_IN);
+          closeConfirmModal();
+      };
+  
+      const handleCancel = () => {
+          closeConfirmModal();
+      };
+
+      const handleButtonClick = (path) => {
+        if (isLoggedIn) {
+          navigate(path);
+        } else {
+          openConfirmModal(
+            "로그인이 필요합니다.",
+            "로그인 페이지로 이동하시겠습니까?",
+            handleConfirm,
+            handleCancel
+          );
+        }
+      };
+      
+
   const handleQuestionClick = (id) => {
     setExpandedQuestions((prev) =>
       prev.includes(id) ? prev.filter((qId) => qId !== id) : [...prev, id]
@@ -94,14 +130,23 @@ const ServiceCenterPage = () => {
               <li>・ 토요일: 이메일 상담</li>
               <li>・ 일요일: 휴무</li>
             </ul>
-            <button className={styles.chatButton} onClick={()=>navigate(PATH.MY_1V1_INQUIRE)}>
+            <button className={styles.chatButton} onClick={()=>handleButtonClick(PATH.MY_1V1_INQUIRE)}>
               관리자 1:1 문의하기
               <div className={styles.newAnswerSection}>새 답변</div>
               </button>
             <div className={styles.emailActions}>
-              <button className={styles.emailButton} onClick={()=>navigate(PATH.EMAIL_INQUIRE)}>
+              <button className={styles.emailButton} onClick={()=>handleButtonClick(PATH.EMAIL_INQUIRE)}>
                 이메일 문의하기</button>
               <button className={styles.copyButton}>이메일 주소 복사하기</button>
+
+              <ConfirmModal
+                  isOpen={isConfirmOpen}
+                  closeModal={closeConfirmModal}
+                  title={confirmContent.title}
+                  message={confirmContent.message}
+                  onConfirm={confirmContent.onConfirm}
+                  onCancel={confirmContent.onCancel}
+              />
             </div>
           </div>
         </div>
