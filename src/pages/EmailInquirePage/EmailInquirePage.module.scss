@@ -1,545 +1,256 @@
 .EmailInquireMain {
   width: 100%;
-}
 
-.commonSection {
-  width: 100%;
-}
-.topContainer {
-    max-width: 750px;
-    margin: 0 auto; 
-    padding: 20px;
-    margin-top: 50px;
+  .commonSection {
     width: 100%;
-  
-    .title {
-      font-size: 25px;
-      font-weight: bold;
-      margin-bottom: 30px;
-      text-align: left;
-    }
-  
-    .subTitle {
-      font-size: 13px;
-      color: var(--black);
-      margin-bottom: 40px;
-      text-align: left;
-  
-      .link {
-        color: var(--main1);
-        text-decoration: none;
-        font-weight: bold;
-  
-        &:hover {
-          text-decoration: underline;
-        }
-      }
-    }
-  
-    .divGroup {
-      margin-bottom: 15px;
-      font-size: 16px;
-      width : 100%;
-  
-      .hintInquiryType {
-        color: #a09f9f;
-        font-size: 12px;
-        margin-top: 5px;
-        line-height: 1.5;
-      }
-  
-      .textInput,
-      .textArea,
-      .selectInput,
-      .fileInput {
-        width: 50%;
-        padding: 10px;
-        font-size: 12px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-      }
-  
-      .textArea {
-        resize: none;
-        height: 170px;
-        width: 100%;
-      }
-  
-      .hint {
-        color: #666;
-        font-size: 12px;
-        margin-top: 5px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-      }
-  
-      .fileUploadWrapper {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: nowrap;
 
-        .fileInputText {
-          padding: 10px;
-          font-size: 12px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          background-color: #ffffff;
-          color: #666;
-          box-sizing: border-box;
-          width: 50%;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-  
-        .fileButton {
-          display: inline-block;
-          padding: 10px 15px;
-          font-size: 12px;
-          font-weight: normal;
-          color: var(--main2);
-          border: 1px solid var(--main2);
-          border-radius: 4px;
-          text-align: center;
-          cursor: pointer;
-          background-color: var(--white);
-          transition: all 0.3s ease;
-          width: 20%;
-          margin: 20px;
-  
+  .topContainer {
+      max-width: 750px;
+      margin: 0 auto; 
+      padding: 20px;
+      margin-top: 20px;
+      width: 100%;
+    
+      .title {
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-align: left;
+      }
+    
+      .subTitle {
+        font-size: 15px;
+        color: var(--black);
+        margin-bottom: 40px;
+        text-align: left;
+    
+        .link {
+          color: var(--main1);
+          text-decoration: none;
+          font-weight: bold;
+    
           &:hover {
-            background-color: #eaf4ff;
+            text-decoration: underline;
           }
         }
-  
+      }
+    
+      .divGroup {
+        margin-bottom: 15px;
+        font-size: 15px;
+        width : 100%;
+    
+        .hintInquiryType {
+          color: #a09f9f;
+          font-size: 13px;
+          margin-top: 5px;
+          line-height: 1.5;
+        }
+    
+        .textInput,
+        .textArea,
+        .selectInput,
         .fileInput {
-          display: none;
+          width: 50%;
+          padding: 10px;
+          font-size: 15px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          box-sizing: border-box;
         }
-      }
-    }
-  
-    .privacyContainer {
-      background-color: #f6f6f6;
-      padding: 10px;
-      border: 1px none #ddd;
-      border-radius: 4px;
-      margin-bottom: 20px;
-      width: 100%;
-      height: auto;
-      line-height: 1.5;
-      overflow: hidden;
-      text-align: justify;
-  
-      .checkboxLabel {
-        display: flex;
-        align-items: center;
-        font-size: 12px;
-  
-        .checkbox {
-          margin-right: 5px;
-          accent-color: var(--main2);
-          transform: scale(0.8);
+    
+        .textArea {
+          resize: none;
+          height: 170px;
+          width: 100%;
         }
-  
-        .required {
-          color: var(--red1);
-          font-size: 14px;
-          margin-left: 5px;
-        }
-      }
-  
-      .privacyDetails {
-        font-size: 12px;
-        color: var(--font2);
-        margin-top: 5px;
-        padding: 4px;
-        word-wrap: break-word;
-      }
-    }
-  
-    .submitButton {
-      width: 50%;
-      padding: 10px;
-      font-size: 8px;
-      font-weight: bold;
-      background-color: var(--main2);
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-bottom: 30px;
-  
-      &:hover {
-        background-color: var(--main1);
-      }
-  
-      &.disabled {
-        background-color: #ccc;
-        cursor: not-allowed;
-      }
-    }
-  }
-  
-/* 800px 이하 */
-@media (max-width: 800px) {
-  .formContainer {
-    margin-left: 100px;
-    margin-right: 100px;
-    max-width: 600px;
-
-    .title {
-      font-size: 18px;
-    }
-
-    .subTitle {
-      font-size: 11px;
-
-      .link {
-        font-size: 11px;
-      }
-    }
-
-    .formGroup {
-
-      .hintInquiryType {
-        font-size: 11px;
-      }
-
-      .textInput,
-      .textArea,
-      .selectInput {
-        font-size: 11px;
-      }
-
-      .fileUploadWrapper {
-        .fileInputText {
-          width: 70%;
-          font-size: 11px;
-        }
-
-        .fileButton {
-          width: 25%;
-          font-size: 11px;
-          margin: 15px;
-        }
-      }
-    }
-
-    .privacyContainer {
-      width: 90%;
-      padding: 8px;
-
-      .checkboxLabel {
-        font-size: 11px;
-
-        .checkbox {
-          transform: scale(0.7);
-        }
-
-        .required {
+    
+        .hint {
+          color: #666;
           font-size: 12px;
+          margin-top: 5px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+        }
+    
+        .fileUploadWrapper {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          flex-wrap: nowrap;
+          position: relative;
+
+          .fileInputText {
+            padding: 10px;
+            font-size: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: #666;
+            box-sizing: border-box;
+            width: 50%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          .fileIcon {
+            position: absolute;
+            right: 51%; 
+            top: 50%; /* 중앙 */
+            transform: translateY(-50%);  /* 중앙 */
+            cursor: pointer;
+          }       
+
+          .fileButton {
+            display: inline-block;
+            padding: 7px 3px;
+            font-size: 15px;
+            font-weight: normal;
+            color: var(--main2);
+            border: 1px solid var(--main2);
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            background-color: var(--white);
+            transition: all 0.3s ease;
+            width: 20%;
+            margin: 20px;
+    
+            &:hover {
+              background-color: #eaf4ff;
+            }
+          }
+          .resetButton {
+            display: inline-block;
+            padding: 7px 3px;
+            font-size: 15px;
+            font-weight: normal;
+            border: 1px solid var(--font3);
+            border: 1px solid;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 15%;
+            color: var(--font3);
+        
+            &:hover {
+              background-color: var(--admin-body);
+            }
+          }        
+    
+          .fileInput {
+            display: none;
+          }
         }
       }
-
-      .privacyDetails {
-        font-size: 11px;
-        line-height: 1.4;
+    
+      .privacyContainer {
+        background-color: #f6f6f6;
+        padding: 10px;
+        border: 1px none #ddd;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        width: 100%;
+        height: auto;
+        line-height: 1.5;
+        overflow: hidden;
+        text-align: justify;
+    
+        .checkboxLabel {
+          display: flex;
+          align-items: center;
+          font-size: 12px;
+    
+          .checkbox {
+            margin-right: 5px;
+            accent-color: var(--main2);
+            transform: scale(0.8);
+          }
+    
+          .required {
+            color: var(--red1);
+            font-size: 14px;
+            margin-left: 5px;
+          }
+        }
+    
+        .privacyDetails {
+          font-size: 12px;
+          color: var(--font2);
+          margin-top: 5px;
+          padding: 4px;
+          word-wrap: break-word;
+        }
       }
-    }
-
-    .submitButton {
-      width: 80%;
-      font-size: 12px;
+    
+      .submitButton {
+        width: 40%;
+        padding: 10px;
+        font-size: 12px;
+        font-weight: bold;
+        background-color: var(--main2);
+        color: var(--white);
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-bottom: 30px;
+        margin-top: 30px;
+    
+        &:hover {
+          background-color: var(--main1);
+        }
+    
+        &.disabled {
+          background-color: var(--divider-border);
+          cursor: not-allowed;
+        }
+      }
     }
   }
 }
 
-/* 600px 이하 */
+
+/*----------------------------------- 600px 이하 ------------------------------------------*/
 @media (max-width: 600px) {
-  .formContainer {
-    margin-left: 50px;
-    margin-right: 50px;
-    max-width: 500px;
+  .EmailInquireMain {
+    padding-top: 60px; /* 상단 여백 */
+  }
 
-    .title {
-      font-size: 16px;
+  .textInput,
+  .fileInput {
+    width: 80% !important; 
+  }
+
+  .fileUploadWrapper {
+    .fileButton {
+      width: 30% !important; /* 버튼 너비 */
+      margin: 0 !important;
     }
-
-    .subTitle {
-      font-size: 10px;
-    }
-
-    .formGroup {
-
-      .hintInquiryType {
-        font-size: 10px;
-      }
-
-      .textInput,
-      .textArea,
-      .selectInput {
-        font-size: 10px;
-      }
-
-      .fileUploadWrapper {
-        .fileInputText {
-          width: 70%;
-          font-size: 10px;
-        }
-
-        .fileButton {
-          width: 25%;
-          font-size: 9px;
-          margin: 10px;
-        }
-      }
-    }
-
-    .privacyContainer {
-      width: 100%;
-      padding: 6px;
-
-      .checkboxLabel {
-        font-size: 10px;
-
-        .checkbox {
-          transform: scale(0.6);
-        }
-
-        .required {
-          font-size: 11px;
-        }
-      }
-
-      .privacyDetails {
-        font-size: 10px;
-        line-height: 1.4;
-      }
-    }
-
-    .submitButton {
-      width: 100%;
-      font-size: 10px;
+    .resetButton {
+      width: 20% !important; 
     }
   }
-}
 
-/* 430px 이하 */
-@media (max-width: 430px) {
-  .formContainer {
-    margin: 10px;
-    padding: 15px;
+  .fileIcon {
+    right: 55% !important;
+  }
 
-    .title {
-      font-size: 14px;
-    }
-
-    .subTitle {
-      font-size: 9px;
-
-      .link {
-        font-size: 9px;
-      }
-    }
-
-    .formGroup {
-
-      .hintInquiryType {
-        font-size: 9px;
-      }
-
-      .textInput,
-      .textArea,
-      .selectInput {
-        font-size: 9px;
-      }
-
-      .fileUploadWrapper {
-        .fileInputText {
-          width: 65%;
-          font-size: 9px;
-        }
-
-        .fileButton {
-          width: 30%;
-          font-size: 9px;
-          margin: 10px;
-        }
-      }
-    }
-
-    .privacyContainer {
-      width: 100%;
-      padding: 5px;
-
-      .checkboxLabel {
-        font-size: 9px;
-
-        .checkbox {
-          transform: scale(0.5);
-        }
-
-        .required {
-          font-size: 10px;
-        }
-      }
-
-      .privacyDetails {
-        font-size: 9px;
-        line-height: 1.3;
-      }
-    }
-
-    .submitButton {
-      font-size: 10px;
+  .privacyContainer {
+    .privacyDetails {
+      max-height: 110px; /* 고정 높이 */
+      overflow-y: auto; /* 스크롤 */
     }
   }
-}
 
-/* 390px 이하 */
-@media (max-width: 390px) {
-  .formContainer {
-    margin: 5px;
-    padding: 10px;
-
-    .title {
-      font-size: 14px;
-    }
-
-    .subTitle {
-      font-size: 8px;
-
-      .link {
-        font-size: 8px;
-      }
-    }
-
-    .formGroup {
-
-      .hintInquiryType {
-        font-size: 8.5px;
-      }
-
-      .textInput,
-      .textArea,
-      .selectInput {
-        font-size: 8px;
-      }
-
-      .fileUploadWrapper {
-        .fileInputText {
-          width: 60%;
-          font-size: 8px;
-        }
-
-        .fileButton {
-          width: 35%;
-          font-size: 8px;
-          margin: 8px;
-        }
-      }
-    }
-
-    .privacyContainer {
-      width: 100%;
-      padding: 4px;
-
-      .checkboxLabel {
-        font-size: 8px;
-
-        .checkbox {
-          transform: scale(0.5);
-        }
-
-        .required {
-          font-size: 9px;
-        }
-      }
-
-      .privacyDetails {
-        font-size: 8.5px;
-        line-height: 1.2;
-      }
-    }
-
-    .submitButton {
-      font-size: 8px;
-    }
+  .subTitle {
+    font-size: 13px !important; 
   }
-}
 
-/* 360px 이하 */
-@media (max-width: 360px) {
-  .formContainer {
-    margin: 0;
-    padding: 5px;
-
-    .title {
-      font-size: 12px;
-    }
-
-    .subTitle {
-      font-size: 8px;
-
-      .link {
-        font-size: 8px;
-      }
-    }
-
-    .formGroup {
-
-      .hintInquiryType {
-        font-size: 8px;
-      }
-
-      .textInput,
-      .textArea,
-      .selectInput {
-        font-size: 8px;
-      }
-
-      .fileUploadWrapper {
-        .fileInputText {
-          width: 55%;
-          font-size: 8px;
-        }
-
-        .fileButton {
-          width: 40%;
-          font-size: 8px;
-          margin: 5px;
-        }
-      }
-    }
-
-    .privacyContainer {
-      width: 100%;
-      padding: 3px;
-
-      .checkboxLabel {
-        font-size: 7px;
-
-        .checkbox {
-          transform: scale(0.4);
-        }
-
-        .required {
-          font-size: 8px;
-        }
-      }
-
-      .privacyDetails {
-        font-size: 8px;
-        line-height: 1.1;
-      }
-    }
-
-    .submitButton {
-      font-size: 7px;
-    }
+  .hintInquiryType {
+    font-size: 12px !important;
   }
 }
