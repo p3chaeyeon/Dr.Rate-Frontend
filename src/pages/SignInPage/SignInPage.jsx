@@ -28,7 +28,7 @@ const SignInPage = () => {
     const [password, setPassword] = useState('');
 
     // 로그인 처리 함수
-    const handleLogin = async () => {
+    const handleSignIn = async () => {
         try {
             // --- [FormData 방식] ---
             const formData = new FormData();
@@ -91,7 +91,12 @@ const SignInPage = () => {
                 </div>
 
                 <div className={styles.loginForm}>
-                    <form>
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault(); //기본 동작 방지
+                            handleSignIn(); // handleLogin 함수 호출
+                        }}
+                    >
                         <div className={styles.inputWrapper}>
                             <input
                                 type="text"
@@ -114,10 +119,11 @@ const SignInPage = () => {
                             />
                             <label htmlFor="password">비밀번호</label>
                         </div>
+
+                        <button type="submit">로그인</button>
                     </form>
                 </div>
 
-                <button onClick={handleLogin}>로그인</button>
 
                 <div className={styles.icons}>
                     <img
