@@ -5,7 +5,7 @@ import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import MyNav from 'src/components/MyNav';
 import { PATH } from 'src/utils/path';
 import { useAtom } from 'jotai';
-import { userData } from '../../atoms/userData';
+import { userData } from 'src/atoms/userData';
 
 const MyInfoPage = () => {
     const navigate = useNavigate();
@@ -54,9 +54,11 @@ const MyInfoPage = () => {
                         <p className={`${styles.tagName}`}>생년월일</p>
                         <p className={`${styles.myData}`}>{myData.birthdate || '데이터 없음'}</p>
                     </div>
+                    {!myData?.social ? (
                     <div className={`${styles.buttonBox}`}>
                         <button onClick={handleMyEdit}>회원정보 수정</button>
                     </div>
+                    ) : (<div></div>)}
                 </div>
                 ) : (<div></div>)}
             </section>
