@@ -15,29 +15,45 @@ import spinner from 'src/assets/icons/spinner.gif';
 
 const productData = [
   {
-    productId: 1,
-    bankLogo: "wooriLogo.png",
-    bankName: "우리은행",
-    prdName: "WON플러스예금",
-    spclRate: 4.0,
-    basicRate: 2.6,
+    "prdId": 71,
+    "bankLogo": "kookminLogo.png",
+    "bankName": "국민은행",
+    "prdName": "KB 특★한 적금",
+    "spclRate": 6.0,
+    "basicRate": 2.0
   },
   {
-    productId: 2,
-    bankLogo: "remainLogo.png",
-    bankName: "한국스탠다드차타드은행",
-    prdName: "e-그린세이브예금",
-    spclRate: 4.0,
-    basicRate: 2.64,
+    "prdId": 72,
+    "bankLogo": "kookminLogo.png",
+    "bankName": "국민은행",
+    "prdName": "KB차차차 적금",
+    "spclRate": 8.0,
+    "basicRate": 2.50
   },
   {
-    productId: 3,
-    bankLogo: "remainLogo.png",
-    bankName: "아이엠뱅크",
-    prdName: "iM주거래우대예금(첫만남우대형)",
-    spclRate: 4.0,
-    basicRate: 2.6,
+    "prdId": 73,
+    "bankLogo": "shinhanLogo.png",
+    "bankName": "신한은행",
+    "prdName": "신한 알.쏠 적금",
+    "spclRate": 4.2,
+    "basicRate": 2.9
   },
+  {
+    "prdId": 74,
+    "bankLogo": "nonghyupLogo.png",
+    "bankName": "농협은행주식회사",
+    "prdName": "NH올원e 미니적금",
+    "spclRate": 4.45,
+    "basicRate": 2.75
+  },
+  {
+    "prdId": 75,
+    "bankLogo": "nonghyupLogo.png",
+    "bankName": "농협은행주식회사",
+    "prdName": "NH1934월복리적금",
+    "spclRate": 6.40,
+    "basicRate": 2.9
+  },  
 ];
 
 
@@ -45,9 +61,11 @@ const productData = [
 const ProductInsListPage = () => {
   const navigate = useNavigate();
 
-  const { isLoggedIn, clearSession } = useSession();
+  const { isLoggedIn } = useSession();
 
   const {
+    loading,
+    error,
     banks,
     handleBankChange,
     removeBank,
@@ -61,6 +79,9 @@ const ProductInsListPage = () => {
     handlePeriodChange,
     sort,
     handleSortClick,
+    currentPage,
+    handlePageChange,
+    totalPages,   
   } = useProductList();
 
   const {
@@ -203,10 +224,9 @@ const ProductInsListPage = () => {
                     value={period}
                     onChange={handlePeriodChange}
                   >
-                    <option value="3개월">3개월</option>
-                    <option value="6개월">6개월</option>
-                    <option value="12개월">12개월</option>
-                    <option value="24개월">24개월</option>
+                    <option value="3개월">3개월 이상</option>
+                    <option value="6개월">6개월 이상</option>
+                    <option value="12개월">12개월 이상</option>
                   </select>
                 </div>
                 <div className={styles.memberFilterItemDiv}>
@@ -296,7 +316,7 @@ const ProductInsListPage = () => {
                     {/* 상품품 데이터가 있을 경우 리스트 출력 */}
                     {productData.map((item, index) => (
                         <div key={index} className={styles.productList}>
-                            <input type="hidden" value={item.productId} readOnly />
+                            <input type="hidden" value={item.prdId} readOnly />
                             <div className={styles.productLogoDiv}>
                                 <img
                                     src={`${PATH.STORAGE_BANK}/${item.bankLogo}`}
@@ -334,8 +354,36 @@ const ProductInsListPage = () => {
                         </div>
                       ))}
                  {/* )} */} 
-            </div>
+            </div>{/* productListDiv */}
          {/* )} */}
+
+            {/* 페이지네이션 */}
+            <div className={styles.pagination}>
+                <div className={styles.pageBtn}>
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 0}
+                    >
+                        이전
+                    </button>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handlePageChange(index)}
+                            className={currentPage === index ? styles.active : ""}
+                        >
+                            {index + 1}
+                        </button>
+                    ))}
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage === totalPages - 1}
+                    >
+                        다음
+                    </button>
+                </div>
+            </div>
+
 
       </section>
 

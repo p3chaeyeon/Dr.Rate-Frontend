@@ -358,6 +358,19 @@
         }
       }
     }
+
+    .pagination {
+      justify-content: center; /* 페이지네이션 중앙 정렬 */
+      .pageBtn {
+          flex-wrap: wrap; /* 버튼 줄바꿈 허용 */
+          gap: 5px;
+
+          button {
+              padding: 6px 12px; /* 버튼 크기 줄이기 */
+              font-size: 12px;
+          }
+      }
+  }
   }
 }
 
