@@ -53,7 +53,7 @@ const productData = [
     "prdName": "NH1934월복리적금",
     "spclRate": 6.40,
     "basicRate": 2.9
-  },  
+  },
 ];
 
 
@@ -81,7 +81,7 @@ const ProductInsListPage = () => {
     handleSortClick,
     currentPage,
     handlePageChange,
-    totalPages,   
+    totalPages,
   } = useProductList();
 
   const {
@@ -159,9 +159,8 @@ const ProductInsListPage = () => {
             </div>
 
             <div
-              className={`${styles.bankSelectedContainer} ${
-                banks.length > 0 ? styles.hasItems : ""
-              }`}
+              className={`${styles.bankSelectedContainer} ${banks.length > 0 ? styles.hasItems : ""
+                }`}
             >
               {banks.length > 0 ? (
                 banks.map((bank, index) => (
@@ -208,11 +207,11 @@ const ProductInsListPage = () => {
             <>
               <div className={styles.memberFilterContainer}>
                 <div className={styles.memberFilterItemDiv}>
-                  <div className={styles.memberFilterItem}>나이(생년월일)</div>
+                  <div className={styles.memberFilterItem}>나이</div>
                   <input
                     type="number"
                     className={`${styles.memberFilterInput} ${styles.noPointer}`}
-                    placeholder="예시:19991109"
+                    placeholder="예시 : 28"
                     value={age}
                     onChange={handleAgeChange}
                   />
@@ -224,9 +223,9 @@ const ProductInsListPage = () => {
                     value={period}
                     onChange={handlePeriodChange}
                   >
-                    <option value="3개월">3개월 이상</option>
-                    <option value="6개월">6개월 이상</option>
-                    <option value="12개월">12개월 이상</option>
+                    <option value="3">3개월 이상</option>
+                    <option value="6">6개월 이상</option>
+                    <option value="12">12개월 이상</option>
                   </select>
                 </div>
                 <div className={styles.memberFilterItemDiv}>
@@ -276,20 +275,18 @@ const ProductInsListPage = () => {
         {/* 금리순 정렬 */}
         <div className={styles.rateStandard}>
           <li
-            className={`${styles.standardItem} ${
-              sort === "spclRate" ? styles.active : ""
-            }`}
+            className={`${styles.standardItem} ${sort === "spclRate" ? styles.active : ""
+              }`}
             onClick={() => handleSortClick("spclRate")}
           >
             최고 금리순
           </li>
           <li className={styles.standardItem}>
-              <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
+            <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
           </li>
           <li
-            className={`${styles.standardItem} ${
-              sort === "baseRate" ? styles.active : ""
-            }`}
+            className={`${styles.standardItem} ${sort === "baseRate" ? styles.active : ""
+              }`}
             onClick={() => handleSortClick("baseRate")}
           >
             기본 금리순
@@ -306,83 +303,83 @@ const ProductInsListPage = () => {
 
         {/* 정상 데이터 로드 */}
         {/* {!loading && !error && ( */}
-            <div className={styles.productListDiv}>
-                {/* 즐겨찾기 데이터가 없을 경우 메시지 출력 */}
-                {/* {productData.length === 0 ? ( */}
-                    {/* <div className={styles.noProductList}>
+        <div className={styles.productListDiv}>
+          {/* 즐겨찾기 데이터가 없을 경우 메시지 출력 */}
+          {/* {productData.length === 0 ? ( */}
+          {/* <div className={styles.noProductList}>
                         <h4>상품이 없습니다.</h4>
                     </div> */}
-                {/*  ) : ( */}
-                    {/* 상품품 데이터가 있을 경우 리스트 출력 */}
-                    {productData.map((item, index) => (
-                        <div key={index} className={styles.productList}>
-                            <input type="hidden" value={item.prdId} readOnly />
-                            <div className={styles.productLogoDiv}>
-                                <img
-                                    src={`${PATH.STORAGE_BANK}/${item.bankLogo}`}
-                                    alt={`${item.bankName} 로고`}
-                                    className={styles.productLogoImg}
-                                />
-                            </div>
-                            <div className={styles.productInfoDiv}>
-                                <div className={styles.productBankProDiv}>
-                                    <div className={styles.productBank}>{item.bankName}</div>
-                                    <div className={styles.productPro}>{item.prdName}</div>
-                                </div>
-                                <div className={styles.productRateDiv}>
-                                    <div className={styles.productHighestRateDiv}>
-                                        <div className={styles.productHighestRateText}>최고금리</div>
-                                        <div className={styles.productHighestRatePer}>
-                                            <span className={styles.spclRate}>{item.spclRate.toFixed(2)}</span>%
-                                        </div>
-                                    </div>
-                                    <div className={styles.productSBaseRateDiv}>
-                                        <div className={styles.productBaseRateText}>기본금리</div>
-                                        <div className={styles.productBaseRatePer}>
-                                            <span className={styles.basicRate}>{item.basicRate.toFixed(2)}</span>%
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.productBtnDiv}>
-                              <button 
-                                className={styles.productCompareBtn}
-                              >
-                                비교<br />담기
-                              </button>
-                            </div>
-                        </div>
-                      ))}
-                 {/* )} */} 
-            </div>{/* productListDiv */}
-         {/* )} */}
-
-            {/* 페이지네이션 */}
-            <div className={styles.pagination}>
-                <div className={styles.pageBtn}>
-                    <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 0}
-                    >
-                        이전
-                    </button>
-                    {Array.from({ length: totalPages }, (_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => handlePageChange(index)}
-                            className={currentPage === index ? styles.active : ""}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
-                    <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages - 1}
-                    >
-                        다음
-                    </button>
+          {/*  ) : ( */}
+          {/* 상품품 데이터가 있을 경우 리스트 출력 */}
+          {productData.map((item, index) => (
+            <div key={index} className={styles.productList}>
+              <input type="hidden" value={item.prdId} readOnly />
+              <div className={styles.productLogoDiv}>
+                <img
+                  src={`${PATH.STORAGE_BANK}/${item.bankLogo}`}
+                  alt={`${item.bankName} 로고`}
+                  className={styles.productLogoImg}
+                />
+              </div>
+              <div className={styles.productInfoDiv}>
+                <div className={styles.productBankProDiv}>
+                  <div className={styles.productBank}>{item.bankName}</div>
+                  <div className={styles.productPro}>{item.prdName}</div>
                 </div>
+                <div className={styles.productRateDiv}>
+                  <div className={styles.productHighestRateDiv}>
+                    <div className={styles.productHighestRateText}>최고금리</div>
+                    <div className={styles.productHighestRatePer}>
+                      <span className={styles.spclRate}>{item.spclRate.toFixed(2)}</span>%
+                    </div>
+                  </div>
+                  <div className={styles.productSBaseRateDiv}>
+                    <div className={styles.productBaseRateText}>기본금리</div>
+                    <div className={styles.productBaseRatePer}>
+                      <span className={styles.basicRate}>{item.basicRate.toFixed(2)}</span>%
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.productBtnDiv}>
+                <button
+                  className={styles.productCompareBtn}
+                >
+                  비교<br />담기
+                </button>
+              </div>
             </div>
+          ))}
+          {/* )} */}
+        </div>{/* productListDiv */}
+        {/* )} */}
+
+        {/* 페이지네이션 */}
+        <div className={styles.pagination}>
+          <div className={styles.pageBtn}>
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 0}
+            >
+              이전
+            </button>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageChange(index)}
+                className={currentPage === index ? styles.active : ""}
+              >
+                {index + 1}
+              </button>
+            ))}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages - 1}
+            >
+              다음
+            </button>
+          </div>
+        </div>
 
 
       </section>
