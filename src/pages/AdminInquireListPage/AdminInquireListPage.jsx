@@ -31,7 +31,7 @@ const AdminInquireListPage = () => {
                 queryParams.append("keyword", keyword.trim());
             }
 
-            const response = await api.get(`/api/chatrooms/inquireList`, {
+            const response = await api.get(`/api/admin/chatrooms/inquireList`, {
                 params: queryParams,
             });
             const data = response.data;

@@ -15,6 +15,8 @@ import mobileSideDeposit from 'src/assets/icons/mobileSideDeposit.png';
 import mobileSideInstallment from 'src/assets/icons/mobileSideInstallment.png';
 import useDropdown from 'src/hooks/useDropdown';
 
+import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
+
 
 const Header = () => {
     const navigate = useNavigate();
@@ -22,28 +24,27 @@ const Header = () => {
     const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
     const { isDropdownOpen, dropdownRef, handleMouseEnter, handleMouseLeave } = useDropdown();
 
-    // const { isLoggedIn, updateSession, clearSession } = useSession();
-    // const [isLoggedIn, setIsLoggedIn] = useState(!!session);
     const { isLoggedIn, clearSession } = useSession();
 
     const handleLogin = () => {
-        localStorage.setItem('Authorization', 'dummy');
+        // localStorage.setItem('Authorization', 'dummy');
         navigate(PATH.SIGN_IN);
     };
 
-    const handleLogout = () => {
-        clearSession();
-        navigate(PATH.HOME); 
-    };
+    const handleLogout = async () => {
+        try {
+            const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/logout`);
+            if(response.data.success) {
+                clearSession();
+                sideNavigation(PATH.HOME);
+                return { success: true, message: '로그아웃 완료'};
+            } else {
+                return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
+            }
+        } catch {
+            return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
+        }
 
-    const handleMobileLogin = () => {
-        localStorage.setItem('Authorization', 'dummy');
-        sideNavigation(PATH.SIGN_IN);
-    };
-
-    const handleMobileLogout = () => {
-        clearSession();
-        sideNavigation(PATH.HOME);
     };
 
 
@@ -204,13 +205,16 @@ const Header = () => {
                                 <div className={styles.sideBtnDiv}>
                                     <button
                                         className={styles.signInBtn}
-                                        onClick={handleMobileLogin}
+                                        onClick={() => {
+                                            handleLogin(); 
+                                            setIsMobileMenuOpen(false);
+                                          }}
                                     >
                                         로그인
                                     </button>
                                     <button
                                         className={styles.signUpBtn}
-                                        onClick={handleMobileLogout}
+                                        onClick={() => sideNavigation(PATH.SIGN_UP)}
                                     >
                                         회원가입
                                     </button>
@@ -258,13 +262,13 @@ const Header = () => {
                                     <ul className={styles.compareSubMenuList}>
                                         <li
                                             className={styles.compareSubMenuItem}
-                                            onClick={() => sideNavigation(PATH.DEPOSIT_COMPARE)}
+                                            onClick={() => sideNavigation(`${PATH.PRODUCT_COMPARE}/d`)}
                                         >
                                             예금 비교
                                         </li>
                                         <li
                                             className={styles.compareSubMenuItem}
-                                            onClick={() => sideNavigation(PATH.INSTALLMENT_COMPARE)}
+                                            onClick={() => sideNavigation(`${PATH.PRODUCT_COMPARE}/i`)}
                                         >
                                             적금 비교
                                         </li>
@@ -279,7 +283,13 @@ const Header = () => {
                                     <>
                                         {/* (회원) 로그인 했을 때; 로그아웃, 마이페이지, 고객센터 모두 보여야함 */}
                                         <div className={styles.sideMemberMenu}>
-                                            <li className={styles.sideMainItem} onClick={handleLogout}>
+                                            <li 
+                                            className={styles.sideMainItem} 
+                                            onClick={() => {
+                                                handleLogout(); 
+                                                setIsMobileMenuOpen(false);
+                                              }}
+                                            >
                                                 로그아웃
                                             </li>
                                             <li
