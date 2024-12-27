@@ -5,7 +5,7 @@ import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import MyNav from 'src/components/MyNav';
 import { PATH } from 'src/utils/path';
 import { useAtom } from 'jotai';
-import { userData } from '../../atoms/userData';
+import { userData } from 'src/atoms/userData';
 
 const MyInfoPage = () => {
     const navigate = useNavigate();
