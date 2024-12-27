@@ -79,6 +79,7 @@
           align-items: center;
           gap: 10px;
           flex-wrap: nowrap;
+          position: relative;
 
           .fileInputText {
             padding: 10px;
@@ -93,7 +94,15 @@
             white-space: nowrap;
             text-overflow: ellipsis;
           }
-    
+
+          .fileIcon {
+            position: absolute;
+            right: 51%; 
+            top: 50%; /* 중앙 */
+            transform: translateY(-50%);  /* 중앙 */
+            cursor: pointer;
+          }       
+
           .fileButton {
             display: inline-block;
             padding: 7px 3px;
@@ -113,6 +122,24 @@
               background-color: #eaf4ff;
             }
           }
+          .resetButton {
+            display: inline-block;
+            padding: 7px 3px;
+            font-size: 15px;
+            font-weight: normal;
+            border: 1px solid var(--font3);
+            border: 1px solid;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 15%;
+            color: var(--font3);
+        
+            &:hover {
+              background-color: var(--admin-body);
+            }
+          }        
     
           .fileInput {
             display: none;
@@ -165,7 +192,7 @@
         font-size: 12px;
         font-weight: bold;
         background-color: var(--main2);
-        color: white;
+        color: var(--white);
         border: none;
         border-radius: 4px;
         cursor: pointer;
@@ -178,7 +205,7 @@
         }
     
         &.disabled {
-          background-color: #ccc;
+          background-color: var(--divider-border);
           cursor: not-allowed;
         }
       }
@@ -201,7 +228,15 @@
   .fileUploadWrapper {
     .fileButton {
       width: 30% !important; /* 버튼 너비 */
+      margin: 0 !important;
     }
+    .resetButton {
+      width: 20% !important; 
+    }
+  }
+
+  .fileIcon {
+    right: 55% !important;
   }
 
   .privacyContainer {
