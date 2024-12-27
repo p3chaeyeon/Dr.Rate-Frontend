@@ -7,7 +7,7 @@ import AlertModal from 'src/components/modal/AlertModal'; // AlertModal import
 import { PATH } from 'src/utils/path';
 
 import { useAtom } from 'jotai';
-import { userData } from '../../atoms/userData';
+import { userData } from 'src/atoms/userData';
 
 // API 호출 함수들 import
 import {
