@@ -5,13 +5,13 @@ import AlertModal from 'src/components/Modal/AlertModal'; // AlertModal import
 import styles from './SignInPage.module.scss';
 
 import { useAtom } from 'jotai';
-import { userData } from '../../atoms/userData';
+import { userData } from 'src/atoms/userData';
 
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
 import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
 import { PATH } from 'src/utils/path';
-import axiosInstanceAPI from "../../apis/axiosInstanceAPI.js";
+import axiosInstanceAPI from "src/apis/axiosInstanceAPI.js";
 
 const SignInPage = () => {
 

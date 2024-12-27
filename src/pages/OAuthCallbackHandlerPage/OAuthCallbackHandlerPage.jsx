@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import {PATH} from 'src/utils/path.js';
 import { useSetAtom, useAtom } from "jotai";
-import { userData } from '../../atoms/userData';
+import { userData } from 'src/atoms/userData';
 import { isLoggedInAtom } from 'src/atoms/sessionAtom';
 
 const OAuthCallbackHandlerPage = () => {
