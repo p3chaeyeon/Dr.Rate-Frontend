@@ -132,9 +132,21 @@
 
 /* 반응형 768px */
 @media (max-width: 768px) {
-    .comparePrd{
-        width: 95% !important;
+    .compareNavDiv{
+        padding: 0 50px;
+
+        .comparePrd{
+            width: 90% !important;
+        }
+
+        .closeNav{
+            span{
+                display: none;
+            }
+        }
     }
+
+
 }
 
 
