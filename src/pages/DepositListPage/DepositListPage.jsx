@@ -132,7 +132,7 @@ const DepositListPage = () => {
     <main>
       <section className={styles.listSection}>
         <div className={styles.listTitleDiv}>
-          적금
+          예금
         </div>
 
         <div className={styles.filterDiv}>
