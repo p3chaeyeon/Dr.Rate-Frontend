@@ -39,6 +39,9 @@ const ListDepositPage = () => {
     currentPage,
     handlePageChange,
     totalPages,
+    paginationRange,
+    handlePrevBlock, 
+    handleNextBlock, 
   } = useProductList();
 
   const {
@@ -315,27 +318,24 @@ const ListDepositPage = () => {
         {/* 페이지네이션 */}
         <div className={styles.pagination}>
           <div className={styles.pageBtn}>
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 0}
-            >
-              이전
-            </button>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => handlePageChange(index + 1)}
-                className={currentPage === (index+1) ? styles.active : ""}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages - 1}
-            >
-              다음
-            </button>
+          <button onClick={handlePrevBlock} disabled={paginationRange[0] === 1}>
+          이전
+        </button>
+        {paginationRange.map((page) => (
+          <button
+            key={page}
+            onClick={() => handlePageChange(page)}
+            className={currentPage === page ? styles.active : ''}
+          >
+            {page}
+          </button>
+        ))}
+        <button
+          onClick={handleNextBlock}
+          disabled={paginationRange[paginationRange.length - 1] === totalPages}
+        >
+          다음
+        </button>
           </div>
         </div>
 
