@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 
 import { useAtom } from 'jotai';
-import { userData } from '../../atoms/userData';
+import { userData } from 'src/atoms/userData';
 
 const EmailInquirePage = () => {
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ const EmailInquirePage = () => {
       formDataToSend.append("inquireEmail", formData.inquireEmail);
       formDataToSend.append("inquireTitle", formData.inquireTitle);
       formDataToSend.append("inquireContent", formData.inquireContent);
-      formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
+      // formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
 
       // 폼데이터에 파일추가
       if (formData.fileUuid) {
