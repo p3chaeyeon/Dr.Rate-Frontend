@@ -121,9 +121,9 @@ const MyInstallmentPage = () => {
                                                     <span className={styles.spcl_rate}>{item.spclRate.toFixed(2)}</span>%
                                                 </div>
                                             </div>
-                                            <div className={styles.favoriteSBaseRateDiv}>
-                                                <div className={styles.favoriteBaseRateText}>기본금리</div>
-                                                <div className={styles.favoriteBaseRatePer}>
+                                            <div className={styles.favoriteBasicRateDiv}>
+                                                <div className={styles.favoriteBasicRateText}>기본금리</div>
+                                                <div className={styles.favoriteBasicRatePer}>
                                                     <span className={styles.basic_rate}>{item.basicRate.toFixed(2)}</span>%
                                                 </div>
                                             </div>
