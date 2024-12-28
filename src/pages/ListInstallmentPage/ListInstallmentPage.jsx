@@ -1,8 +1,8 @@
-/* src/pages/ProductListPage/ProductListPage.jsx */
+/* src/pages/ListInstallmentPage/ListInstallmentPage.jsx */
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './ProductInsListPage.module.scss';
+import styles from './ListInstallmentPage.module.scss';
 import { PATH } from 'src/utils/path';
 import { useSession } from 'src/hooks/useSession';
 import useProductList from 'src/hooks/useProductList';
@@ -223,6 +223,9 @@ const ProductInsListPage = () => {
                     value={period}
                     onChange={handlePeriodChange}
                   >
+                    <option value="">
+                      기간 선택
+                    </option>
                     <option value="3">3개월 이상</option>
                     <option value="6">6개월 이상</option>
                     <option value="12">12개월 이상</option>
