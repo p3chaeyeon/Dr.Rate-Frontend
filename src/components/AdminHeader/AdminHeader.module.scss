@@ -43,31 +43,6 @@
             }
         }
 
-        .adminActions {
-            position: absolute; /* 위치 지정 */
-            right: 200px; /* 기본 오른쪽 위치 */
-        
-            @media (max-width: 600px) {
-                right: 100px; /* 화면 너비 600px 이하일 때 오른쪽으로 조정 */
-            }
-        
-            .depositButton,
-            .installButton {
-                width: 80px;
-                height: 25px;
-                cursor: pointer;
-                color: var(--font1);
-                font-size: 13px;
-                border: 1.7px solid #e6e6e6;
-                background-color: white;
-                border-radius: 7px;
-        
-                &:hover {
-                    background-color: #f0f0f0;
-                }
-            }
-        }        
-
         .adminHeaderLogout {
             width: 100px;
             height: 30px;
