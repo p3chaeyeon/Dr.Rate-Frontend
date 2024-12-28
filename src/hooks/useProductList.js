@@ -75,7 +75,7 @@ const useProductList = () => {
     useEffect(() => {
         const params = {};
         if (category) params.category = category;
-        if (banks.length > 0) params.bank = banks.join(",");
+        if (banks.length > 0) params.banks = banks.join(",");
         if (age) params.age = age;
         if (period) params.period = period;
         if (rate) params.rate = rate;
@@ -141,25 +141,90 @@ const useProductList = () => {
 
 
 
+
     /* ================== API 호출 ================== */
 
     /* 회원 예금, 적금 목록 조회 */
+    const fetchProducts = useCallback(async () => {
+        try {
+            setLoading(true);
+            setError(null);
 
+            // API 호출 파라미터 설정
+            const params = {
+                category,
+                page: currentPage - 1, // API는 0부터 시작
+                banks: banks.length > 0 ? banks : undefined,
+                age: age || undefined,
+                period: period || undefined,
+                rate: rate || undefined,
+                join: join || undefined,
+                sort: sort || 'spclRate', // 기본 정렬 기준
+            };
 
+            // API 호출
+            const data = await getProductList(params);
+
+            console.log('회원 상품 목록 데이터:', data);
+
+            // 데이터 및 페이지 상태 업데이트
+            setTotalPages(data.totalPages || 1); // 총 페이지 수
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    }, [category, currentPage, banks, age, period, rate, join, sort]);
 
 
     /* 비회원 예금, 적금 목록 조회 */
+    const fetchGuestProducts = useCallback(async () => {
+        try {
+            setLoading(true);
+            setError(null);
+
+            const params = {
+                category,
+                page: currentPage - 1, 
+                banks: banks.length > 0 ? banks : undefined,
+                sort: sort || 'spclRate', 
+            };
+
+            // API 호출
+            const data = await getGuestProductList(params);
+
+            console.log('비회원 상품 목록 데이터:', data);
+
+            // 데이터 및 페이지 상태 업데이트
+            setTotalPages(data.totalPages || 1);
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    }, [category, currentPage, banks, sort]);
 
 
+    /* 페이지 URL 변경 감지 시 데이터 로드 */
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!category) return;
 
+            try {
+                if (location.pathname.includes('guest')) {
+                    await fetchGuestProducts(); // 비회원 상품 목록 호출
+                } else {
+                    await fetchProducts(); // 회원 상품 목록 호출
+                }
+            } catch (err) {
+                console.error('데이터 로드 중 오류:', err);
+            }
+        };
 
-    /* 페이지 URL 변경 감지 시 데이터 리로드 */
-
-
+        fetchData(); // 비동기 함수 호출
+    }, [fetchProducts, fetchGuestProducts, category, location.pathname]);
 
     
-
-
 
 
 

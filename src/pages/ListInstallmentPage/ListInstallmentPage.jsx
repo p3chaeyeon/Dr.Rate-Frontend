@@ -286,9 +286,9 @@ const ListInstallmentPage = () => {
             <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
           </li>
           <li
-            className={`${styles.standardItem} ${sort === "baseRate" ? styles.active : ""
+            className={`${styles.standardItem} ${sort === "basicRate" ? styles.active : ""
               }`}
-            onClick={() => handleSortClick("baseRate")}
+            onClick={() => handleSortClick("basicRate")}
           >
             기본 금리순
           </li>
