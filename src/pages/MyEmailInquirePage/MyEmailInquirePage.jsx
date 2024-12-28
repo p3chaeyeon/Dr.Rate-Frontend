@@ -1,68 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import styles from './MyEmailInquirePage.module.scss';
-import { PATH } from 'src/utils/path';
+import { fetchInquiryList } from 'src/apis/axiosInstanceAPI'; // API 호출 함수
 import MyNav from 'src/components/MyNav'; 
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 
-// 객체 배열 함수; 문의 내역 가져오는 api 개발 시 삭제
-const emailInquireData = () => [
-    {
-        id: 1,
-        inquire_ctg: "서비스 개선 제안",
-        inquire_email: "p3chaeyeon@naver.com",
-        inquire_title: "예금·적금 즐겨찾기 기능 개선 요청",
-        inquire_content: `1. 즐겨찾기 검색 옵션 추가
-현재 즐겨찾기 검색 옵션에 은행과 상품 2개 뿐입니다. 최고 금리, 기본 금리 옵션도 추가되면 좋을 것 같습니다.
-
-2. 금리 변경 알림 기능
-즐겨찾기한 상품의 금리가 변경되면 알림을 받을 수 있도록 해주세요.
-특히, 최고 금리나 우대 금리 변동 시 알려준다면 매우 유용할 것 같습니다.`,
-        inquire_date: "2024.12.25",
-        answer_title: "예금·적금 즐겨찾기 기능 개선 요청 답변",
-        answer_content: `안녕하세요, 고객님. 금리박사 서비스를 이용해 주셔서 감사합니다.
-고객님께서 제안해 주신 사항에 대해 검토한 결과는 다음과 같습니다.
-
-1. 즐겨찾기 검색 옵션 추가
-즐겨찾기 검색 옵션은 '기본 금리', '최고 금리' 옵션이 추가될 수 있도록 준비 중입니다.
-
-2. 금리 변경 알림 기능
-현재 개발팀에서 우선순위로 검토 중이며, 이르면 다음 분기 내에 추가될 예정입니다.`,
-        answer_date: "2024.12.26"
-    },
-    {
-        id: 2,
-        inquire_ctg: "시스템 오류 제보",
-        inquire_email: "testuser2@example.com",
-        inquire_title: "이자 계산기 오류 문의",
-        inquire_content: `이자 계산기에서 금리를 입력해도 계산이 되지 않습니다.
-확인 부탁드립니다.`,
-        inquire_date: "2024.12.26",
-        answer_title: "이자 계산기 오류 문의 답변",
-        answer_content: `고객님께서 제보해주신 오류를 확인하였으며, 현재 수정 작업을 진행 중입니다.
-빠르게 해결할 수 있도록 하겠습니다.`,
-        answer_date: "2024.12.27"
-    },
-    {
-        id: 3,
-        inquire_ctg: "서비스 개선 제안",
-        inquire_email: "sample3@domain.com",
-        inquire_title: "대출 상품 비교 기능 추가 요청",
-        inquire_content: `대출 상품도 금리 비교 기능이 있으면 좋겠습니다.
-추가 검토 부탁드립니다.`,
-        inquire_date: "2024.12.27",
-        answer_title: "대출 상품 비교 기능 추가 요청 답변",
-        answer_content: `현재 대출 상품 비교 기능에 대한 검토를 시작하였습니다.
-추후 업데이트 계획에 반영될 수 있도록 하겠습니다.`,
-        answer_date: "2024.12.28"
-    }
-];
-
-
-
 const MyEmailInquirePage = () => {
     const navigate = useNavigate();
-    const inquiries = emailInquireData();
+    const [inquiries, setInquiries] = useState([]); // 서버에서 가져올 문의 내역
+    const [loading, setLoading] = useState(true);  // 로딩 상태
+    const [error, setError] = useState(null);      // 에러 상태
+
+    // 서버에서 데이터 가져오기
+    useEffect(() => {
+        const getInquiries = async () => {
+            try {
+                setLoading(true); // 로딩 시작
+                const data = await fetchInquiryList(); // API 호출
+                setInquiries(data); // 문의 데이터 설정
+            } catch (err) {
+                setError(err.message); // 에러 메시지 설정
+            } finally {
+                setLoading(false); // 로딩 종료
+            }
+        };
+
+        getInquiries();
+    }, []);
+
+    if (loading) return <div>Loading...</div>; // 로딩 중 상태 표시
+    if (error) return <div>Error: {error}</div>; // 에러 상태 표시
 
     return (
         <main>
@@ -103,11 +70,6 @@ const MyEmailInquirePage = () => {
                                     </div>
                                     <div className={styles.inquireFileDiv}>
                                         파일 이미지 div
-                                        {/* <img  나중에 파일 uuid 로 바궈야 함 
-                                            src={`${PATH.STORAGE_BANK}/${item.bankLogo}`} 
-                                            alt={`${item.bankName}`} 
-                                            className={styles.inquireFile}
-                                         /> */}
                                     </div>
                                 </div>
                             </div>
