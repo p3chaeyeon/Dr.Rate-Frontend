@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 
 import { useAtom } from 'jotai';
-import { userData } from '../../atoms/userData';
+import { userData } from 'src/atoms/userData';
 import xIcon from 'src/assets/icons/xIcon.svg';
 
 const EmailInquirePage = () => {
