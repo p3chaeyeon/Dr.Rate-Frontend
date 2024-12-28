@@ -7,8 +7,8 @@ import dashboard from 'src/assets/images/adminDashboard.png';
 import userManagement from 'src/assets/images/adminUserManagement.png';
 import inquiryHistory from 'src/assets/images/adminInquiryHistory.png';
 import inquiryEmailHistory from 'src/assets/images/adminEmailInquiryHistory.png';
-import Deposit from 'src/assets/images/Deposit.png';
-import installment from 'src/assets/images/installment.png';
+import adminSideDeposit from 'src/assets/icons/adminSideDeposit.png';
+import adminSideInstallment from 'src/assets/icons/adminSideInstallment.png';
 import whiteRightArrow from 'src/assets/icons/whiteRightArrow.svg';
 import ConfirmModal from 'src/components/Modal/ConfirmModal/ConfirmModal';
 
@@ -116,14 +116,14 @@ const AdminSideNav = () => {
                 <div
                     className={styles.adminMenuList}
                     onClick={() =>
-                        openConfirmModal('확인', '정말 예금을 추가하시겠습니까?', async () => {
+                        openConfirmModal('확인', '예금을 추가하시겠습니까?', async () => {
                             await handleDepositAdd();
                             closeConfirmModal();
                         })
                     }
                 >
                     <div className={styles.adminMenuItemImg}>
-                        <img src={Deposit} alt="예금 추가" className={styles.adminMenuImg} />
+                        <img src={adminSideDeposit} alt="예금 추가" className={styles.adminMenuImg} />
                     </div>
                     <div
                         className={styles.adminMenuItemText}
@@ -140,14 +140,14 @@ const AdminSideNav = () => {
                 <div
                     className={styles.adminMenuList}
                     onClick={() =>
-                        openConfirmModal('확인', '정말 적금을 추가하시겠습니까?', async () => {
+                        openConfirmModal('확인', '적금을 추가하시겠습니까?', async () => {
                             await handleInstallAdd();
                             closeConfirmModal();
                         })
                     }
                 >
                     <div className={styles.adminMenuItemImg}>
-                        <img src={installment} alt="적금 추가" className={styles.adminMenuImg} />
+                        <img src={adminSideInstallment} alt="적금 추가" className={styles.adminMenuImg} />
                     </div>
                     <div
                         className={styles.adminMenuItemText}
