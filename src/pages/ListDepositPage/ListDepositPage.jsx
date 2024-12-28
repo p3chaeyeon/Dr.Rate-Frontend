@@ -19,6 +19,10 @@ const ListDepositPage = () => {
 
   const { isLoggedIn } = useSession();
 
+  const handleCompareClick = () => {
+    navigate(`${PATH.PRODUCT_COMPARE}/d`);
+  };
+
   const {
     loading,
     error,
@@ -282,7 +286,10 @@ const ListDepositPage = () => {
                   className={styles.productLogoImg}
                 />
               </div>
-              <div className={styles.productInfoDiv}>
+              <div 
+                className={styles.productInfoDiv}
+                onClick={() => navigate(`${PATH.PRODUCT_DETAIL}/${item.id}`)}
+              >
                 <div className={styles.productBankProDiv}>
                   <div className={styles.productBank}>{item.bankName}</div>
                   <div className={styles.productPro}>{item.prdName}</div>
@@ -305,6 +312,7 @@ const ListDepositPage = () => {
               <div className={styles.productBtnDiv}>
                 <button
                   className={styles.productCompareBtn}
+                  onClick={handleCompareClick}
                 >
                   비교<br />담기
                 </button>
