@@ -12,6 +12,7 @@ import {
     rateAtom,
     joinAtom,
     sortAtom,
+    productDataAtom,
 } from 'src/atoms/productListAtom';
 import { getProductList, getGuestProductList } from 'src/apis/productListAPI.js';
 
@@ -33,6 +34,7 @@ const useProductList = () => {
     const [rate, setRate] = useAtom(rateAtom);
     const [join, setJoin] = useAtom(joinAtom);
     const [sort, setSort] = useAtom(sortAtom);
+    const [productData, setProductData] = useAtom(productDataAtom);
 
     const previousCategory = useRef(category); // 이전 category를 저장
 
@@ -73,9 +75,11 @@ const useProductList = () => {
     
     /* 상태 변경 시 URL 쿼리 스트링 업데이트 */
     useEffect(() => {
-        const params = {};
+        const params = new URLSearchParams();
         if (category) params.category = category;
-        if (banks.length > 0) params.banks = banks.join(",");
+        if (banks.length > 0) {
+            banks.forEach((bank) => params.append('banks', bank));
+        }
         if (age) params.age = age;
         if (period) params.period = period;
         if (rate) params.rate = rate;
@@ -162,12 +166,10 @@ const useProductList = () => {
                 sort: sort || 'spclRate', // 기본 정렬 기준
             };
 
-            // API 호출
             const data = await getProductList(params);
-
+            setProductData(data);
             console.log('회원 상품 목록 데이터:', data);
 
-            // 데이터 및 페이지 상태 업데이트
             setTotalPages(data.totalPages || 1); // 총 페이지 수
         } catch (err) {
             setError(err);
@@ -190,12 +192,10 @@ const useProductList = () => {
                 sort: sort || 'spclRate', 
             };
 
-            // API 호출
             const data = await getGuestProductList(params);
-
+            setProductData(data);
             console.log('비회원 상품 목록 데이터:', data);
 
-            // 데이터 및 페이지 상태 업데이트
             setTotalPages(data.totalPages || 1);
         } catch (err) {
             setError(err);
@@ -248,7 +248,8 @@ const useProductList = () => {
         handleSortClick,
         currentPage,
         handlePageChange,     
-        totalPages,   
+        totalPages,
+        productData,
     };
 };
 
