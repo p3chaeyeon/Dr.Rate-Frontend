@@ -277,7 +277,7 @@
         }
 
         .productHighestRateDiv,
-        .productSBaseRateDiv {
+        .productSBasicRateDiv {
           display: flex;
           justify-content: flex-start;
           align-items: center;
@@ -289,7 +289,7 @@
         }
 
         .productHighestRatePer,
-        .productBaseRatePer {
+        .productBasicRatePer {
           width: 50px;
           display: flex;
           justify-content: flex-end;
@@ -607,12 +607,12 @@
             gap: 8px;
 
             .productHighestRateDiv,
-            .productSBaseRateDiv {
+            .productSBasicRateDiv {
               font-size: 12px;
             }
 
             .productHighestRatePer,
-            .productBaseRatePer {
+            .productBasicRatePer {
               width: 36px;
             }
 

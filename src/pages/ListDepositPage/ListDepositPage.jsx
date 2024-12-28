@@ -27,7 +27,7 @@ const productData = [
     "bankLogo": "kookminLogo.png",
     "bankName": "국민은행",
     "prdName": "KB차차차 예금",
-    "spclRate": 8.0,
+    "spclRate": 8,
     "basicRate": 2.50
   },
   {
@@ -286,9 +286,9 @@ const ListDepositPage = () => {
             <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
           </li>
           <li
-            className={`${styles.standardItem} ${sort === "baseRate" ? styles.active : ""
+            className={`${styles.standardItem} ${sort === "basicRate" ? styles.active : ""
               }`}
-            onClick={() => handleSortClick("baseRate")}
+            onClick={() => handleSortClick("basicRate")}
           >
             기본 금리순
           </li>
@@ -334,9 +334,9 @@ const ListDepositPage = () => {
                       <span className={styles.spclRate}>{item.spclRate.toFixed(2)}</span>%
                     </div>
                   </div>
-                  <div className={styles.productSBaseRateDiv}>
-                    <div className={styles.productBaseRateText}>기본금리</div>
-                    <div className={styles.productBaseRatePer}>
+                  <div className={styles.productBasicRateDiv}>
+                    <div className={styles.productBasicRateText}>기본금리</div>
+                    <div className={styles.productBasicRatePer}>
                       <span className={styles.basicRate}>{item.basicRate.toFixed(2)}</span>%
                     </div>
                   </div>
@@ -367,7 +367,7 @@ const ListDepositPage = () => {
             {Array.from({ length: totalPages }, (_, index) => (
               <button
                 key={index}
-                onClick={() => handlePageChange(index)}
+                onClick={() => handlePageChange(index + 1)}
                 className={currentPage === index ? styles.active : ""}
               >
                 {index + 1}

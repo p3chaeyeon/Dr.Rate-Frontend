@@ -13,48 +13,48 @@ import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
 import spinner from 'src/assets/icons/spinner.gif';
 
 
-const productData = [
-  {
-    "prdId": 71,
-    "bankLogo": "kookminLogo.png",
-    "bankName": "국민은행",
-    "prdName": "KB 특★한 적금",
-    "spclRate": 6.0,
-    "basicRate": 2.0
-  },
-  {
-    "prdId": 72,
-    "bankLogo": "kookminLogo.png",
-    "bankName": "국민은행",
-    "prdName": "KB차차차 적금",
-    "spclRate": 8.0,
-    "basicRate": 2.50
-  },
-  {
-    "prdId": 73,
-    "bankLogo": "shinhanLogo.png",
-    "bankName": "신한은행",
-    "prdName": "신한 알.쏠 적금",
-    "spclRate": 4.2,
-    "basicRate": 2.9
-  },
-  {
-    "prdId": 74,
-    "bankLogo": "nonghyupLogo.png",
-    "bankName": "농협은행주식회사",
-    "prdName": "NH올원e 미니적금",
-    "spclRate": 4.45,
-    "basicRate": 2.75
-  },
-  {
-    "prdId": 75,
-    "bankLogo": "nonghyupLogo.png",
-    "bankName": "농협은행주식회사",
-    "prdName": "NH1934월복리적금",
-    "spclRate": 6.40,
-    "basicRate": 2.9
-  },
-];
+// const productData = [
+//   {
+//     "prdId": 71,
+//     "bankLogo": "kookminLogo.png",
+//     "bankName": "국민은행",
+//     "prdName": "KB 특★한 적금",
+//     "spclRate": 6.0,
+//     "basicRate": 2.0
+//   },
+//   {
+//     "prdId": 72,
+//     "bankLogo": "kookminLogo.png",
+//     "bankName": "국민은행",
+//     "prdName": "KB차차차 적금",
+//     "spclRate": 8.0,
+//     "basicRate": 2.50
+//   },
+//   {
+//     "prdId": 73,
+//     "bankLogo": "shinhanLogo.png",
+//     "bankName": "신한은행",
+//     "prdName": "신한 알.쏠 적금",
+//     "spclRate": 4.2,
+//     "basicRate": 2.9
+//   },
+//   {
+//     "prdId": 74,
+//     "bankLogo": "nonghyupLogo.png",
+//     "bankName": "농협은행주식회사",
+//     "prdName": "NH올원e 미니적금",
+//     "spclRate": 4.45,
+//     "basicRate": 2.75
+//   },
+//   {
+//     "prdId": 75,
+//     "bankLogo": "nonghyupLogo.png",
+//     "bankName": "농협은행주식회사",
+//     "prdName": "NH1934월복리적금",
+//     "spclRate": 6.40,
+//     "basicRate": 2.9
+//   },
+// ];
 
 
 
@@ -66,6 +66,7 @@ const ListInstallmentPage = () => {
   const {
     loading,
     error,
+    productData,
     banks,
     handleBankChange,
     removeBank,
@@ -296,64 +297,70 @@ const ListInstallmentPage = () => {
 
 
         {/* 상태에 따라 내부 내용만 바뀜 */}
-        {/* {loading &&
-            <div className={styles.errorDiv}>
-                <img className={styles.loadingImg} src={spinner} alt="loading" />
-            </div>}
-        {error && <div className={styles.errorDiv}>데이터를 불러오는 중 에러가 발생했습니다.</div>} */}
+        {loading &&
+          <div className={styles.errorDiv}>
+            <img className={styles.loadingImg} src={spinner} alt="loading" />
+          </div>}
+        {error && <div className={styles.errorDiv}>데이터를 불러오는 중 에러가 발생했습니다.</div>}
 
         {/* 정상 데이터 로드 */}
-        {/* {!loading && !error && ( */}
-        <div className={styles.productListDiv}>
-          {/* 즐겨찾기 데이터가 없을 경우 메시지 출력 */}
-          {/* {productData.length === 0 ? ( */}
-          {/* <div className={styles.noProductList}>
-                        <h4>상품이 없습니다.</h4>
-                    </div> */}
-          {/*  ) : ( */}
-          {/* 상품품 데이터가 있을 경우 리스트 출력 */}
-          {productData.map((item, index) => (
-            <div key={index} className={styles.productList}>
-              <input type="hidden" value={item.prdId} readOnly />
-              <div className={styles.productLogoDiv}>
-                <img
-                  src={`${PATH.STORAGE_BANK}/${item.bankLogo}`}
-                  alt={`${item.bankName} 로고`}
-                  className={styles.productLogoImg}
-                />
+        {!loading && !error && (
+          <div className={styles.productListDiv}>
+            {/* 상품 데이터가 없을 경우 메시지 출력 */}
+            {productData.length === 0 ? (
+              <div className={styles.noProductList}>
+                <h4>상품이 없습니다.</h4>
               </div>
-              <div className={styles.productInfoDiv}>
-                <div className={styles.productBankProDiv}>
-                  <div className={styles.productBank}>{item.bankName}</div>
-                  <div className={styles.productPro}>{item.prdName}</div>
-                </div>
-                <div className={styles.productRateDiv}>
-                  <div className={styles.productHighestRateDiv}>
-                    <div className={styles.productHighestRateText}>최고금리</div>
-                    <div className={styles.productHighestRatePer}>
-                      <span className={styles.spclRate}>{item.spclRate.toFixed(2)}</span>%
+            ) : (
+              // 상품 데이터가 있을 경우 리스트 출력
+              productData.map((item, index) => (
+                <div key={index} className={styles.productList}>
+                  {/* <input type="hidden" value={item.prdId} readOnly /> */}
+                  <div className={styles.productLogoDiv}>
+                    <img
+                      src={`${PATH.STORAGE_BANK}/${item.bankLogo}`}
+                      alt={`${item.bankName} 로고`}
+                      className={styles.productLogoImg}
+                    />
+                  </div>
+                  <div className={styles.productInfoDiv}>
+                    <div className={styles.productBankProDiv}>
+                      <div className={styles.productBank}>{item.bankName}</div>
+                      <div className={styles.productPro}>{item.prdName}</div>
+                    </div>
+                    <div className={styles.productRateDiv}>
+                      <div className={styles.productHighestRateDiv}>
+                        <div className={styles.productHighestRateText}>최고금리</div>
+                        <div className={styles.productHighestRatePer}>
+                          <span className={styles.spclRate}>
+                            {/* {item.spclRate === 0 ? "N/A" : item.spclRate.toFixed(2) + "%"} */}
+                            {Number(item.spclRate).toFixed(2)}
+                          </span>%
+                        </div>
+                      </div>
+                      <div className={styles.productBasicRateDiv}>
+                        <div className={styles.productBasicRateText}>기본금리</div>
+                        <div className={styles.productBasicRatePer}>
+                          <span className={styles.basicRate}>
+                            {/* {item.basicRate === 0 ? "N/A" : item.spclRate.toFixed(2) + "%"} */}
+                            {Number(item.basicRate).toFixed(2)}
+                          </span>%
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className={styles.productSBaseRateDiv}>
-                    <div className={styles.productBaseRateText}>기본금리</div>
-                    <div className={styles.productBaseRatePer}>
-                      <span className={styles.basicRate}>{item.basicRate.toFixed(2)}</span>%
-                    </div>
+                  <div className={styles.productBtnDiv}>
+                    <button
+                      className={styles.productCompareBtn}
+                    >
+                      비교<br />담기
+                    </button>
                   </div>
                 </div>
-              </div>
-              <div className={styles.productBtnDiv}>
-                <button
-                  className={styles.productCompareBtn}
-                >
-                  비교<br />담기
-                </button>
-              </div>
-            </div>
-          ))}
-          {/* )} */}
-        </div>{/* productListDiv */}
-        {/* )} */}
+              ))
+            )}
+          </div>  /* productListDiv */
+        )}
 
         {/* 페이지네이션 */}
         <div className={styles.pagination}>
@@ -367,7 +374,7 @@ const ListInstallmentPage = () => {
             {Array.from({ length: totalPages }, (_, index) => (
               <button
                 key={index}
-                onClick={() => handlePageChange(index)}
+                onClick={() => handlePageChange(index + 1)}
                 className={currentPage === index ? styles.active : ""}
               >
                 {index + 1}
