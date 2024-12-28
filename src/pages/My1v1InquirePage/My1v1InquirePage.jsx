@@ -155,6 +155,7 @@ const My1v1InquirePage = () => {
                             while (isActive && retries > 0) { // 컴포넌트가 활성화된 경우에만 실행
                                 try {
                                     const response = await api.get(`/api/topic/check/chat-room-${userId}`);
+                                    
                                     if (response.data.success === true) {
                                         console.log("Kafka topic ready, subscribing...");                                    
                                         client.subscribe(`/sub/chat/room/${userId}`, (message) => {
