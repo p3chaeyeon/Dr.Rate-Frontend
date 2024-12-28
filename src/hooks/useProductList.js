@@ -207,7 +207,6 @@ const useProductList = () => {
             };
 
             const data = await getProductList(params);
-            console.log('API Response:', data); // 응답 데이터 확인
             setProductData(data.content); // content 배열을 저장
             setTotalPages(data.totalPages || 1); // 총 페이지 수
             setCurrentPage(data.pageable.pageNumber + 1);
@@ -234,12 +233,9 @@ const useProductList = () => {
             };
 
             const data = await getGuestProductList(params);
-            console.log('API Response:', data); // 응답 데이터 확인
             setProductData(data.content); // content 배열을 저장
             setTotalPages(data.totalPages || 1); // 총 페이지 수
             setCurrentPage(data.pageable.pageNumber + 1);
-            console.log('비회원 상품 목록 데이터:', data);
-
         } catch (err) {
             console.error('Fetch Products Error:', err); // 에러 로그 출력
             setError(err);

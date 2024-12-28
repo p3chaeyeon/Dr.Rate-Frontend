@@ -282,7 +282,10 @@ const ListInstallmentPage = () => {
                       className={styles.productLogoImg}
                     />
                   </div>
-                  <div className={styles.productInfoDiv}>
+                  <div 
+                    className={styles.productInfoDiv}
+                    onClick={() => navigate(`${PATH.PRODUCT_DETAIL}/${item.id}`)}
+                  >
                     <div className={styles.productBankProDiv}>
                       <div className={styles.productBank}>{item.bankName}</div>
                       <div className={styles.productPro}>{item.prdName}</div>
