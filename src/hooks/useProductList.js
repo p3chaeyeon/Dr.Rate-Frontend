@@ -15,13 +15,16 @@ import {
     productDataAtom,
 } from 'src/atoms/productListAtom';
 import { getProductList, getGuestProductList } from 'src/apis/productListAPI.js';
-
+import { useSession } from 'src/hooks/useSession';
 
 
 const useProductList = () => {
+    const { isLoggedIn } = useSession();
+    
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 에러 상태
     const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
+    const [paginationRange, setPaginationRange] = useState([]); // 페이지네이션 범위
 
     const [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
@@ -37,6 +40,7 @@ const useProductList = () => {
     const [productData, setProductData] = useAtom(productDataAtom);
 
     const previousCategory = useRef(category); // 이전 category를 저장
+    const blockSize = 5;
 
     /* 상태 초기화 함수 */
     const resetState = useCallback(() => {
@@ -49,6 +53,48 @@ const useProductList = () => {
         setSort("spclRate");
     }, [setCurrentPage, setBanks, setAge, setPeriod, setRate, setJoin, setSort]);    
 
+    /* 페이지네이션 범위 설정 */
+    const calculatePaginationRange = useCallback(() => {
+        if (totalPages === 0) {
+            setPaginationRange([]);
+            return;
+        }
+
+        const currentBlock = Math.ceil(currentPage / blockSize);
+        const startPage = (currentBlock - 1) * blockSize + 1;
+        const endPage = Math.min(startPage + blockSize - 1, totalPages);
+
+        setPaginationRange(
+            Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i)
+        );
+    }, [currentPage, totalPages]);
+
+    useEffect(() => {
+        calculatePaginationRange();
+    }, [currentPage, totalPages, calculatePaginationRange]);
+
+    /* 페이지네이션 "이전" 블록 */
+    const handlePrevBlock = () => {
+        const firstPageOfBlock = paginationRange[0];
+        if (firstPageOfBlock > 1) {
+            setCurrentPage(firstPageOfBlock - 1);
+        }
+    };
+
+    /* 페이지네이션 "다음" 블록 */
+    const handleNextBlock = () => {
+        const lastPageOfBlock = paginationRange[paginationRange.length - 1];
+        if (lastPageOfBlock < totalPages) {
+            setCurrentPage(lastPageOfBlock + 1);
+        }
+    };
+
+    /* 페이지 변경 */
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages && newPage !== currentPage) {
+            setCurrentPage(newPage);
+        }
+    };
 
 
     /* 페이지 로드 시 URL 경로를 기반으로 category 설정 */
@@ -71,6 +117,7 @@ const useProductList = () => {
         }
         previousCategory.current = category; // 현재 category를 업데이트
     }, [category, resetState]);
+
     
     
     /* 상태 변경 시 URL 쿼리 스트링 업데이트 */
@@ -90,14 +137,6 @@ const useProductList = () => {
         setSearchParams(params);
     }, [category, banks, age, period, rate, join, sort, currentPage, setSearchParams]);
 
-
-
-    /* 페이지 변경 */
-    const handlePageChange = (newPage) => {
-        if (newPage >= 0 && newPage < totalPages && newPage !== currentPage) {
-            setCurrentPage(newPage);
-        }
-    };
 
 
     /* 은행 추가 */
@@ -168,11 +207,12 @@ const useProductList = () => {
             };
 
             const data = await getProductList(params);
-            setProductData(data);
-            console.log('회원 상품 목록 데이터:', data);
-
+            console.log('API Response:', data); // 응답 데이터 확인
+            setProductData(data.content); // content 배열을 저장
             setTotalPages(data.totalPages || 1); // 총 페이지 수
+            setCurrentPage(data.pageable.pageNumber + 1);
         } catch (err) {
+            console.error('Fetch Products Error:', err); // 에러 로그 출력
             setError(err);
         } finally {
             setLoading(false);
@@ -194,11 +234,14 @@ const useProductList = () => {
             };
 
             const data = await getGuestProductList(params);
-            setProductData(data);
+            console.log('API Response:', data); // 응답 데이터 확인
+            setProductData(data.content); // content 배열을 저장
+            setTotalPages(data.totalPages || 1); // 총 페이지 수
+            setCurrentPage(data.pageable.pageNumber + 1);
             console.log('비회원 상품 목록 데이터:', data);
 
-            setTotalPages(data.totalPages || 1);
         } catch (err) {
+            console.error('Fetch Products Error:', err); // 에러 로그 출력
             setError(err);
         } finally {
             setLoading(false);
@@ -212,20 +255,22 @@ const useProductList = () => {
             if (!category) return;
 
             try {
-                if (location.pathname.includes('guest')) {
-                    await fetchGuestProducts(); // 비회원 상품 목록 호출
+                if (isLoggedIn) {
+                    await fetchProducts();
                 } else {
-                    await fetchProducts(); // 회원 상품 목록 호출
+                    await fetchGuestProducts();
                 }
             } catch (err) {
-                console.error('데이터 로드 중 오류:', err);
+                console.error("데이터 로드 중 오류:", err);
             }
         };
 
-        fetchData(); // 비동기 함수 호출
-    }, [fetchProducts, fetchGuestProducts, category, location.pathname]);
+        fetchData();
+    }, [fetchProducts, fetchGuestProducts, category, isLoggedIn, location.pathname]);
 
-    
+
+
+   
 
 
 
@@ -251,6 +296,9 @@ const useProductList = () => {
         handlePageChange,     
         totalPages,
         productData,
+        paginationRange,
+        handlePrevBlock, 
+        handleNextBlock, 
     };
 };
 

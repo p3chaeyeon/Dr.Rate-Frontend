@@ -13,50 +13,6 @@ import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
 import spinner from 'src/assets/icons/spinner.gif';
 
 
-// const productData = [
-//   {
-//     "prdId": 71,
-//     "bankLogo": "kookminLogo.png",
-//     "bankName": "국민은행",
-//     "prdName": "KB 특★한 적금",
-//     "spclRate": 6.0,
-//     "basicRate": 2.0
-//   },
-//   {
-//     "prdId": 72,
-//     "bankLogo": "kookminLogo.png",
-//     "bankName": "국민은행",
-//     "prdName": "KB차차차 적금",
-//     "spclRate": 8.0,
-//     "basicRate": 2.50
-//   },
-//   {
-//     "prdId": 73,
-//     "bankLogo": "shinhanLogo.png",
-//     "bankName": "신한은행",
-//     "prdName": "신한 알.쏠 적금",
-//     "spclRate": 4.2,
-//     "basicRate": 2.9
-//   },
-//   {
-//     "prdId": 74,
-//     "bankLogo": "nonghyupLogo.png",
-//     "bankName": "농협은행주식회사",
-//     "prdName": "NH올원e 미니적금",
-//     "spclRate": 4.45,
-//     "basicRate": 2.75
-//   },
-//   {
-//     "prdId": 75,
-//     "bankLogo": "nonghyupLogo.png",
-//     "bankName": "농협은행주식회사",
-//     "prdName": "NH1934월복리적금",
-//     "spclRate": 6.40,
-//     "basicRate": 2.9
-//   },
-// ];
-
-
 
 const ListInstallmentPage = () => {
   const navigate = useNavigate();
@@ -83,6 +39,9 @@ const ListInstallmentPage = () => {
     currentPage,
     handlePageChange,
     totalPages,
+    paginationRange,
+    handlePrevBlock, 
+    handleNextBlock, 
   } = useProductList();
 
   const {
@@ -312,10 +271,10 @@ const ListInstallmentPage = () => {
                 <h4>상품이 없습니다.</h4>
               </div>
             ) : (
-              // 상품 데이터가 있을 경우 리스트 출력
+              /* 상품 데이터가 있을 경우 리스트 출력 */
               productData.map((item, index) => (
                 <div key={index} className={styles.productList}>
-                  {/* <input type="hidden" value={item.prdId} readOnly /> */}
+                  <input type="hidden" value={item.id} readOnly />
                   <div className={styles.productLogoDiv}>
                     <img
                       src={`${PATH.STORAGE_BANK}/${item.bankLogo}`}
@@ -333,18 +292,16 @@ const ListInstallmentPage = () => {
                         <div className={styles.productHighestRateText}>최고금리</div>
                         <div className={styles.productHighestRatePer}>
                           <span className={styles.spclRate}>
-                            {/* {item.spclRate === 0 ? "N/A" : item.spclRate.toFixed(2) + "%"} */}
-                            {Number(item.spclRate).toFixed(2)}
-                          </span>%
+                            {item.spclRate === 0 ? "N/A" : item.spclRate.toFixed(2) + "%"}
+                          </span>
                         </div>
                       </div>
                       <div className={styles.productBasicRateDiv}>
                         <div className={styles.productBasicRateText}>기본금리</div>
                         <div className={styles.productBasicRatePer}>
                           <span className={styles.basicRate}>
-                            {/* {item.basicRate === 0 ? "N/A" : item.spclRate.toFixed(2) + "%"} */}
-                            {Number(item.basicRate).toFixed(2)}
-                          </span>%
+                            {item.basicRate === 0 ? "N/A" : item.basicRate.toFixed(2) + "%"}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -365,33 +322,29 @@ const ListInstallmentPage = () => {
         {/* 페이지네이션 */}
         <div className={styles.pagination}>
           <div className={styles.pageBtn}>
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 0}
-            >
-              이전
-            </button>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => handlePageChange(index + 1)}
-                className={currentPage === index ? styles.active : ""}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages - 1}
-            >
-              다음
-            </button>
+          <button onClick={handlePrevBlock} disabled={paginationRange[0] === 1}>
+          이전
+        </button>
+        {paginationRange.map((page) => (
+          <button
+            key={page}
+            onClick={() => handlePageChange(page)}
+            className={currentPage === page ? styles.active : ''}
+          >
+            {page}
+          </button>
+        ))}
+        <button
+          onClick={handleNextBlock}
+          disabled={paginationRange[paginationRange.length - 1] === totalPages}
+        >
+          다음
+        </button>
           </div>
         </div>
 
 
       </section>
-
     </main>
   );
 };

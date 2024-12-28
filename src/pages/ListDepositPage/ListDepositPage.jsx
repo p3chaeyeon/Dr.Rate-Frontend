@@ -13,50 +13,6 @@ import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
 import spinner from 'src/assets/icons/spinner.gif';
 
 
-const productData = [
-  {
-    "prdId": 71,
-    "bankLogo": "kookminLogo.png",
-    "bankName": "국민은행",
-    "prdName": "KB 특★한 예금",
-    "spclRate": 6.0,
-    "basicRate": 2.0
-  },
-  {
-    "prdId": 72,
-    "bankLogo": "kookminLogo.png",
-    "bankName": "국민은행",
-    "prdName": "KB차차차 예금",
-    "spclRate": 8,
-    "basicRate": 2.50
-  },
-  {
-    "prdId": 73,
-    "bankLogo": "shinhanLogo.png",
-    "bankName": "신한은행",
-    "prdName": "신한 알.쏠 예금",
-    "spclRate": 4.2,
-    "basicRate": 2.9
-  },
-  {
-    "prdId": 74,
-    "bankLogo": "nonghyupLogo.png",
-    "bankName": "농협은행주식회사",
-    "prdName": "NH올원e 미니예금",
-    "spclRate": 4.45,
-    "basicRate": 2.75
-  },
-  {
-    "prdId": 75,
-    "bankLogo": "nonghyupLogo.png",
-    "bankName": "농협은행주식회사",
-    "prdName": "NH1934월복리예금",
-    "spclRate": 6.40,
-    "basicRate": 2.9
-  },
-];
-
-
 
 const ListDepositPage = () => {
   const navigate = useNavigate();
@@ -66,6 +22,7 @@ const ListDepositPage = () => {
   const {
     loading,
     error,
+    productData,
     banks,
     handleBankChange,
     removeBank,
@@ -296,25 +253,25 @@ const ListDepositPage = () => {
 
 
         {/* 상태에 따라 내부 내용만 바뀜 */}
-        {/* {loading &&
+        {loading &&
             <div className={styles.errorDiv}>
                 <img className={styles.loadingImg} src={spinner} alt="loading" />
             </div>}
-        {error && <div className={styles.errorDiv}>데이터를 불러오는 중 에러가 발생했습니다.</div>} */}
+        {error && <div className={styles.errorDiv}>데이터를 불러오는 중 에러가 발생했습니다.</div>}
 
         {/* 정상 데이터 로드 */}
-        {/* {!loading && !error && ( */}
+        {!loading && !error && ( 
         <div className={styles.productListDiv}>
-          {/* 즐겨찾기 데이터가 없을 경우 메시지 출력 */}
-          {/* {productData.length === 0 ? ( */}
-          {/* <div className={styles.noProductList}>
+          {/* 상품 데이터가 없을 경우 메시지 출력 */}
+          {productData.length === 0 ? (
+           <div className={styles.noProductList}>
                         <h4>상품이 없습니다.</h4>
-                    </div> */}
-          {/*  ) : ( */}
-          {/* 상품품 데이터가 있을 경우 리스트 출력 */}
-          {productData.map((item, index) => (
+                    </div> 
+          ) : ( 
+           /* 상품 데이터가 있을 경우 리스트 출력 */
+          productData.map((item, index) => (
             <div key={index} className={styles.productList}>
-              <input type="hidden" value={item.prdId} readOnly />
+              <input type="hidden" value={item.id} readOnly />
               <div className={styles.productLogoDiv}>
                 <img
                   src={`${PATH.STORAGE_BANK}/${item.bankLogo}`}
@@ -350,10 +307,10 @@ const ListDepositPage = () => {
                 </button>
               </div>
             </div>
-          ))}
-          {/* )} */}
-        </div>{/* productListDiv */}
-        {/* )} */}
+          ))
+          )}
+        </div>/* productListDiv */
+        )}
 
         {/* 페이지네이션 */}
         <div className={styles.pagination}>
@@ -368,7 +325,7 @@ const ListDepositPage = () => {
               <button
                 key={index}
                 onClick={() => handlePageChange(index + 1)}
-                className={currentPage === index ? styles.active : ""}
+                className={currentPage === (index+1) ? styles.active : ""}
               >
                 {index + 1}
               </button>
