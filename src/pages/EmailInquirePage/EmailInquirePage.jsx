@@ -91,7 +91,7 @@ const EmailInquirePage = () => {
       formDataToSend.append("inquireEmail", formData.inquireEmail);
       formDataToSend.append("inquireTitle", formData.inquireTitle);
       formDataToSend.append("inquireContent", formData.inquireContent);
-      formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
+      // formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
 
       // 폼데이터에 파일추가
       if (formData.fileUuid) {
