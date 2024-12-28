@@ -68,7 +68,7 @@ const useMyFavorite = () => {
         } finally {
             setLoading(false);
         }
-    }, [category, setFavoriteData, setIndividualChecked, setAllCheckedState]);
+    }, [category, setFavoriteData/* , setIndividualChecked, setAllCheckedState */]);
 
 
     /* 페이지 URL 변경 감지 시 데이터 리로드 */

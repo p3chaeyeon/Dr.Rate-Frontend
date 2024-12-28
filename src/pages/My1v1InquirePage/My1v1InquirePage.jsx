@@ -9,6 +9,7 @@ import MyNav from 'src/components/MyNav';
 import AlertModal from 'src/components/Modal/AlertModal';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
+import spinner from 'src/assets/icons/spinner.gif';
 import api from 'src/apis/axiosInstanceAPI';
 
 
@@ -25,6 +26,8 @@ const My1v1InquirePage = () => {
     const [inputMessage, setInputMessage] = useState(""); // 메시지 입력 필드 상태
     const [stompClient, setStompClient] = useState(null); // WebSocket STOMP 클라이언트 상태
     const [isDragging, setIsDragging] = useState(false); // 드래그 상태
+
+    const [isLoading, setLoading] = useState(false)
 
 
     const {
@@ -157,6 +160,7 @@ const My1v1InquirePage = () => {
                                     const response = await api.get(`/api/topic/check/chat-room-${userId}`);
                                     
                                     if (response.data.success === true) {
+                                        setLoading(true);
                                         console.log("Kafka topic ready, subscribing...");                                    
                                         client.subscribe(`/sub/chat/room/${userId}`, (message) => {
                                             console.log("message : "+message)
@@ -285,6 +289,18 @@ const My1v1InquirePage = () => {
         <main>
             <MyNav />
 
+            {isLoading || (
+                <div className={ styles.spinner }>
+                    <div className={styles.spinnerDiv}>
+                        <img src={spinner}/>
+                        <div className={styles.spinnerSpan}>
+                            <span>로딩중 입니다.</span>
+                            <span>잠시만 기다려주세요.</span>
+                        </div>
+                    </div>
+                </div>
+            )}
+            
             <section className={styles.my1v1InquireSection}>
                 {/* 문의 내역 카테고리 - 예금 or 적금 */}
                 <div className={ styles.inquireTypeDiv }>
@@ -296,6 +312,7 @@ const My1v1InquirePage = () => {
                         1:1 문의
                     </div>
                 </div>
+
 
                 <section className={styles.userInquireBody}>
                     {/* 헤더 영역 */}

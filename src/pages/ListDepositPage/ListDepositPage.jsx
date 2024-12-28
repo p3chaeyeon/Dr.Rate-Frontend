@@ -1,8 +1,8 @@
-/* src/pages/ProductListPage/ProductListPage.jsx */
+/* src/pages/ListDepositPage/ListDepositPage.jsx */
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './DepositListPage.module.scss';
+import styles from './ListDepositPage.module.scss';
 import { PATH } from 'src/utils/path';
 import { useSession } from 'src/hooks/useSession';
 import useProductList from 'src/hooks/useProductList';
