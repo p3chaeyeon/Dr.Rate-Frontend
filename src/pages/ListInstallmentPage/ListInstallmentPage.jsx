@@ -19,6 +19,10 @@ const ListInstallmentPage = () => {
 
   const { isLoggedIn } = useSession();
 
+  const handleCompareClick = () => {
+    navigate(`${PATH.PRODUCT_COMPARE}/i`);
+  };  
+
   const {
     loading,
     error,
@@ -312,6 +316,7 @@ const ListInstallmentPage = () => {
                   <div className={styles.productBtnDiv}>
                     <button
                       className={styles.productCompareBtn}
+                      onClick={handleCompareClick}
                     >
                       비교<br />담기
                     </button>
