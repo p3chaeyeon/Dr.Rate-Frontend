@@ -58,7 +58,7 @@ const productData = [
 
 
 
-const DepositListPage = () => {
+const ListDepositPage = () => {
   const navigate = useNavigate();
 
   const { isLoggedIn } = useSession();
@@ -223,6 +223,7 @@ const DepositListPage = () => {
                     value={period}
                     onChange={handlePeriodChange}
                   >
+                    <option value="">기간 선택</option>
                     <option value="3">3개월 이상</option>
                     <option value="6">6개월 이상</option>
                     <option value="12">12개월 이상</option>
@@ -388,5 +389,5 @@ const DepositListPage = () => {
   );
 };
 
-export default DepositListPage;
+export default ListDepositPage;
 

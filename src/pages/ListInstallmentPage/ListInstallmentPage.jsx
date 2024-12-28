@@ -58,7 +58,7 @@ const productData = [
 
 
 
-const ProductInsListPage = () => {
+const ListInstallmentPage = () => {
   const navigate = useNavigate();
 
   const { isLoggedIn } = useSession();
@@ -223,9 +223,7 @@ const ProductInsListPage = () => {
                     value={period}
                     onChange={handlePeriodChange}
                   >
-                    <option value="">
-                      기간 선택
-                    </option>
+                    <option value="">기간 선택</option>
                     <option value="3">3개월 이상</option>
                     <option value="6">6개월 이상</option>
                     <option value="12">12개월 이상</option>
@@ -288,9 +286,9 @@ const ProductInsListPage = () => {
             <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
           </li>
           <li
-            className={`${styles.standardItem} ${sort === "baseRate" ? styles.active : ""
+            className={`${styles.standardItem} ${sort === "basicRate" ? styles.active : ""
               }`}
-            onClick={() => handleSortClick("baseRate")}
+            onClick={() => handleSortClick("basicRate")}
           >
             기본 금리순
           </li>
@@ -391,5 +389,5 @@ const ProductInsListPage = () => {
   );
 };
 
-export default ProductInsListPage;
+export default ListInstallmentPage;
 
