@@ -71,14 +71,15 @@ const AdminInquireListPage = () => {
                         <h4>1:1 문의 내역</h4>
                     </div>
                     <div className={styles.inquireSearchBar}>
-                        <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
-                            <optgroup label="검색 항목">
-                                <option value="roomId" selected>방 번호</option>
-                                <option value="email">이메일</option>
-                                <option value="name">이름</option>
-                            </optgroup>
+                        <select
+                            value={searchType}
+                            onChange={(e) => setSearchType(e.target.value)}
+                        >
+                            <option value="" disabled>검색 항목</option>
+                            <option value="roomId">방 번호</option>
+                            <option value="email">이메일</option>
+                            <option value="name">이름</option>
                         </select>
-
                         <input type="text" placeholder="검색어" value={keyword} onChange={(e) => setKeyword(e.target.value)}
                             onKeyPress={(e) => {
                                 if (e.key === "Enter") {

@@ -57,7 +57,6 @@ const MyInfoPage = () => {
                         <p className={`${styles.tagName}`}>생년월일</p>
                         <p className={`${styles.myData}`}>{myData.birthdate || '데이터 없음'}</p>
                     </div>
-                    
                     <div className={`${styles.buttonBox}`}>
                         <div className={`${styles.deleteUser}`}>
                             <p onClick={handleMyWithdraw}>회원탈퇴&nbsp;&gt;</p>
@@ -68,7 +67,6 @@ const MyInfoPage = () => {
                         </div>
                         ) : (<div></div>)}
                     </div>
-                    
                 </div>
                 ) : (<div></div>)}
             </section>

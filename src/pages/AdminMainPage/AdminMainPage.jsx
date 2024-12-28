@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from './AdminMainPage.module.scss';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar  } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import api from 'src/apis/axiosInstanceAPI';
 import userLogo from 'src/assets/icons/userIcon.png';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const AdminMainPage = () => {
     // 방문자 현황 체크
@@ -79,34 +79,33 @@ const AdminMainPage = () => {
 
 
     const data = {
-        labels: ['오늘', '최근 7일', '이번 달'], // X축 라벨
+        labels: ['오늘', '최근 7일', '이번 달'],
         datasets: [
             {
                 label: '총 방문자 수',
                 data: [
-                    visitorSummary.today.visitorCount,   // 오늘 방문자 수
-                    visitorSummary.last7DaysTotal.visitorCount, // 최근 7일 방문자 수
-                    visitorSummary.thisMonthTotal.visitorCount  // 이번 달 방문자 수
+                    visitorSummary.today.todayGuestCount,
+                    visitorSummary.last7DaysTotal.visitorTotalCount,
+                    visitorSummary.thisMonthTotal.visitorTotalCount
                 ],
-                borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                fill: true,
-                tension: 0.4,
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
             },
             {
                 label: '신규 가입자 수',
                 data: [
-                    visitorSummary.today.newMembersCount,  // 오늘 신규 가입자 수
-                    visitorSummary.last7DaysTotal.newMembersCount, // 최근 7일 신규 가입자 수
-                    visitorSummary.thisMonthTotal.newMembersCount  // 이번 달 신규 가입자 수
+                    visitorSummary.today.newMembersCount,
+                    visitorSummary.last7DaysTotal.newMembersCount,
+                    visitorSummary.thisMonthTotal.newMembersCount
                 ],
-                borderColor: 'rgba(54, 162, 235, 1)',
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                fill: true,
-                tension: 0.4,
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
             },
         ],
     };
+
 
     const options = {
         responsive: true,
@@ -147,7 +146,7 @@ const AdminMainPage = () => {
                         </div>
                         {/* 방문자 현황 body : 그래프 */}
                         <div className={styles.dashboardItemBody}>
-                            <Line data={data} options={options} />
+                            <Bar data={data} options={options} />
                         </div>
                     </div>
                 </div>

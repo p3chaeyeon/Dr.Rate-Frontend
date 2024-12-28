@@ -269,9 +269,6 @@ const MyEditPage = () => {
                         </div>
 
                         <div className={`${styles.buttonBox}`}>
-                            <div className={`${styles.deleteUser}`}>
-                                <p>회원탈퇴&nbsp;&gt;</p>
-                            </div>
                             <div className={`${styles.editandreset}`}>
                                 <button onClick={handleMyInfoEdit}>수정하기</button>
                                 <button onClick={handleReset} className={`${styles.resetButton}`}>초기화</button>

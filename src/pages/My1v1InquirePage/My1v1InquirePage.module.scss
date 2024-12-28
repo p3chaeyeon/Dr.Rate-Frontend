@@ -1,6 +1,34 @@
+.spinner{
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    left: 0; bottom: 0;
+
+    width: 100%; height: 100%;
+    margin: 0 !important;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999 !important;
+    
+    .spinnerDiv{
+        width: 300px; height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--white); border-radius: 15px;
+
+        .spinnerSpan{
+            display: flex;
+            flex-direction: column;
+            padding-right: 20px;
+        }
+    }
+}
+
 .my1v1InquireSection {
     padding-top: 70px;
-
+    
     .inquireTypeDiv {
         font-size: 17px;
         padding-top:20px;
@@ -24,6 +52,9 @@
         }
     }
 
+    
+   
+
 
 
 
@@ -34,7 +65,8 @@
         height: 80vh;
         padding: 0;
         margin: 0;
-
+       
+        
         .userInquireHeader {
             padding: 0 10px;
             display: flex;
