@@ -1,20 +1,130 @@
 .MyWithdrawSection {
+    width: 50%; /* 로그인 폼 너비를 50%로 설정 */
+    margin: 100px auto;
     padding-top: 70px;
+    display: flex;
+    justify-content: center;
+    font-family: 'Noto Sans KR';
+    .MyWithdraw {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        .title {
+            display: inline-block;
+            p {
+                font-weight: normal;
+                letter-spacing: .1rem;
+                margin-top: 8px;
+            }
+        }
+        form {
+            .tagBox {
+                display: flex;
+                border-bottom: 1.5px solid var(--black);
+                margin-top: 3rem;
+                width: 100%;
+                position: relative;
+                align-items: center;
+                flex-direction: row; /* 필드를 세로로 배치 */
+                border-bottom: 2px solid var(--black);
+                transition: border-color 0.3s;
+                &:first-child {
+                    margin-top: 5rem;
+                }
+                input {
+                    border: none;
+                    font-size: 16px;
+                    width: 100%;
+                    box-sizing: border-box;
+                    outline: none;
+                    margin-bottom: 2px;
+                }
+                .tagName {
+                    width: 21rem;
+                    text-align: left;
+                    padding-bottom: 2px;
+                    font-weight: bold;
+                }
+                .myData {
+                    width: 28rem;
+                    padding-bottom: 2px;
+                }
+            }
+            .passwordError{
+                display: flex;
+                justify-content: center;
+                margin-top: 10px;
+                margin-bottom: 2.5rem;
+                color: var(--red2);
+                visibility: hidden;
+            }
+            .checkBox {
+                .titletext {
+                    padding: 12px 0;
+                }
+                .checkValue {
+                    label {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        margin-bottom: 10px;
+                        input {
+                            margin-top: 3px;
+                            margin-right: 12px;
+                        }
+                        p {
+                            letter-spacing: .1rem;
+                        }
+                    }
+                }
+                hr {
+                    height: 3px;
+                    background-color: var(--black);
+                    margin-bottom: 8px;
+                }
+                .essentialCheck {
+                    display: flex;
+                    margin: 1rem 0;
+                    label {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        input {
+                            margin-top: 3px;
+                            margin-right: 12px;
+                        }
+                        p {
+                            letter-spacing: .1rem;
+                        }
+                    }
+                    .withdrawButton {
+                        width: 7rem;
+                        padding: 5px 15px;
+                        background-color: var(--red1);
+                        border: none;
+                        color: var(--white);
+                        transition: background-color 0.3s;
+                        &:hover {
+                            background-color: var(--red2);
+                        }
+                    }
+                }
+                .errorText {
+                    display: flex;
+                    justify-content: center;
+                    margin: 1.3rem;
+                    color: var(--red2);
+                    font-weight: bold;
+                    letter-spacing: .1rem;
+                    visibility: hidden;
+                }
+            }
+        }
+        
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* ====================================== 가로 1000px 이하 ====================================== */
 @media (max-width: 1000px) {

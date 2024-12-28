@@ -76,19 +76,20 @@ const useProductList = () => {
     /* 상태 변경 시 URL 쿼리 스트링 업데이트 */
     useEffect(() => {
         const params = new URLSearchParams();
-        if (category) params.category = category;
+        if (category) params.set('category', category);
         if (banks.length > 0) {
             banks.forEach((bank) => params.append('banks', bank));
         }
-        if (age) params.age = age;
-        if (period) params.period = period;
-        if (rate) params.rate = rate;
-        if (join) params.join = join;
-        if (sort) params.sort = sort;
-        params.page = currentPage;
+        if (age) params.set('age', age);
+        if (period) params.set('period', period);
+        if (rate) params.set('rate', rate);
+        if (join) params.set('join', join);
+        if (sort) params.set('sort', sort);
+        params.set('page', currentPage);
 
         setSearchParams(params);
     }, [category, banks, age, period, rate, join, sort, currentPage, setSearchParams]);
+
 
 
     /* 페이지 변경 */

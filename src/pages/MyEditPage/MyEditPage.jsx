@@ -38,13 +38,28 @@ const MyEditPage = () => {
 
     //데이터 받아오기
     useEffect(() => {
-        if (myData) {
+        if(myData) {
             setUsername(myData.username || '');
             setUserId(myData.userId || '');
             setEmail(myData.email || '');
             setBirthdate(myData.birthdate || '');
+        } else if (!myData) {
+            const userDTO = async () => {
+                try {
+                    const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfo`);
+                    setMyData(response.data.result);
+                    setUsername(response.data.result.username || '');
+                    setUserId(response.data.result.userId || '');
+                    setEmail(response.data.result.email || '');
+                    setBirthdate(response.data.result.birthdate || '');
+                    console.log("데이터 가져오기 성공")
+                } catch (error) {
+                    console.log("데이터 가져오기 실패 : ", error);
+                }
+            };
+            userDTO();
         } else {
-            navigate(`${PATH.SIGN_IN}`); // 사용자 데이터가 없으면 로그인 페이지로 리다이렉트
+            console.log("이펙트 실패");
         }
     }, [myData, navigate]);
 
