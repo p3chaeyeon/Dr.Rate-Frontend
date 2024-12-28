@@ -1,8 +1,8 @@
-/* src/pages/ProductListPage/ProductListPage.jsx */
+/* src/pages/ListDepositPage/ListDepositPage.jsx */
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './ProductInsListPage.module.scss';
+import styles from './ListDepositPage.module.scss';
 import { PATH } from 'src/utils/path';
 import { useSession } from 'src/hooks/useSession';
 import useProductList from 'src/hooks/useProductList';
@@ -18,7 +18,7 @@ const productData = [
     "prdId": 71,
     "bankLogo": "kookminLogo.png",
     "bankName": "국민은행",
-    "prdName": "KB 특★한 적금",
+    "prdName": "KB 특★한 예금",
     "spclRate": 6.0,
     "basicRate": 2.0
   },
@@ -26,7 +26,7 @@ const productData = [
     "prdId": 72,
     "bankLogo": "kookminLogo.png",
     "bankName": "국민은행",
-    "prdName": "KB차차차 적금",
+    "prdName": "KB차차차 예금",
     "spclRate": 8.0,
     "basicRate": 2.50
   },
@@ -34,7 +34,7 @@ const productData = [
     "prdId": 73,
     "bankLogo": "shinhanLogo.png",
     "bankName": "신한은행",
-    "prdName": "신한 알.쏠 적금",
+    "prdName": "신한 알.쏠 예금",
     "spclRate": 4.2,
     "basicRate": 2.9
   },
@@ -42,7 +42,7 @@ const productData = [
     "prdId": 74,
     "bankLogo": "nonghyupLogo.png",
     "bankName": "농협은행주식회사",
-    "prdName": "NH올원e 미니적금",
+    "prdName": "NH올원e 미니예금",
     "spclRate": 4.45,
     "basicRate": 2.75
   },
@@ -50,7 +50,7 @@ const productData = [
     "prdId": 75,
     "bankLogo": "nonghyupLogo.png",
     "bankName": "농협은행주식회사",
-    "prdName": "NH1934월복리적금",
+    "prdName": "NH1934월복리예금",
     "spclRate": 6.40,
     "basicRate": 2.9
   },
@@ -58,7 +58,7 @@ const productData = [
 
 
 
-const ProductInsListPage = () => {
+const DepositListPage = () => {
   const navigate = useNavigate();
 
   const { isLoggedIn } = useSession();
@@ -132,7 +132,7 @@ const ProductInsListPage = () => {
     <main>
       <section className={styles.listSection}>
         <div className={styles.listTitleDiv}>
-          적금
+          예금
         </div>
 
         <div className={styles.filterDiv}>
@@ -188,7 +188,7 @@ const ProductInsListPage = () => {
             <>
               <div className={styles.nonMemberFilterContainer}>
                 <div className={styles.nonMemberMessage}>
-                  나에게 맞는 적금 상품이 궁금하다면?
+                  나에게 맞는 예금 상품이 궁금하다면?
                   <span onClick={handleOpenConfirmModal} className={styles.click}>Click</span>
 
                   {/* ConfirmModal */}
@@ -223,9 +223,6 @@ const ProductInsListPage = () => {
                     value={period}
                     onChange={handlePeriodChange}
                   >
-                    <option value="">
-                      기간 선택
-                    </option>
                     <option value="3">3개월 이상</option>
                     <option value="6">6개월 이상</option>
                     <option value="12">12개월 이상</option>
@@ -391,5 +388,5 @@ const ProductInsListPage = () => {
   );
 };
 
-export default ProductInsListPage;
+export default DepositListPage;
 

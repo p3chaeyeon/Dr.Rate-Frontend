@@ -1,4 +1,4 @@
-/* src/pages/ProductInsListPage/ProductInsListPage.scss */
+/* src/pages/ListInstallmentPage/ListInstallmentPage.scss */
 
 .listSection {
   font-size: 16px;
@@ -173,6 +173,7 @@
             width: 48%;
             border: 1px solid var(--divider-border);
             flex: 1;
+            // background-color: var(--white);
             cursor: pointer;
             text-align: center;
             height: 40px;
@@ -310,6 +311,7 @@
 
         .productCompareBtn {
           width: 60px;
+          font-size: 15px;
           aspect-ratio: 1 / 1;
           background: var(--bg2);
           cursor: pointer;
@@ -629,7 +631,9 @@
 
 
   }
-}
+}/* 기본 px */
+
+
 
 /* ====================================== 가로 450px 이하 ====================================== */
 @media (max-width: 450px) {
