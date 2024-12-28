@@ -1,26 +1,32 @@
 /* src/hooks/useProductList.jsx */
 
+import { useSearchParams, useLocation } from 'react-router-dom';
+import { useCallback, useState, useEffect, useRef } from 'react';
 import { useAtom } from 'jotai';
-import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import {
+    currentPageAtom,
+    categoryAtom,
     banksAtom,
     ageAtom,
     periodAtom,
     rateAtom,
     joinAtom,
     sortAtom,
-    currentPageAtom,
 } from 'src/atoms/productListAtom';
+import { getProductList, getGuestProductList } from 'src/apis/productListAPI.js';
+
+
 
 const useProductList = () => {
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 에러 상태
-
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
     const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
 
+    const [searchParams, setSearchParams] = useSearchParams();
+    const location = useLocation();
+
+    const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
+    const [category, setCategory] = useAtom(categoryAtom);
     const [banks, setBanks] = useAtom(banksAtom);
     const [age, setAge] = useAtom(ageAtom);
     const [period, setPeriod] = useAtom(periodAtom);
@@ -28,30 +34,47 @@ const useProductList = () => {
     const [join, setJoin] = useAtom(joinAtom);
     const [sort, setSort] = useAtom(sortAtom);
 
+    const previousCategory = useRef(category); // 이전 category를 저장
 
-    /* 페이지 로드 시 URL 쿼리 스트링을 읽어서 초기 상태 설정 */
+    /* 상태 초기화 함수 */
+    const resetState = useCallback(() => {
+        setCurrentPage(1);
+        setBanks([]);
+        setAge("");
+        setPeriod("");
+        setRate("");
+        setJoin("");
+        setSort("spclRate");
+    }, [setCurrentPage, setBanks, setAge, setPeriod, setRate, setJoin, setSort]);    
+
+
+
+    /* 페이지 로드 시 URL 경로를 기반으로 category 설정 */
     useEffect(() => {
-        const bankParam = searchParams.get("bank");
-        const ageParam = searchParams.get("age");
-        const periodParam = searchParams.get("period");
-        const rateParam = searchParams.get("rate");
-        const joinParam = searchParams.get("join");
-        const sortParam = searchParams.get("sort");
-        const pageParam = searchParams.get("page");
-
-        if (bankParam) setBanks(bankParam.split(","));
-        if (ageParam) setAge(ageParam);
-        if (periodParam) setPeriod(periodParam);
-        if (rateParam) setRate(rateParam);
-        if (joinParam) setJoin(joinParam);
-        if (sortParam) setSort(sortParam);
-        if (pageParam) setCurrentPage(parseInt(pageParam, 10));
-    }, [searchParams, setBanks, setAge, setPeriod, setRate, setJoin, setSort, setCurrentPage]);
+        const path = location.pathname;
+        if (path.includes('installment')) {
+            setCategory('installment');
+        } else if (path.includes('deposit')) {
+            setCategory('deposit');
+        } else {
+            setCategory(""); // 예외 처리
+        }
+    }, [location.pathname, setCategory]);
 
 
+    /* category 변경 감지 및 초기화 */
+    useEffect(() => {
+        if (category !== previousCategory.current) {
+            resetState(); // category가 변경될 때만 초기화
+        }
+        previousCategory.current = category; // 현재 category를 업데이트
+    }, [category, resetState]);
+    
+    
     /* 상태 변경 시 URL 쿼리 스트링 업데이트 */
     useEffect(() => {
         const params = {};
+        if (category) params.category = category;
         if (banks.length > 0) params.bank = banks.join(",");
         if (age) params.age = age;
         if (period) params.period = period;
@@ -61,7 +84,7 @@ const useProductList = () => {
         params.page = currentPage;
 
         setSearchParams(params);
-    }, [banks, age, period, rate, join, sort, currentPage, setSearchParams]);
+    }, [category, banks, age, period, rate, join, sort, currentPage, setSearchParams]);
 
 
     /* 페이지 변경 */
@@ -120,12 +143,12 @@ const useProductList = () => {
 
     /* ================== API 호출 ================== */
 
-    /* 회원 적금 목록 조회 */
+    /* 회원 예금, 적금 목록 조회 */
 
 
 
 
-    /* 비회원 적금 목록 조회 */
+    /* 비회원 예금, 적금 목록 조회 */
 
 
 
