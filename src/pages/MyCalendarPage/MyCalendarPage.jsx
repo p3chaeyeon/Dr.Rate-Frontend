@@ -397,7 +397,7 @@ const MyCalendarPage = () => {
   return (
     <main>
       <MyNav />
-      <section>
+      <section className={styles.section}>
         <AlertModal
           isOpen={isAlertOpen} closeModal={closeAlertModal} title={alertContent.title} message={alertContent.message}
         />
