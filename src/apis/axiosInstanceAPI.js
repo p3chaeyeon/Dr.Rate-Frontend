@@ -88,7 +88,7 @@ api.interceptors.response.use(
  */
 export const fetchInquiryList = async () => {
   try {
-    const response = await api.get('/inquiries'); // 서버에 요청
+    const response = await api.get('/api/inquiries'); // 서버에 요청
     return response.data; // 데이터 반환
   } catch (error) {
     console.error('문의 내역 가져오기 실패:', error);
@@ -103,7 +103,7 @@ export const fetchInquiryList = async () => {
  */
 export const fetchInquiryDetail = async (inquiryId) => {
   try {
-    const response = await api.get(`/inquiries/${inquiryId}`); // 문의 ID로 요청
+    const response = await api.get(`/api/inquiries/${inquiryId}`); // 문의 ID로 요청
     return response.data; // 데이터 반환
   } catch (error) {
     console.error(`문의 상세 내역 가져오기 실패 (ID: ${inquiryId}):`, error);
