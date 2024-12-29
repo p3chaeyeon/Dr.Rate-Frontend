@@ -1,7 +1,7 @@
 /* src/hooks/useProductList.jsx */
 
 import { useSearchParams, useLocation } from 'react-router-dom';
-import { useCallback, useState, useEffect, useRef } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useAtom } from 'jotai';
 import {
     currentPageAtom,
@@ -17,13 +17,12 @@ import {
 import { getProductList, getGuestProductList } from 'src/apis/productListAPI.js';
 import { useSession } from 'src/hooks/useSession';
 
-
 const useProductList = () => {
     const { isLoggedIn } = useSession();
     
     const [loading, setLoading] = useState(true); // 로딩 상태
-    const [error, setError] = useState(null); // 에러 상태
-    const [totalPages, setTotalPages] = useState(0); // 총 페이지 수
+    const [error, setError] = useState(null);     // 에러 상태
+    const [totalPages, setTotalPages] = useState(0);            // 총 페이지 수
     const [paginationRange, setPaginationRange] = useState([]); // 페이지네이션 범위
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -39,22 +38,12 @@ const useProductList = () => {
     const [sort, setSort] = useAtom(sortAtom);
     const [productData, setProductData] = useAtom(productDataAtom);
 
-    const previousCategory = useRef(category); // 이전 category를 저장
-    const blockSize = 5;
-
-    /* 상태 초기화 함수 */
-    const resetState = useCallback(() => {
-        setCurrentPage(1);
-        setBanks([]);
-        setAge("");
-        setPeriod("");
-        setRate("");
-        setJoin("");
-        setSort("spclRate");
-    }, [setCurrentPage, setBanks, setAge, setPeriod, setRate, setJoin, setSort]);    
+    const blockSize = 5; // 페이지네이션 블록 크기
 
 
-    /* 은행 추가 */
+
+    /* ================== handler ======================================================================== */
+
     const handleBankChange = (event) => {
         const selectedBank = event.target.value;
         if (!banks.includes(selectedBank)) {
@@ -62,54 +51,41 @@ const useProductList = () => {
         }
     };
 
-
-    /* 은행 삭제 */
     const removeBank = (bankToRemove) => {
         setBanks(banks.filter((bank) => bank !== bankToRemove));
     };
 
-
-    /* 나이 변경 */
     const handleAgeChange = (event) => {
         setAge(event.target.value);
     };
 
-
-    /* 저축 예정 기간 변경 */
     const handlePeriodChange = (event) => {
         setPeriod(event.target.value);
     };
 
-
-    /* 단리/복리 선택 */
     const handleRateClick = (choice) => {
         setRate((prev) => (prev === choice ? "" : choice));
     };
 
-
-    /* 대면/비대면 선택 */
     const handleJoinClick = (choice) => {
         setJoin((prev) => (prev === choice ? "" : choice));
     };
 
-
-    /* 정렬 상태 관리 함수 */
     const handleSortClick = (choice) => {
         setSort(choice);
-      };
+    };
 
 
 
 
+    /* ================== Pagination ======================================================================== */
 
-
-    /* 페이지네이션 범위 설정 */
+    /* 페이지네이션 범위 계산 */
     const calculatePaginationRange = useCallback(() => {
         if (totalPages === 0) {
             setPaginationRange([]);
             return;
         }
-
         const currentBlock = Math.ceil(currentPage / blockSize);
         const startPage = (currentBlock - 1) * blockSize + 1;
         const endPage = Math.min(startPage + blockSize - 1, totalPages);
@@ -122,6 +98,7 @@ const useProductList = () => {
     useEffect(() => {
         calculatePaginationRange();
     }, [currentPage, totalPages, calculatePaginationRange]);
+
 
     /* 페이지네이션 "이전" 블록 */
     const handlePrevBlock = () => {
@@ -147,7 +124,11 @@ const useProductList = () => {
     };
 
 
-    /* 페이지 로드 시 URL 경로를 기반으로 category 설정 */
+
+
+    /* ================== Loading ======================================================================== */
+
+    /* URL 경로 기반 category 설정 */
     useEffect(() => {
         const path = location.pathname;
         if (path.includes('installment')) {
@@ -155,22 +136,19 @@ const useProductList = () => {
         } else if (path.includes('deposit')) {
             setCategory('deposit');
         } else {
-            setCategory(""); // 예외 처리
+            setCategory("");
         }
     }, [location.pathname, setCategory]);
 
 
-    /* category 변경 감지 및 초기화 */
+    /* 조건 변화 시 page = 1로 초기화 */
     useEffect(() => {
-        if (category !== previousCategory.current) {
-            resetState(); // category가 변경될 때만 초기화
-        }
-        previousCategory.current = category; // 현재 category를 업데이트
-    }, [category, resetState]);
+        // category, banks, age, period, rate, join, sort가 변경되면 currentPage=1
+        setCurrentPage(1);
+    }, [category, banks, age, period, rate, join, sort, setCurrentPage]);
 
-    
-    
-    /* 상태 변경 시 URL 쿼리 스트링 업데이트 */
+
+    /* 상태 변경 시 URL 쿼리 스트링 동기화*/
     useEffect(() => {
         const params = new URLSearchParams();
         if (category) params.set('category', category);
@@ -182,17 +160,26 @@ const useProductList = () => {
         if (rate) params.set('rate', rate);
         if (join) params.set('join', join);
         if (sort) params.set('sort', sort);
+
         params.set('page', currentPage);
 
         setSearchParams(params);
-    }, [category, banks, age, period, rate, join, sort, currentPage, setSearchParams]);
+    }, [
+        category,
+        banks,
+        age,
+        period,
+        rate,
+        join,
+        sort,
+        currentPage,
+        setSearchParams
+    ]);
 
 
 
 
-
-
-    /* ================== API 호출 ================== */
+    /* ================== API Call ======================================================================== */
 
     /* 회원 예금, 적금 목록 조회 */
     const fetchProducts = useCallback(async () => {
@@ -200,29 +187,39 @@ const useProductList = () => {
             setLoading(true);
             setError(null);
 
-            // API 호출 파라미터 설정
+            // API 호출 파라미터
             const params = {
                 category,
-                page: currentPage - 1, // API는 0부터 시작
+                page: currentPage - 1, // 스프링부트 페이지는 0부터 시작
                 banks: banks.length > 0 ? banks : undefined,
                 age: age || undefined,
                 period: period || undefined,
                 rate: rate || undefined,
                 join: join || undefined,
-                sort: sort || 'spclRate', // 기본 정렬 기준
+                sort: sort || 'spclRate',
             };
 
             const data = await getProductList(params);
-            setProductData(data.content); // content 배열을 저장
-            setTotalPages(data.totalPages || 1); // 총 페이지 수
-            setCurrentPage(data.pageable.pageNumber + 1);
+            setProductData(data.content);
+            setTotalPages(data.totalPages || 1);
+
         } catch (err) {
-            console.error('Fetch Products Error:', err); // 에러 로그 출력
+            console.error('Fetch Products Error:', err);
             setError(err);
         } finally {
             setLoading(false);
         }
-    }, [category, currentPage, banks, age, period, rate, join, sort]);
+    }, [
+        category,
+        currentPage,
+        banks,
+        age,
+        period,
+        rate,
+        join,
+        sort,
+        setProductData
+    ]);
 
 
     /* 비회원 예금, 적금 목록 조회 */
@@ -233,28 +230,34 @@ const useProductList = () => {
 
             const params = {
                 category,
-                page: currentPage - 1, 
+                page: currentPage - 1,
                 banks: banks.length > 0 ? banks : undefined,
-                sort: sort || 'spclRate', 
+                sort: sort || 'spclRate',
             };
 
             const data = await getGuestProductList(params);
-            setProductData(data.content); // content 배열을 저장
-            setTotalPages(data.totalPages || 1); // 총 페이지 수
-            setCurrentPage(data.pageable.pageNumber + 1);
+            setProductData(data.content);
+            setTotalPages(data.totalPages || 1);
+
         } catch (err) {
-            console.error('Fetch Products Error:', err); // 에러 로그 출력
+            console.error('Fetch Products Error:', err);
             setError(err);
         } finally {
             setLoading(false);
         }
-    }, [category, currentPage, banks, sort]);
+    }, [
+        category,
+        currentPage,
+        banks,
+        sort,
+        setProductData
+    ]);
 
-
+    
     /* 페이지 URL 변경 감지 시 데이터 로드 */
     useEffect(() => {
         const fetchData = async () => {
-            if (!category) return;
+            if (!category) return; // category가 없으면 API 호출 X
 
             try {
                 if (isLoggedIn) {
@@ -268,39 +271,39 @@ const useProductList = () => {
         };
 
         fetchData();
-    }, [fetchProducts, fetchGuestProducts, category, isLoggedIn, location.pathname]);
-
-
-
-   
-
-
+    }, [
+        fetchProducts,
+        fetchGuestProducts,
+        category,
+        isLoggedIn,
+        location.pathname
+    ]);
 
 
 
     return {
         loading,
         error,
+        productData,
+        totalPages,
+        currentPage,
+        handlePageChange,
+        paginationRange,
+        handlePrevBlock, 
+        handleNextBlock, 
         banks,
         handleBankChange,
         removeBank,
-        rate,
-        handleRateClick,
-        join,
-        handleJoinClick,
         age,
         handleAgeChange,
         period,
         handlePeriodChange,
+        rate,
+        handleRateClick,
+        join,
+        handleJoinClick,
         sort,
         handleSortClick,
-        currentPage,
-        handlePageChange,     
-        totalPages,
-        productData,
-        paginationRange,
-        handlePrevBlock, 
-        handleNextBlock, 
     };
 };
 
