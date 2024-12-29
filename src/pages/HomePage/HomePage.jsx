@@ -14,10 +14,45 @@ import DepositLink from 'src/assets/images/DepositLink.png';
 import InstallmentLink from 'src/assets/images/InstallmentLink.png';
 import homeCalendar from 'src/assets/images/homeCalendar.png';
 import { trackVisitor } from 'src/utils/visitorTracker';
+import { useSession } from 'src/hooks/useSession';
+import useModal from 'src/hooks/useModal';
+import ConfirmModal from 'src/components/Modal/ConfirmModal';
 
 
 const HomePage = () => {
     const navigate = useNavigate();
+
+    const { isLoggedIn } = useSession();
+
+    const {
+        isConfirmOpen,
+        openConfirmModal,
+        closeConfirmModal,
+        confirmContent
+    } = useModal();
+
+    const handleConfirm = () => {
+        navigate(PATH.SIGN_IN);
+        closeConfirmModal();
+    };
+
+    const handleCancel = () => {
+        closeConfirmModal();
+    };
+
+    const handleButtonClick = (path) => {
+        if (isLoggedIn) {
+        navigate(path);
+        } else {
+        openConfirmModal(
+            "로그인이 필요합니다.",
+            "로그인 페이지로 이동하시겠습니까?",
+            handleConfirm,
+            handleCancel
+        );
+        }
+    };   
+    
     const [scatterCollapsed, setScatterCollapsed] = useState(false);
     const [infoVisible, setInfoVisible] = useState(true);
     const [seeTogetherVisible, setSeeTogetherVisible] = useState(false);
@@ -175,10 +210,18 @@ const HomePage = () => {
                             <div className={styles.calendarLinkExplain}>적금 납부일, 납부금액 확인</div>
                             <button 
                                 className={styles.calendarLinkBtn}
-                                onClick={() => navigate(PATH.MY_CALENDAR)}
+                                onClick={()=>handleButtonClick(PATH.MY_CALENDAR)}
                             >
                                 바로가기
                             </button>
+                            <ConfirmModal
+                                isOpen={isConfirmOpen}
+                                closeModal={closeConfirmModal}
+                                title={confirmContent.title}
+                                message={confirmContent.message}
+                                onConfirm={confirmContent.onConfirm}
+                                onCancel={confirmContent.onCancel}
+                            />                            
                         </div>
                     </div>
                 </div>
