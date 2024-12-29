@@ -1,14 +1,15 @@
 /* src/pages/ListInstallmentPage/ListInstallmentPage.jsx */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './ListInstallmentPage.module.scss';
 import { PATH } from 'src/utils/path';
+import { fullToShort } from 'src/utils/shortNameToFullName.js';
 import { useSession } from 'src/hooks/useSession';
 import useProductList from 'src/hooks/useProductList';
-import xIcon from 'src/assets/icons/xIcon.svg';
-import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import useModal from 'src/hooks/useModal';
+import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import xIcon from 'src/assets/icons/xIcon.svg';
 import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
 import spinner from 'src/assets/icons/spinner.gif';
 
@@ -105,7 +106,7 @@ const ListInstallmentPage = () => {
               <div className={styles.bank}>은행</div>
               <select
                 className={styles.bankSelect}
-                value={banks.length > 0 ? banks[banks.length - 1] : ""}
+                value={banks.length > 0 ? fullToShort(banks[banks.length - 1]) : ""}
                 onChange={handleBankChange}
               >
                 <option value="" disabled>
@@ -132,7 +133,7 @@ const ListInstallmentPage = () => {
                     className={styles.bankSelectedItemDiv}
                   >
                     <div className={styles.selectedBankItem}>
-                      {bank}
+                      {fullToShort(bank)}
                     </div>
                     <div
                       className={styles.bankSelectedBtn}
