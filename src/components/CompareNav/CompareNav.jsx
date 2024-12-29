@@ -118,7 +118,7 @@ const CompareNav = ({ctg, handleCancel}) => {
             <div className={`${styles.closeNav} ${isNavOpen ? styles.navOpenIcon : ''}`} onClick={handleCloseNav}>
                 {isNavOpen &&
                 <>
-                    접기 
+                    <span>접기</span>
                     <img src={rightIcon} className={styles.rightIcon}/>
                     <img src={rightIcon}/>
                 </>
@@ -128,7 +128,7 @@ const CompareNav = ({ctg, handleCancel}) => {
                 <>
                     <img src={leftIcon}/>
                     <img src={leftIcon} className={styles.leftIcon}/>
-                    예/적금 비교담기
+                    <span>예/적금 비교담기</span>
                 </>
                 }
             </div>

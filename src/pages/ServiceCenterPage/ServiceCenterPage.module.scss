@@ -4,6 +4,7 @@
   align-items: center;
   padding: 20px;
   margin-top: 90px;
+  width: 100%;
 
   .commonSection {
     display: flex; /* 가로 정렬 */
@@ -299,6 +300,9 @@
       padding: 5px 15px;
       font-size: 13px;
     }
+  }
+  .commonSection {
+    width: 100% !important; /* 너비를 100%로 설정 */
   }
 }
 

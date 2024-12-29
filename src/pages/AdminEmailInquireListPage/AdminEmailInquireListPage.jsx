@@ -21,11 +21,10 @@ const AdminEmailInquireListPage = () => {
                     </div>
                     <div className={styles.emailInquireSearchBar}>
                         <select>
-                            <optgroup label="검색 항목">
-                                <option value="roomId" selected>방 번호</option>
-                                <option value="email">이메일</option>
-                                <option value="name">이름</option>
-                            </optgroup>
+                            <option value="" disabled>검색 항목</option>
+                            <option value="roomId">방 번호</option>
+                            <option value="email">이메일</option>
+                            <option value="name">이름</option>
                         </select>
 
                         <input type="text" placeholder="검색어" />

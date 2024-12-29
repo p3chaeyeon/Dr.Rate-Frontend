@@ -83,7 +83,11 @@ const Footer = () => {
                             <img src={labIcon} alt="Lab Icon" className={ styles.iconSvg } />
                         </a>
                     </div>
-                    <div><img src={appstoreIcon} alt="Apple Icon" className={ styles.iconSvg } /></div>
+                    <div>
+                        <a href="https://github.com/BitCamp-Final-Project/Dr.Rate-Backend.git" target="_blank" rel="Dr.Rate-Frontend">
+                            <img src={appstoreIcon} alt="Apple Icon" className={ styles.iconSvg } />
+                        </a>
+                    </div>
                     <div><img src={playstoreIcon} alt="Android Icon" className={ styles.iconSvg } /></div>
                 </div>
             </div>

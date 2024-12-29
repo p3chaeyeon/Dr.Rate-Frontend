@@ -1,22 +1,39 @@
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styles from './AdminHeader.module.scss';
 import React, { useEffect, useState } from 'react';
 import { PATH } from 'src/utils/path';
 import { useSession } from 'src/hooks/useSession';
+import ConfirmModal from 'src/components/Modal/ConfirmModal/ConfirmModal';
 
 
 const AdminHeader = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+    const [confirmContent, setConfirmContent] = useState({
+        title: '',
+        message: '',
+        onConfirm: () => { },
+    });
+
     const navigate = useNavigate();
     const { isLoggedIn, clearSession } = useSession();
 
     const handleLogout = () => {
         clearSession();
-        navigate(PATH.HOME); 
+        navigate(PATH.HOME);
     };
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
+    };
+
+    const openConfirmModal = (title, message, onConfirm) => {
+        setConfirmContent({ title, message, onConfirm });
+        setIsConfirmOpen(true);
+    };
+
+    const closeConfirmModal = () => {
+        setIsConfirmOpen(false);
     };
 
     // width를 1000px 이상으로 늘리면 isMenuOpen를 다시 false
@@ -33,6 +50,16 @@ const AdminHeader = () => {
             window.removeEventListener('resize', handleResize); // 클린업
         };
     }, [isMenuOpen])
+
+    // 예금 데이터 추가
+    const handleDepositAdd = async () => {
+        await fetch(`${PATH.SERVER}/api/products/insertDep`, { method: 'GET' });
+    };
+
+    // 적금 데이터 추가
+    const handleInstallAdd = async () => {
+        await fetch(`${PATH.SERVER}/api/products/insertIns`, { method: 'GET' });
+    };
 
     return (
         <div className={styles.adminHeader}>
@@ -82,11 +109,35 @@ const AdminHeader = () => {
                                     navigate(PATH.ADMIN_INQUIRE_LIST);
                                     setIsMenuOpen(false);
                                 }}>고객센터</li>
+                                <li onClick={() =>
+                                    openConfirmModal('확인', '정말 예금을 추가하시겠습니까?', async () => {
+                                        await handleDepositAdd();
+                                        closeConfirmModal();
+                                    })
+                                }>
+                                    예금 추가
+                                </li>
+                                <li onClick={() =>
+                                    openConfirmModal('확인', '정말 적금을 추가하시겠습니까?', async () => {
+                                        await handleInstallAdd();
+                                        closeConfirmModal();
+                                    })
+                                }>
+                                    적금 추가
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </>
             )}
+            <ConfirmModal
+                isOpen={isConfirmOpen}
+                closeModal={closeConfirmModal}
+                title={confirmContent.title}
+                message={confirmContent.message}
+                onConfirm={confirmContent.onConfirm}
+                onCancel={closeConfirmModal}
+            />
         </div>
     );
 };

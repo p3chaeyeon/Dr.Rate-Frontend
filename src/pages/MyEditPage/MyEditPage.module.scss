@@ -13,6 +13,9 @@
         justify-content: center;
         width: 100%;
         form {
+            margin: 0;
+            padding: 0;
+            width: 100%; /* 부모 요소에 맞게 확장 */
             .tagBox {
                 display: flex;
                 border-bottom: 1.5px solid var(--divider-border);
@@ -72,10 +75,6 @@
                         margin-top: 28px;
                         font-weight: normal;
                         color: var(--divider-border);
-                        img {
-                            height: 13.5px;
-                            color: var(--divider-border);
-                        }
                     }
                 }
                 .editandreset {
@@ -116,32 +115,43 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ====================================== 가로 1000px 이하 ====================================== */
 @media (max-width: 1000px) {
     .myEditSection {
-        padding-top: 60px;
+        width: 70%; 
+        margin: 0 auto; /* 가운데 정렬 */
+        padding-top: 100px; /* 상단 여백 */
+    }
+
+    .myInfoEdit {
+        .tagBox {
+            flex-direction: column !important; /* 세로 정렬 */
+            align-items: flex-start !important; /* 왼쪽 정렬 */
+            margin-top: 10rem; /* 각 항목 사이의 여백 */
+        }
+        .buttonBox {
+            justify-content: center; /* 버튼 중앙 정렬 */
+        }
     }
 }
 
-
-
-
 /* ====================================== 가로 430px 이하 ====================================== */
 @media (max-width: 430px) {
-    .myEditSection{
-        padding-top: 50px;
+    .myEditSection {
+        width: 95%; 
+        padding-top: 50px; 
+    }
+
+    .myInfoEdit {
+        .tagBox {
+            flex-direction: column !important; 
+            align-items: flex-start !important; 
+            margin-top: 1.5rem; 
+            margin-bottom: 15px; /* 버튼과의 간격 */
+        }
+        .buttonBox {
+            flex-direction: column; /* 가운데 */
+            align-items: center;
+        }
     }
 }

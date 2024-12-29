@@ -47,7 +47,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error) // 요청 에러 처리
 );
 
-
 // Response 인터셉터
 api.interceptors.response.use(
   (response) => response, // 정상 응답은 그대로 반환

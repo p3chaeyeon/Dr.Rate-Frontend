@@ -5,13 +5,13 @@ import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import MyNav from 'src/components/MyNav';
 import { PATH } from 'src/utils/path';
 import { useAtom } from 'jotai';
-import { userData } from '../../atoms/userData';
+import { userData } from 'src/atoms/userData';
 
 const MyInfoPage = () => {
     const navigate = useNavigate();
     const [myData, setMyData] = useAtom(userData); // Jotai Atom 사용
 
-    //데이터 받아오기 (atom에 데이터가 없을 경우)
+    // //데이터 받아오기 (atom에 데이터가 없을 경우)
     useEffect(() => {
         const userDTO = async () => {
             try {
@@ -29,6 +29,9 @@ const MyInfoPage = () => {
     //회원정보 수정페이지 이동
     const handleMyEdit = () => {
         navigate(`${PATH.MY_EDIT}`);
+    }
+    const handleMyWithdraw = () => {
+        navigate(`${PATH.MY_WITHDRAW}`);
     }
 
     return (

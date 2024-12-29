@@ -1,3 +1,3 @@
-import MyInquiryPage from './MyInquiryPage';
+import MyEmailInquirePage from './MyEmailInquirePage';
 
-export default MyInquiryPage;
+export default MyEmailInquirePage;
