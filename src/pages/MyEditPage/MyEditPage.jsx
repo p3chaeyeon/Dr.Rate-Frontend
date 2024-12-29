@@ -3,8 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MyNav from 'src/components/MyNav';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
+import { useSession } from 'src/hooks/useSession';
 import AlertModal from 'src/components/modal/AlertModal'; // AlertModal import
+import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import { PATH } from 'src/utils/path';
+import useModal from 'src/hooks/useModal';
 
 import { useAtom } from 'jotai';
 import { userData } from '../../atoms/userData';
@@ -21,6 +24,7 @@ const MyEditPage = () => {
     const navigate = useNavigate();
     const [myData, setMyData] = useAtom(userData); // Jotai Atom 사용
     /* 상태 관리 */
+    const { clearSession } = useSession();
     const [username, setUsername] = useState('');
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
@@ -31,10 +35,19 @@ const MyEditPage = () => {
     const [emailError, setEmailError] = useState(''); // 이메일 오류 메시지 상태 추가
     const [passwordError, setPasswordError] = useState('');
     const [confirmPwdError, setConfirmPwdError] = useState('');
-    const [showModal, setShowModal] = useState(false); // 모달 표시 상태 관리
-    const [modalTitle, setModalTitle] = useState(''); // 모달 제목
-    const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
     const [isEmailVerified, setIsEmailVerified] = useState(true); // 이메일 인증 여부 상태 추가
+
+    const {
+        isAlertOpen,      // AlertModal이 열려 있는지 여부 (true/false 상태)
+        openAlertModal,   // AlertModal을 열기 위한 함수
+        closeAlertModal,  // AlertModal을 닫기 위한 함수
+        alertContent,    // AlertModal의 제목(title)과 메시지(message)를 담고 있는 객체
+
+        isConfirmOpen,
+        openConfirmModal,
+        closeConfirmModal,
+        confirmContent,
+    } = useModal();
 
     //데이터 받아오기
     useEffect(() => {
@@ -66,6 +79,17 @@ const MyEditPage = () => {
         }
     };
 
+     // 이메일 변경 상태
+    const [isEmailChanged, setIsEmailChanged] = useState(false);
+
+    // 초기 이메일과 비교
+    const handleEmailChange = (e) => {
+        const newEmail = e.target.value;
+        setEmail(newEmail);
+        setIsEmailChanged(newEmail !== (myData?.email || ''));
+        setIsEmailVerified(false);
+    };
+
     // 이메일 인증 처리
     const handleEmailVerification = async () => {
         if (!validateEmail(email)) {
@@ -75,17 +99,19 @@ const MyEditPage = () => {
         setEmailError('');
 
         const result = await sendEmailVerification(email);
-        setModalTitle("메일 전송");
-        setModalMessage(result.message);
-        setShowModal(true);
+        openAlertModal(
+            "메일 전송",
+            result.message,
+        );
     };
 
     // 이메일 인증 코드 확인
     const handleEmailConfirmation = async () => {
         const result = await confirmEmailVerification(email, authCode);
-        setModalTitle(result.success ? "인증 성공" : "인증 실패");
-        setModalMessage(result.message);
-        setShowModal(true);
+        openAlertModal(
+            result.success ? "인증 성공" : "인증 실패",
+            result.message,
+        );
         if (result.success) setIsEmailVerified(true);
     };
     
@@ -93,50 +119,32 @@ const MyEditPage = () => {
     const handleMyInfoEdit = async () => {
         // 유효성 검사
         if (!username || !userId || !password || !confirmPwd || !email) {
-            setModalTitle("정보 수정 오류");
-            setModalMessage("회원 정보를 입력해주세요.");
-            setShowModal(true);
+            openAlertModal(
+                "정보 수정 오류",
+                "회원 정보를 입력해주세요.",
+            );
             return;
         }
-
         if (!isEmailVerified) {
-            setModalTitle("이메일 인증 오류");
-            setModalMessage("이메일 인증을 해주세요");
-            setShowModal(true);
+            openAlertModal(
+                "이메일 인증 오류",
+                "이메일 인증을 해주세요",
+            );
             return;
         }
-
         if (passwordError || confirmPwdError || !password || !confirmPwd) {
-            setModalTitle("정보 수정 오류");
-            setModalMessage("입력 정보를 확인해주세요.");
-            setShowModal(true);
+            openAlertModal(
+                "정보 수정 오류",
+                "입력 정보를 확인해주세요.",
+            );
             return;
         }
-
-        try {
-            const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfoEdit`, {
-                username,
-                userId,
-                password,
-                email,
-            });
-            if (response.data.success) {
-                setMyData({ ...myData, username, email }); // Jotai Atom 업데이트
-                setModalTitle('정보 수정 성공');
-                setModalMessage('회원정보가 성공적으로 수정되었습니다.');
-                setShowModal(true);
-
-                setTimeout(() => {
-                    navigate(`${PATH.MY_EDIT}`);
-                }, 2000);
-            } else {
-                throw new Error('회원정보 수정 중 오류 발생');
-            }
-        } catch (error) {
-            setModalTitle('정보 수정 실패');
-            setModalMessage('회원정보 수정 중 문제가 발생했습니다.');
-            setShowModal(true);
-        }
+        const confirmMessage = (
+            <>
+                <span>정보를 수정하면 다시 로그인해야 됩니다.</span>
+            </>
+        );
+        openConfirmModal("회원정보를 수정하시겠습니까?", confirmMessage, handleConfirm, handleCancel);
     };
 
     //초기화 버튼 클릭
@@ -155,19 +163,38 @@ const MyEditPage = () => {
         }
     }
 
-    const [isEmailChanged, setIsEmailChanged] = useState(false); // 이메일 변경 상태
 
-    const handleEmailChange = (e) => {
-        const newEmail = e.target.value;
-        setEmail(newEmail);
-        setIsEmailChanged(newEmail !== (myData?.email || '')); // 초기 이메일과 비교
-        setIsEmailVerified(false);
+     // 확인 버튼 클릭 핸들러
+    const handleConfirm = () => {
+        // 페이지 이동, 서버 요청 등 필요한 로직 작성 ex) navigate(PATH.SIGN_IN);
+        const editConfirm = async () => {
+            try {
+                const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfoEdit`, {
+                    username,
+                    userId,
+                    password,
+                    email,
+                });
+                if(response.data.success) {
+                        clearSession();
+                        navigate(`${PATH.HOME}`);
+                } else {
+                    openAlertModal(
+                        "정보 수정 실패",
+                        "회원정보 수정 중 문제가 발생했습니다.",
+                    );
+                }
+            } catch(error) {
+                console.error("회원탈퇴 진행 중 오류 발생 : ", error);
+            }
+        }
+        editConfirm();
+        closeConfirmModal(); // ConfirmModal 닫기
     };
-
-    // 모달 닫기
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
+    // 취소 시 필요한 로직 작성
+    const handleCancel = () => {
+        closeConfirmModal(); // ConfirmModal 닫기
+    };   
 
     return (
         <main>
@@ -258,8 +285,8 @@ const MyEditPage = () => {
                                 <p>회원탈퇴&nbsp;&gt;</p>
                             </div>
                             <div className={`${styles.editandreset}`}>
-                                <button onClick={handleMyInfoEdit}>수정하기</button>
-                                <button onClick={handleReset} className={`${styles.resetButton}`}>초기화</button>
+                                <button type="button" onClick={handleMyInfoEdit}>수정하기</button>
+                                <button type="button" onClick={handleReset} className={`${styles.resetButton}`}>초기화</button>
                             </div>
                         </div>
                     </form>
@@ -267,11 +294,19 @@ const MyEditPage = () => {
             </section>
             {/* 모달 표시 */}
             <AlertModal
-                isOpen={showModal}
-                closeModal={handleCloseModal}
-                title={modalTitle}
-                message={modalMessage}
+                isOpen={isAlertOpen}
+                closeModal={closeAlertModal}
+                title={alertContent.title}
+                message={alertContent.message}
             />
+            <ConfirmModal
+                isOpen={isConfirmOpen}           
+                closeModal={closeConfirmModal}   
+                title={confirmContent.title}     
+                message={confirmContent.message} 
+                onConfirm={confirmContent.onConfirm} 
+                onCancel={confirmContent.onCancel}   
+            /> 
         </main>
     );
 };

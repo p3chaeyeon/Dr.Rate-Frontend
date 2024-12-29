@@ -12,18 +12,32 @@ const api = axios.create({
   },
 });
 
+// 안전하게 localStorage에 값 저장하는 함수
+const safeSetItem = (key, value) => {
+  if (value && value !== "undefined") {
+    localStorage.setItem(key, value);
+  } else {
+    localStorage.removeItem(key); // 값이 유효하지 않으면 삭제
+  }
+};
+
 // Request 인터셉터
 api.interceptors.request.use(
   (config) => {
     // 토큰을 가져옴
     let token = localStorage.getItem('Authorization'); // 토큰 가져오기
 
+    // undefined나 비어 있는 값은 무시
+    if (!token || token === "undefined") {
+      token = null; // 잘못된 토큰은 제거
+    }
+
     // 토큰이 존재하고, "Bearer " 접두사가 없는 경우만 추가
     if (token && !token.startsWith('Bearer ')) {
       token = `Bearer ${token}`;
     }
 
-    // 헤더에 토큰 추가
+    // 토큰이 존재하면 헤더에 추가
     if (token) {
       config.headers['Authorization'] = token;
     }
@@ -62,8 +76,8 @@ api.interceptors.response.use(
         // 새로운 토큰 확인
         const newAccessToken = response.data.result;
         console.log("새로운 토큰 = " + newAccessToken);
-        // 새로운 토큰 저장
-        localStorage.setItem('Authorization', `${newAccessToken}`);
+        // 새로운 토큰 안전하게 저장
+        safeSetItem('Authorization', newAccessToken);
         // 원래 요청에 새로운 토큰 설정
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
 
@@ -82,6 +96,5 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
 
 export default api;

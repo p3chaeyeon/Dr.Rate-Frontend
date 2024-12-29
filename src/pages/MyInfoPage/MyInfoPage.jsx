@@ -54,11 +54,16 @@ const MyInfoPage = () => {
                         <p className={`${styles.tagName}`}>생년월일</p>
                         <p className={`${styles.myData}`}>{myData.birthdate || '데이터 없음'}</p>
                     </div>
-                    {!myData?.social ? (
                     <div className={`${styles.buttonBox}`}>
-                        <button onClick={handleMyEdit}>회원정보 수정</button>
+                        <div className={`${styles.deleteUser}`}>
+                            <p onClick={handleMyWithdraw}>회원탈퇴&nbsp;&gt;</p>
+                        </div>
+                        {!myData?.social ? (
+                        <div className={`${styles.editandreset}`}>
+                            <button onClick={handleMyEdit}>회원정보 수정</button>
+                        </div>
+                        ) : (<div></div>)}
                     </div>
-                    ) : (<div></div>)}
                 </div>
                 ) : (<div></div>)}
             </section>
