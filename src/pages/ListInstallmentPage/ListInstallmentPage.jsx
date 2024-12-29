@@ -118,7 +118,6 @@ const ListInstallmentPage = () => {
                 <option value="토스뱅크">토스뱅크</option>
                 <option value="카카오뱅크">카카오뱅크</option>
                 <option value="농협은행">농협은행</option>
-                <option value="기타">기타</option>
               </select>
             </div>
 
