@@ -53,6 +53,56 @@ const useProductList = () => {
         setSort("spclRate");
     }, [setCurrentPage, setBanks, setAge, setPeriod, setRate, setJoin, setSort]);    
 
+
+    /* 은행 추가 */
+    const handleBankChange = (event) => {
+        const selectedBank = event.target.value;
+        if (!banks.includes(selectedBank)) {
+            setBanks([...banks, selectedBank]);
+        }
+    };
+
+
+    /* 은행 삭제 */
+    const removeBank = (bankToRemove) => {
+        setBanks(banks.filter((bank) => bank !== bankToRemove));
+    };
+
+
+    /* 나이 변경 */
+    const handleAgeChange = (event) => {
+        setAge(event.target.value);
+    };
+
+
+    /* 저축 예정 기간 변경 */
+    const handlePeriodChange = (event) => {
+        setPeriod(event.target.value);
+    };
+
+
+    /* 단리/복리 선택 */
+    const handleRateClick = (choice) => {
+        setRate((prev) => (prev === choice ? "" : choice));
+    };
+
+
+    /* 대면/비대면 선택 */
+    const handleJoinClick = (choice) => {
+        setJoin((prev) => (prev === choice ? "" : choice));
+    };
+
+
+    /* 정렬 상태 관리 함수 */
+    const handleSortClick = (choice) => {
+        setSort(choice);
+      };
+
+
+
+
+
+
     /* 페이지네이션 범위 설정 */
     const calculatePaginationRange = useCallback(() => {
         if (totalPages === 0) {
@@ -138,50 +188,6 @@ const useProductList = () => {
     }, [category, banks, age, period, rate, join, sort, currentPage, setSearchParams]);
 
 
-
-    /* 은행 추가 */
-    const handleBankChange = (event) => {
-        const selectedBank = event.target.value;
-        if (!banks.includes(selectedBank)) {
-            setBanks([...banks, selectedBank]);
-        }
-    };
-
-
-    /* 은행 삭제 */
-    const removeBank = (bankToRemove) => {
-        setBanks(banks.filter((bank) => bank !== bankToRemove));
-    };
-
-
-    /* 나이 변경 */
-    const handleAgeChange = (event) => {
-        setAge(event.target.value);
-    };
-
-
-    /* 저축 예정 기간 변경 */
-    const handlePeriodChange = (event) => {
-        setPeriod(event.target.value);
-    };
-
-
-    /* 단리/복리 선택 */
-    const handleRateClick = (choice) => {
-        setRate((prev) => (prev === choice ? "" : choice));
-    };
-
-
-    /* 대면/비대면 선택 */
-    const handleJoinClick = (choice) => {
-        setJoin((prev) => (prev === choice ? "" : choice));
-    };
-
-
-    /* 정렬 상태 관리 함수 */
-    const handleSortClick = (choice) => {
-        setSort(choice);
-      };
 
 
 
