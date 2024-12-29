@@ -144,6 +144,16 @@ const ListDepositPage = () => {
 
   return (
     <main>
+      {isConfirmOpen && (
+      <ConfirmModal
+          isOpen={isConfirmOpen}
+          closeModal={closeConfirmModal}
+          title={confirmContent.title}
+          message={confirmContent.message}
+          onConfirm={confirmContent.onConfirm}
+          onCancel={confirmContent.onCancel}
+      />
+      )}
       <section className={styles.listSection}>
         <div className={styles.listTitleDiv}>
           예금
