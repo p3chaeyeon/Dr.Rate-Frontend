@@ -223,6 +223,17 @@
   } /* rateStandard */
 
 
+  .errorDiv {
+    display: flex;
+    justify-content: center;
+    height: 280px;
+
+    .loadingImg {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
 
   .productListDiv {
     margin-top: 40px;
@@ -636,8 +647,16 @@
 /* ====================================== 가로 450px 이하 ====================================== */
 @media (max-width: 450px) {
   .listSection {
+    
+    .errorDiv {
+      height: 100px;
+    }
 
     .productListDiv {
+      .noProductList {
+        height: 100px;
+      }
+
       .productList {
         gap: 7px;
 

@@ -109,7 +109,10 @@ const MyInstallmentPage = () => {
                                             className={styles.favoriteLogoImg}
                                         />
                                     </div>
-                                    <div className={styles.favoriteInfoDiv}>
+                                    <div 
+                                        className={styles.favoriteInfoDiv}
+                                        onClick={() => navigate(`${PATH.PRODUCT_DETAIL}/${item.prdId}`)} 
+                                    >
                                         <div className={styles.favoriteBankProDiv}>
                                             <div className={styles.favoriteBank}>{item.bankName}</div>
                                             <div className={styles.favoritePro}>{item.prdName}</div>
