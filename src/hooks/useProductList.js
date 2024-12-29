@@ -16,6 +16,7 @@ import {
 } from 'src/atoms/productListAtom';
 import { getProductList, getGuestProductList } from 'src/apis/productListAPI.js';
 import { useSession } from 'src/hooks/useSession';
+import { shortToFull } from 'src/utils/shortNameToFullName.js';
 
 const useProductList = () => {
     const { isLoggedIn } = useSession();
@@ -45,9 +46,11 @@ const useProductList = () => {
     /* ================== handler ======================================================================== */
 
     const handleBankChange = (event) => {
-        const selectedBank = event.target.value;
-        if (!banks.includes(selectedBank)) {
-            setBanks([...banks, selectedBank]);
+        const selectedShortName = event.target.value;   // "토스뱅크"
+        const selectedFullName = shortToFull(selectedShortName); // "토스뱅크 주식회사"
+        
+        if (!banks.includes(selectedFullName)) {
+            setBanks((prev) => [...prev, selectedFullName]);
         }
     };
 
@@ -253,7 +256,7 @@ const useProductList = () => {
         setProductData
     ]);
 
-    
+
     /* 페이지 URL 변경 감지 시 데이터 로드 */
     useEffect(() => {
         const fetchData = async () => {
