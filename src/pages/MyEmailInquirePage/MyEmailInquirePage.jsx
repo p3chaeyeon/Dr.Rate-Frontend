@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import styles from './MyEmailInquirePage.module.scss';
 import { fetchInquiryList } from 'src/apis/axiosInstanceAPI'; // API 호출 함수
+import axios from 'axios'; // 삭제 요청에 사용
 import MyNav from 'src/components/MyNav'; 
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 
@@ -28,6 +29,27 @@ const MyEmailInquirePage = () => {
         getInquiries();
     }, []);
 
+    // 삭제 핸들러
+    const handleDelete = async (id) => {
+        if (window.confirm('정말로 삭제하시겠습니까?')) {
+            try {
+                await axios.delete(`/api/emailinquire/delete/${id}`); // 삭제 API 호출
+                setInquiries((prev) => prev.filter((inquire) => inquire.id !== id)); // 상태 업데이트
+                alert('문의가 성공적으로 삭제되었습니다.');
+            } catch (err) {
+                console.error('Error deleting inquiry:', err);
+                alert('삭제 중 오류가 발생했습니다.');
+            }
+        }
+    };
+
+    // 날짜 포맷팅 함수
+    const formatDate = (dateString) => {
+        if (!dateString) return '날짜 없음';
+        const date = new Date(dateString);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+    };
+
     if (loading) return <div>Loading...</div>; // 로딩 중 상태 표시
     if (error) return <div>Error: {error}</div>; // 에러 상태 표시
 
@@ -52,24 +74,27 @@ const MyEmailInquirePage = () => {
                     {inquiries.map((inquire) => (
                         <div className={styles.inquireList} key={inquire.id}>
                             <div className={styles.listTopDiv}>
-                                <div className={styles.topCategory}>{inquire.inquire_ctg}</div>
-                                <div className={styles.topDate}>{inquire.inquire_date}</div>
+                                <div className={styles.topCategory}>{inquire.inquireCtg || '카테고리 없음'}</div>
+                                <div className={styles.topDate}>{formatDate(inquire.createdAt)}</div>
                             </div>
 
                             <div className={styles.listContentDiv}>
                                 <div className={styles.contentQ}><div>Q</div></div>
                                 <div className={styles.contentDiv}>
                                     <div className={styles.inquireTitleDiv}>
-                                        <span className={styles.inquireTitle}>{inquire.inquire_title}</span>
+                                        <span className={styles.inquireTitle}>{inquire.inquireTitle || '제목 없음'}</span>
+                                    </div>
+                                    <div className={styles.inquireUserDiv}>
+                                        문의자 이름: <span className={styles.inquireUser}>{inquire.inquireUser || '이름 없음'}</span>
                                     </div>
                                     <div className={styles.inquireEmailDiv}>
-                                        문의자 이메일 : <span className={styles.inquireEmail}>{inquire.inquire_email}</span>
+                                        문의자 이메일: <span className={styles.inquireEmail}>{inquire.inquireEmail || '이메일 없음'}</span>
                                     </div>
                                     <div className={styles.inquireContentDiv}>
-                                        <pre className={styles.inquireContent}>{inquire.inquire_content}</pre>
+                                        <pre className={styles.inquireContent}>{inquire.inquireContent || '내용 없음'}</pre>
                                     </div>
                                     <div className={styles.inquireFileDiv}>
-                                        파일 이미지 div
+                                        {inquire.fileUuid ? <span>파일: {inquire.fileUuid}</span> : '첨부파일 없음'}
                                     </div>
                                 </div>
                             </div>
@@ -77,19 +102,24 @@ const MyEmailInquirePage = () => {
                             <div className={styles.listAnswerDiv}>
                                 <div className={styles.answerDiv}>
                                     <div className={styles.answerTitleDiv}>
-                                        <pre className={styles.answerTitle}>{inquire.answer_title}</pre>
+                                        <pre className={styles.answerTitle}>{inquire.answerTitle || '답변 제목 없음'}</pre>
                                     </div>
                                     <div className={styles.answerContentDiv}>
-                                        <pre className={styles.answerContent}>{inquire.answer_content}</pre>
+                                        <pre className={styles.answerContent}>{inquire.answerContent || '답변 내용 없음'}</pre>
                                     </div>
                                 </div>
                                 <div className={styles.answerDate}>
-                                    {inquire.answer_date}
+                                    {formatDate(inquire.answerDate)}
                                 </div>
                             </div>
 
                             <div className={styles.btnDiv}>
-                                <button className={styles.deleteBtn}>삭제</button>
+                                <button
+                                    className={styles.deleteBtn}
+                                    onClick={() => handleDelete(inquire.id)}
+                                >
+                                    삭제
+                                </button>
                             </div>
                         </div>
                     ))}
