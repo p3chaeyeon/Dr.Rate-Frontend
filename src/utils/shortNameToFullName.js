@@ -11,7 +11,7 @@ export const shortToFullMap = {
     return shortToFullMap[shortName] || shortName;
   }
   
-  // banks 배열에 들어있는 풀네임을 다시 짧은 이름으로 만들어주는 함수
+  // banks 배열에 들어있는 풀네임 >> 셀렉트박스용 짧은 이름
   export function fullToShort(fullName) {
     for (const key in shortToFullMap) {
       if (shortToFullMap[key] === fullName) {
