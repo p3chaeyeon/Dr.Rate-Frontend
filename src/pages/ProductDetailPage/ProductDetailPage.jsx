@@ -131,6 +131,7 @@ const ProductDetailPage = () => {
     };
 
     useEffect(() => {
+        
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setIsDropdownOpen(false);
@@ -338,7 +339,11 @@ const ProductDetailPage = () => {
                 <div className={styles.optionCheck}>
                     <span className={styles.optionChkTitle}>옵션선택</span>
                     <div className={`${styles.selectedOption} ${isDropdownOpen ? styles.selected : ''}`} onClick={toggleDropdown}>
-                        {options[i]?.saveTime || ''} 개월 | {options[i] ? `${options?.[i]?.rsrvTypeName || '자유적립식'}, ${options[i]?.rateTypeKo || '단리'} | 최고 ${options[i].spclRate}% 기본 ${options[i].basicRate}%` : '옵션을 선택하세요'}
+                    {
+                        options ? 
+                        `${options[i]?.saveTime || ''} 개월 | ${options[i]?.rsrvTypeName || '자유적립식'}, ${options[i]?.rateTypeKo || '단리'} | 최고 ${options[i]?.spclRate || 0}% 기본 ${options[i]?.basicRate || 0}%` 
+                        : '옵션을 선택하세요'
+                    }
                     </div>
                     
                     {isDropdownOpen && (

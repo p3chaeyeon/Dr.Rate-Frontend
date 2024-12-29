@@ -11,6 +11,7 @@ import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import useModal from 'src/hooks/useModal';
 import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
 import spinner from 'src/assets/icons/spinner.gif';
+import { getProductDetails } from 'src/apis/productsAPI';
 
 
 
@@ -18,10 +19,59 @@ const ListDepositPage = () => {
   const navigate = useNavigate();
 
   const { isLoggedIn } = useSession();
+  
+  const handleCompareClick = async (item) => {
+    let addProduct;
 
-  const handleCompareClick = () => {
-    navigate(`${PATH.PRODUCT_COMPARE}/d`);
+    const prdId = item.id;
+      if(prdId) {
+        try {
+            const productDetails = await getProductDetails(prdId);
+            console.log(productDetails.product)
+
+            addProduct = {
+              index: productDetails?.optionNum || 0,
+              options: productDetails.options,
+              product: productDetails.product
+            };
+
+          } catch (error) {
+            if (error.response?.data?.message === "존재하지 않는 상품입니다.") {
+              setNoIdMessage("존재하지 않는 상품입니다.");
+            } else {
+              console.error("Failed to fetch product details:", error);
+            }
+          }
+      }
+
+      const compareList = JSON.parse(localStorage.getItem('depCompareList')) || [];
+      
+      const duplicateProduct = compareList.some(comproduct => comproduct.product.id === prdId);
+
+      if (duplicateProduct) {
+          openConfirmModal('이미 추가된 상품입니다', '비교하기로 이동하시겠습니까?', handleConfirm2, handleCancel);
+          return;
+      }
+
+      if (compareList.length >= 3) {
+          openConfirmModal('상품 비교 한도 초과', '비교할 수 있는 상품은 최대 3개입니다', handleConfirm2, handleCancel);
+          return;
+      }
+
+      compareList.push(addProduct);
+          
+      localStorage.setItem('depCompareList', JSON.stringify(compareList));
+    
+      openConfirmModal('비교 상품이 등록되었습니다', '비교하기로 이동하시겠습니까?', handleConfirm2, handleCancel);
   };
+
+  
+
+  const handleConfirm2 = () => {
+    navigate(`${PATH.PRODUCT_COMPARE}/d`);
+    closeConfirmModal();
+  };
+
 
   const {
     loading,
@@ -312,7 +362,7 @@ const ListDepositPage = () => {
               <div className={styles.productBtnDiv}>
                 <button
                   className={styles.productCompareBtn}
-                  onClick={handleCompareClick}
+                  onClick={() => handleCompareClick(item)}
                 >
                   비교<br />담기
                 </button>
