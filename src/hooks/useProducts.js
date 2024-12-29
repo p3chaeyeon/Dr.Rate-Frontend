@@ -22,6 +22,7 @@ const useProducts = (prdId) => {
             if(prdId) {
                 try {
                     const productDetails = await getProductDetails(prdId);
+                    console.log(productDetails.product)
                     setProducts({
                         optionNum: productDetails.optionNum,
                         options: productDetails.options,
