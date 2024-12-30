@@ -25,7 +25,7 @@ const AdminHeader = () => {
             const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/logout`);
             if(response.data.success) {
                 clearSession();
-                sideNavigation(PATH.HOME);
+                navigate(PATH.HOME);
                 return { success: true, message: '로그아웃 완료'};
             } else {
                 return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
