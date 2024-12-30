@@ -5,6 +5,8 @@ import { PATH } from 'src/utils/path';
 import { useSession } from 'src/hooks/useSession';
 import ConfirmModal from 'src/components/Modal/ConfirmModal/ConfirmModal';
 
+import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
+
 
 const AdminHeader = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,9 +20,19 @@ const AdminHeader = () => {
     const navigate = useNavigate();
     const { isLoggedIn, clearSession } = useSession();
 
-    const handleLogout = () => {
-        clearSession();
-        navigate(PATH.HOME);
+    const handleLogout = async () => {
+        try {
+            const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/logout`);
+            if(response.data.success) {
+                clearSession();
+                sideNavigation(PATH.HOME);
+                return { success: true, message: '로그아웃 완료'};
+            } else {
+                return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
+            }
+        } catch {
+            return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
+        }
     };
 
     const toggleMenu = () => {

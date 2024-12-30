@@ -23,7 +23,6 @@ const MyWithdrawPage = () => {
 
     // 확인 버튼 클릭 핸들러
     const handleConfirm = () => {
-        // 페이지 이동, 서버 요청 등 필요한 로직 작성 ex) navigate(PATH.SIGN_IN);
         const deleteAccount = async () => {
             try {
                 const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/deleteAccount`, formData);
@@ -31,6 +30,8 @@ const MyWithdrawPage = () => {
                         clearSession();
                         navigate(`${PATH.HOME}`);
                 } else {
+                    setIsPasswordErrorVisible(true);
+                    console.log(response.data);
                     console.log("회원탈퇴 진행 중 오류 발생 : ", response);
                 }
             } catch(error) {
@@ -79,11 +80,13 @@ const MyWithdrawPage = () => {
                     setFormData((prev) => ({
                         ...prev,
                         userId: response.data.result.email,
+                        password: response.data.result.password,
                     }));
                 } 
                 setFormData((prev) => ({
                     ...prev,
                     userId: response.data.result.userId,
+                    password: response.data.result.password,
                 }));
             } catch (error) {
                 console.error('데이터 가져오기 실패:', error);
@@ -118,19 +121,15 @@ const MyWithdrawPage = () => {
     const handleDeleteAcccount = async () => {
         setIsPasswordErrorVisible(false);
         setIsCheckErrorVisible(false);
+        
         if(formData.password === '') {
             setFormData((prev) => ({
                 ...prev,
                 password: null,
             }));
         }
-        if(myData.password !== formData.password) {
-            if(myData.password === null && formData.password === ''){
-                return;
-            }
-            setIsPasswordErrorVisible(true);
-            return;
-        } else if(!formData.essentialCheck) {
+
+        if(!formData.essentialCheck) {
             setIsCheckErrorVisible(true);
             return;
         }
