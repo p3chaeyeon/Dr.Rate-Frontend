@@ -1,7 +1,7 @@
 .MyWithdrawSection {
-    width: 50%; /* 로그인 폼 너비를 50%로 설정 */
+    width: 60%; /* 로그인 폼 너비를 60%로 설정 */
     margin: 100px auto;
-    padding-top: 70px;
+    padding-top: 50px;
     display: flex;
     justify-content: center;
     font-family: 'Noto Sans KR';
@@ -19,7 +19,8 @@
                 margin-top: 8px;
             }
         }
-        form {
+        .MyWithdrawForm {
+            width: 100%;
             .tagBox {
                 display: flex;
                 border-bottom: 1.5px solid var(--black);
@@ -126,19 +127,79 @@
     }
 }
 
-/* ====================================== 가로 1000px 이하 ====================================== */
-@media (max-width: 1000px) {
+/* ====================================== 가로 1050px 이하 ====================================== */
+@media (max-width: 1050px) {
     .MyWithdrawSection {
-        padding-top: 60px;
+        width: 70%;
+        padding-top: 10px !important;
+    }
+    .MyWithdrawForm {
+        .tagBox {
+            flex-direction: column !important; /* 세로로 정렬 */
+            .tagName {
+                width: 100% !important; 
+                padding-bottom: 15px !important;
+            }
+            .myData {
+                width: 100% !important; 
+                padding: 10px; 
+            }
+        }
+        .checkBox {
+            .checkValue {
+                label {
+                    flex-direction: column !important; /* 체크박스와 텍스트를 세로로 정렬 */
+                    input {
+                        margin-bottom: 7px; /* 체크박스와 텍스트 사이 간격 */
+                    }
+                    h4 {
+                        padding: 25px;
+                        margin-top: -53px;
+                    }
+                    p {
+                        font-size: 15px;
+                        margin-bottom: 20px;
+                        margin-top: -10px;
+                        padding: 3px;
+                    }
+                }
+            }
+            .essentialCheck {
+                flex-direction: column !important;
+                label {
+                    flex-direction: column !important;
+                    
+                    input {
+                        margin-bottom: 7px;
+                    }
+                    h4 {
+                        padding: 25px;
+                        margin-top: -53px;
+                    }
+                    p {
+                        font-size: 15px;
+                        margin-bottom: 20px;
+                        margin-top: -10px;
+                        padding: 3px;
+                    }
+                }
+                .withdrawButton {
+                    margin-top: 20px !important; /* 간격 추가 */
+                    margin-left: auto; 
+                    margin-right: auto; 
+                }
+            }
+        }
     }
 }
 
 
 
 
-/* ====================================== 가로 430px 이하 ====================================== */
-@media (max-width: 430px) {
+/* ====================================== 가로 500px 이하 ====================================== */
+@media (max-width: 500px) {
     .MyWithdrawSection{
+        width: 100% !important;
         padding-top: 50px;
     }
 }

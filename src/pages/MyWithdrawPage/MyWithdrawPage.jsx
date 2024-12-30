@@ -147,7 +147,7 @@ const MyWithdrawPage = () => {
             <section className={ styles.MyWithdrawSection }>
                 <div className={ styles.MyWithdraw }>
                     
-                    <form>
+                    <form className={ styles.MyWithdrawForm }>
                         <div className={`${styles.title}`}>
                             <h3>회원탈퇴</h3>
                             <p>회원 탈퇴를 원하시면 아래 정보를 입력한 후 탈퇴 버튼을 클릭하세요</p>
@@ -165,7 +165,7 @@ const MyWithdrawPage = () => {
                             <input type="password" className={`${styles.myData}`}
                                     name="password" 
                                     value={formData.password || ''}
-                                    placeholder="비밀번호 입력(소셜로그인 사용자는 비밀번호가 필요 없습니다.)" 
+                                    placeholder="비밀번호 입력 ( 소셜로그인은 제외 )" 
                                     onChange={handleChange} />
                         </div>
 
@@ -218,7 +218,7 @@ const MyWithdrawPage = () => {
                                         name="checkVal5"
                                         checked={formData.checkVal5} 
                                         onChange={handleChange}/>
-                                    <h4>기타 개인 사유 : </h4><p>&nbsp;"개인적인 사유로 더 이상 이용하지 않기로 했습니다."</p>
+                                    <h4>기타 개인 사유 : </h4><p className={`${styles.separateText}`}>&nbsp;"개인적인 사유로 더 이상 이용하지 않기로 했습니다."</p>
                                 </label>
                             </div>
                             <hr/>
