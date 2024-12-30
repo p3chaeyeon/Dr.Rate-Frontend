@@ -63,10 +63,16 @@
 
             .inquiryAttachment {
                 flex-grow: 4;
+                flex-direction: column;
+                .attachmentImage {
+                    max-height: 100%;    // 비율을 유지하며 크기 조정
+                    max-width: 12rem; // 이미지가 영역을 벗어나지 않도록
+                    margin-top: 10px; // 텍스트와의 간격
+                    border: 1px solid #ccc; // 테두리 추가
+                    border-radius: 5px; // 둥근 테두리
+                }
             }
-
         }
-
         .emailInquireListAdmin {
             display: flex;
             flex-direction: column;
@@ -93,7 +99,13 @@
                     }
                 }
             }
-
+            .submitButtonBox {
+                display: flex;
+                align-items: flex-end;
+                .submitButton {
+                    width: 60px;
+                }
+            }
             /* 공통 스타일 */
             div {
                 display: flex;
@@ -176,6 +188,9 @@
                     padding: 5px;
                     width: 80%;
                 }
+                .resetButton {
+                    width: 70px;
+                }
             }
         }
 
@@ -239,7 +254,6 @@
             .emailInquireListUser {
                 border-right: none;
             }
-
         }
     }
 
