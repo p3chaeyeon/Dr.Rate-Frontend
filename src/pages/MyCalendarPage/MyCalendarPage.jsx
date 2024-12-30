@@ -278,7 +278,6 @@ const MyCalendarPage = () => {
 
     // 적금명 목록 가져오기
     const response = await axiosInstanceAPI.get(`${API_URL}/banks/${bankName}/products`);
-    console.log(response.data);
     setProducts(response.data.result || []);
 
     // 로고 업데이트
@@ -383,8 +382,6 @@ const MyCalendarPage = () => {
       } else {
         setSavingName(''); // 적금명을 찾지 못하면 기본값
       }
-      setProducts([]);
-      setSavingName('');
     }
     setModalIsOpen(true); // 모달 열기
   };
