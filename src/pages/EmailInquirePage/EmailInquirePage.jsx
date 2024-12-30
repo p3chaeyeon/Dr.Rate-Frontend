@@ -106,7 +106,9 @@ const EmailInquirePage = () => {
           },
         }
       );
-      console.log("이메일 전송 = " + response.data);
+      if(response.data.success) {
+        navigate(`${PATH.HONE}`);
+      }
     } catch (error) {
       console.log(error);
     }
