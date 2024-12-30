@@ -21,14 +21,17 @@ import { shortToFull } from 'src/utils/shortNameToFullName.js';
 const useProductList = () => {
     const { isLoggedIn } = useSession();
     
-    const [loading, setLoading] = useState(true); // 로딩 상태
-    const [error, setError] = useState(null);     // 에러 상태
-    const [totalPages, setTotalPages] = useState(0);            // 총 페이지 수
-    const [paginationRange, setPaginationRange] = useState([]); // 페이지네이션 범위
+    // 로딩, 에러, 페이지네이션 상태
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [totalPages, setTotalPages] = useState(0);
+    const [paginationRange, setPaginationRange] = useState([]);
 
+    // 라우팅 관련 훅
     const [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
 
+    // jotai 전역 상태
     const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
     const [category, setCategory] = useAtom(categoryAtom);
     const [banks, setBanks] = useAtom(banksAtom);
@@ -39,43 +42,55 @@ const useProductList = () => {
     const [sort, setSort] = useAtom(sortAtom);
     const [productData, setProductData] = useAtom(productDataAtom);
 
+    // 이전 카테고리를 저장하여 “카테고리 변경”을 감지하기 위함
+    const [prevCategory, setPrevCategory] = useState("");
+
     const blockSize = 5; // 페이지네이션 블록 크기
 
 
 
-    /* ================== handler ======================================================================== */
+    /* ================== handler (필터 변경 시) ======================================================================== */
+
 
     const handleBankChange = (event) => {
-        const selectedShortName = event.target.value;   // "토스뱅크"
-        const selectedFullName = shortToFull(selectedShortName); // "토스뱅크 주식회사"
-        
+        const selectedShortName = event.target.value;  
+        const selectedFullName = shortToFull(selectedShortName); 
+
+        // 이미 선택된 은행이 아니라면 추가
         if (!banks.includes(selectedFullName)) {
             setBanks((prev) => [...prev, selectedFullName]);
+            setCurrentPage(1); // 필터 변경 시 페이지 1
         }
     };
 
     const removeBank = (bankToRemove) => {
         setBanks(banks.filter((bank) => bank !== bankToRemove));
+        setCurrentPage(1); // 필터 변경 시 페이지 1
     };
 
     const handleAgeChange = (event) => {
         setAge(event.target.value);
+        setCurrentPage(1);
     };
 
     const handlePeriodChange = (event) => {
         setPeriod(event.target.value);
+        setCurrentPage(1);
     };
 
     const handleRateClick = (choice) => {
         setRate((prev) => (prev === choice ? "" : choice));
+        setCurrentPage(1);
     };
 
     const handleJoinClick = (choice) => {
         setJoin((prev) => (prev === choice ? "" : choice));
+        setCurrentPage(1);
     };
 
     const handleSortClick = (choice) => {
         setSort(choice);
+        setCurrentPage(1);
     };
 
 
@@ -129,7 +144,7 @@ const useProductList = () => {
 
 
 
-    /* ================== Loading ======================================================================== */
+    /* ================== 카테고리 및 필터 초기화 로직 ======================================================== */
 
     /* URL 경로 기반 category 설정 */
     useEffect(() => {
@@ -144,14 +159,33 @@ const useProductList = () => {
     }, [location.pathname, setCategory]);
 
 
-    /* 조건 변화 시 page = 1로 초기화 */
+    /* category 바뀌면 모든 필터 초기화 + 페이지=1 (페이지 1 초기화는 category 바뀔 때만) */
     useEffect(() => {
-        // category, banks, age, period, rate, join, sort가 변경되면 currentPage=1
-        setCurrentPage(1);
-    }, [category, banks, age, period, rate, join, sort, setCurrentPage]);
+        // category가 아직 "" 이거나 최초 렌더링인 경우엔 스킵
+        if (!category) return;
+
+        // 이전 카테고리가 있고, 현재 카테고리와 다르면 (즉, 예금 <-> 적금 변환)
+        if (prevCategory && prevCategory !== category) {
+            setBanks([]);
+            setAge("");
+            setPeriod("");
+            setRate("");
+            setJoin("");
+            setSort("");
+            setCurrentPage(1);
+        }
+
+        // prevCategory를 현재 category로 갱신
+        setPrevCategory(category);
+    }, [category, prevCategory, 
+        setBanks, setAge, setPeriod, setRate, setJoin, setSort, setCurrentPage
+    ]);
 
 
-    /* 상태 변경 시 URL 쿼리 스트링 동기화*/
+
+
+    /* ================== 상태 변경 시 URL Query String 동기화 =============================================== */
+    
     useEffect(() => {
         const params = new URLSearchParams();
         if (category) params.set('category', category);
@@ -164,6 +198,7 @@ const useProductList = () => {
         if (join) params.set('join', join);
         if (sort) params.set('sort', sort);
 
+        // currentPage 도 쿼리에 추가
         params.set('page', currentPage);
 
         setSearchParams(params);
@@ -257,7 +292,7 @@ const useProductList = () => {
     ]);
 
 
-    /* 페이지 URL 변경 감지 시 데이터 로드 */
+    /* 카테고리나 로그인 여부, URL(필터 상태) 변경 감지 시 데이터 로드 */
     useEffect(() => {
         const fetchData = async () => {
             if (!category) return; // category가 없으면 API 호출 X
