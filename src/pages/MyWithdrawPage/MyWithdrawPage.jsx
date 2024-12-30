@@ -31,7 +31,6 @@ const MyWithdrawPage = () => {
                         navigate(`${PATH.HOME}`);
                 } else {
                     setIsPasswordErrorVisible(true);
-                    console.log(response.data);
                     console.log("회원탈퇴 진행 중 오류 발생 : ", response);
                 }
             } catch(error) {
