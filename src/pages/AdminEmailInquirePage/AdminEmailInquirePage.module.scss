@@ -101,9 +101,17 @@
             }
             .submitButtonBox {
                 display: flex;
-                align-items: flex-end;
+                align-items: center;
                 .submitButton {
-                    width: 60px;
+                    width: 6rem;
+                    padding: 5px 20px;
+                    background-color: var(--main2);
+                    border: none;
+                    color: var(--white);
+                    transition: background-color 0.3s;
+                    &:hover {
+                        background-color: var(--main1);
+                    }
                 }
             }
             /* 공통 스타일 */
@@ -189,13 +197,21 @@
                     width: 80%;
                 }
                 .resetButton {
-                    width: 70px;
+                    width: 5rem;
+                    padding: 7px 13px;
+                    background-color: var(--main2);
+                    border: none;
+                    color: var(--white);
+                    transition: background-color 0.3s;
+                    &:hover {
+                        background-color: var(--main1);
+                    }
                 }
             }
         }
 
     }
-
+    // --------------------------------------------------------
     @media (max-width: 880px) {
         .toggleButtons {
             display: flex;
@@ -256,19 +272,34 @@
             }
         }
     }
-
+    // --------------------------------------------------------
     @media(max-width: 535px){
-        .sendEmailSection{            
-            flex-direction: column !important;
-            align-items: flex-start !important;
-
-            p{
-                padding: 10px 0px ;
+        .emailInquireListAdmin {
+            .sendEmailSection {            
+                flex-direction: column !important;
+                align-items: flex-start !important;
+    
+                p{
+                    padding: 10px 0px ;
+                }
+                input{
+                    margin-bottom: 10px;
+                }
             }
-            input{
-                margin-bottom: 10px;
+            .emailAttachment {
+                .resetButton {
+                    font-size: 0.9rem;
+                    width: 1rem;
+                    padding: 5px 5px;
+                    background-color: var(--main2);
+                    border: none;
+                    color: var(--white);
+                    transition: background-color 0.3s;
+                    &:hover {
+                        background-color: var(--main1);
+                    }
+                }
             }
         }
     }
-
 }

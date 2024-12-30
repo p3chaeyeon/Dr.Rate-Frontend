@@ -200,13 +200,6 @@ const AdminEmailInquirePage = () => {
                             <button onClick={handleAnswer}
                                     className={styles.submitButton}>전송</button>
                         </div>
-                        {/* 버튼 - 880px 이하에서만 렌더링 */}
-                        {isMobileView && (
-                            <div className={styles.toggleButtons}>
-                                <button onClick={() => setShowAdminSection(false)}>유저 문의 보기</button>
-                                <button>문의 작성</button>
-                            </div>
-                        )}
                     </div>
                 ) : null}
             </section>
