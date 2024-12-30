@@ -144,6 +144,21 @@ const useProductList = () => {
     }, [location.pathname, setCategory]);
 
 
+    /* category 바뀌면 모든 필터 초기화 + 페이지=1 */
+    useEffect(() => {
+        // category가 비어있거나, 바뀌었다면 필터 모두 초기화
+        setBanks([]);
+        setAge("");
+        setPeriod("");
+        setRate("");
+        setJoin("");
+        setSort("spclRate");
+
+        // 페이지도 1로
+        setCurrentPage(1);
+    }, [category]);    
+
+
     /* 조건 변화 시 page = 1로 초기화 */
     useEffect(() => {
         // category, banks, age, period, rate, join, sort가 변경되면 currentPage=1
