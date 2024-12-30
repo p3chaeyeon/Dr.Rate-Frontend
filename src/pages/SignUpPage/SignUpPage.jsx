@@ -19,7 +19,7 @@ import {
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
 import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
-import FindModal from "../../components/Modal/FindModal/index.js";
+import FindModal from 'src/components/Modal/FindModal/index.js';
 
 const SignUpPage = () => {
     const navigate = useNavigate();
