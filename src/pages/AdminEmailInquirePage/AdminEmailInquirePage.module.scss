@@ -103,14 +103,18 @@
                 display: flex;
                 align-items: center;
                 .submitButton {
-                    width: 6rem;
-                    padding: 5px 20px;
-                    background-color: var(--main2);
-                    border: none;
-                    color: var(--white);
-                    transition: background-color 0.3s;
+                    padding: 10px;
+                    font-size: 16px;
+                    border: 1px solid var(--main2);
+                    border-radius: 4px;
+                    background-color: #ffffff;
+                    color: var(--main2);
+                    box-sizing: border-box;
+                    width: 30%;
+                    text-overflow: ellipsis;
+                    transition: all 0.3s ease;
                     &:hover {
-                        background-color: var(--main1);
+                        background-color: #edf6fb;
                     }
                 }
             }
@@ -187,6 +191,7 @@
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+                justify-content: center;
 
                 p {
                     width: 20%;
@@ -197,15 +202,62 @@
                     width: 80%;
                 }
                 .resetButton {
-                    width: 5rem;
-                    padding: 7px 13px;
-                    background-color: var(--main2);
-                    border: none;
-                    color: var(--white);
-                    transition: background-color 0.3s;
+                    display: inline-block;
+                    padding: 7px 3px;
+                    font-size: 15px;
+                    font-weight: normal;
+                    border: 1px solid var(--font3);
+                    border: 1px solid;
+                    border-radius: 4px;
+                    text-align: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    width: 15%;
+                    color: var(--font3);
+                
                     &:hover {
-                        background-color: var(--main1);
+                        background-color: var(--admin-body);
                     }
+                }
+                .fileInputText {
+                    padding: 10px;
+                    font-size: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    background-color: #ffffff;
+                    color: #666;
+                    box-sizing: border-box;
+                    width: 50%;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+                .fileButton {
+                    display: inline-block;
+                    padding: 7px 3px;
+                    font-size: 15px;
+                    font-weight: normal;
+                    color: var(--main2);
+                    border: 1px solid var(--main2);
+                    border-radius: 4px;
+                    text-align: center;
+                    cursor: pointer;
+                    background-color: var(--white);
+                    transition: all 0.3s ease;
+                    width: 20%;
+                    margin-right: 20px;
+                    margin-left: 5px;
+            
+                    &:hover {
+                    background-color: #eaf4ff;
+                    }
+                }
+                .fileIcon {
+                    margin-left: 5px;
+                    cursor: pointer;
+                }
+                .fileInput {
+                    display: none;
                 }
             }
         }
@@ -274,29 +326,38 @@
     }
     // --------------------------------------------------------
     @media(max-width: 535px){
-        .emailInquireListAdmin {
-            .sendEmailSection {            
-                flex-direction: column !important;
-                align-items: flex-start !important;
-    
-                p{
-                    padding: 10px 0px ;
+        .emailInquireListArea {
+            width: 100%;
+            margin: 0 auto;
+            .emailInquireListAdmin {
+                .sendEmailSection {            
+                    flex-direction: column !important;
+                    align-items: flex-start !important;
+        
+                    p{
+                        padding: 10px 0px ;
+                    }
+                    input{
+                        margin-bottom: 10px;
+                    }
                 }
-                input{
-                    margin-bottom: 10px;
-                }
-            }
-            .emailAttachment {
-                .resetButton {
-                    font-size: 0.9rem;
-                    width: 1rem;
-                    padding: 5px 5px;
-                    background-color: var(--main2);
-                    border: none;
-                    color: var(--white);
-                    transition: background-color 0.3s;
-                    &:hover {
-                        background-color: var(--main1);
+                .emailAttachment {
+                    .resetButton {
+                        display: inline-block;
+                        padding: 10px;
+                        font-size: 10px;
+                        font-weight: normal;
+                        border: 1px solid var(--font3);
+                        border: 1px solid;
+                        border-radius: 4px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        color: var(--font3);
+                    
+                        &:hover {
+                            background-color: var(--admin-body);
+                        }
                     }
                 }
             }
