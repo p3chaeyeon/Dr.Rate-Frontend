@@ -14,7 +14,7 @@ import AutoClosePopup from 'src/components/Popup';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { atom, useAtom } from 'jotai';
-import { PATH } from "src/utils/path";
+import { PATH } from 'src/utils/path';
 
 import { useSession } from 'src/hooks/useSession';
 import CompareNav from 'src/components/CompareNav/CompareNav';
@@ -131,6 +131,7 @@ const ProductDetailPage = () => {
     };
 
     useEffect(() => {
+        
         const handleClickOutside = (event) => {
             if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
                 setIsDropdownOpen(false);
@@ -247,8 +248,13 @@ const ProductDetailPage = () => {
                         handleFavoriteCancel
                     );
                 } else {
+                    const styleMessage = (
+                        <div style={{ marginBottom: '50px' }}>
+                            즐겨찾기가 삭제되었습니다.
+                        </div>
+                    );
                     // 즐겨찾기 취소 시 Alert Modal 표시
-                    openAlertModal('즐겨찾기가 삭제되었습니다.');
+                    openAlertModal(styleMessage);
 
                 }
 
@@ -291,17 +297,6 @@ const ProductDetailPage = () => {
         closeConfirmModal();
     };
 
-    /* 즐겨찾기 등록 시 Confirm 모달 */
-    useEffect(() => {
-        if (favoriteClicked && isFavorite) { 
-            openConfirmModal(
-                '즐겨찾기가 등록되었습니다.',
-                '마이페이지로 이동하시겠습니까?',
-                handleFavoriteConfirm,
-                handleFavoriteCancel
-            );
-        }
-    }, [favoriteClicked, isFavorite, openConfirmModal, closeConfirmModal, navigate]);
 
     /* 유효하지 않은 상품 리다이렉트 팝업 */
     useEffect(() => {
@@ -338,7 +333,11 @@ const ProductDetailPage = () => {
                 <div className={styles.optionCheck}>
                     <span className={styles.optionChkTitle}>옵션선택</span>
                     <div className={`${styles.selectedOption} ${isDropdownOpen ? styles.selected : ''}`} onClick={toggleDropdown}>
-                        {options[i]?.saveTime || ''} 개월 | {options[i] ? `${options?.[i]?.rsrvTypeName || '자유적립식'}, ${options[i]?.rateTypeKo || '단리'} | 최고 ${options[i].spclRate}% 기본 ${options[i].basicRate}%` : '옵션을 선택하세요'}
+                    {
+                        options ? 
+                        `${options[i]?.saveTime || ''} 개월 | ${options[i]?.rsrvTypeName || '자유적립식'}, ${options[i]?.rateTypeKo || '단리'} | 최고 ${options[i]?.spclRate || 0}% 기본 ${options[i]?.basicRate || 0}%` 
+                        : '옵션을 선택하세요'
+                    }
                     </div>
                     
                     {isDropdownOpen && (

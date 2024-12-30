@@ -3,8 +3,8 @@ import styles from './ServiceCenterPage.module.scss';
 import {  useNavigate } from 'react-router-dom';
 import { PATH } from 'src/utils/path';
 import { useSession } from 'src/hooks/useSession';
-import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import useModal from 'src/hooks/useModal';
+import ConfirmModal from 'src/components/Modal/ConfirmModal';
 
 
 const categories = [
@@ -53,36 +53,36 @@ const ServiceCenterPage = () => {
 
   const navigate = useNavigate();
 
-      const { isLoggedIn } = useSession();
-  
-      const {
-          isConfirmOpen,
-          openConfirmModal,
-          closeConfirmModal,
-          confirmContent
-      } = useModal();
-  
-      const handleConfirm = () => {
-          navigate(PATH.SIGN_IN);
-          closeConfirmModal();
-      };
-  
-      const handleCancel = () => {
-          closeConfirmModal();
-      };
+  const { isLoggedIn } = useSession();
 
-      const handleButtonClick = (path) => {
-        if (isLoggedIn) {
-          navigate(path);
-        } else {
-          openConfirmModal(
-            "로그인이 필요합니다.",
-            "로그인 페이지로 이동하시겠습니까?",
-            handleConfirm,
-            handleCancel
-          );
-        }
-      };
+  const {
+      isConfirmOpen,
+      openConfirmModal,
+      closeConfirmModal,
+      confirmContent
+  } = useModal();
+
+  const handleConfirm = () => {
+      navigate(PATH.SIGN_IN);
+      closeConfirmModal();
+  };
+
+  const handleCancel = () => {
+      closeConfirmModal();
+  };
+
+  const handleButtonClick = (path) => {
+    if (isLoggedIn) {
+      navigate(path);
+    } else {
+      openConfirmModal(
+        "로그인이 필요합니다.",
+        "로그인 페이지로 이동하시겠습니까?",
+        handleConfirm,
+        handleCancel
+      );
+    }
+  };
       
 
   const handleQuestionClick = (id) => {
@@ -138,7 +138,6 @@ const ServiceCenterPage = () => {
               <button className={styles.emailButton} onClick={()=>handleButtonClick(PATH.EMAIL_INQUIRE)}>
                 이메일 문의하기</button>
               <button className={styles.copyButton}>이메일 주소 복사하기</button>
-
               <ConfirmModal
                   isOpen={isConfirmOpen}
                   closeModal={closeConfirmModal}

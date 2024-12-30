@@ -1,71 +1,83 @@
-/* src/pages/ProductListPage/ProductListPage.jsx */
+/* src/pages/ListDepositPage/ListDepositPage.jsx */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './ProductInsListPage.module.scss';
+import styles from './ListDepositPage.module.scss';
 import { PATH } from 'src/utils/path';
+import { fullToShort } from 'src/utils/shortNameToFullName.js';
 import { useSession } from 'src/hooks/useSession';
 import useProductList from 'src/hooks/useProductList';
-import xIcon from 'src/assets/icons/xIcon.svg';
-import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import useModal from 'src/hooks/useModal';
+import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import xIcon from 'src/assets/icons/xIcon.svg';
 import verticalDividerIcon from 'src/assets/icons/verticalDivider.svg';
 import spinner from 'src/assets/icons/spinner.gif';
-
-
-const productData = [
-  {
-    "prdId": 71,
-    "bankLogo": "kookminLogo.png",
-    "bankName": "국민은행",
-    "prdName": "KB 특★한 적금",
-    "spclRate": 6.0,
-    "basicRate": 2.0
-  },
-  {
-    "prdId": 72,
-    "bankLogo": "kookminLogo.png",
-    "bankName": "국민은행",
-    "prdName": "KB차차차 적금",
-    "spclRate": 8.0,
-    "basicRate": 2.50
-  },
-  {
-    "prdId": 73,
-    "bankLogo": "shinhanLogo.png",
-    "bankName": "신한은행",
-    "prdName": "신한 알.쏠 적금",
-    "spclRate": 4.2,
-    "basicRate": 2.9
-  },
-  {
-    "prdId": 74,
-    "bankLogo": "nonghyupLogo.png",
-    "bankName": "농협은행주식회사",
-    "prdName": "NH올원e 미니적금",
-    "spclRate": 4.45,
-    "basicRate": 2.75
-  },
-  {
-    "prdId": 75,
-    "bankLogo": "nonghyupLogo.png",
-    "bankName": "농협은행주식회사",
-    "prdName": "NH1934월복리적금",
-    "spclRate": 6.40,
-    "basicRate": 2.9
-  },
-];
+import { getProductDetails } from 'src/apis/productsAPI';
 
 
 
-const ProductInsListPage = () => {
+const ListDepositPage = () => {
   const navigate = useNavigate();
 
   const { isLoggedIn } = useSession();
+  
+  const handleCompareClick = async (item) => {
+    let addProduct;
+
+    const prdId = item.id;
+      if(prdId) {
+        try {
+            const productDetails = await getProductDetails(prdId);
+            console.log(productDetails.product)
+
+            addProduct = {
+              index: productDetails?.optionNum || 0,
+              options: productDetails.options,
+              product: productDetails.product
+            };
+
+          } catch (error) {
+            if (error.response?.data?.message === "존재하지 않는 상품입니다.") {
+              setNoIdMessage("존재하지 않는 상품입니다.");
+            } else {
+              console.error("Failed to fetch product details:", error);
+            }
+          }
+      }
+
+      const compareList = JSON.parse(localStorage.getItem('depCompareList')) || [];
+      
+      const duplicateProduct = compareList.some(comproduct => comproduct.product.id === prdId);
+
+      if (duplicateProduct) {
+          openConfirmModal('이미 추가된 상품입니다', '비교하기로 이동하시겠습니까?', handleConfirm2, handleCancel);
+          return;
+      }
+
+      if (compareList.length >= 3) {
+          openConfirmModal('상품 비교 한도 초과', '비교할 수 있는 상품은 최대 3개입니다', handleConfirm2, handleCancel);
+          return;
+      }
+
+      compareList.push(addProduct);
+          
+      localStorage.setItem('depCompareList', JSON.stringify(compareList));
+    
+      openConfirmModal('비교 상품이 등록되었습니다', '비교하기로 이동하시겠습니까?', handleConfirm2, handleCancel);
+  };
+
+  
+
+  const handleConfirm2 = () => {
+    navigate(`${PATH.PRODUCT_COMPARE}/d`);
+    closeConfirmModal();
+  };
+
 
   const {
     loading,
     error,
+    productData,
     banks,
     handleBankChange,
     removeBank,
@@ -82,6 +94,9 @@ const ProductInsListPage = () => {
     currentPage,
     handlePageChange,
     totalPages,
+    paginationRange,
+    handlePrevBlock, 
+    handleNextBlock, 
   } = useProductList();
 
   const {
@@ -130,9 +145,19 @@ const ProductInsListPage = () => {
 
   return (
     <main>
+      {isConfirmOpen && (
+      <ConfirmModal
+          isOpen={isConfirmOpen}
+          closeModal={closeConfirmModal}
+          title={confirmContent.title}
+          message={confirmContent.message}
+          onConfirm={confirmContent.onConfirm}
+          onCancel={confirmContent.onCancel}
+      />
+      )}
       <section className={styles.listSection}>
         <div className={styles.listTitleDiv}>
-          적금
+          예금
         </div>
 
         <div className={styles.filterDiv}>
@@ -141,7 +166,7 @@ const ProductInsListPage = () => {
               <div className={styles.bank}>은행</div>
               <select
                 className={styles.bankSelect}
-                value={banks.length > 0 ? banks[banks.length - 1] : ""}
+                value={banks.length > 0 ? fullToShort(banks[banks.length - 1]) : ""}
                 onChange={handleBankChange}
               >
                 <option value="" disabled>
@@ -154,7 +179,6 @@ const ProductInsListPage = () => {
                 <option value="토스뱅크">토스뱅크</option>
                 <option value="카카오뱅크">카카오뱅크</option>
                 <option value="농협은행">농협은행</option>
-                <option value="기타">기타</option>
               </select>
             </div>
 
@@ -169,7 +193,7 @@ const ProductInsListPage = () => {
                     className={styles.bankSelectedItemDiv}
                   >
                     <div className={styles.selectedBankItem}>
-                      {bank}
+                      {fullToShort(bank)}
                     </div>
                     <div
                       className={styles.bankSelectedBtn}
@@ -223,6 +247,7 @@ const ProductInsListPage = () => {
                     value={period}
                     onChange={handlePeriodChange}
                   >
+                    <option value="">기간 선택</option>
                     <option value="3">3개월 이상</option>
                     <option value="6">6개월 이상</option>
                     <option value="12">12개월 이상</option>
@@ -285,9 +310,9 @@ const ProductInsListPage = () => {
             <img src={verticalDividerIcon} alt="세로 구분선" className={styles.verticalDivider} />
           </li>
           <li
-            className={`${styles.standardItem} ${sort === "baseRate" ? styles.active : ""
+            className={`${styles.standardItem} ${sort === "basicRate" ? styles.active : ""
               }`}
-            onClick={() => handleSortClick("baseRate")}
+            onClick={() => handleSortClick("basicRate")}
           >
             기본 금리순
           </li>
@@ -295,25 +320,25 @@ const ProductInsListPage = () => {
 
 
         {/* 상태에 따라 내부 내용만 바뀜 */}
-        {/* {loading &&
+        {loading &&
             <div className={styles.errorDiv}>
                 <img className={styles.loadingImg} src={spinner} alt="loading" />
             </div>}
-        {error && <div className={styles.errorDiv}>데이터를 불러오는 중 에러가 발생했습니다.</div>} */}
+        {error && <div className={styles.errorDiv}>데이터를 불러오는 중 에러가 발생했습니다.</div>}
 
         {/* 정상 데이터 로드 */}
-        {/* {!loading && !error && ( */}
+        {!loading && !error && ( 
         <div className={styles.productListDiv}>
-          {/* 즐겨찾기 데이터가 없을 경우 메시지 출력 */}
-          {/* {productData.length === 0 ? ( */}
-          {/* <div className={styles.noProductList}>
+          {/* 상품 데이터가 없을 경우 메시지 출력 */}
+          {productData.length === 0 ? (
+           <div className={styles.noProductList}>
                         <h4>상품이 없습니다.</h4>
-                    </div> */}
-          {/*  ) : ( */}
-          {/* 상품품 데이터가 있을 경우 리스트 출력 */}
-          {productData.map((item, index) => (
+                    </div> 
+          ) : ( 
+           /* 상품 데이터가 있을 경우 리스트 출력 */
+          productData.map((item, index) => (
             <div key={index} className={styles.productList}>
-              <input type="hidden" value={item.prdId} readOnly />
+              <input type="hidden" value={item.id} readOnly />
               <div className={styles.productLogoDiv}>
                 <img
                   src={`${PATH.STORAGE_BANK}/${item.bankLogo}`}
@@ -321,7 +346,10 @@ const ProductInsListPage = () => {
                   className={styles.productLogoImg}
                 />
               </div>
-              <div className={styles.productInfoDiv}>
+              <div 
+                className={styles.productInfoDiv}
+                onClick={() => navigate(`${PATH.PRODUCT_DETAIL}/${item.id}`)}
+              >
                 <div className={styles.productBankProDiv}>
                   <div className={styles.productBank}>{item.bankName}</div>
                   <div className={styles.productPro}>{item.prdName}</div>
@@ -333,9 +361,9 @@ const ProductInsListPage = () => {
                       <span className={styles.spclRate}>{item.spclRate.toFixed(2)}</span>%
                     </div>
                   </div>
-                  <div className={styles.productSBaseRateDiv}>
-                    <div className={styles.productBaseRateText}>기본금리</div>
-                    <div className={styles.productBaseRatePer}>
+                  <div className={styles.productBasicRateDiv}>
+                    <div className={styles.productBasicRateText}>기본금리</div>
+                    <div className={styles.productBasicRatePer}>
                       <span className={styles.basicRate}>{item.basicRate.toFixed(2)}</span>%
                     </div>
                   </div>
@@ -344,40 +372,38 @@ const ProductInsListPage = () => {
               <div className={styles.productBtnDiv}>
                 <button
                   className={styles.productCompareBtn}
+                  onClick={() => handleCompareClick(item)}
                 >
                   비교<br />담기
                 </button>
               </div>
             </div>
-          ))}
-          {/* )} */}
-        </div>{/* productListDiv */}
-        {/* )} */}
+          ))
+          )}
+        </div>/* productListDiv */
+        )}
 
         {/* 페이지네이션 */}
         <div className={styles.pagination}>
           <div className={styles.pageBtn}>
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 0}
-            >
-              이전
-            </button>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => handlePageChange(index)}
-                className={currentPage === index ? styles.active : ""}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages - 1}
-            >
-              다음
-            </button>
+          <button onClick={handlePrevBlock} disabled={paginationRange[0] === 1}>
+          이전
+        </button>
+        {paginationRange.map((page) => (
+          <button
+            key={page}
+            onClick={() => handlePageChange(page)}
+            className={currentPage === page ? styles.active : ''}
+          >
+            {page}
+          </button>
+        ))}
+        <button
+          onClick={handleNextBlock}
+          disabled={paginationRange[paginationRange.length - 1] === totalPages}
+        >
+          다음
+        </button>
           </div>
         </div>
 
@@ -388,5 +414,5 @@ const ProductInsListPage = () => {
   );
 };
 
-export default ProductInsListPage;
+export default ListDepositPage;
 

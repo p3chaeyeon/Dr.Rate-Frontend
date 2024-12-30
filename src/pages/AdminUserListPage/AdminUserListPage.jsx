@@ -62,10 +62,9 @@ const AdminUserListPage = () => {
                     </div>
                     <div className={styles.userSearchBar}>
                         <select value={searchType} onChange={(e) => setSearchType(e.target.value)}>
-                            <optgroup label="검색 항목">
-                                <option value="email">이메일</option>
-                                <option value="name">이름</option>
-                            </optgroup>
+                            <option value="" disabled>검색 항목</option>
+                            <option value="email">이메일</option>
+                            <option value="name">이름</option>
                         </select>
                         <input
                             type="text"

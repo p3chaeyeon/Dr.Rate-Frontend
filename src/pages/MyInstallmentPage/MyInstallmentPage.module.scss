@@ -89,6 +89,7 @@
                 align-items: center;
                 color: var(--black);
                 padding: 0 10px;
+                cursor: pointer;
 
                 .favoriteBankProDiv {
                     .favoriteBank {
@@ -97,7 +98,7 @@
                 }
 
                 .favoriteHighestRateDiv,
-                .favoriteSBaseRateDiv {
+                .favoriteBasicRateDiv {
                     display: flex;
                     justify-content: flex-start;
                     align-items: center;
@@ -109,7 +110,7 @@
                 }
 
                 .favoriteHighestRatePer,
-                .favoriteBaseRatePer {
+                .favoriteBasicRatePer {
                     width: 50px;
                     display: flex;
                     justify-content: flex-end;
@@ -249,12 +250,12 @@
                         gap: 8px;
 
                         .favoriteHighestRateDiv,
-                        .favoriteSBaseRateDiv {
+                        .favoriteSBasicRateDiv {
                             font-size: 12px;
                         }
 
                         .favoriteHighestRatePer,
-                        .favoriteBaseRatePer {
+                        .favoriteBasicRatePer {
                             width: 36px;
                         }
 

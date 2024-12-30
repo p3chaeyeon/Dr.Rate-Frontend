@@ -1,4 +1,4 @@
-/* src/pages/ProductInsListPage/ProductInsListPage.scss */
+/* src/pages/ListDepositPage/ListDepositPage.scss */
 
 .listSection {
   font-size: 16px;
@@ -21,8 +21,7 @@
       background: var(--bg2);
       display: flex;
       justify-content: flex-start;
-      // align-items: center;
-      align-items: flex-start;
+      align-items: center;
       gap: 15px;
       flex-wrap: wrap;
 
@@ -173,7 +172,6 @@
             width: 48%;
             border: 1px solid var(--divider-border);
             flex: 1;
-            background-color: var(--white);
             cursor: pointer;
             text-align: center;
             height: 40px;
@@ -225,6 +223,17 @@
   } /* rateStandard */
 
 
+  .errorDiv {
+    display: flex;
+    justify-content: center;
+    height: 280px;
+
+    .loadingImg {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
 
   .productListDiv {
     margin-top: 40px;
@@ -271,6 +280,7 @@
         justify-content: space-between;
         align-items: center;
         color: var(--black);
+        cursor: pointer;
 
         .productBankProDiv {
           .productBank {
@@ -279,7 +289,7 @@
         }
 
         .productHighestRateDiv,
-        .productSBaseRateDiv {
+        .productBasicRateDiv {
           display: flex;
           justify-content: flex-start;
           align-items: center;
@@ -291,7 +301,7 @@
         }
 
         .productHighestRatePer,
-        .productBaseRatePer {
+        .productBasicRatePer {
           width: 50px;
           display: flex;
           justify-content: flex-end;
@@ -311,6 +321,7 @@
 
         .productCompareBtn {
           width: 60px;
+          font-size: 15px;
           aspect-ratio: 1 / 1;
           background: var(--bg2);
           cursor: pointer;
@@ -514,6 +525,7 @@
     .filterDiv {
       .commonFilterDiv {
         flex-direction: column;
+        align-items: flex-start;
         gap: 0;
 
         .bankSelectContainer {
@@ -607,12 +619,12 @@
             gap: 8px;
 
             .productHighestRateDiv,
-            .productSBaseRateDiv {
+            .productBasicRateDiv {
               font-size: 12px;
             }
 
             .productHighestRatePer,
-            .productBaseRatePer {
+            .productBasicRatePer {
               width: 36px;
             }
 
@@ -635,8 +647,16 @@
 /* ====================================== 가로 450px 이하 ====================================== */
 @media (max-width: 450px) {
   .listSection {
+    
+    .errorDiv {
+      height: 100px;
+    }
 
     .productListDiv {
+      .noProductList {
+        height: 100px;
+      }
+
       .productList {
         gap: 7px;
 

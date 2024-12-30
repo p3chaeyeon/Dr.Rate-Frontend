@@ -10,20 +10,22 @@ import MyCalendarPage from './MyCalendarPage';
 import AdminMainPage from './AdminMainPage';
 import ProductDetailPage from './ProductDetailPage';
 import AdminInquirePage from './AdminInquirePage';
-import AdminUserListPage from './AdminUserListPage/AdminUserListPage';
-import AdminInquireListPage from './AdminInquireListPage/AdminInquireListPage';
-import ProductInsListPage from './ProductInsListPage';
-import ProductDepListPage from './ProductDepListPage';
+import AdminUserListPage from './AdminUserListPage';
+import AdminInquireListPage from './AdminInquireListPage';
+//import ProductDepListPage from './ProductDepListPage';
+import ListDepositPage from './ListDepositPage';
+import ListInstallmentPage from './ListInstallmentPage';
 import ProductComparePage from './ProductComparePage';
 import ServiceCenterPage from './ServiceCenterPage';
 import SignInPage from './SignInPage/index.js';
 import SignUpPage from './SignUpPage/index.js';
 import EmailInquirePage from './EmailInquirePage';
 import OAuthCallbackHandlerPage from './OAuthCallbackHandlerPage';
-import AdminEmailInquireListPage from './AdminEmailInquireListPage/AdminEmailInquireListPage.jsx';
-import AdminEmailInquirePage from './AdminEmailInquirePage/AdminEmailInquirePage.jsx';
-import MyEmailInquirePage from './MyEmailInquirePage/MyEmailInquirePage.jsx';
-import My1v1InquirePage from './My1v1InquirePage/My1v1InquirePage.jsx';
+import AdminEmailInquireListPage from './AdminEmailInquireListPage';
+import AdminEmailInquirePage from './AdminEmailInquirePage';
+import MyEmailInquirePage from './MyEmailInquirePage';
+import My1v1InquirePage from './My1v1InquirePage';
+
 
 // 각 페이지 컴포넌트를 PageRoutes 객체에 모아 내보내기
 const PageRoutes = {
@@ -39,8 +41,9 @@ const PageRoutes = {
   MyCalendarPage,
   MyEmailInquirePage,
   My1v1InquirePage,
-  ProductInsListPage,
-  ProductDepListPage,
+  //ProductDepListPage,
+  ListDepositPage,
+  ListInstallmentPage,
   ProductDetailPage,
   ProductComparePage,
   OAuthCallbackHandlerPage,

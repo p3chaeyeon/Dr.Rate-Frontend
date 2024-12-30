@@ -109,7 +109,10 @@ const MyInstallmentPage = () => {
                                             className={styles.favoriteLogoImg}
                                         />
                                     </div>
-                                    <div className={styles.favoriteInfoDiv}>
+                                    <div 
+                                        className={styles.favoriteInfoDiv}
+                                        onClick={() => navigate(`${PATH.PRODUCT_DETAIL}/${item.prdId}`)} 
+                                    >
                                         <div className={styles.favoriteBankProDiv}>
                                             <div className={styles.favoriteBank}>{item.bankName}</div>
                                             <div className={styles.favoritePro}>{item.prdName}</div>
@@ -121,9 +124,9 @@ const MyInstallmentPage = () => {
                                                     <span className={styles.spcl_rate}>{item.spclRate.toFixed(2)}</span>%
                                                 </div>
                                             </div>
-                                            <div className={styles.favoriteSBaseRateDiv}>
-                                                <div className={styles.favoriteBaseRateText}>기본금리</div>
-                                                <div className={styles.favoriteBaseRatePer}>
+                                            <div className={styles.favoriteBasicRateDiv}>
+                                                <div className={styles.favoriteBasicRateText}>기본금리</div>
+                                                <div className={styles.favoriteBasicRatePer}>
                                                     <span className={styles.basic_rate}>{item.basicRate.toFixed(2)}</span>%
                                                 </div>
                                             </div>
