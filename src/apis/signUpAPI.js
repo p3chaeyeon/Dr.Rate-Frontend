@@ -110,3 +110,62 @@ export const signUpUser = async (user_name, user_id, user_pwd, user_email) => {
 export const handleOAuthLogin = (provider) => {
     window.location.href = `${PATH.SERVER}/api/signIn/${provider}`;
 };
+
+//아이디 찾기
+export const sendIdByEmail = async (user_email) => {
+    try {
+        const response = await axios.post(`${PATH.SERVER}/api/email/findId?email=${encodeURIComponent(user_email)}`);
+        return response.data;
+    } catch (error) {
+        return {
+            success: false,
+            message: error.response?.data?.message || '아이디 찾기 요청에 실패했습니다.',
+        };
+    }
+};
+// 아이디와 이메일 매칭 확인 API
+export const validateUserByEmailAndId = async (user_id, user_email) => {
+    try {
+        const response = await axios.get(
+            `${PATH.SERVER}/api/email/validateUser?userId=${encodeURIComponent(user_id)}&email=${encodeURIComponent(user_email)}`
+        );
+        const { success, message } = response.data;
+        if (success) {
+            return { success: true };
+        } else {
+            return { success: false, message };
+        }
+    } catch {
+        return { success: false, message: '서버와의 통신 중 오류가 발생했습니다.' };
+    }
+};
+// 인증 메일 전송
+export const sendFindPwdCode = async (user_email) => {
+    try {
+        const response = await axios.post(`${PATH.SERVER}/api/email/findPwd?email=${encodeURIComponent(user_email)}`);
+        const { success, message } = response.data;
+        return { success, message };
+    } catch (error) {
+        return {
+            success: false,
+            message: error.response?.data?.message || '인증 메일 전송에 실패했습니다.'
+        };
+    }
+};
+//비밀번호 재설정
+export const resetUserPassword = async (userId, newPassword) => {
+    try {
+        const response = await axios.post(`${PATH.SERVER}/api/signUp/resetPwd`, {
+            userId,
+            newPassword,
+        });
+        const { success, message } = response.data;
+        return { success, message };
+    } catch (error) {
+        return {
+            success: false,
+            message: error.response?.data?.message || '비밀번호 재설정 요청에 실패했습니다.'
+        };
+    }
+}
+
