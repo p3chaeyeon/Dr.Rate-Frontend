@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';  // useNavigate 추가
 import AlertModal from 'src/components/Modal/AlertModal'; // AlertModal import
+import FindModal from "src/components/Modal/FindModal/index.js";
 import styles from './SignInPage.module.scss';
 
 import { useAtom } from 'jotai';
@@ -18,10 +19,14 @@ const SignInPage = () => {
     const navigate = useNavigate();  // navigate 훅 사용
     const [, setMyData] = useAtom(userData); // Jotai Atom 사용
 
-    // 모달 상태 관리
+    // Alert 모달 상태 관리
     const [showModal, setShowModal] = useState(false);
     const [modalTitle, setModalTitle] = useState('');
     const [modalMessage, setModalMessage] = useState('');
+
+    // Find 모달 상태 관리
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalMode, setModalMode] = useState('id'); // 'id' or 'pw'
 
     // 일반 로그인 상태 관리
     const [userId, setUserId] = useState('');
@@ -143,7 +148,13 @@ const SignInPage = () => {
                     />
                 </div>
                 <div className={styles.findUser}>
-                    <p>아이디 찾기</p>/<p>비밀번호 찾기</p>
+                    <p onClick={() => {setModalMode('id'); setIsModalOpen(true); }}>
+                            아이디 찾기
+                    </p>
+                    /
+                    <p onClick={() =>  {setModalMode('pw'); setIsModalOpen(true); }}>
+                            비밀번호 찾기
+                    </p>
                 </div>
             </section>
 
@@ -152,6 +163,12 @@ const SignInPage = () => {
                 closeModal={handleCloseModal}
                 title={modalTitle}
                 message={modalMessage}
+            />
+
+            <FindModal
+                isOpen={isModalOpen}
+                closeModal={() => setIsModalOpen(false)}
+                mode={modalMode} // 'id' OR 'pw'
             />
         </main>
     );
