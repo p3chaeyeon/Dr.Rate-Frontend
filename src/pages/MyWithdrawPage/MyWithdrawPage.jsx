@@ -160,14 +160,14 @@ const MyWithdrawPage = () => {
                                     onChange={handleChange}
                                     readOnly />
                         </div>
-                        {myData?.social ? (
+                        {(myData?.social && !myData?.password) ? (
                             <div className={`${styles.tagBox}`}>
                             <p className={`${styles.tagName}`}>비밀번호 확인</p>
                             <input type="password" className={`${styles.myData}`}
                                     name="password" 
-                                    value={formData.password || ''}
-                                    placeholder="비밀번호 입력 ( 소셜로그인은 제외 )" 
+                                    value={formData.password || ''} 
                                     readOnly
+                                    placeholder="비밀번호 입력 ( 소셜로그인은 제외 )"
                                     onChange={handleChange} />
                             </div>
                         ) : (
@@ -176,11 +176,10 @@ const MyWithdrawPage = () => {
                             <input type="password" className={`${styles.myData}`}
                                     name="password" 
                                     value={formData.password || ''}
-                                    placeholder="비밀번호 입력 ( 소셜로그인은 제외 )" 
+                                    placeholder="비밀번호 입력 ( 소셜로그인은 제외 )"
                                     onChange={handleChange} />
                             </div>
                         )}
-                        
 
                         <div className={`${styles.passwordError}`}
                             style={{
