@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import MyNav from 'src/components/MyNav';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import { useSession } from 'src/hooks/useSession';
-import AlertModal from 'src/components/modal/AlertModal'; // AlertModal import
+import AlertModal from 'src/components/Modal/AlertModal'; // AlertModal import
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import { PATH } from 'src/utils/path';
 import useModal from 'src/hooks/useModal';
