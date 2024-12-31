@@ -23,10 +23,9 @@ const AdminHeader = () => {
     const handleLogout = async () => {
         try {
             const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/logout`);
-            clearSession();
             console.log(response.data.success);
             if(response.data.success) {
-                console.log('홈');
+                clearSession();
                 navigate(`${PATH.HOME}`);
                 return { success: true, message: '로그아웃 완료'};
             } else {
