@@ -17,8 +17,6 @@ const MyInstallmentPage = () => {
 
     const navigate = useNavigate();
 
-    const { isLoggedIn } = useSession();
-
     const {
         isConfirmOpen,
         openConfirmModal,
@@ -27,7 +25,7 @@ const MyInstallmentPage = () => {
     } = useModal();
 
 
-    const { favoriteData = [], fetchFavorites, loading, error, individualChecked, handleIndividualCheck } = useMyFavorite();
+    const { favoriteData = [], loading, error, individualChecked, handleIndividualCheck } = useMyFavorite();
 
 
 

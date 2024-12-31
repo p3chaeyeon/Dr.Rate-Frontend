@@ -17,8 +17,6 @@ const MyDepositPage = () => {
 
     const navigate = useNavigate();
 
-    const { isLoggedIn } = useSession();
-
     const {
         isConfirmOpen,
         openConfirmModal,
@@ -27,7 +25,7 @@ const MyDepositPage = () => {
     } = useModal();
 
 
-    const { favoriteData = [], fetchFavorites, loading, error, individualChecked, handleIndividualCheck } = useMyFavorite();
+    const { favoriteData = [], loading, error, individualChecked, handleIndividualCheck } = useMyFavorite();
 
 
 
