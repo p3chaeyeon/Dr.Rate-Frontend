@@ -26,30 +26,9 @@ const MyDepositPage = () => {
         confirmContent
     } = useModal();
 
-    const handleConfirm = () => {
-        navigate(PATH.SIGN_IN);
-        closeConfirmModal();
-    };
 
-    const handleCancel = () => {
-        navigate(PATH.HOME);
-        closeConfirmModal();
-    };
+    const { favoriteData = [], fetchFavorites, loading, error, individualChecked, handleIndividualCheck } = useMyFavorite();
 
-    const { favoriteData, fetchFavorites, loading, error, individualChecked, handleIndividualCheck } = useMyFavorite();
-
-    useEffect(() => {
-        if (!isLoggedIn) {
-            openConfirmModal(
-                '로그인이 필요합니다.',
-                '로그인 페이지로 이동하시겠습니까?',
-                handleConfirm,
-                handleCancel
-            );
-        } else {
-            fetchFavorites(); // 로그인된 경우에만 즐겨찾기 데이터를 가져옴
-        }
-    }, [isLoggedIn, fetchFavorites]); // isLoggedIn이 변경될 때 실행
 
 
 
@@ -80,7 +59,7 @@ const MyDepositPage = () => {
                 {!loading && !error && (
                     <div className={styles.favoriteListDiv}>
                         {/* 즐겨찾기 데이터가 없을 경우 메시지 출력 */}
-                        {favoriteData.length === 0 ? (
+                        {Array.isArray(favoriteData) && favoriteData.length === 0 ? (
                             <div className={styles.noFavoriteList}>
                                 <h4>즐겨찾기가 없습니다.</h4>
                                 <div className={styles.moveList}>

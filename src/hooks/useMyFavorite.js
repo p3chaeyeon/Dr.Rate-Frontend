@@ -1,7 +1,7 @@
 /* src/hooks/useMyFavorite.js */
 /* 마이페이지 즐겨찾기; MyDepositPage, MyInstallmentPage */
 
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useCallback, useState, useEffect } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
@@ -15,11 +15,16 @@ import {
     hasSelectedItemsAtom,
 } from 'src/atoms/myFavoriteAtom';
 import { getFavorite, searchFavorite, deleteFavorite } from 'src/apis/myFavoriteAPI';
+import { useSession } from 'src/hooks/useSession';
 import useModal from 'src/hooks/useModal';
+import { PATH } from 'src/utils/path';
 
 
 
 const useMyFavorite = () => {
+    const { isLoggedIn } = useSession();
+
+    const navigate = useNavigate();
     const location = useLocation();
 
     // 상태 및 Atom 관리
@@ -50,6 +55,17 @@ const useMyFavorite = () => {
     } = useModal();
 
 
+    const handleConfirm = () => {
+        navigate(PATH.SIGN_IN);
+        closeConfirmModal();
+    };
+
+    const handleCancel = () => {
+        navigate(PATH.HOME);
+        closeConfirmModal();
+    };    
+
+
 
     /* 개별 체크박스 상태 업데이트 */
     const handleIndividualCheck = (index, isChecked) => {
@@ -63,6 +79,16 @@ const useMyFavorite = () => {
 
     /* 마이페이지 즐겨찾기 조회 */
     const fetchFavorites = useCallback(async () => {
+        if (!isLoggedIn) {
+            openConfirmModal(
+                '로그인이 필요합니다.',
+                '로그인 페이지로 이동하시겠습니까?',
+                handleConfirm,
+                handleCancel,
+            );
+            return; // 로그인되지 않았으면 API 호출 중단
+        }
+    
         try {
             setLoading(true);
             const data = await getFavorite(category);
@@ -74,7 +100,14 @@ const useMyFavorite = () => {
         } finally {
             setLoading(false);
         }
-    }, [category, setFavoriteData]);
+    }, [
+        isLoggedIn,
+        category,
+        setFavoriteData,
+        setIndividualChecked,
+        setAllCheckedState,
+        openConfirmModal,
+    ]);
 
 
     /* 페이지 URL 변경 감지 시 데이터 리로드 */
