@@ -6,6 +6,7 @@ import { PATH } from 'src/utils/path';
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
+import xIcon from 'src/assets/icons/xIcon.svg';
 
 const AdminEmailInquirePage = () => {
     const [isMobileView, setIsMobileView] = useState(false); // 모바일 뷰 여부
@@ -41,6 +42,16 @@ const AdminEmailInquirePage = () => {
             fileInput.value = ""; // 
         }
     }
+    // 파일 첨부 초기화
+    const handleResetFile = () => {
+        setForm((prev) => ({ ...prev, answerFile: null }));
+      
+        // 파일 입력 필드 초기화
+        const fileInput = document.getElementById("file");
+        if (fileInput) {
+          fileInput.value = ""; // 
+        }
+    };  
 
     const handleChange = (e) => {
         const { name, value, type, files } = e.target;
@@ -183,11 +194,30 @@ const AdminEmailInquirePage = () => {
                                         onChange={handleChange}></textarea>
                         </div>
                         <div className={styles.emailAttachment}>
-                            <p>첨부 파일</p>
+                            <input
+                                type="text"
+                                readOnly
+                                value={form.answerFile ? form.answerFile.name : ""}
+                                placeholder=""
+                                className={styles.fileInputText}
+                            />
+                            {/* x 아이콘 */}
+                            {form.answerFile && (
+                            <img
+                                src={xIcon}
+                                alt="첨부 파일"
+                                className={styles.fileIcon}
+                                onClick={handleResetFile}
+                            />
+                            )}
+                            <label htmlFor="file" className={styles.fileButton}>
+                                첨부 파일
                             <input type="file"
                                     id="file"
                                     name="answerFile"
+                                    className={styles.fileInput}
                                     onChange={handleChange}/>
+                            </label>
                             <button
                                 type="button"
                                 className={styles.resetButton}
@@ -200,13 +230,6 @@ const AdminEmailInquirePage = () => {
                             <button onClick={handleAnswer}
                                     className={styles.submitButton}>전송</button>
                         </div>
-                        {/* 버튼 - 880px 이하에서만 렌더링 */}
-                        {isMobileView && (
-                            <div className={styles.toggleButtons}>
-                                <button onClick={() => setShowAdminSection(false)}>유저 문의 보기</button>
-                                <button>문의 작성</button>
-                            </div>
-                        )}
                     </div>
                 ) : null}
             </section>
