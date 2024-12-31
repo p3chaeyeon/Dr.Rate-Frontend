@@ -22,7 +22,6 @@ export const PATH = {
 
   /* 고객센터 경로 */
   SERVICE_CENTER: '/serviceCenter',
-  USER_INQUIRE: '/userInquire',
   EMAIL_INQUIRE: '/emailInquire',
 
   /* 관리자 경로 */

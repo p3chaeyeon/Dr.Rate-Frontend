@@ -4,34 +4,34 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import MyNav from 'src/components/MyNav';
 import { PATH } from 'src/utils/path';
+import { useAtom } from 'jotai';
+import { userData } from 'src/atoms/userData';
 
 const MyInfoPage = () => {
     const navigate = useNavigate();
+    const [myData, setMyData] = useAtom(userData); // Jotai Atom 사용
 
-    //회원 데이터
-    const [myData, setMyData] = useState({
-        username: '',
-        email: '',
-        userId: '',
-        birthdate: ''
-    });
-
-    //데이터 받아오기
+    // //데이터 받아오기 (atom에 데이터가 없을 경우)
     useEffect(() => {
-        const userData = async () => {
+        const userDTO = async () => {
             try {
-                const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfo`);
-                setMyData(response.data);  // 데이터 업데이트
+                if(!myData) { // atom에 데이터가 없을경우
+                    const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfo`);
+                    setMyData(response.data.result);  // 데이터 업데이트
+                }
             } catch (error) {
                 console.error('데이터 가져오기 실패:', error);
             }
         };
-        userData();
-    }, []);
+        userDTO();
+    }, [myData, setMyData]);
 
     //회원정보 수정페이지 이동
     const handleMyEdit = () => {
         navigate(`${PATH.MY_EDIT}`);
+    }
+    const handleMyWithdraw = () => {
+        navigate(`${PATH.MY_WITHDRAW}`);
     }
 
     return (
@@ -39,26 +39,33 @@ const MyInfoPage = () => {
             <MyNav />
 
             <section className={ styles.myInfoSection }>
-                {myData?.result ? (
+                {myData? (
                 <div className={styles.myInfo}>
                     <div className={`${styles.tagBox}`}>
                         <p className={`${styles.tagName}`}>이름</p>
-                        <p className={`${styles.myData}`}>{myData.result.username || '데이터 없음'}</p>
+                        <p className={`${styles.myData}`}>{myData.username || '데이터 없음'}</p>
                     </div>
                     <div className={`${styles.tagBox}`}>
                         <p className={`${styles.tagName}`}>이메일</p>
-                        <p className={`${styles.myData}`}>{myData.result.email || '데이터 없음'}</p>
+                        <p className={`${styles.myData}`}>{myData.email || '데이터 없음'}</p>
                     </div>
                     <div className={`${styles.tagBox}`}>
                         <p className={`${styles.tagName}`}>아이디</p>
-                        <p className={`${styles.myData}`}>{myData.result.userId || '데이터 없음'}</p>
+                        <p className={`${styles.myData}`}>{myData.userId || '데이터 없음'}</p>
                     </div>
                     <div className={`${styles.tagBox}`}>
                         <p className={`${styles.tagName}`}>생년월일</p>
                         <p className={`${styles.myData}`}>{myData.birthdate || '데이터 없음'}</p>
                     </div>
                     <div className={`${styles.buttonBox}`}>
-                        <button onClick={handleMyEdit}>회원정보 수정</button>
+                        <div className={`${styles.deleteUser}`}>
+                            <p onClick={handleMyWithdraw}>회원탈퇴&nbsp;&gt;</p>
+                        </div>
+                        {!myData?.social ? (
+                        <div className={`${styles.editandreset}`}>
+                            <button onClick={handleMyEdit}>회원정보 수정</button>
+                        </div>
+                        ) : (<div></div>)}
                     </div>
                 </div>
                 ) : (<div></div>)}

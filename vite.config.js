@@ -26,5 +26,9 @@ export default defineConfig(({ mode }) => {
       'process.env.REACT_ROUTER_USE_START_TRANSITION': true, // Future Flag for v7_startTransition
       'process.env.REACT_ROUTER_USE_RELATIVE_SPLAT_PATHS': true, // Future Flag for v7_relativeSplatPath
     },
+    esbuild: {
+      jsxFactory: 'React.createElement', // JSX 구문을 React.createElement로 처리
+      jsxFragment: 'React.Fragment',    // Fragment를 React.Fragment로 처리
+    },
   };
 });

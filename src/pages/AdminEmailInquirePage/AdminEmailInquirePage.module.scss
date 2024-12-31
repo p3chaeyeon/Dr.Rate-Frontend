@@ -63,10 +63,16 @@
 
             .inquiryAttachment {
                 flex-grow: 4;
+                flex-direction: column;
+                .attachmentImage {
+                    max-height: 100%;    // 비율을 유지하며 크기 조정
+                    max-width: 12rem; // 이미지가 영역을 벗어나지 않도록
+                    margin-top: 10px; // 텍스트와의 간격
+                    border: 1px solid #ccc; // 테두리 추가
+                    border-radius: 5px; // 둥근 테두리
+                }
             }
-
         }
-
         .emailInquireListAdmin {
             display: flex;
             flex-direction: column;
@@ -93,7 +99,25 @@
                     }
                 }
             }
-
+            .submitButtonBox {
+                display: flex;
+                align-items: center;
+                .submitButton {
+                    padding: 10px;
+                    font-size: 16px;
+                    border: 1px solid var(--main2);
+                    border-radius: 4px;
+                    background-color: #ffffff;
+                    color: var(--main2);
+                    box-sizing: border-box;
+                    width: 30%;
+                    text-overflow: ellipsis;
+                    transition: all 0.3s ease;
+                    &:hover {
+                        background-color: #edf6fb;
+                    }
+                }
+            }
             /* 공통 스타일 */
             div {
                 display: flex;
@@ -167,6 +191,7 @@
                 display: flex;
                 flex-direction: row;
                 align-items: center;
+                justify-content: center;
 
                 p {
                     width: 20%;
@@ -176,11 +201,69 @@
                     padding: 5px;
                     width: 80%;
                 }
+                .resetButton {
+                    display: inline-block;
+                    padding: 7px 3px;
+                    font-size: 15px;
+                    font-weight: normal;
+                    border: 1px solid var(--font3);
+                    border: 1px solid;
+                    border-radius: 4px;
+                    text-align: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    width: 15%;
+                    color: var(--font3);
+                
+                    &:hover {
+                        background-color: var(--admin-body);
+                    }
+                }
+                .fileInputText {
+                    padding: 10px;
+                    font-size: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    background-color: #ffffff;
+                    color: #666;
+                    box-sizing: border-box;
+                    width: 50%;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+                .fileButton {
+                    display: inline-block;
+                    padding: 7px 3px;
+                    font-size: 15px;
+                    font-weight: normal;
+                    color: var(--main2);
+                    border: 1px solid var(--main2);
+                    border-radius: 4px;
+                    text-align: center;
+                    cursor: pointer;
+                    background-color: var(--white);
+                    transition: all 0.3s ease;
+                    width: 20%;
+                    margin-right: 20px;
+                    margin-left: 5px;
+            
+                    &:hover {
+                    background-color: #eaf4ff;
+                    }
+                }
+                .fileIcon {
+                    margin-left: 5px;
+                    cursor: pointer;
+                }
+                .fileInput {
+                    display: none;
+                }
             }
         }
 
     }
-
+    // --------------------------------------------------------
     @media (max-width: 880px) {
         .toggleButtons {
             display: flex;
@@ -239,22 +322,45 @@
             .emailInquireListUser {
                 border-right: none;
             }
-
         }
     }
-
+    // --------------------------------------------------------
     @media(max-width: 535px){
-        .sendEmailSection{            
-            flex-direction: column !important;
-            align-items: flex-start !important;
-
-            p{
-                padding: 10px 0px ;
-            }
-            input{
-                margin-bottom: 10px;
+        .emailInquireListArea {
+            width: 100%;
+            margin: 0 auto;
+            .emailInquireListAdmin {
+                .sendEmailSection {            
+                    flex-direction: column !important;
+                    align-items: flex-start !important;
+        
+                    p{
+                        padding: 10px 0px ;
+                    }
+                    input{
+                        margin-bottom: 10px;
+                    }
+                }
+                .emailAttachment {
+                    .resetButton {
+                        display: inline-block;
+                        padding: 10px;
+                        font-size: 10px;
+                        font-weight: normal;
+                        border: 1px solid var(--font3);
+                        border: 1px solid;
+                        border-radius: 4px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        color: var(--font3);
+                    
+                        &:hover {
+                            background-color: var(--admin-body);
+                        }
+                    }
+                }
             }
         }
     }
-
 }

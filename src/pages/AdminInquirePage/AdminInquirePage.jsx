@@ -133,7 +133,8 @@ const AdminInquirePage = () => {
     // WebSocket 연결 및 STOMP 클라이언트 설정
     useEffect(() => {
         if (roomId) {
-            let retries = 1000; // Kafka 토픽 준비를 위한 최대 재시도 횟수
+            let retries = 100; // Kafka 토픽 준비를 위한 최대 재시도 횟수
+            let isActive = true;
     
             const connectWebSocket = () => {
                 const socket = new WebSocket(`${PATH.SERVER}/ws`);
@@ -145,11 +146,11 @@ const AdminInquirePage = () => {
                         console.log("WebSocket connected");
     
                         const checkTopicAndSubscribe = async () => {
-                            while (retries > 0) {
+                            while (isActive && retries > 0) {
                                 try {
                                     // Kafka 토픽 상태 확인
                                     const response = await api.get(`/api/topic/check/chat-room-${roomId}`);
-                                    if (response.data.success==="OK") {
+                                    if (response.data.success===true) {
                                         console.log("Kafka topic ready, subscribing...");
                                         client.subscribe(`/sub/chat/room/${roomId}`, (message) => {
                                             const newMessage = JSON.parse(message.body);
@@ -162,7 +163,7 @@ const AdminInquirePage = () => {
                                 }
     
                                 retries--;
-                                await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기 후 재시도
+                                await new Promise((resolve) => setTimeout(resolve, 5000)); // 5초 대기 후 재시도
                             }
     
                             if (retries === 0) {
