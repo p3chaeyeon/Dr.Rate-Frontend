@@ -1,0 +1,702 @@
+/* src/pages/ListDepositPage/ListDepositPage.scss */
+
+.listSection {
+  font-size: 16px;
+  padding-top: 50px;
+
+
+  .listTitleDiv {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+
+  .filterDiv {
+    margin-top: 5px;
+    border-top: 1px solid var(--font1);
+    border-bottom: 1px solid var(--font1);
+
+    .commonFilterDiv {
+      padding: 10px;
+      background: var(--bg2);
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+
+      .bankSelectContainer {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 20px;
+
+        .bank {
+          font-size: 18px;
+          font-weight: 500;
+        }
+
+        .bankSelect {
+          min-width: 200px;
+          height: 40px;
+          padding: 5px;
+          border: 1px solid var(--divider-border);
+          border-radius: 5px;
+          background-color: var(--white);
+          cursor: pointer;
+
+          option {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .bankSelectedContainer {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        max-width: 100%;
+        flex-wrap: wrap;
+
+        .bankSelectedItemDiv {
+          height: 40px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 8px;
+          border: 1px solid var(--black);
+          border-radius: 5px;
+          background: var(--white);
+          cursor: pointer;
+          gap: 8px;
+          width: 120px;
+          font-size: 15px;
+
+          .selectedBankItem {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .bankSelectedBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+              width: 16px;
+              height: 16px;
+            }
+          }
+        }
+      }
+    }
+
+    .nonMemberFilterContainer {
+      margin: 50px 0;
+      padding: 10px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--main2);
+      color: var(--white);
+      font-size: 28px;
+      font-weight: 600;
+
+      .nonMemberMessage {
+        .click {
+          text-decoration: underline;
+          margin-left: 10px;
+          cursor: pointer;
+        }
+
+        .loginLink {
+          text-decoration: underline;
+          margin-left: 10px;
+          cursor: pointer;
+          color: var(--main1);
+        }
+      }
+    }
+
+    .memberFilterContainer {
+      margin: 30px 0;
+      border: 1px solid var(--divider-border);
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+
+      .memberFilterItemDiv {
+        width: 46%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 20px;
+
+        .memberFilterItem {
+          font-size: 18px;
+          font-weight: 600;
+          min-width: 120px;
+        }
+
+        .memberFilterInput {
+          border: 1px solid var(--divider-border);
+          border-radius: 5px;
+          padding: 0 10px;
+          font-size: 14px;
+          color: var(--font1);
+          cursor: pointer;
+          height: 40px;
+          flex: 1;
+          min-width: 0;
+        }
+
+        .noPointer {
+          cursor: auto;
+        }
+
+
+        .toggleButtonGroup {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          font-size: 15px;
+          flex: 1;
+
+          .toggleButton {
+            width: 48%;
+            border: 1px solid var(--divider-border);
+            flex: 1;
+            cursor: pointer;
+            text-align: center;
+            height: 40px;
+          }
+
+          .toggleButton:first-child {
+            border-radius: 5px 0 0 5px;
+          }
+
+          .toggleButton:last-child {
+            border-radius: 0 5px 5px 0;
+            border-left: 0px;
+          }
+
+          .active {
+            background-color: var(--main2);
+            color: var(--white);
+            border: 0px;
+          }
+        }
+      }
+    }
+  } /* filterDiv */
+
+
+  .rateStandard {
+    margin: 20px 0 10px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    color: var(--font2);
+
+    .standardItem {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &.active {
+        font-weight: 600;
+        color: var(--font1);
+      }
+    }
+
+    :nth-child(2) {
+      cursor: default;
+    }
+  } /* rateStandard */
+
+
+  .errorDiv {
+    display: flex;
+    justify-content: center;
+    height: 280px;
+
+    .loadingImg {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+
+  .productListDiv {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .noProductList {
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      h4 {
+        letter-spacing: 2px;
+        font-size: 20px;
+      }
+    }
+
+    .productList {
+      border: 1px solid var(--font2);
+      border-radius: 3px;
+      height: 100px;
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+
+      .productLogoDiv {
+        width: 140px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .productLogoImg {
+          object-fit: contain;
+          width: 70px;
+        }
+      }
+
+      .productInfoDiv {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--black);
+        cursor: pointer;
+
+        .productBankProDiv {
+          .productBank {
+            font-weight: 600;
+          }
+        }
+
+        .productHighestRateDiv,
+        .productBasicRateDiv {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .productHighestRateDiv {
+          color: var(--red2);
+        }
+
+        .productHighestRatePer,
+        .productBasicRatePer {
+          width: 50px;
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .spclRate,
+        .basicRate {
+          margin-right: 3px;
+        }
+      }
+
+      .productBtnDiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px;
+
+        .productCompareBtn {
+          width: 60px;
+          font-size: 15px;
+          aspect-ratio: 1 / 1;
+          background: var(--bg2);
+          cursor: pointer;
+          border: 0px;
+          letter-spacing: 1px;
+          font-weight: normal;
+        }
+      }
+    }
+
+
+  } /* productListDiv */
+
+
+  .pagination {
+    display: flex;
+    height: 20%;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+
+    .pageBtn {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      height: 40%;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      background-color: #fff;
+
+      button {
+        padding: 8px 16px;
+        /* 버튼 내부 여백 */
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        /* 배경, 그림자, 크기 전환 효과 */
+
+        &:hover {
+          background-color: #f7f7f7;
+          box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+          transform: scale(1.05);
+        }
+
+        &:active {
+          background-color: #ececec;
+          box-shadow: none;
+          transform: scale(0.95);
+        }
+      }
+
+      .active {
+        background-color: #007bff;
+        color: #fff;
+
+        &:hover {
+          background-color: #9fc5ee;
+          transform: scale(1.05);
+        }
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        color: #aaa;
+        background-color: #f5f5f5;
+      }
+    }
+  }
+
+
+}
+
+
+/* ====================================== 가로 900px 이하 ====================================== */
+@media (max-width: 900px) {
+  .listSection {
+    .filterDiv {
+      .nonMemberFilterContainer {
+        font-size: 24px;
+      }
+
+      .memberFilterContainer {
+        .memberFilterItemDiv {
+          .memberFilterItem {
+            font-size: 16px;
+            min-width: 110px;
+
+          }
+        }
+      }
+    }
+
+    .productListDiv {
+      .productList {
+        gap: 20px;
+
+        .productLogoDiv {
+          width: 90px;
+
+          .productLogoImg {
+            width: 60px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/* ====================================== 가로 800px 이하 ====================================== */
+@media (max-width: 800px) {
+  .listSection {
+    .filterDiv {
+      .memberFilterContainer {
+        .memberFilterItemDiv {
+          gap: 10px;
+        }
+      }
+    }
+
+    .productListDiv {
+      .productList {
+        gap: 10px;
+
+        .productLogoDiv {
+          width: 76px;
+
+          .productLogoImg {
+            width: 54px;
+          }
+        }
+
+        .productBtnDiv {
+          .productCompareBtn {
+            width: 54px;
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/* ====================================== 가로 700px 이하 ====================================== */
+@media (max-width: 700px) {
+  .listSection {
+    .filterDiv {
+      .nonMemberFilterContainer {
+        font-size: 22px;
+      }
+
+      .memberFilterContainer {
+        .memberFilterItemDiv {
+          gap: 10px;
+
+          .memberFilterItem {
+            font-size: 14px;
+            min-width: 90px;
+          }
+
+          .toggleButtonGroup {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .productListDiv {
+      .productList {
+        .productLogoDiv {
+          width: 70px;
+
+          .productLogoImg {
+            width: 50px;
+          }
+        }
+
+        .productInfoDiv {
+          padding: 0 5px;
+        }
+      }
+    }
+  }
+}
+
+/* ====================================== 가로 600px 이하 ====================================== */
+@media (max-width: 600px) {
+  .listSection {
+    padding: 20px 10px;
+    width: 84%;
+
+    .listTitleDiv {
+      font-size: 18px;
+    }
+
+    .filterDiv {
+      .commonFilterDiv {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+
+        .bankSelectContainer {
+          .bank {
+            font-size: 16px;
+          }
+
+          .bankSelect {
+            min-width: 170px;
+            height: 36px;
+          }
+        }
+
+
+        .bankSelectedContainer {
+
+          &.hasItems {
+            margin-top: 10px;
+            /* 선택된 은행이 있을 때 */
+          }
+
+          .bankSelectedItemDiv {
+            width: 110px;
+            height: 36px;
+
+            .selectedBankItem {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+
+
+      .nonMemberFilterContainer {
+        margin: 30px 0;
+        font-size: 20px;
+
+        .nonMemberMessage {
+          text-align: center;
+        }
+      }
+
+
+
+      .memberFilterContainer {
+        .memberFilterItemDiv {
+          width: 100%;
+          gap: 10px;
+
+          .memberFilterItem {
+            min-width: 90px;
+          }
+
+          .memberFilterInput {
+            height: 36px;
+          }
+
+          .toggleButtonGroup {
+            font-size: 14px;
+
+            .toggleButton {
+              height: 36px;
+            }
+          }
+        }
+      }
+    }
+
+    .productListDiv {
+      .productList {
+        .productLogoDiv {
+          width: 66px;
+          margin-left: 10px;
+
+          .productLogoImg {
+            width: 44px;
+          }
+        }
+
+        .productInfoDiv {
+          padding: 10px 0;
+          flex-direction: column;
+          align-items: flex-start;
+
+          .productBankProDiv {
+            font-size: 13px;
+          }
+
+          .productRateDiv {
+            display: flex;
+            gap: 8px;
+
+            .productHighestRateDiv,
+            .productBasicRateDiv {
+              font-size: 12px;
+            }
+
+            .productHighestRatePer,
+            .productBasicRatePer {
+              width: 36px;
+            }
+
+          }
+        }
+
+        .productBtnDiv {
+          .productCompareBtn {
+            width: 50px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+
+  }
+}
+
+/* ====================================== 가로 450px 이하 ====================================== */
+@media (max-width: 450px) {
+  .listSection {
+    
+    .errorDiv {
+      height: 100px;
+    }
+
+    .productListDiv {
+      .noProductList {
+        height: 100px;
+      }
+
+      .productList {
+        gap: 7px;
+
+        .productLogoDiv {
+          width: 60px;
+
+          .productLogoImg {
+            width: 40px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/* ====================================== 가로 430px 이하 ====================================== */
+@media (max-width: 430px) {
+  .listSection {
+
+    .productListDiv {
+      .productList {
+        .productLogoDiv {
+          width: 54px;
+          margin: 0;
+        }
+
+        .productInfoDiv {
+          .productRateDiv {
+            flex-direction: column;
+            gap: 0;
+          }
+        }
+
+        .productBtnDiv {
+          .productCompareBtn {
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}

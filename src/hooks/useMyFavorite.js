@@ -2,6 +2,7 @@
 /* 마이페이지 즐겨찾기; MyDepositPage, MyInstallmentPage */
 
 import { useLocation } from 'react-router-dom';
+import { useCallback, useState, useEffect } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
     categoryAtom,
@@ -13,9 +14,9 @@ import {
     favoriteDataAtom,
     hasSelectedItemsAtom,
 } from 'src/atoms/myFavoriteAtom';
-import { useCallback, useState, useEffect } from 'react';
 import { getFavorite, searchFavorite, deleteFavorite } from 'src/apis/myFavoriteAPI';
 import useModal from 'src/hooks/useModal';
+
 
 
 const useMyFavorite = () => {
@@ -45,6 +46,8 @@ const useMyFavorite = () => {
         confirmContent, 
     } = useModal();
 
+
+
     /* 개별 체크박스 상태 업데이트 */
     const handleIndividualCheck = (index, isChecked) => {
         setIndividualChecked((prev) => {
@@ -68,14 +71,14 @@ const useMyFavorite = () => {
         } finally {
             setLoading(false);
         }
-    }, [category, setFavoriteData, setIndividualChecked, setAllCheckedState]);
+    }, [category, setFavoriteData]);
 
 
     /* 페이지 URL 변경 감지 시 데이터 리로드 */
     useEffect(() => {
         setSearchValue('');
         fetchFavorites();
-    }, [fetchFavorites, location.pathname]);     
+    }, [fetchFavorites, location.pathname]); 
 
 
     /* 마이페이지 즐겨찾기 검색 */
@@ -107,7 +110,7 @@ const useMyFavorite = () => {
         try {
             await deleteFavorite(selectedIds); // API 호출
             await fetchFavorites(); // 삭제 후 목록 갱신
-            closeConfirmModal(); // Confirm Modal 닫기
+            closeConfirmModal();
         } catch (error) {
             console.error('삭제 중 에러 발생:', error);
             throw error;
@@ -116,7 +119,7 @@ const useMyFavorite = () => {
 
     /* 취소 버튼 클릭 */
     const handleCancel = () => {
-        closeConfirmModal(); // Confirm Modal 닫기
+        closeConfirmModal(); 
     };
 
     /* 삭제 버튼 클릭 */
@@ -149,7 +152,7 @@ const useMyFavorite = () => {
         handleSearch,
         hasSelectedItems,
         handleDeleteClick,
-        isAlertOpen, // AlertModal 상태
+        isAlertOpen,
         openAlertModal,
         closeAlertModal,
         alertContent,

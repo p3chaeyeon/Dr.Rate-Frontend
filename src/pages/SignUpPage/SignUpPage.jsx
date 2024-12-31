@@ -19,6 +19,7 @@ import {
 import googleIcon from 'src/assets/socialIcons/Google-Icon.png';
 import kakaoIcon from 'src/assets/socialIcons/Kakao-Icon.png';
 import naverIcon from 'src/assets/socialIcons/Naver-Icon.png';
+import FindModal from 'src/components/Modal/FindModal/index.js';
 
 const SignUpPage = () => {
     const navigate = useNavigate();
@@ -38,6 +39,10 @@ const SignUpPage = () => {
     const [modalTitle, setModalTitle] = useState(''); // 모달 제목
     const [modalMessage, setModalMessage] = useState(''); // 모달 메시지
     const [isEmailVerified, setIsEmailVerified] = useState(false); // 이메일 인증 여부 상태 추가
+
+    //Find 모달 상태 관리
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalMode, setModalMode] = useState('id'); // 'id' or 'pw'
 
     // 비밀번호 검증
     const handlePasswordBlur = () => {
@@ -166,7 +171,12 @@ const SignUpPage = () => {
                 </div>
 
                 <div className={styles.signUpForm}>
-                    <form>
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            handleSignUp();
+                        }}
+                    >
                         <div className={styles.inputWrapper}>
                             <input
                                 type="text"
@@ -264,10 +274,11 @@ const SignUpPage = () => {
                             <label htmlFor="confirmPassword">비밀번호 확인</label>
                         </div>
                         {confirmPwdError && <p className={styles.errorText}>{confirmPwdError}</p>}
+
+                        <button type="submit">회원가입</button>
                     </form>
                 </div>
 
-                <button onClick={handleSignUp}>회원가입</button>
 
                 <div className={styles.icons}>
                     <img
@@ -288,7 +299,19 @@ const SignUpPage = () => {
                 </div>
 
                 <div className={styles.findUser}>
-                    <p>아이디 찾기</p>/<p>비밀번호 찾기</p>
+                    <p onClick={() => {
+                        setModalMode('id');
+                        setIsModalOpen(true);
+                    }}>
+                        아이디 찾기
+                    </p>
+                    /
+                    <p onClick={() => {
+                        setModalMode('pw');
+                        setIsModalOpen(true);
+                    }}>
+                        비밀번호 찾기
+                    </p>
                 </div>
             </section>
 
@@ -298,6 +321,11 @@ const SignUpPage = () => {
                 closeModal={handleCloseModal}
                 title={modalTitle}
                 message={modalMessage}
+            />
+            <FindModal
+                isOpen={isModalOpen}
+                closeModal={() => setIsModalOpen(false)}
+                mode={modalMode} // 'id' OR 'pw'
             />
         </main>
     );

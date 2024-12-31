@@ -26,39 +26,78 @@
             .myData {
                 width: 28rem;
                 padding-bottom: 2px;
+                font-weight: normal;
             }
         }
         .buttonBox {
             display: flex;
             width: 100%;
-            justify-content: flex-end;
-            button {
-                margin-top: 1.8rem;
-                background-color: var(--main2);
-                padding: 5px 15px;
-                color: var(--white);
-                border: 0 ;
+            justify-content: space-between;
+            .deleteUser{
+                display: flex;
+                align-content: flex-end;
+                p {
+                    cursor: pointer;
+                    display: inline-block;
+                    height: auto;
+                    margin-top: 28px;
+                    font-weight: normal;
+                    color: var(--divider-border);
+                }
             }
-            button:hover {
-                background-color: var(--main1);
+            .editandreset {
+                display: flex;
+                button {
+                    margin-top: 1.8rem;
+                    background-color: var(--main2);
+                    transition: background-color 0.3s;
+                    padding: 5px 15px;
+                    color: var(--white);
+                    border: 0 ;
+                    &:hover {
+                        background-color: var(--main1);
+                    }
+                }
             }
         }
     }
 } //myInfoSection (메인)
 
-/* ====================================== 가로 1000px 이하 ====================================== */
-@media (max-width: 1000px) {
+
+/* ====================================== 가로 750px 이하 ====================================== */
+@media (max-width: 750px) {
     .myInfoSection {
-        padding-top: 60px;
+        width: 75%;
+        margin: 0 auto; 
+        padding-top: 100px; 
+    }
+
+    .myInfo {
+        .tagBox {
+            flex-direction: column; /* 세로정렬 */
+            align-items: flex-start; /* 왼쪽 정렬 */
+            margin-top: 5rem; /* 각 항목 사이의 여백 */
+        }
+        .buttonBox {
+            justify-content: center;
+        }
     }
 }
-
-
-
 
 /* ====================================== 가로 430px 이하 ====================================== */
 @media (max-width: 430px) {
     .myInfoSection{
         padding-top: 50px;
+    }
+
+    .myInfo {
+        .tagBox {
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 1.5rem;
+        }
+        .buttonBox {
+            justify-content: center;
+        }
     }
 }

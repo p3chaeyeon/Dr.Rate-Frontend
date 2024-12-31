@@ -14,6 +14,10 @@ import mobileSideCompare from 'src/assets/icons/mobileSideCompare.png';
 import mobileSideDeposit from 'src/assets/icons/mobileSideDeposit.png';
 import mobileSideInstallment from 'src/assets/icons/mobileSideInstallment.png';
 import useDropdown from 'src/hooks/useDropdown';
+import {userData} from "src/atoms/userData.js";
+import {useAtom} from "jotai";
+
+import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 
 
 const Header = () => {
@@ -22,20 +26,45 @@ const Header = () => {
     const isPathActive = (paths) => paths.some((path) => location.pathname.includes(path));
     const { isDropdownOpen, dropdownRef, handleMouseEnter, handleMouseLeave } = useDropdown();
 
-    // const { isLoggedIn, updateSession, clearSession } = useSession();
-    // const [isLoggedIn, setIsLoggedIn] = useState(!!session);
     const { isLoggedIn, clearSession } = useSession();
 
     const handleLogin = () => {
-        localStorage.setItem('Authorization', 'dummy');
+        // localStorage.setItem('Authorization', 'dummy');
         navigate(PATH.SIGN_IN);
     };
 
-    const handleLogout = () => {
-        clearSession();
-        navigate(PATH.HOME); 
-    };
+    const handleLogout = async () => {
+        try {
+            const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/logout`);
+            if(response.data.success) {
+                clearSession();
+                sideNavigation(PATH.HOME);
+                return { success: true, message: '로그아웃 완료'};
+            } else {
+                return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
+            }
+        } catch {
+            return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
+        }
 
+    };
+    //로그인시 회원정보 갖고 온 상태
+    const [myData,setMyData] = useAtom(userData);
+
+    //데이터 받아오기 (atom에 데이터가 없을 경우)
+        useEffect(() => {
+            const userDTO = async () => {
+                try {
+                    if(!myData) { // atom에 데이터가 없을경우
+                        const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/myInfo`);
+                        setMyData(response.data.result);  // 데이터 업데이트
+                    }
+                } catch (error) {
+                    console.error('데이터 가져오기 실패:', error);
+                }
+            };
+            userDTO();
+        }, [myData, setMyData]);
 
     // 모바일 사이드 메뉴
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -184,7 +213,7 @@ const Header = () => {
                                         <img src={mobileSideProfile} alt="mobileSideProfile" className={styles.mobileSideProfile} />
                                     </div>
                                     <div className={styles.sideUserName}>
-                                        <span>홍박사</span>님
+                                        <span>{myData.username}</span>님
                                     </div>
                                 </div>
                             </div>
@@ -251,13 +280,13 @@ const Header = () => {
                                     <ul className={styles.compareSubMenuList}>
                                         <li
                                             className={styles.compareSubMenuItem}
-                                            onClick={() => sideNavigation(PATH.DEPOSIT_COMPARE)}
+                                            onClick={() => sideNavigation(`${PATH.PRODUCT_COMPARE}/d`)}
                                         >
                                             예금 비교
                                         </li>
                                         <li
                                             className={styles.compareSubMenuItem}
-                                            onClick={() => sideNavigation(PATH.INSTALLMENT_COMPARE)}
+                                            onClick={() => sideNavigation(`${PATH.PRODUCT_COMPARE}/i`)}
                                         >
                                             적금 비교
                                         </li>

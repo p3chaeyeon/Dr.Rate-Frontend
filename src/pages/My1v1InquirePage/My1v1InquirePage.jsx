@@ -9,6 +9,7 @@ import MyNav from 'src/components/MyNav';
 import AlertModal from 'src/components/Modal/AlertModal';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
+import spinner from 'src/assets/icons/spinner.gif';
 import api from 'src/apis/axiosInstanceAPI';
 
 
@@ -25,6 +26,8 @@ const My1v1InquirePage = () => {
     const [inputMessage, setInputMessage] = useState(""); // 메시지 입력 필드 상태
     const [stompClient, setStompClient] = useState(null); // WebSocket STOMP 클라이언트 상태
     const [isDragging, setIsDragging] = useState(false); // 드래그 상태
+
+    const [isLoading, setLoading] = useState(false)
 
 
     const {
@@ -138,36 +141,83 @@ const My1v1InquirePage = () => {
             console.error("WebSocket 연결 실패: 토큰이 없습니다.");
             return;
         }
-
-        const socket = new WebSocket(`${PATH.SERVER}/ws`);
-        const client = Stomp.over(socket);
-
-        client.connect(
-            { Authorization: `Bearer ${token}` },
-            () => {
-                console.log("WebSocket connected");
-                client.subscribe(`/sub/chat/room/${userId}`, (message) => {
-                    const newMessage = JSON.parse(message.body);
-                    setMessages((prevMessages) => [...prevMessages, newMessage]);
-                });
-            },
-            (error) => {
-                console.error("WebSocket connection error:", error);
-                setTimeout(connectWebSocket, 5000);
-            }
-        );
-
-        setStompClient(client);
-
-        return () => {
-            if (client) {
-                console.log('Disconnecting WebSocket');
-                client.disconnect(() => {
-                    console.log('WebSocket disconnected');
-                }, {});
+    
+        let retries = 100; // Kafka 토픽 준비를 위한 최대 재시도 횟수
+        let isActive = true; // 컴포넌트가 활성화 상태인지 확인
+    
+        const connectWebSocket = async () => {
+            try {
+                // 1. 채팅방 생성 또는 로드
+                const createRoomResponse = await api.post(`/api/chatrooms/create`, { id: userId });
+                if (createRoomResponse.data.success) {
+                    console.log("채팅방 생성/로드 성공");
+                } else {
+                    console.error("채팅방 생성/로드 실패");
+                    return;
+                }
+    
+                // 2. WebSocket 연결
+                const socket = new WebSocket(`${PATH.SERVER}/ws`);
+                const client = Stomp.over(socket);
+    
+                client.connect(
+                    { Authorization: `Bearer ${token}` },
+                    async () => {
+                        console.log("WebSocket connected");
+    
+                        // 3. Kafka 토픽 체크 및 구독
+                        while (isActive && retries > 0) {
+                            try {
+                                const response = await api.get(`/api/topic/check/chat-room-${userId}`);
+                                setLoading(true);
+                                if (response.data.success === true) {
+                                    console.log("Kafka topic ready, subscribing...");
+                                    client.subscribe(`/sub/chat/room/${userId}`, (message) => {
+                                        const newMessage = JSON.parse(message.body);
+                                        setMessages((prevMessages) => [...prevMessages, newMessage]);
+                                    });
+                                    break; // 구독 성공 시 반복 종료
+                                }
+                            } catch (error) {
+                                console.error("Kafka 토픽 확인 오류:", error);
+                            }
+    
+                            retries--;
+                            await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기 후 재시도
+                        }
+    
+                        if (retries === 0) {
+                            console.error("Kafka 토픽 확인 실패");
+                        }
+                    },
+                    (error) => {
+                        console.error("WebSocket connection error:", error);
+                        setTimeout(connectWebSocket, 5000); // 5초 후 재시도
+                    }
+                );
+    
+                setStompClient(client);
+    
+                return () => {
+                    if (client) {
+                        console.log("Disconnecting WebSocket");
+                        client.disconnect(() => {
+                            console.log("WebSocket disconnected");
+                        }, {});
+                    }
+                };
+            } catch (error) {
+                console.error("WebSocket 초기화 실패:", error);
             }
         };
+    
+        connectWebSocket();
+    
+        return () => {
+            isActive = false; // 컴포넌트가 언마운트될 때 isActive를 false로 설정
+        };
     }, [token]);
+    
 
     // 메세지 불러옴(페이징 처리)
     const fetchMessages = async (currentPage) => {
@@ -249,6 +299,18 @@ const My1v1InquirePage = () => {
         <main>
             <MyNav />
 
+            {isLoading || (
+                <div className={ styles.spinner }>
+                    <div className={styles.spinnerDiv}>
+                        <img src={spinner}/>
+                        <div className={styles.spinnerSpan}>
+                            <span>로딩중 입니다.</span>
+                            <span>잠시만 기다려주세요.</span>
+                        </div>
+                    </div>
+                </div>
+            )}
+            
             <section className={styles.my1v1InquireSection}>
                 {/* 문의 내역 카테고리 - 예금 or 적금 */}
                 <div className={ styles.inquireTypeDiv }>
@@ -260,6 +322,7 @@ const My1v1InquirePage = () => {
                         1:1 문의
                     </div>
                 </div>
+
 
                 <section className={styles.userInquireBody}>
                     {/* 헤더 영역 */}
