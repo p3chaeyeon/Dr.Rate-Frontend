@@ -171,7 +171,7 @@ const useProductList = () => {
             setPeriod("");
             setRate("");
             setJoin("");
-            setSort("");
+            setSort("spclRate");
             setCurrentPage(1);
         }
 
