@@ -66,9 +66,7 @@ const useMyFavorite = () => {
     };    
 
 
-    /**
-     * 라우트에 따라 category 설정
-     */
+    /* 라우트에 따라 category 설정 */
     useEffect(() => {
         if (location.pathname.includes('myInstallment')) {
             setCategory('installment');
@@ -105,7 +103,7 @@ const useMyFavorite = () => {
         setLoading(true);
         try {
             const data = await getFavorite(category);
-            console.log('[DEBUG] fetchFavorites. category=', category, ', data=', data);
+            // console.log('[DEBUG] fetchFavorites. category=', category, ', data=', data);
             setFavoriteData(data);
             setIndividualChecked(new Array(data.length).fill(false));
             setAllCheckedState(false);
@@ -131,7 +129,7 @@ const useMyFavorite = () => {
      */
     useEffect(() => {
         if (category && category !== prevCategory) {
-            console.log(`[DEBUG] category="${category}" -> fetchFavorites()`);
+            // console.log(`[DEBUG] category="${category}" -> fetchFavorites()`);
             setPrevCategory(category); // 현재 category를 이전 category로 설정
 
             // 검색 키, 값 초기화
@@ -171,10 +169,7 @@ const useMyFavorite = () => {
 
 
 
-    /**
-     * 마이페이지 즐겨찾기 삭제
-     * 삭제 후에는 API에서 최신 목록을 다시 불러오므로 fetchFavorites 호출
-     */
+    /* 마이페이지 즐겨찾기 삭제 */
     const handleDeleteClick = useCallback(() => {
         if (!hasSelectedItems) {
             openAlertModal('삭제할 항목이 없습니다', '삭제할 상품을 선택해주세요.');
