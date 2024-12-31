@@ -1,7 +1,7 @@
 /* src/hooks/useMyFavorite.js */
 /* 마이페이지 즐겨찾기; MyDepositPage, MyInstallmentPage */
 
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useCallback, useState, useEffect } from 'react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import {
@@ -15,15 +15,20 @@ import {
     hasSelectedItemsAtom,
 } from 'src/atoms/myFavoriteAtom';
 import { getFavorite, searchFavorite, deleteFavorite } from 'src/apis/myFavoriteAPI';
+import { useSession } from 'src/hooks/useSession';
 import useModal from 'src/hooks/useModal';
+import { PATH } from 'src/utils/path';
 
 
 
 const useMyFavorite = () => {
+    const { isLoggedIn } = useSession();
+
+    const navigate = useNavigate();
     const location = useLocation();
 
     // 상태 및 Atom 관리
-    const category = useAtomValue(categoryAtom);
+    const [category, setCategory] = useAtom(categoryAtom);
     const [favoriteData, setFavoriteData] = useAtom(favoriteDataAtom);
     const [searchKey, setSearchKey] = useAtom(searchKeyAtom);
     const [searchValue, setSearchValue] = useAtom(searchValueAtom);
@@ -32,8 +37,11 @@ const useMyFavorite = () => {
     const setAllCheckedState = useSetAtom(setAllCheckedAtom);
     const hasSelectedItems = useAtomValue(hasSelectedItemsAtom); // 선택된 항목이 있는지 확인
 
-    const [loading, setLoading] = useState(true); // 로딩 상태
+    const [loading, setLoading] = useState(false); // 로딩 상태
     const [error, setError] = useState(null); // 에러 상태
+    const [prevCategory, setPrevCategory] = useState("");
+
+
 
     const {         
         isAlertOpen,
@@ -46,6 +54,30 @@ const useMyFavorite = () => {
         confirmContent, 
     } = useModal();
 
+
+    const handleConfirm = () => {
+        navigate(PATH.SIGN_IN);
+        closeConfirmModal();
+    };
+
+    const handleCancel = () => {
+        navigate(PATH.HOME);
+        closeConfirmModal();
+    };    
+
+
+    /**
+     * 라우트에 따라 category 설정
+     */
+    useEffect(() => {
+        if (location.pathname.includes('myInstallment')) {
+            setCategory('installment');
+        } else {
+            setCategory('deposit');
+        }
+    }, [location.pathname]);
+
+    
 
 
     /* 개별 체크박스 상태 업데이트 */
@@ -60,9 +92,20 @@ const useMyFavorite = () => {
 
     /* 마이페이지 즐겨찾기 조회 */
     const fetchFavorites = useCallback(async () => {
+        if (!isLoggedIn) {
+            openConfirmModal(
+                '로그인이 필요합니다.',
+                '로그인 페이지로 이동하시겠습니까?',
+                handleConfirm,
+                handleCancel,
+            );
+            return; // 로그인되지 않았으면 API 호출 중단
+        }
+
+        setLoading(true);
         try {
-            setLoading(true);
             const data = await getFavorite(category);
+            console.log('[DEBUG] fetchFavorites. category=', category, ', data=', data);
             setFavoriteData(data);
             setIndividualChecked(new Array(data.length).fill(false));
             setAllCheckedState(false);
@@ -71,14 +114,37 @@ const useMyFavorite = () => {
         } finally {
             setLoading(false);
         }
-    }, [category, setFavoriteData]);
+    }, [
+        isLoggedIn,
+        category,
+        setFavoriteData,
+        setIndividualChecked,
+        setAllCheckedState,
+    ]);
 
 
-    /* 페이지 URL 변경 감지 시 데이터 리로드 */
+
+  
+    /**
+     * category가 변경될 때만 fetchFavorites를 호출하도록 수정
+     * 이전 category와 현재 category가 다를 때만 호출
+     */
     useEffect(() => {
-        setSearchValue('');
-        fetchFavorites();
-    }, [fetchFavorites, location.pathname]); 
+        if (category && category !== prevCategory) {
+            console.log(`[DEBUG] category="${category}" -> fetchFavorites()`);
+            setPrevCategory(category); // 현재 category를 이전 category로 설정
+
+            // 검색 키, 값 초기화
+            setSearchKey('bankName');
+            setSearchValue('');
+
+            // API 호출
+            fetchFavorites();
+        }
+    }, [category, prevCategory, fetchFavorites, setSearchKey, setSearchValue]);
+
+
+      
 
 
     /* 마이페이지 즐겨찾기 검색 */
@@ -94,49 +160,61 @@ const useMyFavorite = () => {
         } finally {
             setLoading(false);
         }
-    }, [category, searchKey, searchValue, setFavoriteData, setIndividualChecked, setAllCheckedState]);
-
+    }, [category, 
+        searchKey, 
+        searchValue, 
+        setFavoriteData, 
+        setIndividualChecked, 
+        setAllCheckedState
+    ]);
     
 
 
 
-
-    /* 마이페이지 즐겨찾기 삭제 */
-    const handleConfirm = async () => {
-        const selectedIds = favoriteData
-            .filter((_, index) => individualChecked[index]) // 선택된 항목 필터링
-            .map((item) => item.favoriteId); // ID만 추출
-
-        try {
-            await deleteFavorite(selectedIds); // API 호출
-            await fetchFavorites(); // 삭제 후 목록 갱신
-            closeConfirmModal();
-        } catch (error) {
-            console.error('삭제 중 에러 발생:', error);
-            throw error;
-        }
-    };
-
-    /* 취소 버튼 클릭 */
-    const handleCancel = () => {
-        closeConfirmModal(); 
-    };
-
-    /* 삭제 버튼 클릭 */
-    const handleDeleteClick = () => {
+    /**
+     * 마이페이지 즐겨찾기 삭제
+     * 삭제 후에는 API에서 최신 목록을 다시 불러오므로 fetchFavorites 호출
+     */
+    const handleDeleteClick = useCallback(() => {
         if (!hasSelectedItems) {
-            openAlertModal('삭제할 항목이 없습니다', '삭제할 상품을 선택해주세요');
+            openAlertModal('삭제할 항목이 없습니다', '삭제할 상품을 선택해주세요.');
             return;
         }
 
-        // 확인 모달 표시
         openConfirmModal(
             '선택한 항목을 삭제하시겠습니까?',
             '삭제할 항목을 확인해주세요.',
-            handleConfirm, 
-            handleCancel
+            async () => {
+                const selectedIds = favoriteData
+                    .filter((_, index) => individualChecked[index])
+                    .map((item) => item.favoriteId);
+
+                try {
+                    setLoading(true);
+                    await deleteFavorite(selectedIds);
+                    await fetchFavorites(); // 조회 호출
+                } catch (error) {
+                    console.error('삭제 중 에러 발생:', error);
+                } finally {
+                    closeConfirmModal();
+                    setLoading(false);
+                }
+            },
+            closeConfirmModal
         );
-    };
+    }, [
+        hasSelectedItems,
+        favoriteData,
+        individualChecked,
+        fetchFavorites,
+        openConfirmModal,
+        closeConfirmModal,
+        openAlertModal,
+    ]);
+
+
+
+
 
     return {
         individualChecked,
@@ -159,7 +237,7 @@ const useMyFavorite = () => {
         isConfirmOpen,
         openConfirmModal,
         closeConfirmModal,
-        confirmContent, 
+        confirmContent,
     };
 };
 

@@ -7,7 +7,7 @@ import { atom } from 'jotai';
 export const currentPageAtom = atom(1); // 기본값 1 (첫 페이지)
 
 /* 카테고리 필터 상태 관리; deposit 또는 installment */
-export const categoryAtom = atom("installment");
+export const categoryAtom = atom("deposit");
 
 /* 공통 필터 상태 관리 */
 export const banksAtom = atom([]); // 은행 선택
