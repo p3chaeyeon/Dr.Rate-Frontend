@@ -105,41 +105,83 @@ const useMyFavorite = () => {
 
 
     /* 마이페이지 즐겨찾기 삭제 */
-    const handleConfirm = async () => {
-        const selectedIds = favoriteData
-            .filter((_, index) => individualChecked[index]) // 선택된 항목 필터링
-            .map((item) => item.favoriteId); // ID만 추출
+    // const handleConfirm = async () => {
+    //     const selectedIds = favoriteData
+    //         .filter((_, index) => individualChecked[index]) // 선택된 항목 필터링
+    //         .map((item) => item.favoriteId); // ID만 추출
 
-        try {
-            await deleteFavorite(selectedIds); // API 호출
-            await fetchFavorites(); // 삭제 후 목록 갱신
-            closeConfirmModal();
-        } catch (error) {
-            console.error('삭제 중 에러 발생:', error);
-            throw error;
-        }
-    };
+    //     try {
+    //         await deleteFavorite(selectedIds); // API 호출
+    //         await fetchFavorites(); // 삭제 후 목록 갱신
+    //         closeConfirmModal();
+    //     } catch (error) {
+    //         console.error('삭제 중 에러 발생:', error);
+    //         throw error;
+    //     }
+    // };
 
-    /* 취소 버튼 클릭 */
-    const handleCancel = () => {
-        closeConfirmModal(); 
-    };
+    // /* 취소 버튼 클릭 */
+    // const handleCancel = () => {
+    //     closeConfirmModal(); 
+    // };
 
-    /* 삭제 버튼 클릭 */
-    const handleDeleteClick = () => {
+    // /* 삭제 버튼 클릭 */
+    // const handleDeleteClick = () => {
+    //     if (!hasSelectedItems) {
+    //         openAlertModal('삭제할 항목이 없습니다', '삭제할 상품을 선택해주세요');
+    //         return;
+    //     }
+
+    //     // 확인 모달 표시
+    //     openConfirmModal(
+    //         '선택한 항목을 삭제하시겠습니까?',
+    //         '삭제할 항목을 확인해주세요.',
+    //         handleConfirm, 
+    //         handleCancel
+    //     );
+    // };
+
+
+    const handleDeleteClick = useCallback(() => {
         if (!hasSelectedItems) {
-            openAlertModal('삭제할 항목이 없습니다', '삭제할 상품을 선택해주세요');
+            openAlertModal('삭제할 항목이 없습니다', '삭제할 상품을 선택해주세요.');
             return;
         }
 
-        // 확인 모달 표시
         openConfirmModal(
             '선택한 항목을 삭제하시겠습니까?',
             '삭제할 항목을 확인해주세요.',
-            handleConfirm, 
-            handleCancel
+            async () => {
+                const selectedIds = favoriteData
+                    .filter((_, index) => individualChecked[index])
+                    .map((item) => item.favoriteId);
+
+                try {
+                    setLoading(true);
+                    await deleteFavorite(selectedIds);
+                    await fetchFavorites();
+                } catch (error) {
+                    console.error('삭제 중 에러 발생:', error);
+                } finally {
+                    closeConfirmModal();
+                    setLoading(false);
+                }
+            },
+            closeConfirmModal
         );
-    };
+    }, [
+        hasSelectedItems,
+        favoriteData,
+        individualChecked,
+        fetchFavorites,
+        openConfirmModal,
+        closeConfirmModal,
+        openAlertModal,
+    ]);
+
+
+
+
 
     return {
         individualChecked,
