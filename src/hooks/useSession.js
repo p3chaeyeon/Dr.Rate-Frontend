@@ -26,9 +26,6 @@ export const useSession = () => {
   // 로그아웃 처리
   const clearSession = () => {
     localStorage.removeItem('Authorization'); // 로컬 스토리지에서 토큰 삭제
-    console.log('Authorization removed');
-    localStorage.removeItem('depCompareList');
-    console.log('depCompareList removed');
     setIsLoggedIn(false); // 상태를 false로 업데이트
   };
 
