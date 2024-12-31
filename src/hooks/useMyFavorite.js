@@ -23,7 +23,7 @@ const useMyFavorite = () => {
     const location = useLocation();
 
     // 상태 및 Atom 관리
-    const category = useAtomValue(categoryAtom);
+    const [category, setCategory] = useAtom(categoryAtom);
     const [favoriteData, setFavoriteData] = useAtom(favoriteDataAtom);
     const [searchKey, setSearchKey] = useAtom(searchKeyAtom);
     const [searchValue, setSearchValue] = useAtom(searchValueAtom);
@@ -34,6 +34,9 @@ const useMyFavorite = () => {
 
     const [loading, setLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(null); // 에러 상태
+    const [prevCategory, setPrevCategory] = useState("");
+
+
 
     const {         
         isAlertOpen,
