@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import styles from './MyEmailInquirePage.module.scss';
-import { fetchInquiryList } from 'src/apis/axiosInstanceAPI'; // API 호출 함수
-import axios from 'axios'; // 삭제 요청에 사용
+import { fetchInquiryList } from 'src/apis/emailInquireAPI'; // API 호출 함수
+import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import MyNav from 'src/components/MyNav'; 
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
+import {PATH} from 'src/utils/path'
 
 const MyEmailInquirePage = () => {
     const navigate = useNavigate();
@@ -33,7 +34,7 @@ const MyEmailInquirePage = () => {
     const handleDelete = async (id) => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
             try {
-                await axios.delete(`/api/emailinquire/delete/${id}`); // 삭제 API 호출
+                await axiosInstanceAPI.delete(`${PATH.SERVER}/api/emailinquire/delete/${id}`); // 삭제 API 호출
                 setInquiries((prev) => prev.filter((inquire) => inquire.id !== id)); // 상태 업데이트
                 alert('문의가 성공적으로 삭제되었습니다.');
             } catch (err) {

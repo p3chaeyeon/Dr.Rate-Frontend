@@ -3,6 +3,8 @@ import styles from './EmailInquirePage.module.scss';
 import { PATH } from 'src/utils/path';
 import { useNavigate } from 'react-router-dom';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
+import useModal from 'src/hooks/useModal';
+import ConfirmModal from 'src/components/Modal/ConfirmModal';
 
 import { useAtom } from 'jotai';
 import { userData } from 'src/atoms/userData';
@@ -19,13 +21,6 @@ const EmailInquirePage = () => {
     inquireTitle: "", // 제목
     inquireContent: "", // 문의 내용
     fileUuid: null, // 첨부파일
-    agreeToPrivacy: false,
-  });
-
-  const [errors, setErrors] = useState({
-    inquireCtg: false,
-    inquireTitle: false,
-    inquireContent: false,
     agreeToPrivacy: false,
   });
 
@@ -76,7 +71,15 @@ const EmailInquirePage = () => {
       fileInput.value = ""; 
     }
   };
+  //모달 변수
+  const {
+    isConfirmOpen,
+    openConfirmModal,
+    closeConfirmModal,
+    confirmContent,
+  } = useModal();
   
+  // 입력값
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
     if (type === "checkbox") {
@@ -88,51 +91,52 @@ const EmailInquirePage = () => {
     }
   };
 
-  // 입력 유효성 검사
-  const validateForm = () => {
-    const newErrors = {
-      inquireCtg: !formData.inquireCtg,
-      inquireTitle: !formData.inquireTitle.trim(),
-      inquireContent: !formData.inquireContent.trim(),
-      agreeToPrivacy: !formData.agreeToPrivacy,
-    };
-    setErrors(newErrors);
-    return !Object.values(newErrors).some((error) => error);
-  };
+  // 확인 버튼 클릭 핸들러
+  const handleSubmitInquire = () => {
+      const inquireDTO = async () => {
+          try {
+            const formDataToSend = new FormData();
 
-  const handleSubmitInquire = async () => {
-    if (!validateForm()) {
-      alert("필수 입력 항목을 확인해 주세요.");
-      return;
-    }
+            // 보내는 폼 데이터에 추가
+            formDataToSend.append("inquireCtg", formData.inquireCtg);
+            formDataToSend.append("inquireUser", formData.inquireUser);
+            formDataToSend.append("inquireEmail", formData.inquireEmail);
+            formDataToSend.append("inquireTitle", formData.inquireTitle);
+            formDataToSend.append("inquireContent", formData.inquireContent);
+            // formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
 
-    try {
-      const formDataToSend = new FormData();
-
-      // 보내는 폼 데이터에 추가
-      formDataToSend.append("inquireCtg", formData.inquireCtg);
-      formDataToSend.append("inquireUser", formData.inquireUser);
-      formDataToSend.append("inquireEmail", formData.inquireEmail);
-      formDataToSend.append("inquireTitle", formData.inquireTitle);
-      formDataToSend.append("inquireContent", formData.inquireContent);
-
-      // 폼데이터에 파일추가
-      if (formData.fileUuid) {
-        formDataToSend.append("fileUuid", formData.fileUuid); // 파일 추가
+            // 폼데이터에 파일추가
+            if (formData.fileUuid) {
+              formDataToSend.append("fileUuid", formData.fileUuid); // 파일 추가
+            }
+            const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/emailinquire/save`, 
+              formDataToSend,
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data", // 중요!
+                },
+              }
+            );
+            if(response.data.success) {
+                    navigate(`${PATH.MY_EMAIL_INQUIRE}`);
+            } else {
+                console.log("이메일 전송 중 오류 발생 : ", response);
+            }
+          } catch(error) {
+              console.error("이메일 전송 중 오류 발생 : ", error);
+          }
       }
-
-      const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/emailinquire/save`,
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data", // 중요!
-          },
-        }
-      );
-      console.log("이메일 전송 = " + response.data);
-    } catch (error) {
-      console.log(error);
-    }
+      inquireDTO();
+      closeConfirmModal(); // ConfirmModal 닫기
+  };
+  // 취소 버튼 클릭 핸들러
+  const handleCancel = () => {
+    // 취소 시 필요한 로직 작성
+    closeConfirmModal(); // ConfirmModal 닫기
+  };
+  
+  const handleSubmit = async () => {
+    openConfirmModal("전송 하시겠습니까?", null, handleSubmitInquire, handleCancel);
   }
 
   return (
@@ -157,9 +161,8 @@ const EmailInquirePage = () => {
               <option value="serviceImprovement">서비스 개선 제안</option>
               <option value="systemError">시스템 오류 제보</option>
             </select>
-            {errors.inquireCtg && <p className={styles.errorMsg}>문의 유형을 선택해 주세요.</p>}
+            <br></br>
             <small className={styles.hintInquiryType}>
-              <br></br>
               • 앱 개선 제안은 '서비스 개선 제안'으로 선택해 주세요
               <br></br>
               • 앱 장애 신고는 '시스템 오류 제보'로 선택해 주세요
@@ -205,7 +208,6 @@ const EmailInquirePage = () => {
               className={styles.textInput}
               placeholder="제목"
             />
-            {errors.inquireTitle && <p className={styles.errorMsg}>제목을 입력해 주세요.</p>}
           </div>
 
           {/* 문의 내용 */}
@@ -220,7 +222,6 @@ const EmailInquirePage = () => {
               maxLength="500"
             />
             <br></br>
-            {errors.inquireContent && <p className={styles.errorMsg}>문의 내용을 입력해 주세요.</p>}
             <small className={styles.hint}>
               {formData.inquireContent.length}자 / 최대 500자
             </small>
@@ -295,12 +296,20 @@ const EmailInquirePage = () => {
             className={`${styles.submitButton} ${!formData.agreeToPrivacy ? styles.disabled : ""
               }`}
             disabled={!formData.agreeToPrivacy}
-            onClick={handleSubmitInquire}
+            onClick={handleSubmit}
           >
             제출하기
           </button>
         </div>
       </section>
+      <ConfirmModal
+        isOpen={isConfirmOpen}           
+        closeModal={closeConfirmModal}   
+        title={confirmContent.title}     
+        message={confirmContent.message} 
+        onConfirm={confirmContent.onConfirm} 
+        onCancel={confirmContent.onCancel}   
+      /> 
     </main>
   );
 };
