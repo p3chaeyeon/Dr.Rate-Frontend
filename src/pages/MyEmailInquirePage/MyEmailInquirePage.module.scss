@@ -33,6 +33,13 @@
         max-width: 800px;
         color: var(--black);
 
+        .noInquiriesMessage {
+            text-align: center;
+            font-size: 16px;
+            color: var(--font2);
+            margin: 20px 0;
+        }
+
         .inquireList {
             padding: 10px 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
