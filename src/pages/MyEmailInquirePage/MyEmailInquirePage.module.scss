@@ -123,14 +123,15 @@
                     }
 
                     .inquireFileDiv {
-                        border: 1px solid red;
-                        /* 확인용. 나중에 삭제 */
                         min-height: 100px;
-
+                        display: flex;
+                        justify-content: center;
+                        margin-right: 24px;
                         .inquireFile {
-                            width: 100px;
+                            width: 200px;
                             aspect-ratio: 1 / 1;
                             object-fit: cover;
+                            cursor: pointer;
                         }
                     }
                 }
@@ -196,6 +197,7 @@
         }
     }
 }
+
 
 
 

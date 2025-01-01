@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import useModal from 'src/hooks/useModal';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import AlertModal from 'src/components/Modal/AlertModal';
 
 import { useAtom } from 'jotai';
 import { userData } from 'src/atoms/userData';
@@ -13,6 +14,18 @@ import xIcon from 'src/assets/icons/xIcon.svg';
 const EmailInquirePage = () => {
   const navigate = useNavigate();
   const [myData, setMyData] = useAtom(userData); // Jotai Atom 사용
+
+  const {
+    isAlertOpen,      // AlertModal이 열려 있는지 여부 (true/false 상태)
+    openAlertModal,   // AlertModal을 열기 위한 함수
+    closeAlertModal,  // AlertModal을 닫기 위한 함수
+    alertContent,    // AlertModal의 제목(title)과 메시지(message)를 담고 있는 객체
+
+    isConfirmOpen,
+    openConfirmModal,
+    closeConfirmModal,
+    confirmContent,
+  } = useModal();
 
   const [formData, setFormData] = useState({
     inquireCtg: "", // 문의 유형
@@ -71,6 +84,7 @@ const EmailInquirePage = () => {
       fileInput.value = ""; 
     }
   };
+<<<<<<< Updated upstream
   //모달 변수
   const {
     isConfirmOpen,
@@ -79,6 +93,9 @@ const EmailInquirePage = () => {
     confirmContent,
   } = useModal();
   
+=======
+
+>>>>>>> Stashed changes
   // 입력값
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -93,9 +110,17 @@ const EmailInquirePage = () => {
 
   // 확인 버튼 클릭 핸들러
   const handleSubmitInquire = () => {
+<<<<<<< Updated upstream
       const inquireDTO = async () => {
           try {
             const formDataToSend = new FormData();
+=======
+    const inquireDTO = async () => {
+      if (!validateForm()) {
+        openAlertModal("필수 입력 항목을 확인해 주세요.");
+        return;
+      }
+>>>>>>> Stashed changes
 
             // 보내는 폼 데이터에 추가
             formDataToSend.append("inquireCtg", formData.inquireCtg);
@@ -131,7 +156,6 @@ const EmailInquirePage = () => {
   };
   // 취소 버튼 클릭 핸들러
   const handleCancel = () => {
-    // 취소 시 필요한 로직 작성
     closeConfirmModal(); // ConfirmModal 닫기
   };
   
@@ -309,7 +333,17 @@ const EmailInquirePage = () => {
         message={confirmContent.message} 
         onConfirm={confirmContent.onConfirm} 
         onCancel={confirmContent.onCancel}   
+<<<<<<< Updated upstream
       /> 
+=======
+      />
+      <AlertModal
+        isOpen={isAlertOpen}
+        closeModal={closeAlertModal}
+        title={alertContent.title}
+        message={alertContent.message}
+      />
+>>>>>>> Stashed changes
     </main>
   );
 };

@@ -374,3 +374,39 @@
         }
     }
 }
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5); /* 모달 배경 어둡게 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 2000;
+    .imgAlert {
+        max-width: 90%;  /* 모달에 표시되는 이미지의 최대 너비 설정 */
+        max-height: 80%; /* 모달에 표시되는 이미지의 최대 높이 설정 */
+        border-radius: 10px; /* 이미지를 부드럽게 둥글게 처리 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 이미지에 그림자 추가 */
+        margin: auto; /* 이미지를 중앙에 배치 */
+        display: flex; /* 블록 요소로 설정 */
+        align-items: center;
+        align-content: center;
+        margin-bottom: 5px;
+    }
+    .closeModalBtn {
+        transition: background-color 0.3s;
+        background: var(--main2);
+        color: var(--white);
+        border: none;
+        border-radius: 5px;
+        padding: 5px 30px;
+        cursor: pointer;
+        &:hover {
+            background-color: var(--main1);
+        }
+    }
+}
