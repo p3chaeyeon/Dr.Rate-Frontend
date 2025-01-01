@@ -30,7 +30,6 @@ const MyEditPage = () => {
     const [password, setPassword] = useState('');
     const [confirmPwd, setConfirmPwd] = useState('');
     const [email, setEmail] = useState('');
-    const [birthdate, setBirthdate] = useState('');
     const [authCode, setAuthCode] = useState('');
     const [emailError, setEmailError] = useState(''); // 이메일 오류 메시지 상태 추가
     const [passwordError, setPasswordError] = useState('');
@@ -55,7 +54,6 @@ const MyEditPage = () => {
             setUsername(myData.username || '');
             setUserId(myData.userId || '');
             setEmail(myData.email || '');
-            setBirthdate(myData.birthdate || '');
         } else if (!myData) {
             const userDTO = async () => {
                 try {
@@ -64,7 +62,6 @@ const MyEditPage = () => {
                     setUsername(response.data.result.username || '');
                     setUserId(response.data.result.userId || '');
                     setEmail(response.data.result.email || '');
-                    setBirthdate(response.data.result.birthdate || '');
                     console.log("데이터 가져오기 성공")
                 } catch (error) {
                     console.log("데이터 가져오기 실패 : ", error);
@@ -170,7 +167,6 @@ const MyEditPage = () => {
             setPassword(myData.password || '');
             setConfirmPwd('');
             setEmail(myData.email || '');
-            setBirthdate(myData.birthdate || '');
             setAuthCode('');
             setPasswordError('');
             setConfirmPwdError('');
@@ -287,13 +283,6 @@ const MyEditPage = () => {
                                     onBlur={handleConfirmPwdBlur} />
                         </div>
                         {confirmPwdError && <p className={styles.errorText}>{confirmPwdError}</p>}
-
-                        <div className={`${styles.tagBox}`}>
-                            <p className={`${styles.tagName}`}>생년월일</p>
-                            <input type="text" className={`${styles.myData}`} 
-                                    value={birthdate || '데이터 없음'}
-                                    readOnly />
-                        </div>
 
                         <div className={`${styles.buttonBox}`}>
                             <div className={`${styles.editandreset}`}>
