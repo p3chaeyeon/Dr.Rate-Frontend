@@ -38,12 +38,12 @@ const AdminSideNav = () => {
 
     // 예금 데이터 추가 
     const handleDepositAdd = async () => {
-        await fetch(`${PATH.SERVER}/api/products/insertDep`, { method: 'GET' });
+        await fetch(`${PATH.SERVER}/api/admin/products/insertDep`, { method: 'GET' });
     };
 
     // 적금 데이터 추가 
     const handleInstallAdd = async () => {
-        await fetch(`${PATH.SERVER}/api/products/insertIns`, { method: 'GET' });
+        await fetch(`${PATH.SERVER}/api/admin/products/insertIns`, { method: 'GET' });
     };
 
     return (

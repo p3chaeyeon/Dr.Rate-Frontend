@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: center;
     background-color: var(--admin-body);
+    padding-top: 0px;
     width: 100%;
     height: 92%;
 
@@ -329,6 +330,15 @@
         .emailInquireListArea {
             width: 100%;
             margin: 0 auto;
+            .emailInquireListUser {
+                .inquiryContent {
+                    flex-grow: 4;
+                    /* 40% */
+                    overflow-y: visible;
+                    /* 내용이 많을 경우 스크롤 */
+                }
+            }
+            
             .emailInquireListAdmin {
                 .sendEmailSection {            
                     flex-direction: column !important;
