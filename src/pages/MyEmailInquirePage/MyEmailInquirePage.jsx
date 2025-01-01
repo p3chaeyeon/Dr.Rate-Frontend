@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import styles from './MyEmailInquirePage.module.scss';
 import { fetchInquiryList } from 'src/apis/emailInquireAPI'; // API 호출 함수
@@ -6,12 +6,41 @@ import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import MyNav from 'src/components/MyNav'; 
 import rightArrowIcon from 'src/assets/icons/rightArrow.svg';
 import {PATH} from 'src/utils/path'
+import useModal from 'src/hooks/useModal';
+
+import AlertModal from 'src/components/Modal/AlertModal'; // AlertModal import
+import ImageModal from 'src/components/Modal/ImageModal';
 
 const MyEmailInquirePage = () => {
     const navigate = useNavigate();
     const [inquiries, setInquiries] = useState([]); // 서버에서 가져올 문의 내역
     const [loading, setLoading] = useState(true);  // 로딩 상태
     const [error, setError] = useState(null);      // 에러 상태
+
+    const [isImageOpen, setIsImageOpen] = useState(false);
+    const [isImage, setIsimage] = useState();
+    
+
+    const {
+        isAlertOpen,      // AlertModal이 열려 있는지 여부 (true/false 상태)
+        openAlertModal,   // AlertModal을 열기 위한 함수
+        closeAlertModal,  // AlertModal을 닫기 위한 함수
+        alertContent, 
+    } = useModal();
+
+    const handleCancel = () => {
+        closeAlertModal(); // ConfirmModal 닫기
+    };
+
+    const handleImageClose = useCallback(() => {
+        setIsImageOpen(false); // ConfirmModal 닫기
+    }, []);
+
+    // 이미지 클릭시 핸들러
+    const handleImageClick = (image) => {
+        setIsimage(image); // 이미지 URL 저장
+        setIsImageOpen(true); // 모달 열기
+    };
 
     // 서버에서 데이터 가져오기
     useEffect(() => {
@@ -100,7 +129,9 @@ const MyEmailInquirePage = () => {
                                         <pre className={styles.inquireContent}>{inquire.inquireContent || '내용 없음'}</pre>
                                     </div>
                                     <div className={styles.inquireFileDiv}>
-                                        {inquire.fileUuid ? <span>파일: {inquire.fileUuid}</span> : '첨부파일 없음'}
+                                        {inquire.fileUuid ? <span><img src={inquire.fileUuid} 
+                                                                        className={styles.inquireFile}
+                                                                        onClick={() => handleImageClick(inquire.fileUuid)}/></span> : '첨부파일 없음'}
                                     </div>
                                 </div>
                             </div>
@@ -132,6 +163,17 @@ const MyEmailInquirePage = () => {
                  )}
                 </div>
             </section>
+            <AlertModal
+                isOpen={isAlertOpen}
+                closeModal={closeAlertModal}
+                title={alertContent.title}
+                message={alertContent.message}
+            />
+            <ImageModal
+                isOpen={isImageOpen}
+                closeModal={handleImageClose}
+                image={isImage} // 이미지 URL 전달
+            />
         </main>
     );
 };

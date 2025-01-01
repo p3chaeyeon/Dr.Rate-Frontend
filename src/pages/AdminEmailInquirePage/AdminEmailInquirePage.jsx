@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from './AdminEmailInquirePage.module.scss';
 import useModal from 'src/hooks/useModal';
 import { PATH } from 'src/utils/path';
 import { useNavigate } from 'react-router-dom';
 import ConfirmModal from 'src/components/Modal/ConfirmModal';
+import ImageModal from 'src/components/Modal/ImageModal';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 import xIcon from 'src/assets/icons/xIcon.svg';
 
@@ -13,12 +14,26 @@ const AdminEmailInquirePage = () => {
     const [showAdminSection, setShowAdminSection] = useState(false); // 관리자 섹션 보기 여부
     const navigate = useNavigate();
 
+    const [isImageOpen, setIsImageOpen] = useState(false);
+    const [isImage, setIsimage] = useState();
+
     const {
         isConfirmOpen,
         openConfirmModal,
         closeConfirmModal,
         confirmContent,
     } = useModal();
+
+    const handleImageClose = useCallback(() => {
+        setIsImageOpen(false); // ConfirmModal 닫기
+    }, []);
+
+    // 이미지 클릭시 핸들러
+    const handleImageClick = (image) => {
+        setIsimage(image); // 이미지 URL 저장
+        setIsImageOpen(true); // 모달 열기
+    };
+
     const [form, setForm] = useState({
         id: "",
         answerTitle: "",
@@ -151,11 +166,14 @@ const AdminEmailInquirePage = () => {
                         <div className={styles.inquiryAttachment}>
                             <p>첨부 파일</p>
                             {item?.fileUuid ? (
+                                <span>
                                 <img
                                     src={`${item.fileUuid}`}
                                     alt="첨부 파일"
                                     className={styles.attachmentImage}
+                                    onClick={() => handleImageClick(item.fileUuid)}
                                 />
+                                </span>
                             ) : (
                                 <p>첨부 파일 없음</p>
                             )}
@@ -240,7 +258,12 @@ const AdminEmailInquirePage = () => {
                 message={confirmContent.message} 
                 onConfirm={confirmContent.onConfirm} 
                 onCancel={confirmContent.onCancel}   
-            /> 
+            />
+            <ImageModal
+                isOpen={isImageOpen}
+                closeModal={handleImageClose}
+                image={isImage} // 이미지 URL 전달
+            />
         </main>
     );
 };

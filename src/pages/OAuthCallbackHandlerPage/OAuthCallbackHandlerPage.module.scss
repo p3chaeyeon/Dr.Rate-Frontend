@@ -1,0 +1,12 @@
+.lodingImageDiv {
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .loadingImg {
+        width: 120px;
+        height: 120px;
+    }
+}
