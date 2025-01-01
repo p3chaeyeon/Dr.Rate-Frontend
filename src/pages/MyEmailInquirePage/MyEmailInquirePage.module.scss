@@ -125,12 +125,11 @@
                     .inquireFileDiv {
                         min-height: 100px;
                         display: flex;
-                        justify-content: center;
+                        justify-content: flex-start;
                         margin-right: 24px;
                         .inquireFile {
                             width: 200px;
-                            aspect-ratio: 1 / 1;
-                            object-fit: cover;
+                            object-fit: contain;
                             cursor: pointer;
                         }
                     }
