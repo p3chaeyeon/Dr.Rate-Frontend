@@ -16,10 +16,10 @@ const EmailInquirePage = () => {
   const [myData, setMyData] = useAtom(userData); // Jotai Atom 사용
 
   const {
-    isAlertOpen,      // AlertModal이 열려 있는지 여부 (true/false 상태)
-    openAlertModal,   // AlertModal을 열기 위한 함수
-    closeAlertModal,  // AlertModal을 닫기 위한 함수
-    alertContent,    // AlertModal의 제목(title)과 메시지(message)를 담고 있는 객체
+    isAlertOpen,
+    openAlertModal,
+    closeAlertModal,
+    alertContent,
 
     isConfirmOpen,
     openConfirmModal,
@@ -34,6 +34,13 @@ const EmailInquirePage = () => {
     inquireTitle: "", // 제목
     inquireContent: "", // 문의 내용
     fileUuid: null, // 첨부파일
+    agreeToPrivacy: false,
+  });
+
+  const [errors, setErrors] = useState({
+    inquireCtg: false,
+    inquireTitle: false,
+    inquireContent: false,
     agreeToPrivacy: false,
   });
 
@@ -58,13 +65,13 @@ const EmailInquirePage = () => {
   // 첨부 파일 삭제
   const handleResetFile = () => {
     setFormData((prev) => ({ ...prev, fileUuid: null }));
-  
+
     // 파일 입력 필드 초기화
     const fileInput = document.getElementById("file");
     if (fileInput) {
       fileInput.value = ""; // 
     }
-  };  
+  };
 
   // 초기화
   const handleResetForm = () => {
@@ -76,26 +83,15 @@ const EmailInquirePage = () => {
       inquireContent: "",
       fileUuid: null,
       agreeToPrivacy: false,
-    }); 
-    
+    });
+
     // 파일 입력 필드 초기화
     const fileInput = document.getElementById("file");
     if (fileInput) {
-      fileInput.value = ""; 
+      fileInput.value = "";
     }
   };
-<<<<<<< Updated upstream
-  //모달 변수
-  const {
-    isConfirmOpen,
-    openConfirmModal,
-    closeConfirmModal,
-    confirmContent,
-  } = useModal();
-  
-=======
 
->>>>>>> Stashed changes
   // 입력값
   const handleChange = (e) => {
     const { name, value, type, checked, files } = e.target;
@@ -108,57 +104,65 @@ const EmailInquirePage = () => {
     }
   };
 
+  // 입력 유효성 검사
+  const validateForm = () => {
+    const newErrors = {
+      inquireCtg: !formData.inquireCtg,
+      inquireTitle: !formData.inquireTitle.trim(),
+      inquireContent: !formData.inquireContent.trim(),
+      agreeToPrivacy: !formData.agreeToPrivacy,
+    };
+    setErrors(newErrors);
+    return !Object.values(newErrors).some((error) => error);
+  };
+
   // 확인 버튼 클릭 핸들러
   const handleSubmitInquire = () => {
-<<<<<<< Updated upstream
-      const inquireDTO = async () => {
-          try {
-            const formDataToSend = new FormData();
-=======
     const inquireDTO = async () => {
+
       if (!validateForm()) {
         openAlertModal("필수 입력 항목을 확인해 주세요.");
         return;
       }
->>>>>>> Stashed changes
+      try {
+        const formDataToSend = new FormData();
+        // 보내는 폼 데이터에 추가
+        formDataToSend.append("inquireCtg", formData.inquireCtg);
+        formDataToSend.append("inquireUser", formData.inquireUser);
+        formDataToSend.append("inquireEmail", formData.inquireEmail);
+        formDataToSend.append("inquireTitle", formData.inquireTitle);
+        formDataToSend.append("inquireContent", formData.inquireContent);
+        // formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
 
-            // 보내는 폼 데이터에 추가
-            formDataToSend.append("inquireCtg", formData.inquireCtg);
-            formDataToSend.append("inquireUser", formData.inquireUser);
-            formDataToSend.append("inquireEmail", formData.inquireEmail);
-            formDataToSend.append("inquireTitle", formData.inquireTitle);
-            formDataToSend.append("inquireContent", formData.inquireContent);
-            // formDataToSend.append("agreeToPrivacy", formData.agreeToPrivacy);
-
-            // 폼데이터에 파일추가
-            if (formData.fileUuid) {
-              formDataToSend.append("fileUuid", formData.fileUuid); // 파일 추가
-            }
-            const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/emailinquire/save`, 
-              formDataToSend,
-              {
-                headers: {
-                  "Content-Type": "multipart/form-data", // 중요!
-                },
-              }
-            );
-            if(response.data.success) {
-                    navigate(`${PATH.MY_EMAIL_INQUIRE}`);
-            } else {
-                console.log("이메일 전송 중 오류 발생 : ", response);
-            }
-          } catch(error) {
-              console.error("이메일 전송 중 오류 발생 : ", error);
+        // 폼데이터에 파일추가
+        if (formData.fileUuid) {
+          formDataToSend.append("fileUuid", formData.fileUuid); // 파일 추가
+        }
+        const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/emailinquire/save`,
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // 중요!
+            },
           }
+        );
+        if (response.data.success) {
+          navigate(`${PATH.MY_EMAIL_INQUIRE}`);
+        } else {
+          console.log("이메일 전송 중 오류 발생 : ", response);
+        }
+      } catch (error) {
+        console.error("이메일 전송 중 오류 발생 : ", error);
       }
-      inquireDTO();
-      closeConfirmModal(); // ConfirmModal 닫기
+    }
+    inquireDTO();
+    closeConfirmModal(); // ConfirmModal 닫기
   };
   // 취소 버튼 클릭 핸들러
   const handleCancel = () => {
     closeConfirmModal(); // ConfirmModal 닫기
   };
-  
+
   const handleSubmit = async () => {
     openConfirmModal("전송 하시겠습니까?", null, handleSubmitInquire, handleCancel);
   }
@@ -185,8 +189,9 @@ const EmailInquirePage = () => {
               <option value="serviceImprovement">서비스 개선 제안</option>
               <option value="systemError">시스템 오류 제보</option>
             </select>
-            <br></br>
+            {errors.inquireCtg && <p className={styles.errorMsg}>문의 유형을 선택해 주세요.</p>}
             <small className={styles.hintInquiryType}>
+              <br></br>
               • 앱 개선 제안은 '서비스 개선 제안'으로 선택해 주세요
               <br></br>
               • 앱 장애 신고는 '시스템 오류 제보'로 선택해 주세요
@@ -232,6 +237,7 @@ const EmailInquirePage = () => {
               className={styles.textInput}
               placeholder="제목"
             />
+            {errors.inquireTitle && <p className={styles.errorMsg}>제목을 입력해 주세요.</p>}
           </div>
 
           {/* 문의 내용 */}
@@ -246,6 +252,7 @@ const EmailInquirePage = () => {
               maxLength="500"
             />
             <br></br>
+            {errors.inquireContent && <p className={styles.errorMsg}>문의 내용을 입력해 주세요.</p>}
             <small className={styles.hint}>
               {formData.inquireContent.length}자 / 최대 500자
             </small>
@@ -320,22 +327,19 @@ const EmailInquirePage = () => {
             className={`${styles.submitButton} ${!formData.agreeToPrivacy ? styles.disabled : ""
               }`}
             disabled={!formData.agreeToPrivacy}
-            onClick={handleSubmit}
+            onClick={handleSubmitInquire}
           >
             제출하기
           </button>
         </div>
       </section>
       <ConfirmModal
-        isOpen={isConfirmOpen}           
-        closeModal={closeConfirmModal}   
-        title={confirmContent.title}     
-        message={confirmContent.message} 
-        onConfirm={confirmContent.onConfirm} 
-        onCancel={confirmContent.onCancel}   
-<<<<<<< Updated upstream
-      /> 
-=======
+        isOpen={isConfirmOpen}
+        closeModal={closeConfirmModal}
+        title={confirmContent.title}
+        message={confirmContent.message}
+        onConfirm={confirmContent.onConfirm}
+        onCancel={confirmContent.onCancel}
       />
       <AlertModal
         isOpen={isAlertOpen}
@@ -343,7 +347,6 @@ const EmailInquirePage = () => {
         title={alertContent.title}
         message={alertContent.message}
       />
->>>>>>> Stashed changes
     </main>
   );
 };
