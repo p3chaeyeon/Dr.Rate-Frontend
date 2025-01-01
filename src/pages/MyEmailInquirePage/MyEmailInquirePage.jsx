@@ -109,7 +109,7 @@ const MyEmailInquirePage = () => {
                     inquiries.map((inquire) => (
                         <div className={styles.inquireList} key={inquire.id}>
                             <div className={styles.listTopDiv}>
-                                <div className={styles.topCategory}>{inquire.inquireCtg || '카테고리 없음'}</div>
+                                <div className={styles.topCategory}>{inquire.inquireCtg === 'serviceImprovement' ? '서비스 개선 제안' : inquire.inquireCtg === 'systemError' ? '시스템 오류 제보' : '제목 없음'}</div>
                                 <div className={styles.topDate}>{formatDate(inquire.createdAt)}</div>
                             </div>
 
