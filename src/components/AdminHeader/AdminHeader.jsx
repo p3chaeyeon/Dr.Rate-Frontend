@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { PATH } from 'src/utils/path';
 import { useSession } from 'src/hooks/useSession';
 import ConfirmModal from 'src/components/Modal/ConfirmModal/ConfirmModal';
+import adminMenuBarLogo from '/src/assets/icons/mobileMenuIcon.svg';
 
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 
@@ -81,7 +82,7 @@ const AdminHeader = () => {
 
                 <div className={styles.adminHeaderMenuBar}>
                     <button className={styles.adminButton} onClick={toggleMenu}>
-                        <img src='/src/assets/icons/mobileMenuIcon.svg' alt="menu" />
+                        <img src={adminMenuBarLogo} alt="menu" />
                     </button>
                 </div>
 
