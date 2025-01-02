@@ -144,9 +144,14 @@ const MyEmailInquirePage = () => {
                                     <div className={styles.answerContentDiv}>
                                         <pre className={styles.answerContent}>{inquire.answerContent || '답변 내용 없음'}</pre>
                                     </div>
+                                    <div className={styles.answerFileDiv}>
+                                        {inquire.answerFile ? <span><img src={inquire.answerFile} 
+                                                                        className={styles.answerFile}
+                                                                        onClick={() => handleImageClick(inquire.answerFile)}/></span> : '첨부파일 없음'}
+                                    </div>
                                 </div>
                                 <div className={styles.answerDate}>
-                                    {formatDate(inquire.answerDate)}
+                                    {formatDate(inquire.updatedAt)}
                                 </div>
                             </div>
 
