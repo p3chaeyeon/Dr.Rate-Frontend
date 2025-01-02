@@ -392,24 +392,29 @@ const ListInstallmentPage = () => {
         {/* 페이지네이션 */}
         <div className={styles.pagination}>
           <div className={styles.pageBtn}>
-          <button onClick={handlePrevBlock} disabled={paginationRange[0] === 1}>
-          이전
-        </button>
-        {paginationRange.map((page) => (
-          <button
-            key={page}
-            onClick={() => handlePageChange(page)}
-            className={currentPage === page ? styles.active : ''}
+          <button 
+            className={styles.navigationBtn} 
+            onClick={handlePrevBlock} 
+            disabled={paginationRange[0] === 1}
           >
-            {page}
+            이전
           </button>
-        ))}
-        <button
-          onClick={handleNextBlock}
-          disabled={paginationRange[paginationRange.length - 1] === totalPages}
-        >
-          다음
-        </button>
+          {paginationRange.map((page) => (
+            <button
+              key={page}
+              onClick={() => handlePageChange(page)}
+              className={currentPage === page ? styles.active : ''}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            className={styles.navigationBtn} 
+            onClick={handleNextBlock}
+            disabled={paginationRange[paginationRange.length - 1] === totalPages}
+          >
+            다음
+          </button>
           </div>
         </div>
 
