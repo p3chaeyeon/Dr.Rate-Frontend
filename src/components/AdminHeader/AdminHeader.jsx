@@ -120,9 +120,9 @@ const AdminHeader = () => {
                                 }}>이메일 문의</li>
                                 <li onClick={handleLogout}>로그아웃</li>
                                 <li onClick={() => {
-                                    navigate(PATH.ADMIN_INQUIRE_LIST);
+                                    navigate(PATH.HOME);
                                     setIsMenuOpen(false);
-                                }}>고객센터</li>
+                                }}>사용자 페이지로 이동</li>
                                 <li onClick={() =>
                                     openConfirmModal('확인', '정말 예금을 추가하시겠습니까?', async () => {
                                         await handleDepositAdd();
