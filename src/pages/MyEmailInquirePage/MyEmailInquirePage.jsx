@@ -49,7 +49,6 @@ const MyEmailInquirePage = () => {
                 setLoading(true); // 로딩 시작
                 const data = await fetchInquiryList(); // API 호출
                 setInquiries(data); // 문의 데이터 설정
-                console.log(data);
             } catch (err) {
                 setError(err.message); // 에러 메시지 설정
             } finally {
