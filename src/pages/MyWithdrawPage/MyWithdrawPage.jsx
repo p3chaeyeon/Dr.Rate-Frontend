@@ -23,6 +23,8 @@ const MyWithdrawPage = () => {
 
     // 확인 버튼 클릭 핸들러
     const handleConfirm = () => {
+        console.log(myData.password);
+        console.log(formData.password);
         const deleteAccount = async () => {
             try {
                 const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/deleteAccount`, formData);
