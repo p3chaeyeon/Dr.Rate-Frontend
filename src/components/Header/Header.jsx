@@ -352,6 +352,21 @@ const Header = () => {
                                                     >
                                                         적금달력
                                                     </li>
+                                                    <li className={styles.mySubMenuItem}>문의내역</li>
+                                                    <ul className={styles.myFavSubMenuList}>
+                                                        <li
+                                                            className={styles.myFavSubMenuItem}
+                                                            onClick={() => sideNavigation(PATH.MY_EMAIL_INQUIRE)}
+                                                        >
+                                                            <span>•</span>이메일 문의
+                                                        </li>
+                                                        <li
+                                                            className={styles.myFavSubMenuItem}
+                                                            onClick={() => sideNavigation(PATH.MY_1V1_INQUIRE)}
+                                                        >
+                                                            <span>•</span>1:1 문의
+                                                        </li>
+                                                    </ul>                                                    
                                                 </ul>
                                             )}
                                         </div>
