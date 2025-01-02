@@ -641,6 +641,20 @@
       }
     }
 
+    .pagination {
+      font-size: 14px;
+
+      .pageBtn {
+        padding: 0;
+        button {
+          padding: 6px 12px;
+        }
+        .navigationBtn {
+          padding: 6px 6px;
+        }
+      }
+    }
+
 
   }
 }/* 기본 px */
@@ -662,6 +676,7 @@
 
       .productList {
         gap: 7px;
+        height: 110px;
 
         .productLogoDiv {
           width: 60px;
@@ -672,6 +687,7 @@
         }
       }
     }
+
   }
 }
 
@@ -698,6 +714,27 @@
           .productCompareBtn {
             font-size: 13px;
           }
+        }
+      }
+    }
+  }
+}
+
+
+
+/* ====================================== 가로 360px 이하 ====================================== */
+@media (max-width: 360px) {
+  .listSection {
+    .pagination {
+      font-size: 12px;
+
+      .pageBtn {
+        padding: 0;
+        button {
+          padding: 5px 10px;
+        }
+        .navigationBtn {
+          padding: 5px 5px;
         }
       }
     }
