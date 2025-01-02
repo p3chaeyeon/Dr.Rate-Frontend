@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { PATH } from 'src/utils/path';
 import { useSession } from 'src/hooks/useSession';
 import ConfirmModal from 'src/components/Modal/ConfirmModal/ConfirmModal';
+import adminMenuBarLogo from '/src/assets/icons/mobileMenuIcon.svg';
 
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
 
@@ -23,9 +24,10 @@ const AdminHeader = () => {
     const handleLogout = async () => {
         try {
             const response = await axiosInstanceAPI.post(`${PATH.SERVER}/api/logout`);
+            console.log(response.data.success);
             if(response.data.success) {
                 clearSession();
-                navigate(PATH.HOME);
+                navigate(`${PATH.HOME}`);
                 return { success: true, message: '로그아웃 완료'};
             } else {
                 return { success: false, message: '로그아웃 진행 중 오류가 발생했습니다.'};
@@ -80,7 +82,7 @@ const AdminHeader = () => {
 
                 <div className={styles.adminHeaderMenuBar}>
                     <button className={styles.adminButton} onClick={toggleMenu}>
-                        <img src='/src/assets/icons/mobileMenuIcon.svg' alt="menu" />
+                        <img src={adminMenuBarLogo} alt="menu" />
                     </button>
                 </div>
 
