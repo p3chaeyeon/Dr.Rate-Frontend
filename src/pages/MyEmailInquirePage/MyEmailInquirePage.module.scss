@@ -33,6 +33,13 @@
         max-width: 800px;
         color: var(--black);
 
+        .noInquiriesMessage {
+            text-align: center;
+            font-size: 16px;
+            color: var(--font2);
+            margin: 20px 0;
+        }
+
         .inquireList {
             padding: 10px 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -116,14 +123,14 @@
                     }
 
                     .inquireFileDiv {
-                        border: 1px solid red;
-                        /* 확인용. 나중에 삭제 */
                         min-height: 100px;
-
+                        display: flex;
+                        justify-content: flex-start;
+                        margin-right: 24px;
                         .inquireFile {
-                            width: 100px;
-                            aspect-ratio: 1 / 1;
-                            object-fit: cover;
+                            width: 200px;
+                            object-fit: contain;
+                            cursor: pointer;
                         }
                     }
                 }
@@ -189,6 +196,7 @@
         }
     }
 }
+
 
 
 

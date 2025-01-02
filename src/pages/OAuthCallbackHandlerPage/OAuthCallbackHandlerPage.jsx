@@ -2,10 +2,14 @@ import { useEffect } from 'react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import axiosInstanceAPI from 'src/apis/axiosInstanceAPI';
+import styles from './OAuthCallbackHandlerPage.module.scss';
 import {PATH} from 'src/utils/path.js';
 import { useSetAtom, useAtom } from "jotai";
 import { userData } from 'src/atoms/userData';
 import { isLoggedInAtom } from 'src/atoms/sessionAtom';
+
+import spinner from 'src/assets/icons/spinner.gif';
+
 
 const OAuthCallbackHandlerPage = () => {
     const navigate = useNavigate();
@@ -49,7 +53,9 @@ const OAuthCallbackHandlerPage = () => {
     return (
         <main>
             <section>
-                <div>로그인 처리 중...</div>
+                <div className={styles.lodingImageDiv}>
+                    <img className={styles.loadingImg} src={spinner} alt="loading" />
+                </div>
             </section>
         </main>
     );
