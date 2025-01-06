@@ -22,7 +22,7 @@
 - **DBMS**: MySQL, Redis, MongoDB, Apache Kafka
 - **버전 관리**: g]Git, GitHub
 - **Naver Cloud DB**: dr-rate-db
-- **Naver Cloud Object Storage**: 
+- **Naver Cloud Object Storage**: dr-rate
 
 <br/><br/>
 
