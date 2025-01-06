@@ -1,8 +1,10 @@
 # Dr.Rate (금융 상품 사이트)
-![Dr.Rate thumbnail](public/ReadMe/Dr.Rate thumbnail.png)
 
-![Dr.Rate PDF](public/ReadMe/Dr.Rate_presentaion.pdf)
-![Dr.Rate PDF 링크]{https://www.dr-rate.store/) (새 탭에서 열기: 오른쪽 클릭 후 새 탭에서 열기 선택)
+![Dr.Rate thumbnail](public/ReadMe/Dr_Rate_thumbnail.png)
+
+![Dr.Rate PDF](public/ReadMe/Dr_Rate_presentation.pdf)
+![Dr.Rate 링크](https://www.dr-rate.store/) (새 탭에서 열기: 오른쪽 클릭 후 새 탭에서 열기 선택)
+
 
 <br/><br/>
 
@@ -21,6 +23,11 @@
 - **버전 관리**: g]Git, GitHub
 - **Naver Cloud DB**: dr-rate-db
 - **Naver Cloud Object Storage**: 
+
+<br/><br/>
+
+## 📰 IA(Information Architecture)	
+![Dr.Rate IA](public/ReadMe/IA.png)
 
 <br/><br/>
 
