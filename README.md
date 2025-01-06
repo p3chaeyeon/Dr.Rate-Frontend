@@ -1,12 +1,14 @@
 # Dr.Rate (금융 상품 사이트)
 
-![Dr.Rate thumbnail](public/ReadMe/Dr_Rate_thumbnail.png){: width="500" height="400"}
-
-[Dr.Rate PDF](public/ReadMe/Dr_Rate_presentation.pdf) <br/><br/>
-[Dr.Rate 링크](https://www.dr-rate.store/) (새 탭에서 열기: 오른쪽 클릭 후 새 탭에서 열기 선택)
-
-
+[<img src="이미지_경로" alt="설명" width="500">](public/ReadMe/Dr_Rate_thumbnail.png)
 <br/><br/>
+[Dr.Rate PDF](public/ReadMe/Dr_Rate_presentation.pdf) 
+<br/><br/>
+[Dr.Rate 서비스 링크](https://www.dr-rate.store/) (새 탭에서 열기: 오른쪽 클릭 후 새 탭에서 열기 선택)
+<br/><br/>
+[Dr.Rate 시연영상 링크](https://www.youtube.com/watch?v=nGptuUa_gHI)
+<br/><br/>
+
 
 ## Abstract ##
 **Dr.Rate** 는 금리박사는 사용자가 다양한 은행의 예금 및 적금 상품을 검색, 비교할 수 있는 금융 상품 플랫폼입니다. 이 시스템은 사용자 서비스와 관리자 서비스를 통해 금융 상품의 등록, 관리 및 사용자 맞춤형 서비스를 제공합니다.
