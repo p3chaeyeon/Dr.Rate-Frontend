@@ -1,8 +1,8 @@
 # Dr.Rate (금융 상품 사이트)
-![Dr.Rate thumbnail](public/ReadMe/ERD.png)
+![Dr.Rate thumbnail](public/ReadMe/Dr.Rate thumbnail.png)
 
 ![Dr.Rate PDF](public/ReadMe/Dr.Rate_presentaion.pdf)
-![Dr.Rate 링크](https://www.dr-rate.store) (새 탭에서 열기: 오른쪽 클릭 후 새 탭에서 열기 선택)
+![Dr.Rate PDF 링크]{https://www.dr-rate.store/) (새 탭에서 열기: 오른쪽 클릭 후 새 탭에서 열기 선택)
 
 <br/><br/>
 
