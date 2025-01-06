@@ -2,7 +2,7 @@
 
 [<img src="public/ReadMe/Dr_Rate_thumbnail.png" alt="설명" width="700">](public/ReadMe/Dr_Rate_thumbnail.png)
 <br/><br/>
-[Dr.Rate PDF](public/ReadMe/Dr_Rate_presentation.pdf) 
+[Dr.Rate PDF 미리보기](public/ReadMe/Dr_Rate_presentation.pdf) 
 <br/><br/>
 [Dr.Rate 서비스 링크](https://www.dr-rate.store/) (새 탭에서 열기: 오른쪽 클릭 후 새 탭에서 열기 선택)
 <br/><br/>
