@@ -1,12 +1,12 @@
 # Dr.Rate (금융 상품 사이트)
 
-[<img src="이미지_경로" alt="설명" width="500">](public/ReadMe/Dr_Rate_thumbnail.png)
+[<img src="public/ReadMe/Dr_Rate_thumbnail.png" alt="설명" width="500">](public/ReadMe/Dr_Rate_thumbnail.png)
 <br/><br/>
 [Dr.Rate PDF](public/ReadMe/Dr_Rate_presentation.pdf) 
 <br/><br/>
 [Dr.Rate 서비스 링크](https://www.dr-rate.store/) (새 탭에서 열기: 오른쪽 클릭 후 새 탭에서 열기 선택)
 <br/><br/>
-[Dr.Rate 시연영상 링크](https://www.youtube.com/watch?v=nGptuUa_gHI)
+[Dr.Rate 시연영상 링크](https://www.youtube.com/watch?v=nGptuUa_gHI) (새 탭에서 열기: 오른쪽 클릭 후 새 탭에서 열기 선택)
 <br/><br/>
 
 
