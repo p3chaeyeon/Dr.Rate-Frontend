@@ -1,6 +1,6 @@
 # Dr.Rate (금융 상품 사이트)
 
-[<img src="public/ReadMe/Dr_Rate_thumbnail.png" alt="설명" width="500">](public/ReadMe/Dr_Rate_thumbnail.png)
+[<img src="public/ReadMe/Dr_Rate_thumbnail.png" alt="설명" width="700">](public/ReadMe/Dr_Rate_thumbnail.png)
 <br/><br/>
 [Dr.Rate PDF](public/ReadMe/Dr_Rate_presentation.pdf) 
 <br/><br/>
