@@ -28,7 +28,7 @@
 
 <br/><br/>
 
-## 📰 IA(Information Architecture)	
+## 👀 IA(Information Architecture)	
 ![Dr.Rate IA](public/ReadMe/IA.png)
 
 <br/><br/>
