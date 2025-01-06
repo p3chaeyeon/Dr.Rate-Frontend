@@ -1,8 +1,8 @@
 # Dr.Rate (금융 상품 사이트)
 
-![Dr.Rate thumbnail](public/ReadMe/Dr_Rate_thumbnail.png)
+![Dr.Rate thumbnail](public/ReadMe/Dr_Rate_thumbnail.png){: width="500" height="400"}
 
-[Dr.Rate PDF](public/ReadMe/Dr_Rate_presentation.pdf) <br/>
+[Dr.Rate PDF](public/ReadMe/Dr_Rate_presentation.pdf) <br/><br/>
 [Dr.Rate 링크](https://www.dr-rate.store/) (새 탭에서 열기: 오른쪽 클릭 후 새 탭에서 열기 선택)
 
 
@@ -65,9 +65,9 @@
 
 ### 관리자 서비스
 1. **대시보드**
-	- 방문자 집계
-  - 신규 회원
-  - 문의 내역
+   - 방문자 집계
+   - 신규 회원
+   - 문의 내역
 
 2. **사용자 조회**
 
