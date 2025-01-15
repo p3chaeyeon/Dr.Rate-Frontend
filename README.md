@@ -108,18 +108,65 @@
   	- 사용자는 관리자와 1:1 채팅을 할 수 있습니다.
 
   
+
+<br/><br/>
+
+  
 ## 🪪 팀 소개
 
-|   이름   | 이메일                    |
+```
+오영수
+E-mail : paul9119298@gmail.com
+```
+
+```
+김세현
+E-mail : kshyeon114@gmail.com
+```
+
+```
+김진환
+E-mail : ghks248@naver.com
+```
+
+```
+박상욱
+E-mail : anfto02@naver.com
+```
+
+```
+박채연
+E-mail : p3chaeyeon@gmail.com
+```
+
+```
+양수민
+E-mail : kongdot0709@gmail.com
+```
+
+```
+오혜진
+E-mail : srin5@naver.com
+```
+
+```
+조윤성
+E-mail : yunseong0220@hanmail.net
+```
+
+## 🧩역할
+
+|   이름   | 주요 작업                    |
 | ------ | --------------------------- |
-| 오영수 | ```paul9119298@gmail.com``` |
-| 김세현 | ```kshyeon114@gmail.com``` |
-| 김진환 | ```ghks248@naver.com``` |
-| 박상욱 | ```anfto02@naver.com``` |
-| 박채연 | ```p3chaeyeon@gmail.com``` |
-| 양수민 | ```kongdot0709@gmail.com``` |
-| 오혜진 | ```srin5@naver.com``` |
-| 조윤성 | ```yunseong0220@hanmail.net``` |
+| 오영수 | 관리자 메인, 회원 조회, 문의 조회 화면 작업  |
+| 김세현 | 예금•적금 상세, 예금•적금 비교 화면 작업 |
+| 김진환 | 회원가입, 로그인 화면 작업 |
+| 박상욱 | 회원조회, 회원정보수정, 회원탈퇴 화면 작업 |
+| 박채연 | 사용자 메인, 예금•적금 목록, 마이페이지 상품 즐겨찾기, 마이페이지 문의 내역 화면 작업 |
+| 양수민 | 고객센터, 이메일 문의 화면 작업 |
+| 조윤성 | 마이페이지 적금달력 화면 작업 |
+
+
 
 
 
