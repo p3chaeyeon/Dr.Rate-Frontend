@@ -144,10 +144,12 @@ E-mail : p3chaeyeon@gmail.com
 E-mail : kongdot0709@gmail.com
 ```
 
+<!--
 ```
-### 오혜진
-### E-mail : srin5@naver.com
+오혜진
+E-mail : srin5@naver.com
 ```
+-->
 
 ```
 조윤성
